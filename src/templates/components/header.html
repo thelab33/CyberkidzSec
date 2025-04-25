@@ -1,0 +1,58 @@
+{# Header partial – drop in templates/components/ #}
+<header id="siteHeader"
+        class="fixed inset-x-0 top-0 z-50 flex items-center justify-between
+               px-6 py-3 backdrop-blur-md bg-zinc-900/70 dark:bg-zinc-800/70
+               border-b border-orange-500 transition-transform duration-300">
+
+  <!-- brand -->
+  <a href="/" class="text-xl font-black tracking-widest text-orange-400
+                     focus:outline-none focus-visible:ring-2
+                     focus-visible:ring-orange-200">
+    CYBERKIDZSEC&nbsp;VAULT
+  </a>
+
+  <!-- desktop widgets -->
+  <div class="hidden lg:flex items-center gap-4">
+    <span class="text-sm font-mono text-orange-300">📡 Vault: LIVE</span>
+    <kbd class="px-2 py-1 font-mono text-xs bg-zinc-700 rounded">⌘ K</kbd>
+    <button id="themeToggle"
+            class="text-2xl rounded focus:outline-none
+                   focus-visible:ring-2 focus-visible:ring-orange-200"
+            aria-label="Toggle theme">
+      🌙
+    </button>
+  </div>
+
+  <!-- hamburger -->
+  <button id="menuToggle"
+          class="lg:hidden text-2xl p-1 rounded hover:bg-orange-500/20
+                 focus:outline-none focus-visible:ring-2
+                 focus-visible:ring-orange-200"
+          aria-label="Toggle navigation"
+          aria-expanded="false">
+    ☰
+  </button>
+
+  <!-- ghost badge -->
+  <div id="ghostBadge"
+       class="absolute right-6 text-xs font-semibold text-emerald-400
+              animate-pulse hidden">
+    👻 Ghost Mode
+  </div>
+</header>
+
+<!-- mobile nav -->
+<nav id="mobileNav"
+     class="lg:hidden fixed inset-x-0 top-14 bg-black/90 backdrop-blur p-6
+            z-40 hidden">
+  <ul class="space-y-4 text-lg font-semibold">
+    <li><a href="/"        class="hover:text-orange-400">Home</a></li>
+    <li><a href="/reports" class="hover:text-orange-400">Vault</a></li>
+    <li><a href="/playground" class="hover:text-orange-400">Playground</a></li>
+  </ul>
+</nav>
+
+<!-- scroll progress bar -->
+<div id="scrollProgress"
+     class="fixed inset-x-0 top-0 h-1 bg-orange-500 origin-left scale-x-0">
+</div>

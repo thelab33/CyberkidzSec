@@ -1,0 +1,65 @@
+/* ──────────────────────────────────────────────
+   CYBERKIDZ - Header module
+   (only rules the header / mobile-nav / progress bar need)
+────────────────────────────────────────────── */
+
+/* palette — pulled from the global design-tokens so they stay in sync */
+:root{
+  --night:              #0e0e0e;
+  --night-glow:         #1c1c1c;
+  --night-phantom:      #141414;
+  --orange-luxe:        #f97316;
+  --orange-luxe-light:  #fdba74;
+  --emerald-ghost:      #34d399;
+}
+
+/* ---------- header shell ---------- */
+#siteHeader{
+  background-color: rgba(14,14,14,.75);      /* .bg-night/75 */
+  border-bottom: 1px solid var(--night-glow);
+  backdrop-filter: blur(12px);
+  transition: transform .3s;
+}
+
+/* ---------- colours / accents ---------- */
+#siteHeader .text-orangeLuxe         { color: var(--orange-luxe); }
+#siteHeader .text-orangeLuxe-light   { color: var(--orange-luxe-light); }
+#siteHeader .bg-night-phantom        { background: var(--night-phantom); }
+
+/* hover state used on hamburger */
+#menuToggle:hover{
+  background-color: rgba(249,115,22,.20);    /* orange-500/20 */
+}
+
+/* ---------- scroll progress bar ---------- */
+#scrollProgress{
+  background: var(--orange-luxe);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .15s linear;
+}
+
+/* ---------- ghost badge pulse ---------- */
+@keyframes pulseGhost{
+  0%,100%{ opacity:1 }
+  50%   { opacity:.35 }
+}
+#ghostBadge.animate-pulse{
+  animation: pulseGhost .9s cubic-bezier(.4,0,.6,1) infinite;
+}
+
+/* ---------- kbd pill ---------- */
+kbd{
+  background: var(--night-phantom);
+  border-radius: .25rem;
+  padding: .15rem .4rem;
+  font-size: .75rem;
+  font-family: inherit;
+}
+
+/* ---------- mobile nav panel ---------- */
+#mobileNav{
+  background: rgba(0,0,0,.90);
+  backdrop-filter: blur(8px);
+}
+
