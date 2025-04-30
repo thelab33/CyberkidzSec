@@ -1,0 +1,134 @@
+<section
+  id="hero"
+  role="banner"
+  aria-labelledby="hero-heading hero-subheading"
+  class="relative isolate flex flex-col justify-center items-center text-center overflow-visible
+         rounded-3xl border border-orangeLuxe/30 backdrop-blur-lg
+         bg-black bg-opacity-95 mix-blend-normal
+         px-6 py-28 sm:py-36 lg:py-48 shadow-2xl shadow-orange-900/10
+         animate-warpStabilize"
+  data-aos="zoom-in"
+  data-aos-delay="200"
+>
+  <!-- 1️⃣ Orbit rings (behind everything) -->
+  <div class="orbit-container">
+    <div class="orbit orbit--small"></div>
+    <div class="orbit orbit--med"></div>
+    <div class="orbit orbit--large"></div>
+  </div>
+
+  <!-- 2️⃣ Lens flare blob -->
+  <div id="lensFlare"></div>
+
+  <!-- 🪐 Starfield Canvas -->
+  <canvas
+    id="heroStarfield"
+    class="absolute inset-0 w-full h-full z-0 pointer-events-none"
+    loading="lazy"
+    data-init="starfield"
+  ></canvas>
+
+  <!-- 🖼 Fallback Image (for reduced-motion) -->
+  <picture class="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <source srcset="/static/images/star-fallback.jpg" media="(prefers-reduced-motion)">
+    <img src="/static/images/star-fallback.jpg"
+         alt=""
+         class="object-cover w-full h-full opacity-10">
+  </picture>
+
+  <!-- 🌌 Visual Effects Layer -->
+  <div aria-hidden="true" class="absolute inset-0 pointer-events-none z-10">
+    <div id="warp-overlay"
+         class="absolute inset-0 mix-blend-overlay animate-warpBlur bg-transparent"></div>
+    <div class="absolute inset-0
+                bg-[url('/static/images/scanlines.svg')]
+                bg-repeat
+                opacity-5
+                animate-shimmer"></div>
+    <div id="heroHalo"
+         class="absolute inset-0
+                opacity-0
+                transition-opacity duration-1000 ease-out
+                blur-2xl"></div>
+    <div id="ghostSparks" class="ghost-sparks hidden"></div>
+  </div>
+
+  <!-- 🧠 Main Content -->
+  <div class="relative z-20 max-w-4xl space-y-10 text-orangeLuxe-light
+              drop-shadow-[0_0_2px_orange]">
+    <hgroup class="space-y-3">
+      <p id="heroTyper"
+         class="text-sm sm:text-base font-mono uppercase tracking-widest
+                animate-typewriter text-emeraldLuxe"
+         aria-live="polite">
+      </p>
+
+      <!-- 3️⃣ Glitchy heading -->
+      <h1 id="hero-heading"
+          class="flex justify-center items-center gap-4
+                 text-5xl sm:text-7xl md:text-8xl font-black leading-[1.2] tracking-tight
+                 bg-clip-text text-transparent
+                 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300
+                 animate-pulse-glow">
+        <span class="glitch" data-text="💀 CYBERKIDZSEC VAULT">
+          <span class="hero-skull inline-block align-middle text-[1.2em] px-1 leading-none">
+            💀
+          </span>
+          CYBERKIDZSEC VAULT
+        </span>
+      </h1>
+
+      <p id="hero-subheading"
+         class="text-lg sm:text-xl font-mono text-white/80">
+        “Ghosted but not gone.” 
+        <span class="text-orangeLuxe font-semibold">— cyberkidzsec</span>
+      </p>
+    </hgroup>
+
+    <!-- 🛰 Operative Info -->
+    <div class="space-y-3">
+      <p class="text-xs sm:text-sm text-emeraldLuxe animate-pulse-glow">
+        🛰️ Operative Title: <strong>{{ operative_title }}</strong>
+      </p>
+
+      <div class="relative w-full h-3 rounded-full bg-black/50 overflow-hidden ring-1 ring-orangeLuxe/30">
+        <div id="heroXpFill"
+             class="absolute inset-0 h-full bg-gradient-to-r from-orange-400 to-emeraldLuxe
+                    transition-all duration-700 ease-out"
+             style="width: {{ vault_xp_percentage }}%">
+        </div>
+      </div>
+
+      <p class="text-xs text-center text-white/70">
+        Level: {{ operative_level }} — Vault Stability: {{ vault_xp_percentage }}%
+      </p>
+    </div>
+
+    <!-- 🎮 CTAs -->
+    <div class="mt-6 flex flex-wrap justify-center gap-6">
+      <button id="searchBtn"
+              class="btn btn--outline neon-button border-emeraldLuxe text-emeraldLuxe
+                     hover:bg-emeraldLuxe hover:text-cyberNight transition
+                     hover:shadow-[0_0_30px_#34d399]
+                     px-8 py-3 rounded-lg backdrop-blur-sm"
+              aria-label="Open global search">
+        ⌘ Cmd + K — Search
+      </button>
+
+      <a href="#playground"
+         class="btn neon-button bg-orange-500 hover:bg-orange-400 text-black hover:text-white
+                border border-emeraldLuxe transition shadow-xl hover:shadow-[0_0_35px_#34d399]
+                px-8 py-3 rounded-lg backdrop-blur-sm"
+         aria-label="Jump to Hacker Playground">
+        🎮 Hack the Vault
+      </a>
+    </div>
+
+    <!-- 👻 Ghost Mode Status -->
+    <p id="ghostMsg"
+       class="hidden mt-6 text-sm font-mono text-emeraldLuxe animate-pulse">
+      👻 Ghost Mode Activated
+    </p>
+  </div>
+</section>
+

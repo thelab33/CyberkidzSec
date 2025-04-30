@@ -1,0 +1,21 @@
+[
+  {
+    "id": "delegatecall-proxy-vuln-coinbase-wrapped-steth",
+    "title": "Delegatecall Proxy Vulnerability in Coinbase Wrapped Staked ETH",
+    "type": "Delegatecall Misconfiguration",
+    "cvss": 9.8,
+    "severity": "Critical",
+    "date": "2024-07-15",
+    "tags": ["solidity", "smart-contract", "proxy", "defi"]
+  },
+  {
+    "id": "reflected-xss-api-direct-playstation-com",
+    "title": "Reflected XSS in PlayStation.com API",
+    "type": "Web Vulnerability",
+    "cvss": 6.5,
+    "severity": "Medium",
+    "date": "2024-05-10",
+    "tags": ["xss", "api", "web", "playstation"]
+  }
+]
+

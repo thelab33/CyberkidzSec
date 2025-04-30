@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="container mx-auto py-12" data-aos="fade-up"">
+    <h1 class="text-4xl font-extrabold mb-6">{{ title }}</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up"">
+      {% for report in featured_reports %}
+        <a href="{{ url_for('bug_vault.view_report', slug=report.slug) }}"
+           class="block p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg hover:shadow-xl transition">
+          <h2 class="text-2xl font-bold mb-2">{{ report.title }}</h2>
+          <p class="text-pink-600 hover:underline">Read details →</p>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
+

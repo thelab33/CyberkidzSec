@@ -1,0 +1,1884 @@
+<!-- back_to_top.html -->
+<button
+  id="backToTopBtn"
+  aria-label="Back to top"
+  class="fixed bottom-8 right-8 z-[9998] rounded-full bg-orangeLuxe p-4 text-black
+         shadow-[0_0_20px_rgba(249,115,22,0.5)] opacity-0 translate-y-6
+         transition-all duration-300 pointer-events-none"
+>
+  <i class="fas fa-rocket animate-bounce-slow"></i>
+</button>
+
+<script>
+(() => {
+  const btn = document.getElementById("backToTopBtn");
+
+  /** show / hide on scroll */
+  function toggle() {
+    if (window.scrollY > 400) {
+      btn.classList.remove("opacity-0", "translate-y-6", "pointer-events-none");
+    } else {
+      btn.classList.add("opacity-0", "translate-y-6", "pointer-events-none");
+    }
+  }
+  toggle();                        // run once
+  window.addEventListener("scroll", toggle);
+
+  /** smooth-scroll to top */
+  btn.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  );
+})();
+</script>
+
+<!-- components/footer.html -->
+<footer class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden">
+  <!-- animated aurora ribbon -->
+  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite]"></div>
+
+  <!-- subtle noise texture -->
+  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 xl:grid-cols-4" data-aos="fade-up"">
+    <!-- Brand + quote -->
+    <div>
+      <p class="text-xs tracking-widest text-orange-400 font-bold select-none">CYBERKIDZSEC&nbsp;VAULT</p>
+      <p class="mt-1 text-orangeLuxe-light">© {{ current_year }} CyberKidzSec</p>
+      <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[14rem]">“Ghosted&nbsp;but&nbsp;not&nbsp;gone.”</p>
+    </div>
+
+    <!-- Quick nav -->
+    <nav class="flex flex-col gap-2 text-orange-300">
+      {% set nav = [("Home","/"),("About","/about"),("Reports","/reports"),("Playground","/playground"),("Analytics","/charts")] %}
+      {% for label, href in nav %}
+        <a href="{{ href }}" class="w-max hover:text-orangeLuxe transition">{{ label }}</a>
+      {% endfor %}
+    </nav>
+
+    <!-- Latest CVE count (placeholder updated by JS) -->
+    <div class="space-y-3">
+      <p class="text-xs tracking-wide text-orange-300/80">🛰️ Latest CVEs (24h)</p>
+      <p id="cveCounter" class="text-3xl font-black text-orangeLuxe-light animate-pulse">--</p>
+      <a href="/charts" class="btn-secondary w-max text-xs">View analytics →</a>
+    </div>
+
+    <!-- Newsletter & socials -->
+    <div class="space-y-4">
+      <!-- newsletter form -->
+      <form action="https://buttondown.email/api/emails/embed-subscribe/cyberkidzsec" method="post" target="popupwindow"
+            class="flex gap-2"
+            onsubmit="window.open('https://buttondown.email/cyberkidzsec','popupwindow')">
+        <input required type="email" name="email" placeholder="your@domain.tld"
+               class="flex-1 rounded-md bg-zinc-800 border border-orangeLuxe/40 px-3 py-2 text-xs placeholder-orangeLuxe-light focus:outline-none" />
+        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orangeLuxe-dark" aria-label="Subscribe to newsletter">Join</button>
+      </form>
+
+      <!-- social icons -->
+      <div class="flex gap-4 text-xl text-orange-400">
+        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub repository" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn profile" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug"></i></a>
+      </div>
+
+      <!-- theme toggle -->
+      <button id="themeToggler" class="mt-3 inline-flex items-center gap-2 text-xs btn-secondary">
+        <i class="fa-solid fa-circle-half-stroke"></i> Toggle&nbsp;Theme
+      </button>
+    </div>
+  </div>
+
+  <!-- Vault XP Bar -->
+  <div class="micro-xp-bar mt-8 max-w-6xl mx-auto">
+    <div class="vault-xp-bar w-full h-2 rounded bg-gray-800 overflow-hidden">
+      <div class="vault-xp-fill h-full" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(90deg, red, orange, yellow, green, cyan);"></div>
+    </div>
+    <p class="vault-xp-text text-center text-xs text-orange-400 mt-2">Vault Stability: {{ vault_xp_percentage }}%</p>
+  </div>
+</footer>
+
+<script type="module">
+/* Footer enhancements --------------------------------------------------- */
+const html = document.documentElement;
+const btn = document.getElementById("themeToggler");
+if (btn) {
+  btn.addEventListener("click", () => {
+    const next = html.dataset.theme === "dark" ? "light" : "dark";
+    html.dataset.theme = next;
+    localStorage.setItem("theme", next);
+  });
+}
+
+/* pull latest CVE count */
+fetch("/api/cve").then(r => r.json()).then(list => {
+  document.getElementById("cveCounter").textContent = list.length.toString();
+}).catch(() => {});
+</script>
+
+<!-- templates/playground.html -->
+{% extends "base.html" %}
+
+{% block title %}Playground · CyberKidzSec{% endblock %}
+
+{% block content %}
+<section class="ckz-hero" data-aos="fade-up"">
+  <div class="max-w-3xl mx-auto flex flex-col items-center justify-center gap-6 text-center">
+
+    <h1 class="ckz-hero-title">
+      Hacker Playground 👾
+    </h1>
+
+    <p class="text-orange-300 font-mono text-sm">
+      "Only the curious survive the Vault."
+    </p>
+
+    <div class="mt-10 space-y-6">
+      <p class="text-orange-200">
+        🧠 <strong>Challenge #1:</strong> Find the hidden flag in the source code of this page.
+      </p>
+      <p class="text-orange-400 text-xs">
+        Tip: Right-click → View Page Source 👀
+      </p>
+    </div>
+
+    <a href="/" class="btn-secondary mt-8">
+      Return to Base 🛰️
+    </a>
+
+  </div>
+
+  <!-- 👻 Hidden Flag inside a comment -->
+  <!-- flag{ghost-vault-activated} -->
+
+</section>
+{% endblock %}
+
+<!-- report_grid.html -->
+<div id="dynamicGrid"></div>
+
+<script>
+/* expects window.FILTERED_REPORTS injected; fall back to empty */
+const LIST = window.FILTERED_REPORTS || [];
+
+const wrap = document.getElementById("dynamicGrid");
+if(!LIST.length){
+  wrap.innerHTML = `<p class="text-center text-orangeLuxe-light/60 py-12 text-sm font-mono">
+                     ⚠️ No reports match your filters. Try adjusting tags or sort order.
+                    </p>`;
+} else {
+  wrap.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8";
+  LIST.forEach(r=>{
+    const a=document.createElement("a");
+    a.href=`/reports/${r.slug}`;
+    a.className=`group card transition-transform`;
+    a.innerHTML=`
+      <h3 class="text-lg font-bold mb-1 text-orangeLuxe-light group-hover:text-orangeLuxe transition">${r.title}</h3>
+      <time datetime="${r.date}" class="block text-xs font-mono text-orangeLuxe-light/60 mb-2">
+        ${new Date(r.date).toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"})}
+      </time>
+      <p class="text-sm text-orangeLuxe-light/80 font-mono mb-4 line-clamp-3">${r.summary||"No summary provided."}</p>
+      <div class="flex justify-between items-center">
+        <span class="text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+          CVSS ${typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A"}
+        </span>
+        <span class="text-xs uppercase font-semibold tracking-wider text-orangeLuxe-light/70">${r.reportType}</span>
+      </div>`;
+    wrap.appendChild(a);
+  });
+}
+function cvssColor(v){
+  if(typeof v!=="number") return "text-zinc-400";
+  return v>=9?"text-red-400":v>=7?"text-orange-400":v>=4?"text-yellow-400":"text-emerald-400";
+}
+</script>
+
+<header class="ckz-header">
+  <div class="flex items-center">
+    <a href="/" class="text-lg font-bold text-orange-400 hover:text-orange-300 transition">
+      CyberKidzSec ⚡ Vault
+    </a>
+  </div>
+  <div class="ckz-ghost-badge">LIVE</div>
+</header>
+
+<!-- breadcrumbs.html -->
+<nav
+  id="breadcrumbs"
+  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light"
+  aria-label="Breadcrumb"
+  itemScope
+  itemType="https://schema.org/BreadcrumbList"
+></nav>
+
+<script>
+/**
+ * Call this once you know the crumbs.
+ * items = [{label:'Home', href:'/'}, {label:'Reports', href:'/reports'}, …]
+ */
+function renderBreadcrumbs(items) {
+  const nav = document.getElementById("breadcrumbs");
+  const ol  = document.createElement("ol");
+  ol.className = "inline-flex items-center gap-1 whitespace-nowrap";
+
+  items.forEach((item, idx) => {
+    const last = idx === items.length - 1;
+    const li   = document.createElement("li");
+    li.className = "inline-flex items-center";
+    li.setAttribute("itemProp", "itemListElement");
+    li.setAttribute("itemScope", "");
+    li.setAttribute("itemType", "https://schema.org/ListItem");
+
+    if (item.href && !last) {
+      const a = document.createElement("a");
+      a.href  = item.href;
+      a.textContent = item.label;
+      a.className   = "hover:text-white";
+      a.setAttribute("itemProp", "item");
+      const span = document.createElement("span");
+      span.textContent = item.label;
+      span.setAttribute("itemProp", "name");
+      a.appendChild(span);
+      li.appendChild(a);
+    } else {
+      const span = document.createElement("span");
+      span.textContent = item.label;
+      span.setAttribute("itemProp", "name");
+      span.setAttribute("aria-current", "page");
+      li.appendChild(span);
+    }
+
+    const meta = document.createElement("meta");
+    meta.setAttribute("itemProp", "position");
+    meta.content = idx + 1;
+    li.appendChild(meta);
+
+    ol.appendChild(li);
+
+    if (!last) {
+      const slash = document.createElement("span");
+      slash.className = "px-1 text-orangeLuxe/50";
+      slash.textContent = "/";
+      ol.appendChild(slash);
+    }
+  });
+
+  nav.innerHTML = "";          // clear any previous markup
+  nav.appendChild(ol);
+}
+
+/* Example usage (delete in production) */
+renderBreadcrumbs([
+  { label: "Home", href: "/" },
+  { label: "Reports", href: "/reports" },
+  { label: "Proxy Vuln" }              // current page (no href)
+]);
+</script>
+
+<!-- hacker_playground.html -->
+<section
+  id="playground"
+  class="relative mx-auto my-24 max-w-3xl px-6 py-12 rounded-2xl border border-orangeLuxe/40
+         bg-gradient-to-b from-cyberNight to-black shadow-xl"
+>
+  <h2 class="text-center text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2">
+    🧠 Hacker Playground
+  </h2>
+  <p class="text-center text-orangeLuxe-light/80 mb-10 font-mono text-sm">
+    Think you’ve got what it takes? Hack the vault – only the curious survive.
+  </p>
+
+  <!-- Hack button -->
+  <button id="hackBtn"
+    class="block mx-auto mb-10 bg-orangeLuxe hover:bg-orangeLuxe-dark text-black px-8 py-3
+           rounded-full font-semibold shadow-lg focus:ring-2 focus:ring-orange-400 transition">
+    Hack Me 🔓
+  </button>
+  <pre id="flagOut" class="hidden mt-4 text-center text-emerald-400 font-mono text-sm break-all"></pre>
+
+  <!-- Terminal scan -->
+  <div class="mt-16">
+    <h3 class="text-orangeLuxe text-lg font-semibold mb-3">🛰️ Terminal-Scan™ Interface</h3>
+    <form id="scanForm" class="flex flex-col sm:flex-row gap-3">
+      <input id="scanInput" type="text"
+        placeholder="> scan /api/dev/console …"
+        class="flex-1 font-mono bg-black/80 rounded border border-orangeLuxe/40
+               px-4 py-2 text-orange-100 placeholder:text-orange-400 focus:ring-2 focus:ring-orangeLuxe" />
+      <button
+        class="bg-orangeLuxe-dark text-white px-5 py-2 rounded font-medium shadow
+               hover:bg-orangeLuxe-light transition">
+        Run Scan 🛰️
+      </button>
+    </form>
+    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light"></pre>
+  </div>
+
+  <!-- ghost flag -->
+  <div id="ghostFlag" class="hidden mt-16 text-center bg-cyberNight.glow/70 rounded-xl p-6
+        border border-orangeLuxe/40 shadow-lg animate-pulse-glow"></div>
+
+  <!-- returnee easter-egg -->
+  <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60">
+    welcome back, operative
+  </p>
+</section>
+
+<script>
+/* tiny helpers --------------------------------------------------- */
+const $ = (sel) => document.querySelector(sel);
+const makeFlag = (txt) => `FLAG{${btoa(txt)}}`;
+const COLORS = ["text-red-400","text-emerald-400","text-sky-400","text-yellow-400"];
+
+/* state ---------------------------------------------------------- */
+let ghostUnlocked = false, keyBuf = [];
+
+/* return visitor? */
+if(localStorage.getItem("firstHack")) $("#returnEgg").style.display="block";
+
+/* Hack button ---------------------------------------------------- */
+$("#hackBtn").onclick = () => {
+  const secret = Math.random().toString(16).slice(2,10);
+  $("#flagOut").textContent = makeFlag(`you_triggered_${secret}`);
+  $("#flagOut").classList.remove("hidden");
+  localStorage.setItem("firstHack", "1");
+};
+
+/* Terminal scan -------------------------------------------------- */
+$("#scanForm").onsubmit = (e) => {
+  e.preventDefault();
+  const q = $("#scanInput").value.trim().toLowerCase();
+  $("#scanInput").value = "";
+  if(!q) return;
+  const good = ["admin","dev","console","vault"].some(k => q.includes(k));
+  $("#scanOut").textContent = good
+    ? "🟢 Access Granted – " + makeFlag("access_terminal_scan_success")
+    : "🔴 Access Denied – Endpoint not in routing table.";
+  $("#scanOut").classList.remove("hidden");
+};
+
+/* Keyboard shortcuts -------------------------------------------- */
+window.addEventListener("keydown", (e)=>{
+  if(e.key==="/"){ e.preventDefault(); $("#scanInput").focus(); }
+  if(e.key==="Escape"){ $("#scanInput").blur(); $("#scanOut").classList.add("hidden"); }
+  keyBuf = [...keyBuf.slice(-1), e.key.toLowerCase()];
+  if(keyBuf.join("")==="gh" && !ghostUnlocked){
+    ghostUnlocked = true;
+    $("#ghostFlag").innerHTML = `👻 <strong>Ghost Sequence Unlocked!</strong><br>${makeFlag("you_found_the_ghost_sequence")}`;
+    $("#ghostFlag").classList.remove("hidden");
+  }
+});
+</script>
+
+<!-- quick_view_modal.html -->
+<template id="quickViewTpl">
+  <div class="fixed inset-0 z-[9999] overflow-y-auto" role="dialog" aria-modal="true">
+    <!-- overlay -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-md" data-close></div>
+
+    <!-- centering helper -->
+    <div class="min-h-screen px-4 text-center">
+      <span class="inline-block h-screen align-middle" aria-hidden="true"></span>
+      <!-- panel -->
+      <div
+        class="inline-block w-full max-w-2xl my-8 p-6 sm:p-8 align-middle
+               text-orange-100 rounded-2xl border border-orangeLuxe/25
+               bg-gradient-to-br from-cyberNight via-cyberNight.glow to-cyberNight.phantom
+               shadow-[0_0_35px_rgba(249,115,22,0.3)]"
+      >
+        <h2 id="qvTitle" class="text-2xl sm:text-3xl font-extrabold text-orangeLuxe-light mb-4">
+          Report Preview
+        </h2>
+
+        <div id="qvBody" class="space-y-5 text-sm leading-relaxed font-mono"></div>
+
+        <!-- footer -->
+        <div class="mt-8 flex justify-between items-center">
+          <a id="qvFullLink" href="#" class="text-sm font-semibold text-orangeLuxe hover:underline">
+            View Full Report →
+          </a>
+
+          <div class="flex gap-3">
+            <button id="qvPrev" class="navBtn hidden" aria-label="Previous report">← Prev</button>
+            <button id="qvNext" class="navBtn hidden" aria-label="Next report">Next →</button>
+            <button data-close
+              class="rounded-md bg-orangeLuxe px-4 py-2 text-sm font-semibold text-black hover:bg-orangeLuxe.dark">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.navBtn{ @apply rounded-md border border-orangeLuxe/60 px-3 py-1.5 text-sm text-orangeLuxe-light hover:bg-orangeLuxe/10;}
+</style>
+
+<script>
+/* expose global QuickView.open(report, {next,prev}) */
+(function () {
+  const tpl = document.getElementById("quickViewTpl");
+  let current;
+
+  function fill(report, opts = {}) {
+    document.getElementById("qvTitle").textContent = report.title || "Report Preview";
+    document.getElementById("qvBody").innerHTML =
+      `<p>${report.description || "⚠️ No description available."}</p>` +
+      `<div class="grid sm:grid-cols-2 gap-4 mt-4" data-aos="fade-up"">
+        ${report.date ? `<div><b>📅 Date:</b> ${new Date(report.date).toLocaleDateString()}</div>` : ""}
+        ${report.severity ? `<div><b>🧪 Severity:</b> ${report.severity}</div>` : ""}
+        <div><b>📈 CVSS:</b> ${typeof report.cvss === "number" ? report.cvss.toFixed(1) : "N/A"}</div>
+        ${
+          report.tags?.length
+            ? `<div class="col-span-2 flex flex-wrap gap-2"><b class="mr-2">🏷️ Tags:</b>${report.tags
+                .map((t) => `<span class="bg-orangeLuxe/10 px-2 py-0.5 rounded">${t}</span>`)
+                .join("")}</div>`
+            : ""
+        }
+       </div>`;
+    document.getElementById("qvFullLink").href = `/reports/${report.slug || ""}`;
+
+    /* next / prev buttons */
+    ["Prev", "Next"].forEach((dir) => {
+      const btn = document.getElementById("qv" + dir);
+      const fn  = opts[dir.toLowerCase()];
+      btn.classList.toggle("hidden", !fn);
+      btn.onclick = fn;
+    });
+  }
+
+  function open(report, opts = {}) {
+    if (current) close();                 // ensure single instance
+    current = tpl.content.firstElementChild.cloneNode(true);
+    document.body.appendChild(current);
+    fill(report, opts);
+
+    current.addEventListener("click", (e) => {
+      if (e.target.closest("[data-close]")) close();
+    });
+
+    /* keyboard nav */
+    current.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") opts.next?.();
+      if (e.key === "ArrowLeft")  opts.prev?.();
+    });
+    current.querySelector("[data-close]").focus();
+  }
+
+  function close() {
+    current?.remove();
+    current = null;
+  }
+
+  window.QuickView = { open, close };
+})();
+</script>
+
+{# components/scroll_progress.html #}
+<div id="scrollProgress"
+     class="fixed inset-x-0 top-0 h-1 bg-orangeLuxe origin-left scale-x-0">
+</div>
+<!-- tag.html -->
+<span class="tagCmp"></span>
+
+<style>
+.tagCmp{
+  @apply inline-block px-3 py-1 text-[11px] font-bold font-mono uppercase rounded-full border
+         cursor-pointer select-none transition-all;
+}
+.tagCmp[data-active="false"]{
+  @apply border-orangeLuxe/30 text-orangeLuxe-light/80 bg-orangeLuxe/10 hover:bg-orangeLuxe/20;
+}
+.tagCmp[data-active="true"]{
+  @apply border-orangeLuxe bg-orangeLuxe text-black shadow-[0_0_8px_#f97316];
+}
+</style>
+
+<script>
+/* Reusable helper: makeTag(label, active, cb) */
+function makeTag(label, active=false, onClick=null){
+  const span=document.createElement("span");
+  span.className="tagCmp"; span.textContent="#"+label;
+  span.dataset.active=active; span.role="button"; span.tabIndex=0;
+  span.onclick=()=>onClick?.(label);
+  span.onkeydown=e=>{ if(e.key==="Enter") span.click(); };
+  return span;
+}
+</script>
+
+<!-- command_palette.html -->
+<div id="cmdBackdrop" class="fixed inset-0 z-[9999] hidden backdrop-blur bg-black/60 p-4"></div>
+
+<template id="cmdTpl">
+  <div class="mx-auto w-full max-w-2xl bg-night border border-orangeLuxe/40 rounded-xl shadow-xl overflow-hidden">
+    <input id="cmdSearch" type="search" placeholder="Search vault reports…"
+           class="w-full px-5 py-4 text-lg font-mono bg-black text-orangeLuxe-light
+                  border-b border-orangeLuxe/30 placeholder:text-orangeLuxe-light/60 outline-none" />
+    <div id="cmdResults" class="max-h-80 overflow-y-auto"></div>
+  </div>
+</template>
+
+<style>
+.cmdRow{ @apply px-5 py-3 cursor-pointer transition-all; }
+.cmdRow[data-active="false"]{ @apply bg-black text-orangeLuxe-light/80; }
+.cmdRow[data-active="true"]{  @apply bg-orangeLuxe text-black scale-[1.01]; }
+.cmdSection{ @apply px-5 py-2 text-xs font-bold tracking-widest text-orangeLuxe-light/70 uppercase; }
+</style>
+
+<script type="module">
+/* lightweight fuzzy search with Fuse.js (14 kB gz) */
+import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.esm.js";
+
+/* ---- data injection ---- */
+const REPORTS = window.ALL_REPORTS || [];   // [{slug,title,tags,cvss,type}, …]
+
+/* build Fuse index */
+const fuse = new Fuse(REPORTS, { keys:["title","tags"], threshold:.4 });
+
+/* ---- open palette on ⌘/Ctrl + K ---- */
+const backdrop = document.getElementById("cmdBackdrop");
+const tpl      = document.getElementById("cmdTpl").content;
+
+let search, list, rows = [];
+window.addEventListener("keydown", (e)=>{
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==="k"){
+    e.preventDefault(); open(); }
+});
+
+function open(){
+  backdrop.classList.remove("hidden");
+  backdrop.innerHTML = ""; backdrop.appendChild(tpl.cloneNode(true));
+  search = document.getElementById("cmdSearch");
+  list   = document.getElementById("cmdResults");
+  search.focus();
+  render(REPORTS.slice(0,10));
+  backdrop.onclick = e=>{ if(e.target===backdrop) close(); };
+  window.addEventListener("keydown", nav);
+}
+function close(){
+  backdrop.classList.add("hidden"); backdrop.innerHTML="";
+  window.removeEventListener("keydown", nav);
+}
+
+/* ---- render helpers ---- */
+function render(arr){
+  list.innerHTML=""; rows=[];
+  if(!arr.length){ list.innerHTML='<div class="cmdSection">Nothing found</div>'; return;}
+  list.insertAdjacentHTML("beforeend",'<div class="cmdSection">Reports</div>');
+  arr.forEach((r,i)=>{
+    const div=document.createElement("div");
+    div.className="cmdRow"; div.dataset.active="false"; div.tabIndex=-1;
+    div.innerHTML=`<div class="text-sm font-semibold">${r.title}</div>
+                   <div class="text-xs opacity-70">CVSS ${r.cvss} • ${r.type}</div>`;
+    div.onclick=()=>location.href=`/reports/${r.slug}`;
+    list.appendChild(div); rows.push(div);
+  });
+  setActive(0);
+}
+function setActive(i){
+  rows.forEach((r,idx)=>r.dataset.active=(idx===i));
+  rows[i]?.scrollIntoView({block:"nearest"});
+}
+
+/* ---- keyboard nav inside palette ---- */
+let idx=0;
+function nav(e){
+  if(e.key==="Escape") return close();
+  if(e.key==="ArrowDown"){ idx=Math.min(idx+1,rows.length-1); setActive(idx); }
+  if(e.key==="ArrowUp"){   idx=Math.max(idx-1,0);             setActive(idx); }
+  if(e.key==="Enter"){ rows[idx]?.click(); }
+}
+
+/* ---- live search ---- */
+document.addEventListener("input",e=>{
+  if(e.target!==search) return;
+  idx=0;
+  const q=search.value.trim();
+  const res = q?fuse.search(q).map(x=>x.item).slice(0,15):REPORTS.slice(0,10);
+  render(res);
+});
+</script>
+
+{# templates/components/header.html #}
+<header id="siteHeader"
+        class="site-header will-change-transform backdrop-blur-md bg-zinc-900/70 dark:bg-zinc-800/70 border-b border-orangeLuxe/30 fixed inset-x-0 top-0 z-50 transition-transform"
+        role="banner"
+        aria-label="Main Site Header">
+
+  <div class="container mx-auto flex items-center justify-between px-6 py-4">
+    <!-- Brand Logo & Title -->
+    <a href="/"
+       class="inline-flex items-center gap-2 text-2xl font-extrabold tracking-wider text-orangeLuxe hover:text-orangeLuxe-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe transition"
+       aria-label="CYBERKIDZSEC Vault Home">
+      <svg class="h-8 w-8 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2L2 7v7c0 5 4 9 10 9s10-4 10-9V7l-10-5z" />
+      </svg>
+      <span class="hidden sm:inline">CYBERKIDZSEC VAULT</span>
+    </a>
+
+    <!-- Desktop Controls -->
+    <div class="hidden lg:flex items-center space-x-5">
+      <span class="vault-status relative px-3 py-1 text-xs font-mono text-orange-300 rounded-full bg-zinc-800/40">
+        📡 Vault: LIVE
+      </span>
+      <kbd class="px-2 py-1 font-mono text-xs rounded border border-zinc-700 bg-zinc-800 text-orange-300">
+        ⌘ K
+      </kbd>
+      <button id="themeToggle"
+              class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition focus-visible:ring-2 focus-visible:ring-orangeLuxe"
+              aria-label="Toggle dark mode"
+              data-action="toggle-dark-mode">
+        <span class="sr-only">Toggle dark mode</span>🌙
+      </button>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="menuToggle"
+            class="lg:hidden p-2 rounded-md text-2xl hover:bg-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orangeLuxe transition"
+            aria-controls="mobileNav"
+            aria-expanded="false"
+            aria-label="Open mobile navigation">
+      ☰
+    </button>
+
+    <!-- Ghost Mode Badge -->
+    <div id="ghostBadge"
+         class="hidden animate-pulse font-semibold text-emeraldLuxe text-xs ml-4"
+         role="status"
+         aria-live="polite">
+      <span class="inline-flex items-center gap-1">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 0C4.477 0 0 4.478 0 10s4.477 10 10 10 10-4.478 10-10S15.523 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
+        </svg>
+        Ghost Mode
+      </span>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Panel -->
+  <nav id="mobileNav"
+       class="mobile-nav fixed inset-x-0 top-full transform -translate-y-full bg-black/90 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-all duration-300 lg:hidden z-40"
+       role="navigation"
+       aria-label="Mobile Navigation">
+    <ul class="flex flex-col gap-4">
+      <li><a href="/"        class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Home</a></li>
+      <li><a href="/reports" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Vault</a></li>
+      <li><a href="/playground" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Playground</a></li>
+      <li><a href="/academy" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Ghost Academy</a></li>
+      <li><a href="/dashboard" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Dashboard</a></li>
+    </ul>
+  </nav>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress"
+       class="h-1 bg-orangeLuxe origin-left scale-x-0 transition-transform duration-150 ease-linear"
+       aria-hidden="true">
+  </div>
+</header>
+
+<script>
+(() => {
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+
+  let isOpen = false;
+
+  menuToggle.addEventListener('click', () => {
+    isOpen = !isOpen;
+    mobileNav.classList.toggle('-translate-y-full', !isOpen);
+    mobileNav.classList.toggle('translate-y-0', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen.toString());
+  });
+})();
+</script>
+
+<!-- related_reports.html -->
+<section id="relatedWrap" class="my-16" data-aos="fade-up""></section>
+
+<script>
+/* expects window.ALL_REPORTS (array) & window.CURRENT_REPORT (slug) injected server-side */
+const RPTS = window.ALL_REPORTS || [];   // [{slug,title,date,tags,cvss}, …]
+const CUR  = RPTS.find(r => r.slug === window.CURRENT_REPORT);
+
+function getRelated(src, max=3){
+  const set = new Set(src.tags);
+  return RPTS.filter(r=>r.slug!==src.slug)
+             .map(r=>({r,score:r.tags.reduce((s,t)=>s+(set.has(t)?1:0),0)}))
+             .filter(x=>x.score)
+             .sort((a,b)=>b.score-a.score)
+             .slice(0,max)
+             .map(x=>x.r);
+}
+const rel = CUR ? getRelated(CUR,3) : [];
+
+const wrap = document.getElementById("relatedWrap");
+wrap.innerHTML = `
+  <h2 class="text-2xl font-extrabold mb-6 tracking-tight text-orangeLuxe-light">🔗 Related Reports</h2>
+  ${
+    !rel.length
+      ? `<p class="text-sm text-orangeLuxe-light/70">No directly-related reports found… yet 👀</p>`
+      : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up"">
+          ${rel.map(r=>`
+            <a href="/reports/${r.slug}"
+               class="block group rounded-xl bg-night-glow/60 border border-orangeLuxe/20 p-5
+                      hover:shadow-lg hover:border-orangeLuxe/40 transition">
+              <h3 class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2">${r.title}</h3>
+              <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3">${new Date(r.date).toLocaleDateString()}</p>
+              <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+                CVSS ${(typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A")}
+              </span>
+            </a>`).join("")}
+        </div>`
+  }`;
+
+function cvssColor(v){
+  if(typeof v!=="number") return "text-zinc-400";
+  return v>=9 ? "text-red-400"
+       : v>=7 ? "text-orange-400"
+       : v>=4 ? "text-yellow-400"
+       :        "text-emerald-400";
+}
+</script>
+
+<!-- section_skeleton.html  (drop anywhere you need a loading placeholder) -->
+<div class="skeleton" data-lines="4"></div> <!-- change lines via data-lines -->
+
+<style>
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+.skeleton{
+  --lines:3;
+  display:grid; gap:.75rem; padding:2.5rem 0;
+}
+.skeleton[data-lines]{ --lines:attr(data-lines); }
+.skeleton::before{ content:""; }
+.skeleton > *,
+.skeleton::before{
+  height:1rem; border-radius:.25rem;
+  background:linear-gradient(90deg,#27272a 0%,#3f3f46 50%,#27272a 100%);
+  background-size:200% 100%; animation:shimmer 1.6s infinite;
+}
+.skeleton::before{ display:none; }          /* hide placeholder grid trick */
+</style>
+
+<script>
+/* auto-generate children based on data-lines */
+document.querySelectorAll(".skeleton").forEach(box=>{
+  const n = +box.dataset.lines || 3;
+  while(box.children.length < n){ box.appendChild(document.createElement("div")); }
+});
+</script>
+
+<!-- tags_section.html -->
+<section class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection">
+  <h2 class="text-3xl sm:text-4xl font-extrabold text-center mb-8
+             bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+    🏷️ Browse by Tag
+  </h2>
+
+  <!-- horizontal rail -->
+  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory"></div>
+
+  <!-- results grid -->
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up""></div>
+</section>
+
+<script>
+const REPORTS = window.ALL_REPORTS || []; // inject via Flask/Jinja
+
+/* build tag list */
+const TAGS = Array.from(new Set(REPORTS.flatMap(r => r.tags))).sort();
+let activeTag = null;
+
+const rail  = document.getElementById("tagRail");
+const grid  = document.getElementById("tagGrid");
+
+/* fancy fade edges */
+["left","right"].forEach(side=>{
+  const div=document.createElement("div");
+  div.className=`pointer-events-none absolute inset-y-0 ${side}-0 w-6 bg-gradient-to-${side==="left"?"r":"l"} from-cyberNight to-transparent`;
+  rail.appendChild(div);
+});
+
+/* render rail */
+function drawRail(){
+  rail.querySelectorAll("[role=button]").forEach(n=>n.remove());
+  rail.prepend(makeTag("All", activeTag===null, ()=>{activeTag=null; render();}));
+  TAGS.forEach(t=>rail.appendChild(makeTag(t,activeTag===t,()=>{activeTag=t; render();}).setAttribute("data-tag",t)));
+}
+
+/* render grid */
+function render(){
+  drawRail();
+  grid.innerHTML="";
+  const list = activeTag ? REPORTS.filter(r=>r.tags.includes(activeTag)) : REPORTS;
+  list.forEach(r=>{
+    const el=document.createElement("article");
+    el.className="p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNight.glow via-cyberNight to-zinc-900/80 shadow-lg";
+    el.innerHTML=`<h3 class="font-bold text-orangeLuxe-light">${r.title}</h3>
+      <p class="mt-1 text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary||"No summary."}</p>`;
+    grid.appendChild(el);
+  });
+  /* auto-scroll tag into view */
+  if(activeTag){
+    const el=rail.querySelector(`[data-tag="${activeTag}"]`);
+    el?.scrollIntoView({inline:"center",behavior:"smooth"});
+  }
+}
+render();
+</script>
+
+<div class="grid md:grid-cols-2 gap-6 mt-12" data-aos="fade-up"">
+  <!-- Ghost Academy -->
+  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition">
+    <h3 class="text-sm font-bold uppercase text-orange-300 mb-2">🎓 Join Ghost Academy</h3>
+    <p class="text-xs text-orange-400 mb-4">Sharpen your skills. Earn XP. Become a legend.</p>
+    <a href="/academy" class="btn-primary text-xs w-full">Enter Academy</a>
+  </div>
+
+  <!-- Operative Dashboard -->
+  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition">
+    <h3 class="text-sm font-bold uppercase text-orange-300 mb-2">🛰️ Operative Stats</h3>
+    <p class="text-xs text-orange-400 mb-4">Track your Vault Journey + XP growth.</p>
+    <a href="/dashboard" class="btn-primary text-xs w-full">Launch Dashboard</a>
+  </div>
+</div>
+
+{# Header partial – drop in templates/components/ #}
+<header id="siteHeader"
+        class="fixed inset-x-0 top-0 z-50 flex items-center justify-between
+               px-6 py-3 backdrop-blur-md bg-zinc-900/70 dark:bg-zinc-800/70
+               border-b border-orange-500 transition-transform duration-300">
+
+  <!-- brand -->
+  <a href="/" class="text-xl font-black tracking-widest text-orange-400
+                     focus:outline-none focus-visible:ring-2
+                     focus-visible:ring-orange-200">
+    CYBERKIDZSEC&nbsp;VAULT
+  </a>
+
+  <!-- desktop widgets -->
+  <div class="hidden lg:flex items-center gap-4">
+    <span class="text-sm font-mono text-orange-300">📡 Vault: LIVE</span>
+    <kbd class="px-2 py-1 font-mono text-xs bg-zinc-700 rounded">⌘ K</kbd>
+    <button id="themeToggle"
+            class="text-2xl rounded focus:outline-none
+                   focus-visible:ring-2 focus-visible:ring-orange-200"
+            aria-label="Toggle theme">
+      🌙
+    </button>
+  </div>
+
+  <!-- hamburger -->
+  <button id="menuToggle"
+          class="lg:hidden text-2xl p-1 rounded hover:bg-orange-500/20
+                 focus:outline-none focus-visible:ring-2
+                 focus-visible:ring-orange-200"
+          aria-label="Toggle navigation"
+          aria-expanded="false">
+    ☰
+  </button>
+
+  <!-- ghost badge -->
+  <div id="ghostBadge"
+       class="absolute right-6 text-xs font-semibold text-emerald-400
+              animate-pulse hidden">
+    👻 Ghost Mode
+  </div>
+</header>
+
+<!-- mobile nav -->
+<nav id="mobileNav"
+     class="lg:hidden fixed inset-x-0 top-14 bg-black/90 backdrop-blur p-6
+            z-40 hidden">
+  <ul class="space-y-4 text-lg font-semibold">
+    <li><a href="/"        class="hover:text-orange-400">Home</a></li>
+    <li><a href="/reports" class="hover:text-orange-400">Vault</a></li>
+    <li><a href="/playground" class="hover:text-orange-400">Playground</a></li>
+  </ul>
+</nav>
+
+<!-- scroll progress bar -->
+<div id="scrollProgress"
+     class="fixed inset-x-0 top-0 h-1 bg-orange-500 origin-left scale-x-0">
+</div>
+
+<!-- report_card_grid.html -->
+<section class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap">
+  <h2 class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange">
+    🧠 Featured Vulnerability Reports
+  </h2>
+
+  <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" data-aos="fade-up""></div>
+</section>
+
+<script>
+/* expects window.ALL_REPORTS from server — use first 9 as sample */
+const CARDS = (window.ALL_REPORTS || []).slice(0, 9);
+
+const grid = document.getElementById("cardGrid");
+CARDS.forEach(r => grid.appendChild(makeCard(r)));
+
+function makeCard(r){
+  const el = document.createElement("a");
+  el.href  = `/reports/${r.slug}`;
+  el.className = `group rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br
+                  from-cyberNight.glow via-cyberNight to-zinc-900/90
+                  border border-orangeLuxe/25 hover:border-orangeLuxe/60
+                  transition-transform hover:scale-[1.02] focus:ring-2
+                  focus:ring-orangeLuxe-light`;
+  el.innerHTML = `
+    <figure class="relative h-44 w-full overflow-hidden">
+      <img src="https://cdn.example.com/thumbnails/${r.slug}.jpg" alt=""
+           class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" loading="lazy">
+    </figure>
+    <div class="p-6 space-y-3">
+      <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">${r.title}</h3>
+      <p class="text-xs text-orangeLuxe-light/60 font-mono">${new Date(r.date).toLocaleDateString()} • ${r.reportType}</p>
+      <div class="flex flex-wrap gap-2">${r.tags.slice(0,3).map(t=>`<span class="badge">${t}</span>`).join("")}
+        ${r.tags.length>3?`<span class="badge">+${r.tags.length-3}</span>`:""}
+      </div>
+      <span class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+        CVSS ${typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A"}
+      </span>
+    </div>`;
+  return el;
+}
+function cvssColor(v){
+  if(typeof v!=="number") return "text-zinc-400";
+  return v>=9?"text-red-400":v>=7?"text-orange-400":v>=4?"text-yellow-400":"text-emerald-400";
+}
+</script>
+
+<!-- templates/components/cta_cards.html -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up"">
+  <!-- 🎓 Ghost Academy Invite -->
+  <div
+    role="region" aria-labelledby="academy-title"
+    class="cta-card group"
+  >
+    <h2 id="academy-title"
+        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-orangeLuxe transition-colors duration-300">
+      🎓 Join Ghost Academy
+    </h2>
+    <p class="text-xs text-orange-400 mb-4">
+      Sharpen your skills. Earn XP. Become a legend.
+    </p>
+    <a href="/academy"
+       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-glow-orange transition-shadow duration-300">
+      Enter Academy
+    </a>
+  </div>
+
+  <!-- 🛰️ Operative Dashboard Invite -->
+  <div
+    role="region" aria-labelledby="dashboard-title"
+    class="cta-card group"
+  >
+    <h2 id="dashboard-title"
+        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-emeraldLuxe transition-colors duration-300">
+      🛰️ View Operative Stats
+    </h2>
+    <p class="text-xs text-orange-400 mb-4">
+      Track your vault journey + XP history.
+    </p>
+    <a href="/dashboard"
+       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-hud-panel transition-shadow duration-300">
+      Launch Dashboard
+    </a>
+  </div>
+</div>
+
+<section id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"">
+  {% set banners = [
+    ('images/og/main_vault_banner.png', "Main Vault Banner"),
+    ('images/og/hacker_underground_banner.png', "Hacker Underground Banner"),
+    ('images/og/zero_day_archive_banner.png', "Zero-Day Archive Banner")
+  ] %}
+  {% for src, alt in banners %}
+  <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-orange-400/30 transition-all duration-300 group">
+    <img src="{{ url_for('static', filename=src) }}" alt="{{ alt }}" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
+  </div>
+  {% endfor %}
+</section>
+
+<!-- empty_state.html -->
+<div id="emptyWrap" class="flex flex-col items-center justify-center py-24 text-center">
+  <div class="w-24 h-24 mb-4 opacity-60 animate-spin-slow">🙀</div>
+  <p class="text-lg text-orangeLuxe-light font-mono mb-4">
+    Nothing to see here—try adjusting your filters.
+  </p>
+  <!-- toggle the reset button by adding data-reset -->
+  <button id="resetBtn" class="hidden px-4 py-1.5 rounded-full bg-orangeLuxe text-black font-semibold hover:bg-orangeLuxe.dark">
+    Reset filters
+  </button>
+</div>
+
+<style>
+@keyframes spin-slow{ to{ transform:rotate(360deg);} }
+.animate-spin-slow{ animation:spin-slow 6s linear infinite; }
+</style>
+
+<script>
+/* Call emptyState.show(msg, resetHandler) anywhere */
+window.emptyState = {
+  show(msg="Nothing to see here—try adjusting your filters.", onReset){
+    document.querySelector("#emptyWrap p").textContent = msg;
+    const btn=document.getElementById("resetBtn");
+    if(onReset){ btn.classList.remove("hidden"); btn.onclick=onReset; }
+    else       { btn.classList.add("hidden");     btn.onclick=null;   }
+    document.getElementById("emptyWrap").style.display="flex";
+  },
+  hide(){ document.getElementById("emptyWrap").style.display="none"; }
+};
+</script>
+
+<section id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"">
+
+  <!-- Ambient FX -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.04),transparent)]"></div>
+    <div class="absolute inset-0 bg-[url('/scanlines.svg')] bg-repeat animate-shimmer opacity-5"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 max-w-3xl mx-auto">
+    <p id="heroTyper" class="text-xs sm:text-sm uppercase font-mono tracking-widest text-orangeLuxe-light animate-typewriter mb-6"></p>
+
+    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 bg-clip-text text-transparent drop-shadow-xl animate-glow mb-4">
+      💀 CYBERKIDZSEC REPORT VAULT
+    </h1>
+
+    <p class="text-lg sm:text-xl font-mono tracking-tight text-orangeLuxe-light mb-8">
+      “Ghosted but not gone.” — <span class="text-orangeLuxe font-semibold">cyberkidzsec</span>
+    </p>
+
+    <!-- Operative -->
+    <div class="space-y-2 mb-8">
+      <p class="text-xs sm:text-sm animate-glow">🛰️ Operative Title: <strong>{{ operative_title }}</strong></p>
+      <div class="w-full bg-zinc-800 rounded-full overflow-hidden h-3">
+        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}%"></div>
+      </div>
+      <p class="text-xs text-center text-orangeLuxe-light mt-2">
+        Level: {{ operative_level }} — Vault Stability: {{ vault_xp_percentage }}%
+      </p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap justify-center gap-4">
+      <button id="searchBtn" class="btn btn--outline px-6 py-2 rounded-full font-semibold hover:shadow-md transition">
+        ⌘ Cmd + K — Search
+      </button>
+      <a href="#playground" class="btn btn--primary px-6 py-2 rounded-full font-semibold hover:shadow-md transition">
+        🎮 Hack the Vault
+      </a>
+    </div>
+
+    <!-- Ghost Mode Easter Egg -->
+    <span id="ghostMsg" class="hidden mt-8 block animate-pulse font-mono text-xs text-emerald-400">
+      👻 Ghost Mode Activated
+    </span>
+  </div>
+
+</section>
+
+<!-- Typewriter Typing Script -->
+<script defer>
+(() => {
+  const lines = [
+    "🔐 Zero-Day Archive Updating…",
+    "💀 Ghosted but not gone.",
+    "🛰️ Live Vault Feed: Stable.",
+    "⚡ Stay Dangerous, Operative."
+  ];
+  let idx = 0;
+  const typer = document.getElementById('heroTyper');
+  
+  function typeNext() {
+    typer.textContent = lines[idx];
+    typer.classList.remove('animate-typewriter');
+    void typer.offsetWidth;
+    typer.classList.add('animate-typewriter');
+    idx = (idx + 1) % lines.length;
+  }
+
+  typeNext();
+  setInterval(typeNext, 3000);
+})();
+</script>
+
+<!-- report_card.html : a reusable tilt card factory -->
+<script>
+function makeTiltCard(r){
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <a href="/reports/${r.slug}" class="group block rounded-2xl focus:ring-2 focus:ring-orangeLuxe">
+      <article class="tilt overflow-hidden rounded-2xl bg-gradient-to-br" data-aos="fade-up"
+                      from-cyberNight.glow via-cyberNight to-zinc-900/90
+                      border border-orangeLuxe/20 shadow-lg transition-shadow
+                      group-hover:shadow-orangeLuxe/40">
+        <div class="relative h-40 overflow-hidden">
+          <img src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}" alt="${r.title}"
+               class="object-cover w-full h-full group-hover:scale-[1.08]
+                      transition-transform duration-500 ease-out" loading="lazy">
+        </div>
+        <div class="p-6 space-y-3">
+          <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors">
+            ${r.title}
+          </h3>
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">${r.summary||"No summary provided."}</p>
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+            ${r.tags.slice(0,4).map(t=>`<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`).join("")}
+          </div>
+        </div>
+      </article>
+    </a>`;
+
+  return li;
+}
+
+/* simple tilt interaction */
+document.addEventListener("pointermove",e=>{
+  const card = e.target.closest(".tilt");
+  if(!card) return;
+  const rect = card.getBoundingClientRect();
+  const x = (e.clientX-rect.left)/rect.width - .5;
+  const y = (e.clientY-rect.top)/rect.height- .5;
+  card.style.transform = `perspective(700px) rotateX(${y*-12}deg) rotateY(${x*12}deg)`;
+});
+document.addEventListener("pointerleave",e=>{
+  const card = e.target.closest(".tilt");
+  if(card) card.style.transform="";
+});
+</script>
+
+<!-- sidebar_filters.html -->
+<aside class="space-y-2 bg-cyberNight.phantom p-4 rounded-lg shadow-inner" id="sideFilter">
+  <input type="search" id="tagSearch" placeholder="Search tags…"
+    class="w-full mb-3 px-3 py-1.5 rounded bg-zinc-800 text-sm text-orangeLuxe-light">
+
+  <div id="tagList" class="max-h-60 overflow-y-auto pr-1 space-y-1"></div>
+</aside>
+
+<script>
+const TAGS_ALL = TAGS;      // reuse list from previous section
+const out      = document.getElementById("tagList");
+const search   = document.getElementById("tagSearch");
+let selected   = null;
+
+function draw(list){
+  out.innerHTML="";
+  list.forEach(t=>{
+    const btn=document.createElement("button");
+    btn.textContent="#"+t;
+    btn.className=`w-full text-left px-3 py-1 rounded font-mono ${
+      t===selected ? "bg-orangeLuxe text-black" : "text-orangeLuxe-light hover:bg-cyberNight.glow"}`;
+    btn.onclick=()=>{ selected=t; draw(filter(search.value)); out.dispatchEvent(new CustomEvent("tagselect",{detail:{tag:t}})); };
+    out.appendChild(btn);
+  });
+}
+function filter(q){ return TAGS_ALL.filter(t=>t.toLowerCase().includes(q.toLowerCase())); }
+
+search.oninput=()=>draw(filter(search.value));
+draw(TAGS_ALL);
+</script>
+
+<!-- vault_popup.html -->
+<template id="vaultTpl">
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur p-4" role="dialog" aria-modal="true">
+    <!-- focus trap sentinels -->
+    <span tabindex="0"></span>
+
+    <div class="relative w-full max-w-xl rounded-2xl overflow-hidden border border-orangeLuxe/30
+                bg-gradient-to-br from-cyberNight via-cyberNight.glow to-cyberNight.phantom
+                text-orangeLuxe-light shadow-[0_0_40px_rgba(249,115,22,0.25)] font-mono"
+         id="vaultPanel">
+      <!-- VHS noise mask -->
+      <div class="absolute inset-0 pointer-events-none vhsMask"></div>
+
+      <div class="relative z-10 p-6 space-y-4" id="vaultBody"></div>
+    </div>
+
+    <span tabindex="0"></span>
+  </div>
+</template>
+
+<audio id="vaultSfx" src="/sfx/vhs-glitch.mp3" preload="auto"></audio>
+
+<style>
+@keyframes pulse-glow { 0%,100%{opacity:.05} 50%{opacity:.15} }
+.vhsMask{
+  mask-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNDAwJyBoZWlnaHQ9JzQwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZGVmcz48ZmlsdGVyIGlkPSJhbSI+PGZlVHVyYnVsZW5jZSBiYXNlRnJlcXVlbmN5PSIuNiIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzQwMCcgc3R5bGU9ImZpbHRlcjpwcm9ncmFtKGVudW1lcmF0ZVNnaWxpYW5XYXZlcyk7Ii8+PC9zdmc+");
+  -webkit-mask-image:inherit; animation:pulse-glow 4s linear infinite;
+}
+.glitch-text{ position:relative; }
+.glitch-text::after{
+  content:attr(data-text);
+  position:absolute; inset:0;
+  clip-path:inset(0 0 50% 0); left:1px; text-shadow:-1px 0 red;
+  opacity:.7; animation:glitch 2s infinite steps(100);
+}
+@keyframes glitch{ to{clip-path:inset(50% 0 0 0);} }
+</style>
+
+<script>
+/* =========  Vault Popup  ========= */
+(() => {
+  let visible = false, mode = "standard", timerId, panel, focusables;
+
+  /* -- render inner body -- */
+  function fillBody() {
+    panel.innerHTML = `
+      <header class="text-xs uppercase tracking-wide text-orangeLuxe-light animate-pulse">
+        ${mode === "admin"
+          ? "🔓 Developer Terminal · backtrace detected"
+          : "📼 Playback Archive · Breach logs 07/14/2024"}
+      </header>
+
+      <div class="space-y-1 text-sm">
+        <p class="glitch-text" data-text="> decrypting VAULT_RECORDS.LOG …">&gt; decrypting VAULT_RECORDS.LOG …</p>
+        <p class="glitch-text" data-text="> asset_vault.tsx | rootkit.backtrace">&gt; asset_vault.tsx | rootkit.backtrace</p>
+        <p class="glitch-text" data-text="> 🧠 MEMORY BLEED layer-3 – status: critical">
+          &gt; 🧠 MEMORY BLEED layer-3 – status: <span class="text-red-400">critical</span>
+        </p>
+        <p class="glitch-text text-emerald-400" data-text="> Access Level: X">
+          &gt; Access Level: <strong>${mode === "admin" ? "🧠 Developer" : "Vault View"}</strong>
+        </p>
+      </div>
+
+      <button id="vaultClose"
+        class="mt-6 inline-flex items-center gap-2 bg-orangeLuxe text-black px-6 py-2 rounded-full font-semibold
+               hover:bg-orangeLuxe.dark hover:scale-105 transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe-light">
+        Continue Monitoring
+      </button>
+    `;
+  }
+
+  /* -- open popup -- */
+  function open() {
+    if (visible) return;
+    visible = true;
+    const tpl = document.getElementById("vaultTpl").content.cloneNode(true);
+    document.body.appendChild(tpl);
+    panel = document.getElementById("vaultPanel");
+    fillBody();
+
+    document.getElementById("vaultClose").onclick = close;
+
+    /* focus trap */
+    focusables = panel.querySelectorAll("[tabindex],button");
+    focusables[0]?.focus();
+    document.addEventListener("keydown", keyHandler);
+
+    /* SFX */
+    const sfx = document.getElementById("vaultSfx");
+    if (!new URLSearchParams(location.search).has("mute")) {
+      sfx.currentTime = 0; sfx.play().catch(()=>null);
+    }
+
+    timerId = setTimeout(close, 15_000);
+  }
+
+  /* -- close -- */
+  function close() {
+    if (!visible) return;
+    visible = false; clearTimeout(timerId);
+    document.querySelectorAll("[role=dialog]").forEach(el => el.remove());
+    document.removeEventListener("keydown", keyHandler);
+  }
+
+  /* -- global shortcuts & internal nav -- */
+  function keyHandler(e){
+    const k = e.key.toLowerCase();
+    if (k === "escape") return close();
+    if (k === "arrowright" || k === "arrowleft"){
+      mode = mode === "standard" ? "admin" : "standard";
+      fillBody();
+    }
+  }
+  window.addEventListener("keydown", e=>{
+    const k = e.key.toLowerCase();
+    if      (e.shiftKey && k === "v")               { mode="standard"; open(); }
+    else if ((e.ctrlKey||e.metaKey)&&e.altKey&&k==="v"){ mode="admin"; open(); }
+  });
+})();
+</script>
+
+<!-- featured_reports.html -->
+<section
+  id="featured"
+  aria-labelledby="featured-heading"
+  class="relative isolate py-20 px-4 sm:px-6 lg:px-8
+         bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e]
+         border border-orangeLuxe/25 shadow-2xl overflow-hidden
+         rounded-[2.5rem] ring-1 ring-orangeLuxe/10 backdrop-blur"
+>
+  <!-- aurora flare -->
+  <div
+    aria-hidden
+    id="featuredAurora"
+    class="absolute -inset-20 bg-[conic-gradient(at_top_right,_#ff7f00_0%,_#ff00e0_45%,_transparent_70%)]
+           opacity-10 will-change-transform"
+  ></div>
+
+  <!-- header -->
+  <header class="relative z-10 text-center space-y-4 mb-12">
+    <h2
+      id="featured-heading"
+      class="text-4xl sm:text-5xl font-extrabold tracking-tight
+             bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500
+             bg-clip-text text-transparent animate-glow"
+    >
+      🧠 Featured Vault Reports
+    </h2>
+    <p class="mx-auto max-w-2xl text-sm sm:text-base font-mono text-orangeLuxe-light/80">
+      Hand-picked exploits, rare bugs &amp; security artforms — straight from the archive.
+    </p>
+  </header>
+
+  <!-- grid -->
+  <ul
+    id="featuredGrid"
+    class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+    role="list"
+  ></ul>
+</section>
+
+<script>
+/* --------------------------------------------------
+   👉 dynamic build (replace with Jinja if you like)
+-------------------------------------------------- */
+const reports = window.FEATURED_REPORTS || []; // inject via Jinja/Flask if desired
+// Example mock (delete in prod):
+if (!reports.length)
+  for (let i = 0; i < 9; i++)
+    reports.push({
+      slug: "demo-" + i,
+      title: "Demo Report " + (i + 1),
+      summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      tags: ["xss", "race", "web3", "pwn"].slice(0, Math.random() * 4),
+    });
+
+/* ----------  tilt + shimmer util  ---------- */
+function makeCard(r) {
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <a href="/reports/${r.slug}"
+       class="group block focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-2xl">
+      <article class="tiltCard h-full rounded-2xl bg-gradient-to-br" data-aos="fade-up"
+                      from-cyberNight.glow via-cyberNight to-zinc-900/90
+                      border border-orangeLuxe/20 shadow-lg transition-shadow
+                      group-hover:shadow-orangeLuxe/40">
+        <div class="relative h-40 overflow-hidden rounded-t-2xl">
+          <img
+            src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}"
+            alt=""
+            class="object-cover w-full h-full group-hover:scale-[1.08]
+                   transition-transform duration-500 ease-out shimmer"
+            loading="lazy"
+          />
+        </div>
+        <div class="p-6 space-y-3">
+          <h3 class="text-lg font-semibold text-orangeLuxe-light
+                     group-hover:text-orangeLuxe transition-colors">
+            ${r.title}
+          </h3>
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
+            ${r.summary}
+          </p>
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+            ${r.tags
+              .slice(0, 4)
+              .map(
+                (t) =>
+                  `<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`
+              )
+              .join("")}
+          </div>
+        </div>
+      </article>
+    </a>`;
+  return li;
+}
+
+const grid = document.getElementById("featuredGrid");
+reports.forEach((r) => grid.appendChild(makeCard(r)));
+
+/* ---------- tiny tilt interaction ---------- */
+grid.addEventListener("pointermove", (e) => {
+  const card = e.target.closest(".tiltCard");
+  if (!card) return;
+  const rect = card.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  card.style.transform = `perspective(700px) rotateX(${y * -12}deg) rotateY(${x * 12}deg)`;
+});
+grid.addEventListener("pointerleave", (e) => {
+  const card = e.target.closest(".tiltCard");
+  if (card) card.style.transform = "";
+});
+
+/* ---------- slow aurora spin ---------- */
+(function spin() {
+  const el = document.getElementById("featuredAurora");
+  let deg = 0;
+  setInterval(() => {
+    deg = (deg + 0.2) % 360;
+    el.style.transform = `rotate(${deg}deg)`;
+  }, 30);
+})();
+</script>
+
+<!-- optional shimmer CSS -->
+<style>
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
+</style>
+
+<!-- HUD Toolbar -->
+<div id="hudToolbar" class="fixed bottom-6 right-6 z-[9998] w-[280px] rounded-2xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom backdrop-blur-md shadow-glow opacity-0 translate-y-6 transition-all duration-500 cursor-grab">
+  
+  <!-- Header -->
+  <button id="hudToggle" class="flex w-full items-center justify-between px-4 py-2 text-xs font-mono text-orangeLuxe-light hover:bg-orangeLuxe/10 rounded-t-2xl" aria-expanded="true">
+    <span class="tracking-widest">💻 HUD STATUS</span>
+    <i id="hudChevron" class="fas fa-chevron-down"></i>
+  </button>
+
+  <!-- Body -->
+  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-2">
+    <div class="flex justify-between">👻 Ghost Mode: <span id="hudGhost" class="font-semibold text-gray-500">OFF</span></div>
+    <div class="flex justify-between">🔓 Admin: <span id="hudAdmin" class="font-semibold text-gray-500">OFF</span></div>
+    <div class="flex justify-between">🛰️ Vault Feed: <span class="font-semibold text-sky-400">STABLE</span></div>
+
+    <hr class="border-orangeLuxe/20 my-3">
+
+    <p id="hudLog" class="min-h-[1.3rem] animate-pulse">⏳ Initializing HUD…</p>
+
+    <!-- XP Status Bar -->
+    <div class="mt-4">
+      <div class="w-full h-2 bg-zinc-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}%"></div>
+      </div>
+      <p class="text-[10px] text-center mt-1 text-orangeLuxe">{{ vault_xp_percentage }}% Vault Stability</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(() => {
+  const toolbar = document.getElementById("hudToolbar");
+  const toggleBtn = document.getElementById("hudToggle");
+  const body = document.getElementById("hudBody");
+  const chevron = document.getElementById("hudChevron");
+  const ghostEl = document.getElementById("hudGhost");
+  const adminEl = document.getElementById("hudAdmin");
+  const logEl = document.getElementById("hudLog");
+
+  // Smooth Fade In
+  requestAnimationFrame(() => toolbar.classList.remove("opacity-0", "translate-y-6"));
+
+  // Toggle Collapse
+  toggleBtn.addEventListener("click", () => {
+    body.classList.toggle("hidden");
+    chevron.classList.toggle("fa-chevron-down");
+    chevron.classList.toggle("fa-chevron-up");
+    toggleBtn.setAttribute("aria-expanded", !body.classList.contains("hidden"));
+  });
+
+  // Simulated Boot
+  setTimeout(() => (logEl.textContent = "🧠 Running memory check…"), 1000);
+  setTimeout(() => {
+    logEl.textContent = "✅ Vault Systems Verified";
+    const ghost = localStorage.getItem("ghost") === "1";
+    const admin = localStorage.getItem("admin") === "1";
+    ghostEl.textContent = ghost ? "ACTIVE" : "OFF";
+    adminEl.textContent = admin ? "ENGAGED" : "OFF";
+    ghostEl.className = "font-semibold " + (ghost ? "text-emerald-400" : "text-gray-500");
+    adminEl.className = "font-semibold " + (admin ? "text-emerald-400" : "text-gray-500");
+  }, 2500);
+  setTimeout(() => (logEl.textContent = "🛰️ Vault Feed Stabilized"), 4000);
+
+  // Draggable HUD
+  let dx = 0, dy = 0, sx = 0, sy = 0, dragging = false;
+  toggleBtn.addEventListener("mousedown", (e) => {
+    dragging = true;
+    sx = e.clientX;
+    sy = e.clientY;
+    toolbar.style.cursor = "grabbing";
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    const x = dx + (e.clientX - sx);
+    const y = dy + (e.clientY - sy);
+    toolbar.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  window.addEventListener("mouseup", (e) => {
+    if (!dragging) return;
+    dragging = false;
+    dx += e.clientX - sx;
+    dy += e.clientY - sy;
+    toolbar.style.cursor = "grab";
+  });
+})();
+</script>
+
+<!-- report_chart.html -->
+<div class="w-full max-w-md mx-auto">
+  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4">Report Distribution</h3>
+  <canvas id="reportChart" height="280"></canvas>
+</div>
+
+<!-- Chart.js from a tiny ES module CDN (18 kB gz) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script type="module">
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+
+/* inject your data array server-side */
+const DATA = window.CHART_DATA || [
+  {name:"XSS", value:12},
+  {name:"Injection", value:8},
+  {name:"Misconfig", value:6},
+  {name:"Race", value:4},
+];
+
+document.getElementById("chartTitle").textContent = "Report Distribution";
+
+new Chart(document.getElementById("reportChart"), {
+  type: "doughnut",
+  data: {
+    labels: DATA.map(d=>d.name),
+    datasets:[{
+      data: DATA.map(d=>d.value),
+      backgroundColor:["#f97316","#ec4899","#8b5cf6","#22d3ee"],
+      borderWidth:1,
+    }],
+  },
+  options:{
+    plugins:{
+      legend:{ display:true, position:"bottom", labels:{color:"#f8fafc",font:{family:"monospace"}} },
+      tooltip:{ backgroundColor:"#020617" }
+    },
+  },
+});
+</script>
+
+{# templates/components/sidebar.html #}
+{% include "components/filter_bar.html" %}
+{% include "components/sidebar_filters.html" %}
+
+<!-- 🎓 Ghost Academy Invite -->
+<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition">
+  <h2 class="text-sm font-bold uppercase text-orange-300 mb-2">🎓 Join Ghost Academy</h2>
+  <p class="text-xs text-orange-400 mb-4">Sharpen your skills. Earn XP. Become a legend.</p>
+  <a href="/academy" class="btn-primary text-xs w-full">Enter Academy</a>
+</div>
+
+<!-- 🛰️ Operative Dashboard Invite -->
+<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition">
+  <h2 class="text-sm font-bold uppercase text-orange-300 mb-2">🛰️ View Operative Stats</h2>
+  <p class="text-xs text-orange-400 mb-4">Track your vault journey + XP history.</p>
+  <a href="/dashboard" class="btn-primary text-xs w-full">Launch Dashboard</a>
+</div>
+
+<!-- filter_bar.html -->
+<div
+  id="filterBar"
+  class="sticky top-0 z-50 border-b border-orangeLuxe/30
+         bg-gradient-to-r from-cyberNight via-cyberNight.glow to-cyberNight.phantom
+         backdrop-blur-md shadow-lg px-4 py-3 rounded-md mb-10"
+></div>
+
+<script>
+/* ---- config – tweak freely ---- */
+const FILTERS      = ["All","XSS","Injection","Misconfiguration","Race Condition"];
+const SORT_OPTIONS = ["cvss","severity","date"];
+
+/* ---- state ---- */
+let filter   = "All";
+let sortBy   = "date";
+let theme    = localStorage.getItem("theme") || "dark";
+const elBar  = document.getElementById("filterBar");
+
+/* ---- render ---- */
+function renderBar() {
+  elBar.innerHTML = `
+    <div class="relative flex items-center w-full overflow-x-auto no-scrollbar
+                gap-4 md:gap-6 scroll-smooth pr-6" id="filterScroll">
+      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports">
+        ${FILTERS.map(
+          (f) => `<button
+                    class="${btnClasses(f === filter)}"
+                    data-filter="${f}"
+                    role="radio" aria-checked="${f === filter}" title="Filter by ${f}">
+                    ${f}
+                  </button>`
+        ).join("")}
+      </div>
+
+      <div class="ml-auto flex items-center gap-4 min-w-fit">
+        <div class="flex items-center gap-2">
+          <label class="text-xs uppercase tracking-widest text-orange-300 font-mono">Sort</label>
+          <select id="sortSel"
+            class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6
+                   text-sm rounded text-orange-200 focus:outline-none"
+            title="Sort reports">
+            ${SORT_OPTIONS.map(
+              (o) => `<option value="${o}" ${o === sortBy ? "selected" : ""}>${o}</option>`
+            ).join("")}
+          </select>
+          <span class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-orange-400">▼</span>
+        </div>
+
+        <button id="themeToggle"
+          class="text-2xl px-2 py-1 rounded-full border border-orangeLuxe
+                 hover:bg-orangeLuxe/20 focus:ring-2 focus:ring-orange-400 transition"
+          aria-label="Toggle dark/light">
+          ${theme === "dark" ? "☀️" : "🌙"}
+        </button>
+      </div>
+    </div>`;
+}
+function btnClasses(active) {
+  return [
+    "px-4 py-1.5 text-sm font-mono rounded-full transition-all border whitespace-nowrap",
+    active
+      ? "bg-orangeLuxe text-white border-orangeLuxe shadow-md"
+      : "bg-zinc-900 text-orange-300 border-orangeLuxe hover:bg-orange-600 hover:text-white",
+  ].join(" ");
+}
+renderBar();
+
+/* ---- event handlers ---- */
+elBar.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-filter]");
+  if (btn) {
+    filter = btn.dataset.filter;
+    announce(`Filtered by ${filter}`);
+    renderBar();
+    elBar.dispatchEvent(new CustomEvent("filterchange", {detail:{filter}}));
+  }
+});
+elBar.addEventListener("change", (e) => {
+  if (e.target.id === "sortSel") {
+    sortBy = e.target.value;
+    announce(`Sorted by ${sortBy}`);
+    elBar.dispatchEvent(new CustomEvent("sortchange",{detail:{sortBy}}));
+  }
+});
+document.getElementById("filterBar").addEventListener("click", (e) => {
+  if (e.target.id === "themeToggle") {
+    theme = theme === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    renderBar();
+  }
+});
+
+/* polite SR-only announcements */
+let live = document.createElement("div");
+live.className = "sr-only";
+live.setAttribute("aria-live", "polite");
+document.body.appendChild(live);
+function announce(msg) {
+  live.textContent = msg;
+}
+</script>
+
+<!-- pagination.html -->
+<nav
+  id="pagination"
+  data-page="1"      <!-- current page -->
+  data-total="10"    <!-- total pages -->
+  class="flex justify-center items-center gap-2 mt-10"
+  aria-label="Pagination"
+></nav>
+
+<script>
+/**
+ * Emit a “pagechange” CustomEvent whenever the user picks a new page.
+ *   nav.addEventListener("pagechange", e => console.log(e.detail.page))
+ */
+(function () {
+  const nav   = document.getElementById("pagination");
+  let page    = +nav.dataset.page  || 1;
+  const total = +nav.dataset.total || 1;
+
+  const delta = 1; // how many siblings to show around the current page
+
+  function makeBtn(txt, aria, disabled, active, click) {
+    const btn = document.createElement("button");
+    btn.textContent = txt;
+    btn.type        = "button";
+    btn.ariaLabel   = aria;
+    if (active) btn.setAttribute("aria-current", "page");
+    btn.className = [
+      "px-3.5 py-1.5 rounded-full font-mono text-sm transition-all",
+      disabled
+        ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+        : active
+          ? "bg-orangeLuxe text-black shadow-[0_0_10px_#f97316]"
+          : "bg-cyberNight.phantom text-orangeLuxe hover:bg-cyberNight.glow"
+    ].join(" ");
+    if (!disabled) btn.onclick = click;
+    return btn;
+  }
+
+  function render() {
+    nav.innerHTML = "";
+
+    /* ← Prev */
+    nav.appendChild(
+      makeBtn("← Prev", "Previous page", page === 1, false, () => set(page - 1))
+    );
+
+    /* middle range */
+    const elems = [];
+    for (let i = 1; i <= total; i++) {
+      if (i === 1 || i === total || Math.abs(i - page) <= delta) elems.push(i);
+      else if (elems[elems.length - 1] !== "...") elems.push("...");
+    }
+
+    elems.forEach((i) => {
+      if (i === "...") {
+        const span = document.createElement("span");
+        span.textContent = "…";
+        span.className   = "px-2 text-orangeLuxe-light/60";
+        nav.appendChild(span);
+      } else {
+        nav.appendChild(
+          makeBtn(i, `Page ${i}`, false, i === page, () => set(i))
+        );
+      }
+    });
+
+    /* Next → */
+    nav.appendChild(
+      makeBtn("Next →", "Next page", page === total, false, () => set(page + 1))
+    );
+  }
+
+  function set(p) {
+    if (p < 1 || p > total || p === page) return;
+    page = p;
+    nav.dataset.page = p;
+    render();
+    nav.dispatchEvent(new CustomEvent("pagechange", { detail: { page: p } }));
+  }
+
+  /* initial paint */
+  render();
+})();
+</script>
+
+<!-- report_charts_grid.html -->
+<section class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"">
+
+  <!-- Bar card -->
+  <article class="chart-card border-orangeLuxe" data-aos="fade-up"">
+    <header class="chart-header">
+      <h3 id="barTitle">CVSS Avg per Year</h3>
+      <select id="barView" class="bg-night-glow text-white text-sm px-3 py-1 rounded border border-night">
+        <option value="yearly">Yearly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </header>
+    <canvas id="barCanvas" height="320"></canvas>
+  </article>
+
+  <!-- Radar card -->
+  <article class="chart-card border-pink-500" data-aos="fade-up"">
+    <header class="chart-header justify-center"><h3>Severity Distribution</h3></header>
+    <canvas id="radarCanvas" height="320"></canvas>
+  </article>
+</section>
+
+<!-- Chart.js -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script type="module">
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+
+/* ------- helpers you used in React: recreate in JS here -------- */
+function getCvssByYear(){
+  /* mocked sample */
+  return [{year:2022,cvss:7.4},{year:2023,cvss:8.1},{year:2024,cvss:7.9}];
+}
+function getMonthlyReportTrends(){
+  return [{month:"Jan",count:4},{month:"Feb",count:8},{month:"Mar",count:5},
+          {month:"Apr",count:7},{month:"May",count:6},{month:"Jun",count:3}];
+}
+function getSeverityRadarData(){
+  return [
+    {severity:"Critical",count:6},
+    {severity:"High",count:12},
+    {severity:"Medium",count:15},
+    {severity:"Low",count:9},
+  ];
+}
+/* --------------------------------------------------------------- */
+const ctxBar   = document.getElementById("barCanvas");
+const ctxRadar = document.getElementById("radarCanvas");
+const sel      = document.getElementById("barView");
+const barTitle = document.getElementById("barTitle");
+
+let barChart, radarChart;
+buildBar("yearly"); buildRadar();
+
+sel.onchange = ()=>buildBar(sel.value);
+
+function buildBar(view){
+  const data = view==="yearly" ? getCvssByYear() : getMonthlyReportTrends();
+  const labels = data.map(d=>view==="yearly"?d.year:d.month);
+  const key    = view==="yearly"?"cvss":"count";
+  const label  = view==="yearly"?"Average":"Reports";
+  barTitle.textContent = view==="yearly"?"CVSS Avg per Year":"Reports per Month";
+  barChart?.destroy();
+  barChart = new Chart(ctxBar,{
+    type:"bar",
+    data:{
+      labels,
+      datasets:[{label, data:data.map(d=>d[key]), backgroundColor:"#f97316", borderRadius:4}],
+    },
+    options:{plugins:{legend:{display:false}}, scales:{x:{ticks:{color:"#f8fafc"}},y:{ticks:{color:"#f8fafc"}}}}
+  });
+}
+
+function buildRadar(){
+  const data = getSeverityRadarData();
+  radarChart = new Chart(ctxRadar,{
+    type:"radar",
+    data:{
+      labels:data.map(d=>d.severity),
+      datasets:[{label:"Vulns", data:data.map(d=>d.count), backgroundColor:"rgba(236,72,153,.5)", borderColor:"#ec4899"}],
+    },
+    options:{scales:{r:{angleLines:{color:"#555"},grid:{color:"#555"},pointLabels:{color:"#f8fafc"}}}}
+  });
+}
+</script>
+
+{# templates/components/skip_nav.html #}
+<a href="#main"
+   class="skip-link"
+   aria-label="Skip to main content">
+  ⏭️ Skip&nbsp;to&nbsp;main&nbsp;content
+</a>
+

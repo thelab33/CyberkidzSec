@@ -1,0 +1,49 @@
+{# templates/macros.html #}
+
+{% macro card(title, url, footer="", image=None, alt="") %}
+<article class="card flex flex-col h-full overflow-hidden" role="article" tabindex="0">
+  {% if image %}
+    <img src="{{ image }}" alt="{{ alt }}" class="w-full h-40 object-cover"/>
+  {% endif %}
+  <div class="p-6 flex-1 flex flex-col justify-between">
+    <h3 class="text-xl font-bold mb-2">
+      <a href="{{ url }}" class="hover:underline focus:outline-none focus:ring-2 focus:ring-orangeLuxe">{{ title }}</a>
+    </h3>
+    {% if footer %}
+      <footer class="mt-4 text-sm text-zinc-400 dark:text-zinc-500">{{ footer }}</footer>
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro data_table(headers, rows, caption="") %}
+<div class="overflow-x-auto bg-white dark:bg-black rounded-lg shadow">
+  <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
+    {% if caption %}
+      <caption class="sr-only">{{ caption }}</caption>
+    {% endif %}
+    <thead class="bg-gray-50 dark:bg-zinc-800">
+      <tr>
+        {% for h in headers %}
+          <th scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
+            {{ h }}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody class="bg-white dark:bg-black divide-y divide-gray-200 dark:divide-zinc-700">
+      {% for row in rows %}
+        <tr>
+          {% for cell in row %}
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-zinc-100">
+              {{ cell }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}
+

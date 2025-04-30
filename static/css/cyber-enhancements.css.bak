@@ -1,0 +1,296 @@
+/* ───────────────────────────────────────────────────────────────
+   ⚙️ BASE TOKENS & VARIABLES — CyberKidzSec Global Design System
+────────────────────────────────────────────────────────────────── */
+:root {
+  --warp-overlay-opacity: 0.8;
+  --warp-overlay-scale: 1.05;
+  --warp-overlay-color: rgb(30 30 50 / 40%);
+  --spark-color: #0fc;
+  --hud-bg: rgb(15 17 26 / 70%);
+  --hud-shadow: 0 0 40px rgb(249 115 22 / 25%);
+  --transition-fast: 0.2s ease-out;
+  --transition-med: 0.3s ease-in-out;
+  --orange: #f97316;
+  --emerald: #34d399;
+
+  /* Luxe Layer Tokens */
+  --orange-luxe-light: #fbbf77;
+}
+
+/* 🌘 Dark Theme Overrides */
+html.dark {
+  --orange: #ff7f00;
+  --orange-luxe-light: #ffc78c;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🔸 UTILITIES — Custom Tokens
+────────────────────────────────────────────────────────────────── */
+.text-orange-luxe-light {
+  color: var(--orange-luxe-light);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🌌 WARP OVERLAY & STARFIELD BACKGROUND
+────────────────────────────────────────────────────────────────── */
+#warp-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at center, var(--warp-overlay-color), transparent 70%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'><circle cx='1' cy='1' r='1' fill='white' fill-opacity='0.2'/></svg>")
+    repeat;
+  animation: warpBlur 30s linear infinite;
+}
+
+@keyframes warpBlur {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: var(--warp-overlay-opacity);
+  }
+
+  50% {
+    transform: scale(1.1) translate(-10px, -10px);
+    opacity: calc(var(--warp-overlay-opacity) + 0.1);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🎬 AOS (Animate on Scroll) Entry Effects
+────────────────────────────────────────────────────────────────── */
+[data-aos] {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity var(--transition-med), transform var(--transition-med);
+}
+
+.aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🧲 Hover Interactions (Hover-Lift)
+────────────────────────────────────────────────────────────────── */
+.hover-lift {
+  will-change: transform, box-shadow;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hover-lift:hover {
+  transform: scale(1.03) rotate(0.5deg);
+  box-shadow: 0 10px 25px rgb(249 115 22 / 15%);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🎨 Animated Gradient Border (Loop)
+────────────────────────────────────────────────────────────────── */
+@keyframes gradientBorder {
+  0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+  50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
+  100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+}
+
+.animated-border {
+  border: 4px solid transparent;
+  border-image-slice: 1;
+  animation: gradientBorder 6s ease infinite;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🧭 Scroll Progress Indicator
+────────────────────────────────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-fast);
+  z-index: 9999;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   📎 Sticky Header: Shrink on Scroll
+────────────────────────────────────────────────────────────────── */
+#siteHeader {
+  backdrop-filter: saturate(180%) blur(12px);
+  transition: padding var(--transition-med), box-shadow var(--transition-med);
+}
+
+#siteHeader.scrolled {
+  padding-block: 0.25rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 50%);
+}
+
+/* 📌 Nav Underline FX */
+nav a.relative {
+  position: relative;
+}
+
+nav a.relative::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--orange);
+  transition: width var(--transition-fast);
+}
+
+nav a.relative:hover::after,
+nav a.relative[data-active]::after {
+  width: 100%;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   📱 Responsive: Mobile Search & UX
+────────────────────────────────────────────────────────────────── */
+@media (width <= 768px) {
+  #globalSearch { font-size: 0.875rem; }
+  kbd { display: none; }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🚀 Hero Warp Animation (Stabilization FX)
+────────────────────────────────────────────────────────────────── */
+#heroStarfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+@keyframes warpStabilize {
+  0%   { opacity: 0; transform: scale(1.05) skewY(1deg); filter: brightness(0.7) blur(2px); }
+  50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg); filter: brightness(1.2) blur(0); }
+  100% { opacity: 1; transform: scale(1) skewY(0); filter: brightness(1) blur(0); }
+}
+
+.animate-warpStabilize {
+  animation: warpStabilize 1.8s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   ✨ Ghost Sparks FX
+────────────────────────────────────────────────────────────────── */
+.ghost-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--spark-color);
+  opacity: 0.8;
+  animation: floatSpark 3s linear infinite;
+}
+
+@keyframes floatSpark {
+  0%   { transform: translateY(0) scale(1);   opacity: 0.9; }
+  50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
+  100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   🌒 Dark Theme — Overlay Tuning
+────────────────────────────────────────────────────────────────── */
+html.dark #hero {
+  backdrop-filter: blur(4px) brightness(0.8);
+  transition: backdrop-filter var(--transition-med);
+}
+
+html.dark #warpOverlay {
+  animation: warpBlur 30s linear infinite, gradientBorder 6s ease infinite;
+  border-image-source: linear-gradient(45deg, #22d3ee, #ec4899);
+  border-image-slice: 1;
+  z-index: 10;
+}
+
+html.dark .scroll-progress {
+  background: rgb(255 127 0 / 60%);
+  backdrop-filter: blur(2px);
+}
+
+.text-orange-luxe-light {
+  color: var(--orange-luxe-light);
+}
+
+.hero-skull {
+    /* override transparent parent text */
+    -webkit-text-fill-color: var(--skull-glow) !important;
+    color: var(--skull-glow) !important;
+
+  color: #fff; /* fallback */
+  text-shadow:
+    0 0 6px var(--skull-glow),
+    0 0 12px var(--skull-stroke);
+}
+
+.hero-skull {
+    /* override transparent parent text */
+    -webkit-text-fill-color: var(--skull-glow) !important;
+    color: var(--skull-glow) !important;
+
+  display: inline-block;
+  font-size: 1em;
+  margin-right: 0.5ch;
+
+  /* 🌀 Gradient fill */
+  background: radial-gradient(circle at 50% 50%, var(--skull-glow), transparent 70%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 💡 Neon Glow */
+  text-shadow:
+    0 0 6px var(--skull-glow),
+    0 0 12px var(--skull-stroke),
+    0 0 20px var(--skull-glow);
+
+  /* 🖤 Fallback for environments without bg-clip */
+  color: var(--skull-glow);
+}
+
+html.dark .hero-skull {
+    /* override transparent parent text */
+    -webkit-text-fill-color: var(--skull-glow) !important;
+    color: var(--skull-glow) !important;
+
+  text-shadow:
+    0 0 8px var(--skull-glow),
+    0 0 16px var(--skull-stroke),
+    0 0 24px var(--skull-glow);
+}
+
+.hero-skull {
+    /* override transparent parent text */
+    -webkit-text-fill-color: var(--skull-glow) !important;
+    color: var(--skull-glow) !important;
+
+  color: white;
+  text-shadow:
+    0 0 6px rgb(255 127 0 / 90%),
+    0 0 12px rgb(255 200 100 / 60%);
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+.neon-button {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+

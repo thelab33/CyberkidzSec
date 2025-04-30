@@ -1,0 +1,104 @@
+<!-- filter_bar.html -->
+<div
+  id="filterBar"
+  class="sticky top-0 z-50 border-b border-orangeLuxe/30
+         bg-gradient-to-r from-cyberNight via-cyberNight.glow to-cyberNight.phantom
+         backdrop-blur-md shadow-lg px-4 py-3 rounded-md mb-10"
+></div>
+
+<script>
+/* ---- config – tweak freely ---- */
+const FILTERS      = ["All","XSS","Injection","Misconfiguration","Race Condition"];
+const SORT_OPTIONS = ["cvss","severity","date"];
+
+/* ---- state ---- */
+let filter   = "All";
+let sortBy   = "date";
+let theme    = localStorage.getItem("theme") || "dark";
+const elBar  = document.getElementById("filterBar");
+
+/* ---- render ---- */
+function renderBar() {
+  elBar.innerHTML = `
+    <div class="relative flex items-center w-full overflow-x-auto no-scrollbar
+                gap-4 md:gap-6 scroll-smooth pr-6" id="filterScroll">
+      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports">
+        ${FILTERS.map(
+          (f) => `<button
+                    class="${btnClasses(f === filter)}"
+                    data-filter="${f}"
+                    role="radio" aria-checked="${f === filter}" title="Filter by ${f}">
+                    ${f}
+                  </button>`
+        ).join("")}
+      </div>
+
+      <div class="ml-auto flex items-center gap-4 min-w-fit">
+        <div class="flex items-center gap-2">
+          <label class="text-xs uppercase tracking-widest text-orange-300 font-mono">Sort</label>
+          <select id="sortSel"
+            class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6
+                   text-sm rounded text-orange-200 focus:outline-none"
+            title="Sort reports">
+            ${SORT_OPTIONS.map(
+              (o) => `<option value="${o}" ${o === sortBy ? "selected" : ""}>${o}</option>`
+            ).join("")}
+          </select>
+          <span class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-orange-400">▼</span>
+        </div>
+
+        <button id="themeToggle"
+          class="text-2xl px-2 py-1 rounded-full border border-orangeLuxe
+                 hover:bg-orangeLuxe/20 focus:ring-2 focus:ring-orange-400 transition"
+          aria-label="Toggle dark/light">
+          ${theme === "dark" ? "☀️" : "🌙"}
+        </button>
+      </div>
+    </div>`;
+}
+function btnClasses(active) {
+  return [
+    "px-4 py-1.5 text-sm font-mono rounded-full transition-all border whitespace-nowrap",
+    active
+      ? "bg-orangeLuxe text-white border-orangeLuxe shadow-md"
+      : "bg-zinc-900 text-orange-300 border-orangeLuxe hover:bg-orange-600 hover:text-white",
+  ].join(" ");
+}
+renderBar();
+
+/* ---- event handlers ---- */
+elBar.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-filter]");
+  if (btn) {
+    filter = btn.dataset.filter;
+    announce(`Filtered by ${filter}`);
+    renderBar();
+    elBar.dispatchEvent(new CustomEvent("filterchange", {detail:{filter}}));
+  }
+});
+elBar.addEventListener("change", (e) => {
+  if (e.target.id === "sortSel") {
+    sortBy = e.target.value;
+    announce(`Sorted by ${sortBy}`);
+    elBar.dispatchEvent(new CustomEvent("sortchange",{detail:{sortBy}}));
+  }
+});
+document.getElementById("filterBar").addEventListener("click", (e) => {
+  if (e.target.id === "themeToggle") {
+    theme = theme === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    renderBar();
+  }
+});
+
+/* polite SR-only announcements */
+let live = document.createElement("div");
+live.className = "sr-only";
+live.setAttribute("aria-live", "polite");
+document.body.appendChild(live);
+function announce(msg) {
+  live.textContent = msg;
+}
+</script>
+

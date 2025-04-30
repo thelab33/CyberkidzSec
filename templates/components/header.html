@@ -1,0 +1,105 @@
+{# templates/components/header.html #}
+<header id="siteHeader"
+        class="fixed inset-x-0 top-0 z-50 bg-zinc-900/80 backdrop-blur-md shadow-md transition-all duration-300 ease-in-out"
+        role="banner"
+        aria-label="Main Site Header"
+>
+  <div class="container mx-auto flex items-center space-x-6 px-6 py-3">
+
+    <!-- Brand -->
+    <a href="{{ url_for('views.home') }}"
+       class="flex items-center space-x-2 text-2xl font-black text-orangeLuxe hover:text-orangeLuxe-light focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition"
+       aria-label="CYBERKIDZSEC Vault Home">
+      <svg class="h-8 w-8 animate-spin-slow text-orangeLuxe" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2L2 7v7c0 5 4 9 10 9s10-4 10-9V7l-10-5z"/>
+      </svg>
+      <span class="hidden sm:block">CYBERKIDZSEC VAULT</span>
+    </a>
+
+    <!-- Global Search -->
+    <div class="relative flex-1 max-w-md">
+      <input id="globalSearch"
+             type="search"
+             placeholder="Search the Vault…"
+             class="input w-full pl-10 pr-4 bg-zinc-800 border-zinc-700 focus:border-orangeLuxe focus:ring-orangeLuxe placeholder-zinc-500"
+             aria-label="Search reports" />
+      <span class="absolute inset-y-0 left-3 flex items-center text-zinc-500">
+        <i class="fas fa-search"></i>
+      </span>
+      <kbd class="absolute right-3 top-1/2 -translate-y-1/2 bg-zinc-800 text-xs font-mono px-1 rounded text-zinc-400">⌘ K</kbd>
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden lg:flex items-center space-x-6" role="navigation" aria-label="Primary">
+  {% for name, endpoint, blueprint in [
+       ('Home',         'views.home',             None),
+       ('Bug Vault',    'bug_vault.index',        'bug_vault'),
+       ('Playground',   'pentest_playground.index','pentest_playground'),
+       ('Ghost Academy','academy.academy_home',   'academy'),
+       ('Dashboard',    'vault_dashboard.index',   'vault_dashboard')
+     ] %}
+    {% set active = (request.endpoint == endpoint) or (blueprint and request.blueprint == blueprint) %}
+    <a href="{{ url_for(endpoint) }}"
+       class="relative text-sm uppercase font-mono tracking-wide py-1
+              {% if active %}text-orangeLuxe{% else %}text-zinc-300 hover:text-orangeLuxe-light{% endif %}
+              focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition">
+      {{ name }}
+      {% if active %}
+        <span class="absolute inset-x-0 -bottom-1 h-0.5 bg-orangeLuxe"></span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</nav>
+
+    <div class="flex items-center space-x-4">
+
+      <!-- Sync Timer -->
+      <div id="lastSync"
+           class="hidden md:inline-block text-xs font-mono bg-zinc-800/60 text-orange-300 px-2 py-1 rounded"
+           aria-live="polite"
+           title="Time since last data sync">
+        Synced: <time id="syncTime">0s ago</time>
+      </div>
+
+      <!-- Theme Toggle -->
+      <button id="themeToggle"
+              class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orangeLuxe transition"
+              aria-label="Toggle dark/light mode">
+        <i class="fas fa-moon text-base text-zinc-300"></i>
+      </button>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle"
+              class="lg:hidden p-2 text-2xl text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orangeLuxe transition"
+              aria-controls="mobileNav"
+              aria-expanded="false"
+              aria-label="Toggle mobile navigation">
+        ☰
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Panel -->
+  <nav id="mobileNav"
+       class="fixed inset-x-0 top-full transform -translate-y-full bg-zinc-900/95 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-transform duration-300 ease-out lg:hidden"
+       role="navigation"
+       aria-label="Mobile">
+    <ul class="flex flex-col gap-4">
+      {% for name, endpoint in [
+           ('Home',         'views.home'),
+           ('Bug Vault',    'bug_vault.index'),
+           ('Playground',   'pentest_playground.index'),
+           ('Ghost Academy','academy.academy_home'),
+           ('Dashboard',    'vault_dashboard.index')
+         ] %}
+        <li>
+          <a href="{{ url_for(endpoint) }}"
+             class="block text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orangeLuxe transition">
+            {{ name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</header>
+

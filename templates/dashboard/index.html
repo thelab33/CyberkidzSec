@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Operative Dashboard · CyberKidzSec Vault{% endblock %}
+
+{% block content %}
+<section class='max-w-4xl mx-auto py-16 px-6 text-center'>
+  <h1 class='text-5xl font-extrabold mb-6 text-orangeLuxe-light'>🛰️ Operative Dashboard</h1>
+  <p class='mb-8 text-orange-300'>Track your journey through the Vault.</p>
+
+  <div class='mt-10'>
+    <div class='vault-xp-bar'>
+      <div class='vault-xp-fill' style='width: {{ vault_xp_percentage }}%'></div>
+    </div>
+    <p class='vault-xp-text'>Vault XP: {{ vault_xp_percentage }}%</p>
+    <p class='text-sm mt-2'>Level: {{ operative_level }}</p>
+  </div>
+</section>
+{% endblock %}

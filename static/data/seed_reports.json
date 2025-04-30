@@ -1,0 +1,5 @@
+[
+  { "id": 1, "title": "Critical XSS in AcmeCorp", "severity": "Critical" },
+  { "id": 2, "title": "Proxy Delegatecall Misuse", "severity": "High" },
+  { "id": 3, "title": "Auth Bypass in CyberSafe", "severity": "Medium" }
+]

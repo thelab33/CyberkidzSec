@@ -1,0 +1,44 @@
+<!-- report_card.html -->
+<script>
+function makeTiltCard(r) {
+  const li = document.createElement("li");
+  li.setAttribute("data-aos", "fade-up");
+  li.setAttribute("data-aos-delay", Math.floor(Math.random() * 300));
+
+  li.innerHTML = `
+    <a href="/reports/${r.slug}" class="group block rounded-2xl focus:ring-2 focus:ring-orangeLuxe">
+      <article class="tilt overflow-hidden rounded-2xl bg-gradient-to-br" data-aos="fade-up"
+                      from-cyberNightGlow via-cyberNight to-zinc-900/90
+                      border border-orangeLuxe/20 shadow-lg transition-all
+                      group-hover:shadow-orangeLuxe/50 group-hover:scale-[1.02]">
+        <div class="relative h-40 overflow-hidden">
+          <img src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}" alt="${r.title}"
+               class="object-cover w-full h-full group-hover:scale-[1.08] transition-transform duration-500 ease-out" loading="lazy">
+        </div>
+        <div class="p-6 space-y-3">
+          <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors">${r.title}</h3>
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">${r.summary || "No summary provided."}</p>
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+            ${r.tags.slice(0, 4).map(t => `<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`).join("")}
+          </div>
+        </div>
+      </article>
+    </a>`;
+  return li;
+}
+
+/* Tilt interaction */
+document.addEventListener("pointermove", e => {
+  const card = e.target.closest(".tilt");
+  if (!card) return;
+  const rect = card.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  card.style.transform = `perspective(800px) rotateX(${y * -12}deg) rotateY(${x * 12}deg) scale(1.03)`;
+});
+document.addEventListener("pointerleave", e => {
+  const card = e.target.closest(".tilt");
+  if (card) card.style.transform = "";
+});
+</script>
+

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth" data-theme="dark">
+<head>
+  <!-- 🌐 Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}">
+  <meta name="robots" content="index, follow">
+  <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
+
+  <!-- 🔌 PWA -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- 🖼 Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+
+  <!-- 🌐 Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- 🧠 Social Meta -->
+  <meta property="og:title" content="{% block og_title %}CYBERKIDZSEC Vault{% endblock %}">
+  <meta property="og:description" content="{% block og_desc %}Hack the future…{% endblock %}">
+  <meta property="og:url" content="{{ request.url_root }}">
+  <meta property="og:image" content="{{ url_for('static', filename='images/og/main_vault_banner.png') }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 🎨 Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- 🔊 Sound FX Preloads -->
+  {% for fx in ['keyboard-clack.mp3', 'vhs-unlock.mp3', 'swoosh.mp3', 'breach.mp3'] %}
+    <link rel="preload" as="audio" href="{{ url_for('static', filename='sfx/' + fx) }}">
+  {% endfor %}
+
+  {% block head_extra %}{% endblock %}
+
+  <noscript>
+    <style>
+      .aos-init[data-aos] { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+
+<body class="bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen">
+
+  <!-- 🧠 Vault Loader -->
+  <div id="vault-loader" role="status" aria-live="assertive">
+    <span class="loader-text">🔐 Vault Decryption in Progress...</span>
+  </div>
+
+  {% include "components/skip_nav.html" %}
+  {% include "components/header.html" %}
+  <div id="scrollProgress" class="scroll-progress"></div>
+
+  <!-- 🔊 Live Status -->
+  <div id="vaultStatusLive"
+       class="fixed top-5 right-5 px-3 py-1 rounded-full bg-zinc-800 text-xs font-mono tracking-wide"
+       aria-live="polite"
+       title="Vault Connectivity Status">
+       Connecting…
+  </div>
+
+  <!-- 📚 Page Content -->
+  <main id="main" class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- 📦 Shared Components -->
+  {% include "components/vault_popup.html" %}
+  {% include "components/quick_view_modal.html" %}
+  {% include "components/hud_toolbar.html" %}
+  {% include "components/command_palette.html" %}
+  {% include "components/footer.html" %}
+  {% include "components/back_to_top.html" %}
+
+  <!-- ⚙️ Scripts -->
+  <script src="{{ url_for('static', filename='js/app.min.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}" type="module" defer></script>
+  <script src="{{ url_for('static', filename='js/ghost-mode.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/ghost-boot.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/cyber-enhancements.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/hero.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/init.js') }}" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- 🔒 PWA -->
+  <script defer>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.warn('Service Worker failed:', err));
+      });
+    }
+  </script>
+
+  {% block scripts_extra %}{% endblock %}
+
+  {% if config['ENV'] == 'production' %}
+    <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
+  {% endif %}
+</body>
+</html>
+

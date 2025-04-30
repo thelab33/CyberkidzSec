@@ -1,0 +1,14 @@
+/* static/css/back_to_top.css */
+.back-to-top{
+  position:fixed; right:2rem; bottom:2rem; z-index:9998;
+  width:3.25rem; height:3.25rem; border-radius:50%;
+  background:var(--orange-luxe); color:#000; font-size:1.35rem;
+  display:none; align-items:center; justify-content:center;
+  box-shadow:0 0 20px rgb(249 115 22 / 45%);
+  transition:transform .12s ease;
+}
+.back-to-top:hover{ transform:scale(1.12); }
+
+@keyframes bounce-slow{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.back-to-top>svg,.back-to-top{ animation:bounce-slow 2s infinite }
+

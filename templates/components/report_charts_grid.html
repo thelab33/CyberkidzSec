@@ -1,0 +1,66 @@
+<!-- report_charts_grid.html -->
+<section class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"" data-aos="fade-up" data-aos-delay="200">
+  <!-- Bar Chart -->
+  <article class="chart-card border-orangeLuxe" data-aos="fade-up"" data-aos="fade-right" data-aos-delay="300">
+    <header class="chart-header">
+      <h3 id="barTitle">CVSS Avg per Year</h3>
+      <select id="barView" class="bg-night-glow text-white text-sm px-3 py-1 rounded border border-night">
+        <option value="yearly">Yearly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </header>
+    <canvas id="barCanvas" height="320"></canvas>
+  </article>
+
+  <!-- Radar Chart -->
+  <article class="chart-card border-pink-500" data-aos="fade-up"" data-aos="fade-left" data-aos-delay="400">
+    <header class="chart-header justify-center">
+      <h3>Severity Distribution</h3>
+    </header>
+    <canvas id="radarCanvas" height="320"></canvas>
+  </article>
+</section>
+
+<script type="module">
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+
+function getCvssByYear() { return [{ year: 2022, cvss: 7.4 }, { year: 2023, cvss: 8.1 }, { year: 2024, cvss: 7.9 }]; }
+function getMonthlyReportTrends() { return [{ month: "Jan", count: 4 }, { month: "Feb", count: 8 }, { month: "Mar", count: 5 }, { month: "Apr", count: 7 }, { month: "May", count: 6 }, { month: "Jun", count: 3 }]; }
+function getSeverityRadarData() { return [{ severity: "Critical", count: 6 }, { severity: "High", count: 12 }, { severity: "Medium", count: 15 }, { severity: "Low", count: 9 }]; }
+
+const ctxBar = document.getElementById("barCanvas");
+const ctxRadar = document.getElementById("radarCanvas");
+const sel = document.getElementById("barView");
+const barTitle = document.getElementById("barTitle");
+
+let barChart, radarChart;
+buildBar("yearly");
+buildRadar();
+
+sel.onchange = () => buildBar(sel.value);
+
+function buildBar(view) {
+  const data = view === "yearly" ? getCvssByYear() : getMonthlyReportTrends();
+  const labels = data.map(d => view === "yearly" ? d.year : d.month);
+  const key = view === "yearly" ? "cvss" : "count";
+  const label = view === "yearly" ? "Average" : "Reports";
+
+  barTitle.textContent = view === "yearly" ? "CVSS Avg per Year" : "Reports per Month";
+  barChart?.destroy();
+  barChart = new Chart(ctxBar, {
+    type: "bar",
+    data: { labels, datasets: [{ label, data: data.map(d => d[key]), backgroundColor: "#f97316", borderRadius: 4 }] },
+    options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: "#f8fafc" } }, y: { ticks: { color: "#f8fafc" } } } }
+  });
+}
+
+function buildRadar() {
+  const data = getSeverityRadarData();
+  radarChart = new Chart(ctxRadar, {
+    type: "radar",
+    data: { labels: data.map(d => d.severity), datasets: [{ label: "Vulns", data: data.map(d => d.count), backgroundColor: "rgba(236,72,153,.5)", borderColor: "#ec4899" }] },
+    options: { scales: { r: { angleLines: { color: "#555" }, grid: { color: "#555" }, pointLabels: { color: "#f8fafc" } } } }
+  });
+}
+</script>
+

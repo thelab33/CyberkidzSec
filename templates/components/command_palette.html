@@ -1,0 +1,156 @@
+<!-- templates/components/command_palette.html -->
+<div id="cmdBackdrop" class="fixed inset-0 z-[9999] hidden bg-black/80 backdrop-blur-sm p-6"></div>
+
+<template id="cmdTpl">
+  <div id="cmdWrapper" class="mx-auto w-full max-w-2xl bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom 
+        border border-orangeLuxe/30 rounded-2xl shadow-[0_0_40px_rgba(255,115,22,0.25)] overflow-hidden animate-fade-slide-blur">
+
+    <!-- Search Input -->
+    <input id="cmdSearch" type="search" placeholder="🔎 Search reports…" autocomplete="off"
+           class="w-full px-6 py-4 text-lg font-mono tracking-wide text-emerald-300 bg-black border-b border-emerald-400/30 placeholder-emerald-400/60 
+           focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+
+    <!-- Search Results -->
+    <div id="cmdResults" class="max-h-80 overflow-y-auto custom-scrollbar"></div>
+
+  </div>
+</template>
+
+<style>
+/* ✨ Search Row Styles */
+.cmdRow {
+  @apply px-6 py-3 cursor-pointer font-mono text-sm tracking-wide transition-all;
+}
+.cmdRow[data-active="false"] {
+  @apply bg-black text-emerald-300/80 hover:bg-emerald-400/10;
+}
+.cmdRow[data-active="true"] {
+  @apply bg-emerald-400 text-black scale-[1.01] shadow-lg;
+}
+
+/* ✨ Section Header */
+.cmdSection {
+  @apply px-6 py-2 text-xs font-bold tracking-widest text-emerald-400/70 uppercase;
+}
+
+/* ✨ Entrance Animation */
+@keyframes fade-slide-blur {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(2px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.animate-fade-slide-blur {
+  animation: fade-slide-blur 0.5s ease-out;
+}
+
+/* ✨ Neon Flicker Ambient */
+@keyframes neonPulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+#cmdWrapper {
+  animation: neonPulse 5s infinite alternate;
+}
+
+/* ✨ Cyber Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #22c55e, #06b6d4);
+  border-radius: 9999px;
+}
+</style>
+
+<script type="module">
+/* 🚀 Starforge Command Palette Ultra+ */
+import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.esm.js";
+
+/* -- Data -- */
+const REPORTS = window.ALL_REPORTS || [];
+
+const fuse = new Fuse(REPORTS, { keys: ["title", "tags"], threshold: 0.3 });
+
+const backdrop = document.getElementById("cmdBackdrop");
+const tpl = document.getElementById("cmdTpl").content;
+
+let search, list, rows = [];
+
+window.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    openPalette();
+  }
+});
+
+function openPalette() {
+  backdrop.classList.remove("hidden");
+  backdrop.innerHTML = "";
+  backdrop.appendChild(tpl.cloneNode(true));
+  search = document.getElementById("cmdSearch");
+  list = document.getElementById("cmdResults");
+  search.focus();
+  render(REPORTS.slice(0, 10));
+
+  backdrop.onclick = (e) => { if (e.target === backdrop) closePalette(); };
+  window.addEventListener("keydown", navKeys);
+}
+
+function closePalette() {
+  backdrop.classList.add("hidden");
+  backdrop.innerHTML = "";
+  window.removeEventListener("keydown", navKeys);
+}
+
+function render(arr) {
+  list.innerHTML = "";
+  rows = [];
+  if (!arr.length) {
+    list.innerHTML = `<div class="cmdSection">No matches found</div>`;
+    return;
+  }
+  list.insertAdjacentHTML("beforeend", `<div class="cmdSection">Results</div>`);
+  arr.forEach((r, i) => {
+    const div = document.createElement("div");
+    div.className = "cmdRow";
+    div.dataset.active = "false";
+    div.tabIndex = -1;
+    div.innerHTML = `
+      <div class="text-sm font-bold">${highlight(r.title)}</div>
+      <div class="text-xs opacity-70">CVSS: ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"} • ${r.type}</div>
+    `;
+    div.onclick = () => location.href = `/reports/${r.slug}`;
+    list.appendChild(div);
+    rows.push(div);
+  });
+  setActive(0);
+}
+
+function setActive(i) {
+  rows.forEach((r, idx) => r.dataset.active = (idx === i));
+  rows[i]?.scrollIntoView({ block: "nearest" });
+}
+
+let idx = 0;
+function navKeys(e) {
+  if (e.key === "Escape") return closePalette();
+  if (e.key === "ArrowDown") { idx = Math.min(idx + 1, rows.length - 1); setActive(idx); }
+  if (e.key === "ArrowUp") { idx = Math.max(idx - 1, 0); setActive(idx); }
+  if (e.key === "Enter") { rows[idx]?.click(); }
+}
+
+document.addEventListener("input", (e) => {
+  if (e.target !== search) return;
+  idx = 0;
+  const q = search.value.trim();
+  const res = q ? fuse.search(q).map(x => x.item).slice(0, 15) : REPORTS.slice(0, 10);
+  render(res);
+});
+
+function highlight(text) {
+  const q = search?.value?.trim();
+  if (!q || !text.toLowerCase().includes(q.toLowerCase())) return text;
+  const regex = new RegExp(`(${q})`, "gi");
+  return text.replace(regex, `<span class="text-emerald-400 underline">$1</span>`);
+}
+</script>
+

@@ -1,0 +1,30 @@
+<!-- tag.html -->
+<span class="tagCmp"></span>
+
+<style>
+.tagCmp {
+  @apply inline-block px-3 py-1 text-[11px] font-bold font-mono uppercase rounded-full border
+         cursor-pointer select-none transition-all hover:scale-105;
+}
+.tagCmp[data-active="false"] {
+  @apply border-orangeLuxe/30 text-orangeLuxe-light/80 bg-orangeLuxe/10 hover:bg-orangeLuxe/20;
+}
+.tagCmp[data-active="true"] {
+  @apply border-orangeLuxe bg-orangeLuxe text-black shadow-[0_0_8px_#f97316];
+}
+</style>
+
+<script>
+function makeTag(label, active = false, onClick = null) {
+  const span = document.createElement("span");
+  span.className = "tagCmp";
+  span.textContent = "#" + label;
+  span.dataset.active = active;
+  span.role = "button";
+  span.tabIndex = 0;
+  span.onclick = () => onClick?.(label);
+  span.onkeydown = e => { if (e.key === "Enter") span.click(); };
+  return span;
+}
+</script>
+

@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-length": "short",
+    "font-family-no-missing-generic-family-keyword": null,
+    "selector-class-pattern": null,
+    "no-descending-specificity": null,
+    "property-no-unknown": [true, { "ignoreProperties": ["mix-blend-mode"] }]
+  }
+}
+

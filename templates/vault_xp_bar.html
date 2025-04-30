@@ -1,0 +1,43 @@
+<!-- vault_xp_bar.html -->
+<section aria-label="Vault XP Status" class="max-w-md mx-auto p-4 space-y-2">
+  <p class="text-sm text-orange-300 font-mono tracking-widest uppercase">
+    Operative Level: {{ operative_level }}
+  </p>
+
+  <div class="relative bg-zinc-800 rounded-full h-4 overflow-hidden">
+    <progress id="vaultXpProgress"
+              class="absolute inset-0 w-full h-full appearance-none"
+              value="{{ vault_xp_percentage }}"
+              max="100"
+              aria-describedby="vaultXpText">
+    </progress>
+    <div id="vaultXpFill"
+         class="h-4 bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out"></div>
+  </div>
+
+  <p id="vaultXpText"
+     class="text-center text-xs text-orange-400 font-mono tracking-wide"
+     role="status">
+    Vault Operational Status: <span id="vaultXpNum">0</span>%
+  </p>
+</section>
+
+<script type="module">
+  // count-up animation
+  const target = {{ vault_xp_percentage }};
+  const numEl = document.getElementById('vaultXpNum');
+  const fillEl = document.getElementById('vaultXpFill');
+
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const animate = () => {
+    if (current < target) {
+      current = Math.min(current + step, target);
+      numEl.textContent = current;
+      fillEl.style.width = current + '%';
+      requestAnimationFrame(animate);
+    }
+  };
+  window.addEventListener('DOMContentLoaded', animate);
+</script>
+

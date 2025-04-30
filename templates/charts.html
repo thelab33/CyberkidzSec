@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Report Analytics · CYBERKIDZSEC{% endblock %}
+
+{% block content %}
+<main class="max-w-6xl mx-auto px-6 py-16 space-y-12 animate-fade-in">
+
+  <h1 class="text-3xl font-extrabold tracking-tight mb-8">
+    📊 Report Analytics
+  </h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+    {# ── CVSS Distribution ── #}
+    <figure class="relative rounded-xl border border-orangeLuxe/30 bg-white dark:bg-black dark:border-zinc-700 shadow-md overflow-hidden" data-aos="fade-up">
+      <figcaption class="px-6 pt-6">
+        <h2 class="text-xl font-semibold">CVSS Score Distribution</h2>
+      </figcaption>
+      <div class="relative px-6 pb-6">
+        <canvas id="cvssChart"
+                class="w-full h-72"
+                role="img"
+                aria-label="Bar chart showing CVSS score distribution"></canvas>
+        <div id="cvssLoader"
+             class="absolute inset-0 flex items-center justify-center bg-white dark:bg-black/80">
+          <!-- spinning loader -->
+          <svg class="animate-spin h-8 w-8 text-orangeLuxe" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+        </div>
+      </div>
+    </figure>
+
+    {# ── Vuln-Type Breakdown ── #}
+    <figure class="relative rounded-xl border border-orangeLuxe/30 bg-white dark:bg-black dark:border-zinc-700 shadow-md overflow-hidden" data-aos="fade-up">
+      <figcaption class="px-6 pt-6">
+        <h2 class="text-xl font-semibold">Vulnerability Type Breakdown</h2>
+      </figcaption>
+      <div class="relative px-6 pb-6">
+        <canvas id="typeChart"
+                class="w-full h-72"
+                role="img"
+                aria-label="Pie chart showing vulnerability type breakdown"></canvas>
+        <div id="typeLoader"
+             class="absolute inset-0 flex items-center justify-center bg-white dark:bg-black/80">
+          <svg class="animate-spin h-8 w-8 text-orangeLuxe" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+        </div>
+      </div>
+    </figure>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts_extra %}
+  <!-- load only when in viewport -->
+  <script type="module">
+    import Chart from 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.esm.min.js';
+
+    // IntersectionObserver to init charts when visible
+    const initOnVisible = (id, initFn) => {
+      const el = document.getElementById(id);
+      new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          initFn();
+          this.disconnect();
+        }
+      }, { threshold: 0.5 }).observe(el);
+    };
+
+    // data + theme helpers...
+    const reports = window.ALL_REPORTS || [];
+    // (Compute cvssCounts, typeLabels, typeCounts, COLORS, theming...)
+
+    initOnVisible('cvssChart', () => {
+      document.getElementById('cvssLoader').remove();
+      new Chart(
+        document.getElementById('cvssChart'),
+        { /* bar chart config as before, with accessible options */ }
+      );
+    });
+
+    initOnVisible('typeChart', () => {
+      document.getElementById('typeLoader').remove();
+      new Chart(
+        document.getElementById('typeChart'),
+        { /* pie chart config */ }
+      );
+    });
+  </script>
+{% endblock %}
+

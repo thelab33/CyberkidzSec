@@ -1,0 +1,65 @@
+<!-- tags_section.html -->
+<section class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up">
+  <h2 class="text-3xl sm:text-4xl font-extrabold text-center mb-8
+             bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+    🏷️ Browse by Tag
+  </h2>
+
+  <!-- Tag Rail -->
+  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory"></div>
+
+  <!-- Results Grid -->
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up""></div>
+</section>
+
+<script>
+const REPORTS = window.ALL_REPORTS || [];
+
+const TAGS = Array.from(new Set(REPORTS.flatMap(r => r.tags))).sort();
+let activeTag = null;
+
+const rail = document.getElementById("tagRail");
+const grid = document.getElementById("tagGrid");
+
+/* Fade rail edges */
+["left", "right"].forEach(side => {
+  const div = document.createElement("div");
+  div.className = `pointer-events-none absolute inset-y-0 ${side}-0 w-6 bg-gradient-to-${side === "left" ? "r" : "l"} from-cyberNight to-transparent`;
+  rail.appendChild(div);
+});
+
+/* Render the Rail */
+function drawRail() {
+  rail.querySelectorAll("[role=button]").forEach(n => n.remove());
+  rail.prepend(makeTag("All", activeTag === null, () => { activeTag = null; render(); }));
+  TAGS.forEach(t => {
+    const tag = makeTag(t, activeTag === t, () => { activeTag = t; render(); });
+    tag.setAttribute("data-tag", t);
+    rail.appendChild(tag);
+  });
+}
+
+/* Render the Tag Grid */
+function render() {
+  drawRail();
+  grid.innerHTML = "";
+  const list = activeTag ? REPORTS.filter(r => r.tags.includes(activeTag)) : REPORTS;
+  list.forEach((r, i) => {
+    const el = document.createElement("article");
+    el.className = "p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNightGlow via-cyberNight to-zinc-900/80 shadow-lg";
+    el.setAttribute("data-aos", "fade-up");
+    el.setAttribute("data-aos-delay", (i * 100).toString());
+    el.innerHTML = `
+      <h3 class="font-bold text-orangeLuxe-light">${r.title}</h3>
+      <p class="mt-1 text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary || "No summary."}</p>`;
+    grid.appendChild(el);
+  });
+  if (activeTag) {
+    const el = rail.querySelector(`[data-tag="${activeTag}"]`);
+    el?.scrollIntoView({ inline: "center", behavior: "smooth" });
+  }
+}
+
+render();
+</script>
+

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Reports · CYBERKIDZSEC{% endblock %}
+
+{% block content %}
+<section class="max-w-7xl mx-auto px-6 py-16 space-y-12" data-aos="fade-up">
+
+  {% include "components/filter_bar.html" %}
+  {% include "components/sidebar_filters.html" %}
+
+  <ul id="dynamicGrid" role="list"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      aria-live="polite">
+    {% for r in reports %}
+      <li role="listitem" class="animate-fade-in hover-lift">
+        {% include "components/report_card.html" %}
+      </li>
+    {% endfor %}
+    {# skeleton slots for infinite scroll #}
+    <template id="report-skeleton">
+      <li class="animate-pulse rounded-2xl bg-zinc-700 h-64"></li>
+    </template>
+  </ul>
+
+  {% include "components/pagination.html" %}
+</section>
+{% endblock %}
+
+{% block scripts_extra %}
+  <script src="{{ url_for('static', filename='js/infinite-scroll.js') }}" defer></script>
+  <script type="module">
+    // hydrate JS grid helpers with initial data
+    window.PAGE_REPORTS = {{ reports|tojson }};
+  </script>
+{% endblock %}
+

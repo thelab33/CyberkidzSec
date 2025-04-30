@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ report.title }} · CYBERKIDZSEC{% endblock %}
+
+{% block content %}
+<article class="prose dark:prose-invert max-w-4xl mx-auto py-10 px-6 space-y-8" data-aos="fade-up">
+  <nav aria-label="Breadcrumb" class="mb-4">
+    <ol class="flex text-sm text-zinc-400 space-x-2">
+      <li><a href="{{ url_for('reports_list') }}" class="hover:underline">Reports</a></li>
+      <li aria-current="page" class="font-semibold text-white">/{{ report.title }}</li>
+    </ol>
+  </nav>
+
+  <h1 class="text-4xl font-extrabold">{{ report.title }}</h1>
+
+  <div class="flex flex-wrap gap-4 text-sm text-orangeLuxe-light/70 font-mono uppercase tracking-wide">
+    <time datetime="{{ report.date }}">{{ report.date|datetimeformat }}</time>
+    <span>{{ report.type }}</span>
+    <span>CVSS {{ report.cvss }}</span>
+  </div>
+
+  <div class="flex flex-wrap gap-2 my-4">
+    {% for t in report.tags %}
+      <a href="{{ url_for('reports_list') }}?tag={{ t }}"
+         class="badge hover:bg-orangeLuxe transition">{{ t }}</a>
+    {% endfor %}
+  </div>
+
+  {{ body_html|safe }}
+
+  {# strengthen the built-in chart component #}
+  <section aria-labelledby="chart-section" class="mt-12">
+    <h2 id="chart-section" class="text-2xl font-semibold mb-4">Severity Breakdown</h2>
+    {% include "components/report_chart.html" %}
+  </section>
+</article>
+{% endblock %}
+
+{% block scripts_extra %}
+  <script src="{{ url_for('static', filename='js/report-detail.js') }}" defer></script>
+{% endblock %}
+

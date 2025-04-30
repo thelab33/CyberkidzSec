@@ -1,0 +1,121 @@
+/* sections/header.css — CYBERKIDZSEC Header & Nav Styles */
+
+/* ─── Palette Variables (sync with design tokens) ─── */
+:root {
+  --color-night: #0f111a;
+  --color-night-75: rgb(15 17 26 / 75%);
+  --color-night-phantom: #090a11;
+  --color-orange-luxe: #ff7f00;
+  --color-orange-luxe-light: #ff9350;
+  --color-emerald-ghost: #34d399;
+  --glow-green: #0f8;
+}
+
+@layer components {
+  /* ── Main Header Shell ── */
+  .site-header {
+    @apply fixed inset-x-0 top-0 z-50 bg-[var(--color-night-75)] dark:bg-[var(--color-night-phantom)]
+           backdrop-blur-md border-b border-[var(--color-night-phantom)]
+           transition-transform duration-300;
+
+    animation: headerReveal 0.6s ease-out;
+  }
+
+  .site-header.hide {
+    @apply -translate-y-full;
+  }
+
+  /* ── Brand Link ── */
+  .site-header__branding a {
+    @apply text-orangeLuxe font-black tracking-widest text-lg
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200;
+
+    animation: glitchText 1.5s infinite alternate;
+  }
+
+  /* ── Desktop Widgets ── */
+  .site-header__widgets {
+    @apply hidden lg:flex items-center gap-4;
+  }
+
+  .site-header__widgets .vault-status {
+    @apply text-sm font-mono text-orange-300;
+
+    text-shadow: 0 0 5px var(--color-orange-luxe-light);
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .site-header__widgets kbd {
+    @apply bg-[var(--color-night-phantom)] text-zinc-200 font-mono text-xs rounded px-2 py-1;
+  }
+
+  /* ── Mobile Nav Toggle ── */
+  #menuToggle {
+    @apply lg:hidden text-2xl p-1 rounded hover:bg-orange-500/20
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200;
+  }
+
+  .mobile-nav {
+    @apply hidden lg:hidden fixed inset-x-0 top-full bg-black/90 backdrop-blur p-6 z-40;
+
+    animation: slideInNav 0.5s ease-out;
+  }
+
+  .mobile-nav.show {
+    @apply block;
+  }
+}
+
+@layer utilities {
+  /* ── Scroll Progress Bar Utility ── */
+  .scroll-progress {
+    @apply fixed inset-x-0 top-0 h-1 bg-orangeLuxe origin-left scale-x-0 transition-transform duration-150;
+  }
+
+  /* ── Ghost Mode Badge ── */
+  .ghost-badge {
+    @apply absolute right-6 top-3 text-xs font-semibold text-emeraldLuxe;
+
+    animation: pulseGhost 0.9s cubic-bezier(.4,0,.6,1) infinite;
+  }
+
+  /* ── Keyframe for Ghost Pulse ── */
+  @keyframes pulseGhost {
+    0%,100% { opacity: 1; }
+    50%     { opacity: 0.35; }
+  }
+
+  /* ── Pulse Glow FX ── */
+  @keyframes pulseGlow {
+    0%, 100% {
+      text-shadow: 0 0 5px var(--color-orange-luxe-light);
+    }
+
+    50% {
+      text-shadow: 0 0 12px var(--color-orange-luxe);
+    }
+  }
+
+  /* ── Glitch Title Animation ── */
+  @keyframes glitchText {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-1px, 1px); }
+    40%  { transform: translate(1px, -1px); }
+    60%  { transform: translate(-1px, 0); }
+    80%  { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+  }
+
+  /* ── Mobile Nav Slide In ── */
+  @keyframes slideInNav {
+    0%   { transform: translateY(-10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ── Header Reveal ── */
+  @keyframes headerReveal {
+    0%   { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}
+

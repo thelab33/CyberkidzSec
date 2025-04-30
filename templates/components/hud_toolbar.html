@@ -1,0 +1,145 @@
+<!-- components/hud_toolbar.html -->
+<div id="hudToolbar"
+     class="fixed bottom-6 right-6 z-[9998] w-72 rounded-2xl border border-orangeLuxe/25
+            bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom
+            backdrop-blur-md shadow-[0_0_40px_rgba(249,115,22,0.25)]
+            transform-gpu transition-all duration-500 opacity-0 translate-y-8 scale-95"
+     role="region" aria-label="HUD Dashboard" tabindex="0">
+
+  <!-- Toolbar Header -->
+  <button id="hudToggle"
+          class="flex w-full items-center justify-between px-4 py-3 text-xs font-mono text-orangeLuxe-light
+                 hover:bg-zinc-800/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orangeLuxe
+                 rounded-t-2xl transition-colors duration-200"
+          aria-expanded="true">
+    <span class="tracking-widest">💻 HUD STATUS</span>
+    <i id="hudChevron" class="fas fa-chevron-down transition-transform duration-300"></i>
+  </button>
+
+  <!-- Toolbar Body -->
+  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-3">
+    <div class="flex justify-between">
+      👻 Ghost Mode:
+      <span id="hudGhost" class="font-semibold text-gray-500">OFF</span>
+    </div>
+    <div class="flex justify-between">
+      🔓 Admin:
+      <span id="hudAdmin" class="font-semibold text-gray-500">OFF</span>
+    </div>
+    <div class="flex justify-between">
+      🛰️ Vault Feed:
+      <span id="hudFeed" class="font-semibold text-sky-400">CONNECTING…</span>
+    </div>
+
+    <hr class="border-orangeLuxe/20 my-3">
+
+    <p id="hudLog" class="min-h-[1.3rem] animate-pulse">⏳ Initializing HUD...</p>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-zinc-700 rounded-full overflow-hidden h-2 mt-3">
+      <div id="hudProgress"
+           class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all duration-700 ease-out"
+           style="width: {{ vault_xp_percentage }}%">
+      </div>
+    </div>
+    <p class="text-[10px] text-center mt-2 text-orangeLuxe">
+      {{ vault_xp_percentage }}% Vault Stability
+    </p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const toolbar = document.getElementById("hudToolbar");
+  const toggleBtn = document.getElementById("hudToggle");
+  const body = document.getElementById("hudBody");
+  const chevron = document.getElementById("hudChevron");
+  const ghostEl = document.getElementById("hudGhost");
+  const adminEl = document.getElementById("hudAdmin");
+  const feedEl = document.getElementById("hudFeed");
+  const logEl = document.getElementById("hudLog");
+
+  // 1️⃣ Entrance Animation
+  requestAnimationFrame(() => {
+    toolbar.classList.replace("opacity-0", "opacity-100");
+    toolbar.classList.replace("translate-y-8", "translate-y-0");
+    toolbar.classList.replace("scale-95", "scale-100");
+  });
+
+  // 2️⃣ Persisted Collapse State
+  const COLLAPSED_KEY = "hud.collapsed";
+  let collapsed = localStorage.getItem(COLLAPSED_KEY) === "1";
+  function updateCollapse() {
+    body.hidden = collapsed;
+    toggleBtn.setAttribute("aria-expanded", (!collapsed).toString());
+    chevron.style.transform = collapsed ? "rotate(-90deg)" : "rotate(0)";
+  }
+  updateCollapse();
+
+  toggleBtn.addEventListener("click", () => {
+    collapsed = !collapsed;
+    localStorage.setItem(COLLAPSED_KEY, collapsed ? "1" : "0");
+    updateCollapse();
+  });
+
+  // 3️⃣ Simulated Boot Sequence & Status
+  setTimeout(() => logEl.textContent = "🧠 Running memory check...", 1000);
+  setTimeout(() => {
+    logEl.textContent = "✅ Vault Systems Verified";
+    const ghost = localStorage.getItem("ghost") === "1";
+    const admin = localStorage.getItem("admin") === "1";
+    ghostEl.textContent = ghost ? "ACTIVE" : "OFF";
+    ghostEl.className = "font-semibold " + (ghost ? "text-emerald-400" : "text-gray-500");
+    adminEl.textContent = admin ? "ENGAGED" : "OFF";
+    adminEl.className = "font-semibold " + (admin ? "text-emerald-400" : "text-gray-500");
+  }, 2500);
+
+  // 4️⃣ WebSocket Live Feed
+  if (window.location.protocol.startsWith("http")) {
+    try {
+      const ws = new WebSocket((location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/ws/status");
+      ws.onopen = () => feedEl.textContent = "LIVE";
+      ws.onmessage = ({ data }) => feedEl.textContent = data;
+      ws.onclose = () => feedEl.textContent = "OFFLINE";
+    } catch {
+      feedEl.textContent = "ERROR";
+    }
+  }
+
+  // 5️⃣ Drag & Inertia
+  let pos = { x: 0, y: 0 }, start = {}, vel = { x:0, y:0 }, moving = false;
+  const friction = 0.92;
+  toggleBtn.addEventListener("pointerdown", e => {
+    moving = true;
+    start = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+    toolbar.setPointerCapture(e.pointerId);
+  });
+  toolbar.addEventListener("pointermove", e => {
+    if (!moving) return;
+    pos = { x: e.clientX - start.x, y: e.clientY - start.y };
+    vel = { x: e.movementX, y: e.movementY };
+    toolbar.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+  });
+  toolbar.addEventListener("pointerup", e => {
+    moving = false;
+    toolbar.releasePointerCapture(e.pointerId);
+    (function inertia() {
+      vel.x *= friction; vel.y *= friction;
+      pos.x += vel.x; pos.y += vel.y;
+      toolbar.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      if (Math.abs(vel.x) > 0.5 || Math.abs(vel.y) > 0.5) {
+        requestAnimationFrame(inertia);
+      }
+    })();
+  });
+
+  // 6️⃣ Keyboard Shortcut (Ctrl+H)
+  document.addEventListener("keydown", e => {
+    if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === "h") {
+      e.preventDefault();
+      toggleBtn.click();
+    }
+  });
+})();
+</script>
+

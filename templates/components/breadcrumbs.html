@@ -1,0 +1,73 @@
+<!-- breadcrumbs.html -->
+<nav
+  id="breadcrumbs"
+  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light"
+  aria-label="Breadcrumb"
+  itemScope
+  itemType="https://schema.org/BreadcrumbList"
+></nav>
+
+<script>
+/**
+ * Call this once you know the crumbs.
+ * items = [{label:'Home', href:'/'}, {label:'Reports', href:'/reports'}, …]
+ */
+function renderBreadcrumbs(items) {
+  const nav = document.getElementById("breadcrumbs");
+  const ol  = document.createElement("ol");
+  ol.className = "inline-flex items-center gap-1 whitespace-nowrap";
+
+  items.forEach((item, idx) => {
+    const last = idx === items.length - 1;
+    const li   = document.createElement("li");
+    li.className = "inline-flex items-center";
+    li.setAttribute("itemProp", "itemListElement");
+    li.setAttribute("itemScope", "");
+    li.setAttribute("itemType", "https://schema.org/ListItem");
+
+    if (item.href && !last) {
+      const a = document.createElement("a");
+      a.href  = item.href;
+      a.textContent = item.label;
+      a.className   = "hover:text-white";
+      a.setAttribute("itemProp", "item");
+      const span = document.createElement("span");
+      span.textContent = item.label;
+      span.setAttribute("itemProp", "name");
+      a.appendChild(span);
+      li.appendChild(a);
+    } else {
+      const span = document.createElement("span");
+      span.textContent = item.label;
+      span.setAttribute("itemProp", "name");
+      span.setAttribute("aria-current", "page");
+      li.appendChild(span);
+    }
+
+    const meta = document.createElement("meta");
+    meta.setAttribute("itemProp", "position");
+    meta.content = idx + 1;
+    li.appendChild(meta);
+
+    ol.appendChild(li);
+
+    if (!last) {
+      const slash = document.createElement("span");
+      slash.className = "px-1 text-orangeLuxe/50";
+      slash.textContent = "/";
+      ol.appendChild(slash);
+    }
+  });
+
+  nav.innerHTML = "";          // clear any previous markup
+  nav.appendChild(ol);
+}
+
+/* Example usage (delete in production) */
+renderBreadcrumbs([
+  { label: "Home", href: "/" },
+  { label: "Reports", href: "/reports" },
+  { label: "Proxy Vuln" }              // current page (no href)
+]);
+</script>
+

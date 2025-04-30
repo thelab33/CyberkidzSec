@@ -1,0 +1,80 @@
+/* ───────────────────────────────────────────────────────────────
+   👻 Hacker Vault Skin: Ghost Mode — STARFORGE Edition
+────────────────────────────────────────────────────────────────── */
+
+/* 🧠 Global Ghost Base */
+body[data-ghost-mode="true"] {
+  background-color: #000;
+  color: #0f0;
+  font-family: 'Fira Code', monospace;
+  text-shadow: 0 0 2px #0f0, 0 0 6px #0f0;
+  transition: background-color 0.5s ease, color 0.3s ease;
+}
+
+/* 🧩 Greened-Out Interactive Elements */
+[data-ghost-mode="true"] a,
+[data-ghost-mode="true"] button,
+[data-ghost-mode="true"] .btn,
+[data-ghost-mode="true"] .text-orangeLuxe,
+[data-ghost-mode="true"] .text-orangeLuxe-light,
+[data-ghost-mode="true"] .border-orangeLuxe {
+  color: #0f0 !important;
+  border-color: #0f0 !important;
+  background-color: transparent !important;
+  text-shadow: 0 0 4px #0f0a, 0 0 6px #0f07;
+}
+
+/* 🛰️ Terminal Shell UI Panels */
+[data-ghost-mode="true"] .vault-status,
+[data-ghost-mode="true"] .hud-toolbar,
+[data-ghost-mode="true"] .footer,
+[data-ghost-mode="true"] .hero,
+[data-ghost-mode="true"] #siteHeader,
+[data-ghost-mode="true"] .cta-card,
+[data-ghost-mode="true"] .card,
+[data-ghost-mode="true"] .tiltCard,
+[data-ghost-mode="true"] .hudToolbar,
+[data-ghost-mode="true"] #filterBar {
+  background-color: #000 !important;
+  border-color: #0f0 !important;
+  box-shadow: 0 0 20px #0f06, 0 0 10px #0f03;
+  transition: all 0.4s ease-in-out;
+}
+
+/* 🔡 Typewriter Cursor */
+[data-ghost-mode="true"] #heroTyper::after {
+  content: '|';
+  animation: blinkGhost 1s infinite steps(2, start);
+  color: #0f0;
+  margin-left: 4px;
+}
+
+/* 📺 Matrix Scanline Overlay */
+[data-ghost-mode="true"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.03) 0px,
+    rgba(0, 255, 0, 0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: scanlinesGhost 4s linear infinite;
+  mix-blend-mode: overlay;
+}
+
+/* ✨ Ghost Blinker + Scanlines Animations */
+@keyframes blinkGhost {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@keyframes scanlinesGhost {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 10px; }
+}
+

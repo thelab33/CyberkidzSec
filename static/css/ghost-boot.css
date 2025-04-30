@@ -1,0 +1,97 @@
+/* ───────────────────────────────────────────────────────────────
+   👻 GHOST BOOTLOADER — CyberKidzSec Entry Sequence (STARFORGE)
+────────────────────────────────────────────────────────────────── */
+
+/* ⚙️ Bootloader Container */
+#ghostBoot {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(180deg, #000, #0a0a0a);
+  color: #0f8;
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  line-height: 1.6;
+  overflow: hidden;
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 60px #0f87, 0 0 20px #0f87;
+  backdrop-filter: blur(4px);
+}
+
+/* ✨ Boot Sequence Lines */
+.ghost-line {
+  opacity: 0;
+  animation: reveal 0.5s forwards;
+}
+
+@keyframes reveal {
+  to { opacity: 1; }
+}
+
+/* ▓█ Cursor FX */
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  background: #0f8;
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  50% { background: transparent; }
+}
+
+/* 🔐 Vault Loader Splash */
+#vault-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at center, #0a0a0a, #000);
+  color: #0ff;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+  overflow: hidden;
+  animation: loaderFadeOut 3.6s ease forwards 3.2s;
+  box-shadow: inset 0 0 80px #0ff4, 0 0 24px #0ff4;
+}
+
+/* 💬 Loader Message Typewriter */
+.loader-text {
+  animation: typewriter 2.5s steps(30, end), blinkCursor .75s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #0ff;
+  padding-right: 0.5ch;
+}
+
+/* ✨ Fade Loader Out */
+@keyframes loaderFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* 🖊️ Typewriter Reveal */
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* ░▒▓ Cursor Blinking */
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
+}
+

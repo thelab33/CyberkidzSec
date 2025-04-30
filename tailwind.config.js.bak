@@ -1,0 +1,83 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,js,ts,tsx,jsx}",
+    "./templates/**/*.html",
+  ],
+  darkMode: "class",
+  theme: {
+    container: {
+      center: true,
+      padding: "1.5rem",
+      screens: {
+        xl: "1280px",
+        "2xl": "1536px",
+      },
+    },
+    extend: {
+      colors: {
+        night: {
+          DEFAULT: "#0f111a",
+          75: "rgba(15,17,26,0.75)", // <-- this makes bg-night/75 valid
+          glow: "#151827",
+          phantom: "#090a11",
+        },
+        orangeLuxe: {
+          DEFAULT: "#ff7f00",
+          light: "#ff9350",
+          dark: "#cc6600",
+        },
+        emeraldLuxe: "#34d399",
+        cyberNight: "#0f111a",           // optional, if you still want to keep your original naming
+        cyberNightGlow: "#151827",
+        cyberNightPhantom: "#090a11",
+      },
+      fontFamily: {
+        sans: ["'Inter'", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["'Fira Code'", "ui-monospace", "monospace"],
+      },
+      backgroundImage: {
+        shimmer: "linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.1) 50%, transparent 75%)",
+      },
+      animation: {
+        glow: "pulse-glow 2s ease-in-out infinite",
+        shimmer: "shimmer 1.3s linear infinite",
+        bounceSlow: "bounce-slow 2s infinite",
+        glitch: "glitch 1.5s infinite alternate-reverse",
+        typewriter: "typewriter 2s steps(40,end) both",
+      },
+      keyframes: {
+        "pulse-glow": {
+          "0%, 100%": { opacity: ".85" },
+          "50%": { opacity: "1" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        glitch: {
+          "0%": { textShadow: "2px 0 #f97316, -2px 0 cyan" },
+          "50%": { textShadow: "-2px 1px #f97316, 2px -1px cyan" },
+          "100%": { textShadow: "2px -1px #f97316, -2px 1px cyan" },
+        },
+        "bounce-slow": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
+        },
+        typewriter: {
+          from: { width: "0" },
+          to: { width: "100%" },
+        },
+      },
+      boxShadow: {
+        "glow-orange": "0 0 30px rgba(249,113,16,0.4)",
+        "hud-panel": "0 0 40px rgba(255,127,0,0.2)",
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
+}

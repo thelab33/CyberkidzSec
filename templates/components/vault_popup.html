@@ -1,0 +1,130 @@
+<!-- vault_popup.html -->
+<template id="vaultTpl">
+  <div id="vaultOverlay" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur
+                                backdrop-saturate-150 backdrop-brightness-90 p-4
+                                opacity-0 scale-95 transition-all duration-300 ease-out"
+       role="dialog" aria-modal="true">
+    <span tabindex="0"></span>
+
+    <div id="vaultPanel" class="relative w-full max-w-xl rounded-2xl overflow-hidden border border-orangeLuxe/30
+                                bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom
+                                text-orangeLuxe-light shadow-[0_0_40px_rgba(249,115,22,0.25)] font-mono">
+      <div class="absolute inset-0 pointer-events-none vhsMask"></div>
+      <div class="relative z-10 p-6 space-y-4" id="vaultBody"></div>
+    </div>
+
+    <span tabindex="0"></span>
+  </div>
+</template>
+
+<!-- 🔊 Vault Sounds -->
+<audio id="vaultSfxOpen" src="/sfx/vhs-open.mp3" preload="auto"></audio>
+<audio id="vaultSfxGlitch" src="/sfx/vhs-glitch.mp3" preload="auto"></audio>
+<audio id="vaultSfxClose" src="/sfx/vhs-close.mp3" preload="auto"></audio>
+
+<style>
+@keyframes pulse-glow { 0%,100% { opacity: .05; } 50% { opacity: .15; } }
+@keyframes glitch { to { clip-path: inset(50% 0 0 0); } }
+
+.vhsMask {
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB3aW...");
+  -webkit-mask-image: inherit;
+  animation: pulse-glow 4s linear infinite;
+}
+
+.glitch-text {
+  position: relative;
+}
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 50% 0);
+  left: 1px;
+  text-shadow: -1px 0 red;
+  opacity: 0.7;
+  animation: glitch 2s infinite steps(100);
+}
+</style>
+
+<script>
+(() => {
+  let visible = false, mode = "standard", timerId, panel;
+
+  function playSfx(id) {
+    const sfx = document.getElementById(id);
+    if (sfx && !new URLSearchParams(location.search).has("mute")) {
+      sfx.currentTime = 0;
+      sfx.play().catch(() => null);
+    }
+  }
+
+  function fillBody() {
+    if (!panel) return;
+    panel.innerHTML = `
+      <header class="text-xs uppercase tracking-wide text-orangeLuxe-light animate-pulse">
+        ${mode === "admin" ? "🔓 Developer Terminal · Root Access" : "📼 Playback Archive · Breach Logs"}
+      </header>
+      <div class="space-y-1 text-sm">
+        <p class="glitch-text" data-text="> Decrypting Vault_Records.log...">&gt; Decrypting Vault_Records.log...</p>
+        <p class="glitch-text" data-text="> asset_vault.tsx | breach_trace">&gt; asset_vault.tsx | breach_trace</p>
+        <p class="glitch-text" data-text="> 🧠 MEMORY BLEED layer-3 — status: critical">&gt; 🧠 MEMORY BLEED layer-3 — status: <span class="text-red-400">critical</span></p>
+        <p class="glitch-text text-emerald-400" data-text="> Access Level: ${mode === "admin" ? "🧠 DEVELOPER" : "VAULT VIEW"}">
+          &gt; Access Level: <strong>${mode === "admin" ? "🧠 DEVELOPER" : "VAULT VIEW"}</strong>
+        </p>
+      </div>
+      <button id="vaultClose" class="mt-6 btn btn--primary w-full">
+        🛰️ Continue Monitoring
+      </button>
+    `;
+    document.getElementById('vaultClose')?.addEventListener('click', close);
+  }
+
+  function open() {
+    if (visible) return;
+    visible = true;
+    const tpl = document.getElementById('vaultTpl').content.cloneNode(true);
+    document.body.appendChild(tpl);
+
+    panel = document.getElementById('vaultPanel');
+    fillBody();
+
+    setTimeout(() => {
+      const overlay = document.getElementById('vaultOverlay');
+      overlay?.classList.remove('opacity-0', 'scale-95');
+      overlay?.classList.add('opacity-100', 'scale-100');
+    }, 10);
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', keyHandler);
+    playSfx('vaultSfxOpen');
+
+    timerId = setTimeout(close, 15000);
+  }
+
+  function close() {
+    if (!visible) return;
+    visible = false;
+    clearTimeout(timerId);
+
+    const overlay = document.getElementById('vaultOverlay');
+    if (overlay) {
+      overlay.classList.remove('opacity-100', 'scale-100');
+      overlay.classList.add('opacity-0', 'scale-95');
+      overlay.addEventListener('transitionend', () => {
+        overlay.remove();
+        document.body.style.overflow = '';
+      }, { once: true });
+    }
+    document.removeEventListener('keydown', keyHandler);
+    playSfx('vaultSfxClose');
+  }
+
+  function keyHandler(e) {
+    if (e.key === "Escape") close();
+  }
+
+  window.Vault = { open };
+})();
+</script>
+

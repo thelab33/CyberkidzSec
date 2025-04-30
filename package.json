@@ -1,0 +1,66 @@
+{
+  "name": "cyberkidzsec-site-flask",
+  "version": "1.0.0",
+  "description": "Flask-powered vault for CyberKidzSec zero-day reports.",
+  "author": "Chris “CyberKidzSec” <hi@cyberkidzsec.com>",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thelab33/CYBERKIDZSEC_VAULT.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thelab33/CYBERKIDZSEC_VAULT/issues"
+  },
+  "homepage": "https://github.com/thelab33/CYBERKIDZSEC_VAULT#readme",
+  "keywords": [
+    "flask",
+    "tailwindcss",
+    "cybersecurity",
+    "bug-bounty",
+    "vault",
+    "zero-day",
+    "frontend",
+    "infosec"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "postinstall": "npx browserslist@latest --update-db",
+    "clean": "rimraf ./src/static/css/app.min.css .stylelintcache",
+    "build:css": "tailwindcss -i ./src/static/css/app.css -o ./src/static/css/app.min.css --minify",
+    "watch:css": "tailwindcss -i ./src/static/css/app.css -o ./src/static/css/app.min.css --watch",
+    "lint:css": "stylelint \"src/static/css/**/*.css\"",
+    "lint:css:fix": "stylelint \"src/static/css/**/*.css\" --fix",
+    "serve": "FLASK_APP=run.py flask run --reload",
+    "dev": "npm-run-all --parallel watch:css serve",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "aos": "^2.3.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.21",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.3",
+    "rimraf": "^5.0.5",
+    "stylelint": "^16.19.1",
+    "stylelint-config-standard": "^38.0.0",
+    "tailwindcss": "^3.4.4",
+    "tailwindcss-animatecss": "^3.0.5"
+  },
+  "browserslist": [
+    "defaults",
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Edge versions",
+    "last 2 Safari versions"
+  ]
+}
+

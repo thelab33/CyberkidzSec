@@ -1,0 +1,47 @@
+/* Elite CSS Module: skip_nav.css */
+
+/* Skip Nav Bar */
+#skipBar {
+  @apply fixed top-0 left-0 right-0 z-[9998] flex items-center justify-between 
+         bg-gradient-to-r from-green-400 via-cyan-400 to-green-400
+         p-3 text-black font-mono text-sm uppercase tracking-wider shadow-lg
+         transform transition-transform duration-500 translate-y-[-100%] pointer-events-none;
+}
+
+/* Warp Mode Flash Text */
+#warpText {
+  @apply absolute top-0 inset-x-0 text-center text-green-400 font-black tracking-widest 
+         text-lg opacity-0 scale-90 translate-y-[-50%]
+         transition-all duration-700 pointer-events-none;
+}
+
+/* Close Button */
+#skipBarClose {
+  @apply rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black 
+         transition p-2 ml-4 focus-visible:ring-2 focus-visible:ring-black;
+}
+
+/* Active SkipBar State */
+#skipBar.translate-y-0 {
+  @apply pointer-events-auto;
+}
+
+/* Flicker Glitch Animation */
+@keyframes cyberpunkFlicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  5% { opacity: 0.4; transform: scale(1.02); }
+  10% { opacity: 0.8; transform: scale(0.98); }
+  15% { opacity: 0.6; transform: scale(1.01); }
+  25% { opacity: 0.9; transform: scale(1); }
+  35% { opacity: 0.7; transform: scale(0.99); }
+  50% { opacity: 1; }
+  65% { opacity: 0.5; transform: scale(1.02); }
+  75% { opacity: 0.9; }
+  90% { opacity: 0.6; transform: scale(1.01); }
+}
+
+.glitch-flicker {
+  animation: cyberpunkFlicker 2.5s infinite alternate;
+  will-change: opacity, transform;
+}
+

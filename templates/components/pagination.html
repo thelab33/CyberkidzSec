@@ -1,0 +1,86 @@
+<!-- pagination.html -->
+<nav
+  id="pagination"
+  data-page="1"      <!-- current page -->
+  data-total="10"    <!-- total pages -->
+  class="flex justify-center items-center gap-2 mt-10"
+  aria-label="Pagination"
+></nav>
+
+<script>
+/**
+ * Emit a “pagechange” CustomEvent whenever the user picks a new page.
+ *   nav.addEventListener("pagechange", e => console.log(e.detail.page))
+ */
+(function () {
+  const nav   = document.getElementById("pagination");
+  let page    = +nav.dataset.page  || 1;
+  const total = +nav.dataset.total || 1;
+
+  const delta = 1; // how many siblings to show around the current page
+
+  function makeBtn(txt, aria, disabled, active, click) {
+    const btn = document.createElement("button");
+    btn.textContent = txt;
+    btn.type        = "button";
+    btn.ariaLabel   = aria;
+    if (active) btn.setAttribute("aria-current", "page");
+    btn.className = [
+      "px-3.5 py-1.5 rounded-full font-mono text-sm transition-all",
+      disabled
+        ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+        : active
+          ? "bg-orangeLuxe text-black shadow-[0_0_10px_#f97316]"
+          : "bg-cyberNight.phantom text-orangeLuxe hover:bg-cyberNight.glow"
+    ].join(" ");
+    if (!disabled) btn.onclick = click;
+    return btn;
+  }
+
+  function render() {
+    nav.innerHTML = "";
+
+    /* ← Prev */
+    nav.appendChild(
+      makeBtn("← Prev", "Previous page", page === 1, false, () => set(page - 1))
+    );
+
+    /* middle range */
+    const elems = [];
+    for (let i = 1; i <= total; i++) {
+      if (i === 1 || i === total || Math.abs(i - page) <= delta) elems.push(i);
+      else if (elems[elems.length - 1] !== "...") elems.push("...");
+    }
+
+    elems.forEach((i) => {
+      if (i === "...") {
+        const span = document.createElement("span");
+        span.textContent = "…";
+        span.className   = "px-2 text-orangeLuxe-light/60";
+        nav.appendChild(span);
+      } else {
+        nav.appendChild(
+          makeBtn(i, `Page ${i}`, false, i === page, () => set(i))
+        );
+      }
+    });
+
+    /* Next → */
+    nav.appendChild(
+      makeBtn("Next →", "Next page", page === total, false, () => set(page + 1))
+    );
+  }
+
+  function set(p) {
+    if (p < 1 || p > total || p === page) return;
+    page = p;
+    nav.dataset.page = p;
+    render();
+    nav.dispatchEvent(new CustomEvent("pagechange", { detail: { page: p } }));
+  }
+
+  /* initial paint */
+  render();
+})();
+</script>
+

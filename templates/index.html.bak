@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
+
+{% block content %}
+
+  <!-- 🧠 Vault Loader Screen -->
+  <div id="vault-loader" role="status" aria-live="assertive">
+    <span class="loader-text">🔐 Vault Decryption in Progress...</span>
+  </div>
+
+  {# Warp overlay sits behind everything #}
+  <div id="warp-overlay" aria-hidden="true"></div>
+
+  {# Status strip #}
+  <section class="section-container">
+    <div class="bg-zinc-800/80 text-orange-400 text-xs sm:text-sm text-center py-2 font-mono uppercase tracking-wider animate-pulse backdrop-blur-sm shadow-md"
+         role="status" aria-live="polite">
+      🔐 Zero-Day Archive Updating · Stay Ghosted.
+    </div>
+  </section>
+
+  {# Hero spotlight #}
+  {% include "components/hero.html" %}
+
+  {# Action CTAs #}
+  <section class="section-container text-center space-y-6 mt-16" data-aos="fade-up" role="region" aria-labelledby="home-ctas">
+    <h2 id="home-ctas" class="sr-only">Primary Actions</h2>
+    <p class="font-bold text-lg text-orange-300 animate-glow">
+      🎮 Try to Hack the Vault • ⌘ K to Search • 🌙 Toggle Dark Mode
+    </p>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="#vault-banners" class="btn btn--primary hover-lift">🚀 Enter The Vault</a>
+      <a href="#reports"        class="btn btn--secondary hover-lift">📚 Browse Reports</a>
+      <a href="/academy"        class="btn btn--outline hover-lift">🎓 Join Ghost Academy</a>
+    </div>
+  </section>
+
+  {# Showcase banners #}
+  <section id="vault-banners" class="section-container" data-aos="fade-up" aria-label="Vault Showcase">
+    {% include "components/vault_banners.html" %}
+  </section>
+
+  {# Main Vault Feed: sidebar + content #}
+  <section class="section-container grid grid-cols-1 lg:grid-cols-4 gap-10 my-20" data-aos="fade-up" aria-label="Vault Feed">
+    <aside class="space-y-10 lg:sticky lg:top-24 self-start" role="complementary" data-aos="fade-up">
+      {% include "components/filter_bar.html" %}
+      {% include "components/sidebar_filters.html" %}
+      {% include "components/sidebar_cta.html" %}
+    </aside>
+
+    <div class="lg:col-span-3 space-y-14" role="region" aria-labelledby="reports-section" data-aos="fade-up">
+      <h2 id="reports-section" class="sr-only">Reports & Analytics</h2>
+      {% include "components/breadcrumbs.html" %}
+      {% include "components/featured_reports.html" %}
+      {% include "components/report_grid.html" %}
+      {% include "components/empty_state.html" %}
+      {% include "components/pagination.html" %}
+      {% include "components/report_charts_grid.html" %}
+      {% include "components/tags_section.html" %}
+      {% include "components/related_reports.html" %}
+    </div>
+  </section>
+
+  {# Hacker Playground #}
+  <section class="section-container bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom py-20 text-center rounded-3xl shadow-2xl border border-orangeLuxe/30 backdrop-blur"
+           data-aos="fade-up"
+           aria-labelledby="playground-heading">
+    <h2 id="playground-heading" class="sr-only">Hacker Playground</h2>
+    {% include "components/hacker_playground.html" %}
+  </section>
+
+  {# Audio preloads for subtle SFX #}
+  <audio id="audio-click"   src="{{ url_for('static', filename='sfx/keyboard-clack.mp3') }}" preload="auto" aria-hidden="true"></audio>
+  <audio id="audio-unlock"  src="{{ url_for('static', filename='sfx/vhs-unlock.mp3') }}"    preload="auto" aria-hidden="true"></audio>
+  <audio id="audio-swoosh"  src="{{ url_for('static', filename='sfx/swoosh.mp3') }}"        preload="auto" aria-hidden="true"></audio>
+
+{% endblock %}
+

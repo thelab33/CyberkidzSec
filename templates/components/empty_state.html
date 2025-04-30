@@ -1,0 +1,31 @@
+<!-- empty_state.html -->
+<div id="emptyWrap" class="flex flex-col items-center justify-center py-24 text-center">
+  <div class="w-24 h-24 mb-4 opacity-60 animate-spin-slow">🙀</div>
+  <p class="text-lg text-orangeLuxe-light font-mono mb-4">
+    Nothing to see here—try adjusting your filters.
+  </p>
+  <!-- toggle the reset button by adding data-reset -->
+  <button id="resetBtn" class="hidden px-4 py-1.5 rounded-full bg-orangeLuxe text-black font-semibold hover:bg-orangeLuxe.dark">
+    Reset filters
+  </button>
+</div>
+
+<style>
+@keyframes spin-slow{ to{ transform:rotate(360deg);} }
+.animate-spin-slow{ animation:spin-slow 6s linear infinite; }
+</style>
+
+<script>
+/* Call emptyState.show(msg, resetHandler) anywhere */
+window.emptyState = {
+  show(msg="Nothing to see here—try adjusting your filters.", onReset){
+    document.querySelector("#emptyWrap p").textContent = msg;
+    const btn=document.getElementById("resetBtn");
+    if(onReset){ btn.classList.remove("hidden"); btn.onclick=onReset; }
+    else       { btn.classList.add("hidden");     btn.onclick=null;   }
+    document.getElementById("emptyWrap").style.display="flex";
+  },
+  hide(){ document.getElementById("emptyWrap").style.display="none"; }
+};
+</script>
+

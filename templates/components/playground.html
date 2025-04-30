@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Playground · CyberKidzSec{% endblock %}
+
+{% block content %}
+<section id="playgroundSection" class="ckz-hero min-h-screen flex flex-col justify-center items-center text-center gap-8 px-6" data-aos="fade-up"">
+
+  <!-- ✨ Title -->
+  <h1 class="ckz-hero-title animate-glow text-4xl sm:text-5xl font-extrabold">
+    Hacker Playground 👾
+  </h1>
+
+  <p class="text-orange-300 font-mono text-sm">
+    "Only the curious survive the Vault."
+  </p>
+
+  <!-- 💻 Hacker Terminal -->
+  <div id="terminalBox" class="w-full max-w-2xl bg-black rounded-lg p-6 border border-orange-500 text-green-400 font-mono text-sm text-left shadow-xl overflow-y-auto h-[400px] relative">
+    <div id="terminalOutput" class="whitespace-pre-wrap"></div>
+    <div class="flex items-center">
+      <span class="text-green-400">$</span>
+      <input id="terminalInput" type="text" autocomplete="off"
+             class="flex-1 bg-transparent outline-none text-green-400 pl-2 caret-green-400" />
+    </div>
+  </div>
+
+  <!-- 🛰️ Return Button -->
+  <a href="/" class="btn btn--secondary mt-10">
+    🛰️ Return to Base
+  </a>
+
+</section>
+
+<!-- 👻 Hidden Flag inside a comment -->
+<!-- flag{ghost-vault-activated} -->
+
+<script>
+(() => {
+  const output = document.getElementById("terminalOutput");
+  const input = document.getElementById("terminalInput");
+
+  const responses = {
+    "help": "Available commands:\n- ls\n- cat flag.txt\n- decrypt\n- ghost\n- clear",
+    "ls": "flag.txt  vault.log  hack.exe  access_key.pub",
+    "cat flag.txt": "🧠 FLAG{ghost-vault-activated}",
+    "decrypt": "Decrypting vault records...\nAccess Level: 🧠 OPERATOR",
+    "ghost": "👻 GHOST MODE ACTIVATED!",
+    "clear": "",
+    "default": "Command not recognized. Type 'help'."
+  };
+
+  function print(msg) {
+    output.textContent += msg + "\n";
+    output.scrollTop = output.scrollHeight;
+  }
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const cmd = input.value.trim().toLowerCase();
+      print(`$ ${cmd}`);
+      if (cmd in responses) {
+        print(responses[cmd]);
+        if (cmd === "ghost") activateGhostMode();
+      } else {
+        print(responses["default"]);
+      }
+      input.value = "";
+    }
+  });
+
+  function activateGhostMode() {
+    document.documentElement.classList.add("ghost-mode");
+    print("🧪 Neon Hacker Mode Engaged. Welcome, Operative.");
+    localStorage.setItem("ghost", "1");
+  }
+
+  // focus on input automatically
+  window.addEventListener("load", () => input.focus());
+})();
+</script>
+
+<style>
+/* 🧠 Blinking Hacker Cursor */
+#terminalInput::placeholder {
+  color: green;
+}
+#terminalInput {
+  caret-color: #22c55e;
+}
+</style>
+
+{% endblock %}
+

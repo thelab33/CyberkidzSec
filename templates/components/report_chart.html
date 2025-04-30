@@ -1,0 +1,38 @@
+<!-- report_chart.html -->
+<div class="w-full max-w-md mx-auto" data-aos="zoom-in" data-aos-delay="150">
+  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4">Report Distribution</h3>
+  <canvas id="reportChart" height="280"></canvas>
+</div>
+
+<script type="module">
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+
+/* Mock sample or server-injected data */
+const DATA = window.CHART_DATA || [
+  { name: "XSS", value: 12 },
+  { name: "Injection", value: 8 },
+  { name: "Misconfig", value: 6 },
+  { name: "Race", value: 4 },
+];
+
+document.getElementById("chartTitle").textContent = "Report Distribution";
+
+new Chart(document.getElementById("reportChart"), {
+  type: "doughnut",
+  data: {
+    labels: DATA.map(d => d.name),
+    datasets: [{
+      data: DATA.map(d => d.value),
+      backgroundColor: ["#f97316", "#ec4899", "#8b5cf6", "#22d3ee"],
+      borderWidth: 1,
+    }],
+  },
+  options: {
+    plugins: {
+      legend: { display: true, position: "bottom", labels: { color: "#f8fafc", font: { family: "monospace" } } },
+      tooltip: { backgroundColor: "#020617" },
+    },
+  },
+});
+</script>
+
