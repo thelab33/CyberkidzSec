@@ -1,71 +1,94 @@
 {% extends "base.html" %}
+
 {% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
 
+{% block head_extra %}
+  <!-- 🎯 Page-Specific Component Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/vault_banners.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/filter_bar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/sidebar_filters.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/sidebar_cta.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/breadcrumbs.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/featured_reports.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/report_grid.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/empty_state.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/pagination.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/report_charts_grid.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/tags_section.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/related_reports.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sections/hacker_playground.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/terminal_scan.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/hud_status.css') }}">
+{% endblock %}
+
 {% block content %}
+  <!-- Vault Status Banner -->
+  <section class="section-container" aria-live="polite">
+    <div class="bg-zinc-800/80 text-orange-400 text-xs sm:text-sm text-center py-2 font-mono uppercase tracking-wider animate-pulse backdrop-blur shadow">
+      🔐 Zero-Day Archive Updating · Stay Ghosted.
+    </div>
+  </section>
 
-<!-- 🔐 Vault Status Banner -->
-<section class="section-container" aria-live="polite">
-  <div class="bg-zinc-800/80 text-orange-400 text-xs sm:text-sm text-center py-2 font-mono uppercase tracking-wider animate-pulse backdrop-blur shadow"
-       role="status">
-    🔐 Zero-Day Archive Updating · Stay Ghosted.
-  </div>
-</section>
+  <!-- Console & Hero -->
+  {% include "components/console.html" %}
+  {% include "components/hero.html" %}
 
-<!-- 💀 Hero Spotlight -->
-{% include "components/hero.html" %}
+  <!-- Primary CTAs -->
+  <section class="section-container text-center mt-16 space-y-6" data-aos="fade-up" role="region" aria-labelledby="home-ctas">
+    <h2 id="home-ctas" class="sr-only">Primary Actions</h2>
+    <p class="text-orange-300 font-bold text-lg animate-glow">
+      🎮 Try to Hack the Vault • ⌘ K to Search • 🌙 Toggle Dark Mode
+    </p>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="#vault-banners" class="btn btn--primary hover-lift">🚀 Enter The Vault</a>
+      <a href="#reports" class="btn btn--secondary hover-lift">📚 Browse Reports</a>
+      <a href="/academy" class="btn btn--outline hover-lift">🎓 Join Ghost Academy</a>
+    </div>
+  </section>
 
-<!-- 🚀 Primary CTAs -->
-<section class="section-container text-center mt-16 space-y-6" data-aos="fade-up" role="region" aria-labelledby="home-ctas">
-  <h2 id="home-ctas" class="sr-only">Primary Actions</h2>
-  <p class="text-orange-300 font-bold text-lg animate-glow">
-    🎮 Try to Hack the Vault • ⌘ K to Search • 🌙 Toggle Dark Mode
-  </p>
-  <div class="flex flex-wrap justify-center gap-6">
-    <a href="#vault-banners" class="btn btn--primary hover-lift">🚀 Enter The Vault</a>
-    <a href="#reports" class="btn btn--secondary hover-lift">📚 Browse Reports</a>
-    <a href="/academy" class="btn btn--outline hover-lift">🎓 Join Ghost Academy</a>
-  </div>
-</section>
+  <!-- Vault Showcase -->
+  <section id="vault-banners" class="section-container mt-20" data-aos="fade-up" aria-labelledby="vault-showcase-heading">
+    <h2 id="vault-showcase-heading" class="sr-only">Vault Showcase</h2>
+    {% include "components/vault_banners.html" %}
+  </section>
 
-<!-- 🛰️ Vault Showcase -->
-<section id="vault-banners" class="section-container mt-20" data-aos="fade-up" aria-labelledby="vault-showcase-heading">
-  <h2 id="vault-showcase-heading" class="sr-only">Vault Showcase</h2>
-  {% include "components/vault_banners.html" %}
-</section>
+  <!-- Vault Feed Grid -->
+  <section class="section-container grid grid-cols-1 lg:grid-cols-4 gap-10 my-24" data-aos="fade-up">
+    <aside class="space-y-10 lg:sticky lg:top-24 self-start" role="complementary">
+      {% include "components/filter_bar.html" %}
+      {% include "components/sidebar_filters.html" %}
+      {% include "components/sidebar_cta.html" %}
+    </aside>
+    <div class="lg:col-span-3 space-y-14" role="region" aria-labelledby="reports-section">
+      <h2 id="reports-section" class="sr-only">Reports & Analytics</h2>
+      {% include "components/breadcrumbs.html" %}
+      {% include "components/featured_reports.html" %}
+      {% include "components/report_grid.html" %}
+      {% include "components/empty_state.html" %}
+      {% include "components/pagination.html" %}
+      {% include "components/report_charts_grid.html" %}
+      {% include "components/tags_section.html" %}
+      {% include "components/related_reports.html" %}
+    </div>
+  </section>
 
-<!-- 📈 Vault Feed Grid -->
-<section class="section-container grid grid-cols-1 lg:grid-cols-4 gap-10 my-24" data-aos="fade-up" aria-labelledby="vault-feed-heading">
-  <aside class="space-y-10 lg:sticky lg:top-24 self-start" role="complementary">
-    {% include "components/filter_bar.html" %}
-    {% include "components/sidebar_filters.html" %}
-    {% include "components/sidebar_cta.html" %}
-  </aside>
+  <!-- Hacker Playground -->
+  <section class="section-container py-20 text-center rounded-3xl shadow-2xl border border-orangeLuxe/30 backdrop-blur bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom" data-aos="fade-up" aria-labelledby="playground-heading">
+    <h2 id="playground-heading" class="sr-only">Hacker Playground</h2>
+    {% include "components/hacker_playground.html" %}
+  </section>
 
-  <div class="lg:col-span-3 space-y-14" role="region" aria-labelledby="reports-section">
-    <h2 id="reports-section" class="sr-only">Reports & Analytics</h2>
-    {% include "components/breadcrumbs.html" %}
-    {% include "components/featured_reports.html" %}
-    {% include "components/report_grid.html" %}
-    {% include "components/empty_state.html" %}
-    {% include "components/pagination.html" %}
-    {% include "components/report_charts_grid.html" %}
-    {% include "components/tags_section.html" %}
-    {% include "components/related_reports.html" %}
-  </div>
-</section>
+  <!-- Terminal & HUD -->
+  {% include "components/terminal_scan.html" %}
+  {% include "components/hud_status.html" %}
 
-<!-- 🎮 Hacker Playground -->
-<section class="section-container py-20 text-center rounded-3xl shadow-2xl border border-orangeLuxe/30 backdrop-blur bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom"
-         data-aos="fade-up"
-         aria-labelledby="playground-heading">
-  <h2 id="playground-heading" class="sr-only">Hacker Playground</h2>
-  {% include "components/hacker_playground.html" %}
-</section>
+  <!-- Footer -->
+  {% include "components/footer.html" %}
+  {% include "components/back_to_top.html" %}
+{% endblock %}
 
-<!-- 🎧 Audio FX (preloaded but available inline if needed) -->
-<audio id="audio-click"   src="{{ url_for('static', filename='sfx/keyboard-clack.mp3') }}" preload="auto" aria-hidden="true"></audio>
-<audio id="audio-unlock"  src="{{ url_for('static', filename='sfx/vhs-unlock.mp3') }}" preload="auto" aria-hidden="true"></audio>
-<audio id="audio-swoosh"  src="{{ url_for('static', filename='sfx/swoosh.mp3') }}" preload="auto" aria-hidden="true"></audio>
-
+{% block scripts_extra %}
+  <script src="{{ url_for('static', filename='js/console.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/hero_starfield_debug.js') }}"></script>
 {% endblock %}
 

@@ -1,0 +1,10 @@
+#bug-tales {
+  background: rgba(15,15,15,0.9);
+  border: 1px solid #334155;
+}
+#bug-tales button {
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  color: white;
+}
+

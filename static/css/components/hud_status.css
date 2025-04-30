@@ -1,0 +1,5 @@
+/* hud_status.css */
+#hudBadge, #vaultXpBar, #hudTooltip {
+  z-index: 9999;
+}
+

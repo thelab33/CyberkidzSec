@@ -1,0 +1,58 @@
+{# templates/components/hud_status.html — Enhanced HUD Status Badge 🌠 #}
+<div id="hudBadge"
+     class="fixed bottom-4 right-4 bg-zinc-900/90 backdrop-blur-sm text-orange-400 text-xs sm:text-sm font-mono px-4 py-2 rounded-lg shadow-xl z-50 flex items-center space-x-2"
+     role="status" aria-live="polite">
+
+  <span>👻 Ghost Mode: <strong id="hudGhostStatus" class="text-white">Loading…</strong></span>
+  <span class="hidden sm:inline">·</span>
+  <span>🔓 Admin: <strong id="hudAdminStatus" class="text-white">Loading…</strong></span>
+  <span class="hidden sm:inline">·</span>
+  <span>🛰️ Feed: <strong id="hudFeedStatus" class="text-emerald-400">Connecting…</strong></span>
+  <span class="hidden sm:inline">·</span>
+  <span>Vault: <strong>{{ vault_xp_percentage }}%</strong></span>
+</div>
+
+<div id="vaultXpBar" class="fixed top-0 left-0 right-0 z-50 h-1 bg-black/30 backdrop-blur-sm">
+  <div class="h-full bg-gradient-to-r from-orange-400 to-emeraldLuxe transition-all duration-700 ease-out"
+       style="width: {{ vault_xp_percentage }}%">
+  </div>
+</div>
+
+<div id="hudTooltip"
+     class="hidden fixed bottom-16 right-4 text-[10px] text-orange-300 font-mono bg-zinc-800/90 px-3 py-2 rounded shadow-md z-50 animate-fade-in"
+     aria-hidden="true">
+  HUD Systems Verified · All Clear
+</div>
+
+<style>
+  #hudBadge::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(255,127,0,0.1);
+    animation: hudPulse 3s ease-in-out infinite;
+    z-index: -1;
+  }
+  @keyframes hudPulse {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(1.05); }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const ghost = localStorage.getItem('ghost') === 'true';
+  const admin = localStorage.getItem('admin') === 'true';
+  document.getElementById('hudGhostStatus').textContent = ghost ? 'ACTIVE' : 'OFF';
+  document.getElementById('hudAdminStatus').textContent = admin ? 'ENGAGED' : 'OFF';
+
+  const ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws/status');
+  ws.onmessage = e => {
+    document.getElementById('hudFeedStatus').textContent = e.data;
+  };
+  ws.onclose = () => {
+    document.getElementById('hudFeedStatus').textContent = 'OFFLINE';
+  };
+});
+</script>

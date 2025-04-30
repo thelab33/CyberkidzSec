@@ -1,4 +1,4 @@
-<!-- components/hud_toolbar.html -->
+{# templates/components/hud_toolbar.html — Enhanced HUD Toolbar with Live Status 🌐 #}
 <div id="hudToolbar"
      class="fixed bottom-6 right-6 z-[9998] w-72 rounded-2xl border border-orangeLuxe/25
             bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom
@@ -20,15 +20,15 @@
   <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-3">
     <div class="flex justify-between">
       👻 Ghost Mode:
-      <span id="hudGhost" class="font-semibold text-gray-500">OFF</span>
+      <span id="hudGhost" class="font-semibold">Loading…</span>
     </div>
     <div class="flex justify-between">
       🔓 Admin:
-      <span id="hudAdmin" class="font-semibold text-gray-500">OFF</span>
+      <span id="hudAdmin" class="font-semibold">Loading…</span>
     </div>
     <div class="flex justify-between">
       🛰️ Vault Feed:
-      <span id="hudFeed" class="font-semibold text-sky-400">CONNECTING…</span>
+      <span id="hudFeed" class="font-semibold">CONNECTING…</span>
     </div>
 
     <hr class="border-orangeLuxe/20 my-3">
@@ -59,14 +59,12 @@
   const feedEl = document.getElementById("hudFeed");
   const logEl = document.getElementById("hudLog");
 
-  // 1️⃣ Entrance Animation
   requestAnimationFrame(() => {
     toolbar.classList.replace("opacity-0", "opacity-100");
     toolbar.classList.replace("translate-y-8", "translate-y-0");
     toolbar.classList.replace("scale-95", "scale-100");
   });
 
-  // 2️⃣ Persisted Collapse State
   const COLLAPSED_KEY = "hud.collapsed";
   let collapsed = localStorage.getItem(COLLAPSED_KEY) === "1";
   function updateCollapse() {
@@ -82,19 +80,17 @@
     updateCollapse();
   });
 
-  // 3️⃣ Simulated Boot Sequence & Status
   setTimeout(() => logEl.textContent = "🧠 Running memory check...", 1000);
   setTimeout(() => {
     logEl.textContent = "✅ Vault Systems Verified";
-    const ghost = localStorage.getItem("ghost") === "1";
-    const admin = localStorage.getItem("admin") === "1";
+    const ghost = localStorage.getItem("ghost") === "true";
+    const admin = localStorage.getItem("admin") === "true";
     ghostEl.textContent = ghost ? "ACTIVE" : "OFF";
     ghostEl.className = "font-semibold " + (ghost ? "text-emerald-400" : "text-gray-500");
     adminEl.textContent = admin ? "ENGAGED" : "OFF";
     adminEl.className = "font-semibold " + (admin ? "text-emerald-400" : "text-gray-500");
   }, 2500);
 
-  // 4️⃣ WebSocket Live Feed
   if (window.location.protocol.startsWith("http")) {
     try {
       const ws = new WebSocket((location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/ws/status");
@@ -106,34 +102,6 @@
     }
   }
 
-  // 5️⃣ Drag & Inertia
-  let pos = { x: 0, y: 0 }, start = {}, vel = { x:0, y:0 }, moving = false;
-  const friction = 0.92;
-  toggleBtn.addEventListener("pointerdown", e => {
-    moving = true;
-    start = { x: e.clientX - pos.x, y: e.clientY - pos.y };
-    toolbar.setPointerCapture(e.pointerId);
-  });
-  toolbar.addEventListener("pointermove", e => {
-    if (!moving) return;
-    pos = { x: e.clientX - start.x, y: e.clientY - start.y };
-    vel = { x: e.movementX, y: e.movementY };
-    toolbar.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-  });
-  toolbar.addEventListener("pointerup", e => {
-    moving = false;
-    toolbar.releasePointerCapture(e.pointerId);
-    (function inertia() {
-      vel.x *= friction; vel.y *= friction;
-      pos.x += vel.x; pos.y += vel.y;
-      toolbar.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-      if (Math.abs(vel.x) > 0.5 || Math.abs(vel.y) > 0.5) {
-        requestAnimationFrame(inertia);
-      }
-    })();
-  });
-
-  // 6️⃣ Keyboard Shortcut (Ctrl+H)
   document.addEventListener("keydown", e => {
     if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === "h") {
       e.preventDefault();
@@ -142,4 +110,3 @@
   });
 })();
 </script>
-

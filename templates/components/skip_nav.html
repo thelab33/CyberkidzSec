@@ -1,70 +1,74 @@
-<!-- templates/components/skip_nav.html -->
+<!-- Updated skip_nav.html -->
 <div id="skipBar"
-     class="fixed top-0 left-0 right-0 z-[9998] flex items-center justify-between 
+     class="fixed top-0 left-0 right-0 z-[9998] flex items-center justify-between
             bg-gradient-to-r from-green-400 via-cyan-400 to-green-400
-            p-3 text-black font-mono text-sm uppercase tracking-wider shadow-lg
-            transform translate-y-[-120%] transition-all duration-500 pointer-events-none"
+            p-3 text-black font-mono text-sm uppercase tracking-wider shadow-xl
+            transform -translate-y-40 transition-transform duration-500 ease-out pointer-events-none"
      role="navigation" aria-label="Skip Navigation Bar">
-  
-  <!-- 🚀 Warp Text -->
+
+  <!-- 🚀 Warp Text + Shake -->
   <div id="warpText"
        class="absolute top-0 inset-x-0 text-center text-green-400 font-black tracking-widest
-              text-lg opacity-0 scale-90 translate-y-[-50%] transition-all duration-700 pointer-events-none glitch-flicker">
+              text-lg mix-blend-difference opacity-0 scale-90 -translate-y-1/2
+              transition-all duration-500 ease-in-out glitch-flicker shake-on-show">
     WARP MODE ENGAGED
   </div>
 
   <!-- Skip Links -->
   <div class="flex gap-6">
-    <a href="#main" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded-md px-2 py-1">
+    <a href="#main" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Main
     </a>
-    <a href="#footer" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded-md px-2 py-1">
+    <a href="#footer" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Footer
     </a>
   </div>
 
   <!-- ✖️ Close Button -->
   <button id="skipBarClose" aria-label="Close Skip Navigation"
-          class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 ml-4 focus-visible:ring-2 focus-visible:ring-black">
+          class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black">
     ✖️
   </button>
+
+  <!-- 🎉 Confetti Canvas -->
+  <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none"></canvas>
 </div>
 
-<!-- 🌌 Warp Mode Cyberpunk Flicker -->
 <style>
-@keyframes cyberpunkFlicker {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  5% { opacity: 0.4; transform: scale(1.02); }
-  10% { opacity: 0.8; transform: scale(0.98); }
-  15% { opacity: 0.6; transform: scale(1.01); }
-  25% { opacity: 0.9; transform: scale(1); }
-  35% { opacity: 0.7; transform: scale(0.99); }
-  50% { opacity: 1; }
-  65% { opacity: 0.5; transform: scale(1.02); }
-  75% { opacity: 0.9; }
-  90% { opacity: 0.6; transform: scale(1.01); }
-}
-.glitch-flicker {
-  animation: cyberpunkFlicker 2.5s infinite alternate;
-  will-change: opacity, transform;
-}
+  @keyframes cyberpunkFlicker { /* unchanged */ }
+  .glitch-flicker { animation: cyberpunkFlicker 2.5s infinite alternate; }
+  .shake-on-show { animation: shake 0.6s ease-in-out; }
+  @keyframes shake {
+    0%,100%{ transform: translateX(0); }
+    20%,60%{ transform: translateX(-4px); }
+    40%,80%{ transform: translateX(4px); }
+  }
+  canvas#confettiCanvas { z-index: 9997; }
 </style>
 
-<!-- 🛸 Warp Mode Skip Bar Logic -->
 <script>
 (() => {
   const skipBar = document.getElementById("skipBar");
   const warpText = document.getElementById("warpText");
   const closeBtn = document.getElementById("skipBarClose");
+  const confettiCanvas = document.getElementById("confettiCanvas");
+  let confetti;
 
   function showSkipBar() {
-    skipBar.classList.remove("translate-y-[-120%]", "pointer-events-none");
+    skipBar.classList.remove("-translate-y-40", "pointer-events-none");
     skipBar.classList.add("translate-y-0");
-    warpText.classList.remove("opacity-0", "scale-90", "translate-y-[-50%]");
+    warpText.classList.remove("opacity-0", "scale-90", "-translate-y-1/2");
     warpText.classList.add("opacity-100", "scale-100", "translate-y-0");
 
+    // play sound
+    new Audio('/static/audio/warp-sound.mp3').play().catch(()=>{});
+
+    // trigger confetti
+    confetti = ConfettiGenerator({ target: confettiCanvas, max: 80 });
+    confetti.render();
+
     setTimeout(() => {
-      warpText.classList.add("opacity-0", "scale-90", "translate-y-[-50%]");
+      warpText.classList.add("opacity-0", "scale-90", "-translate-y-1/2");
       warpText.classList.remove("opacity-100", "scale-100", "translate-y-0");
     }, 1500);
 
@@ -72,22 +76,15 @@
   }
 
   function hideSkipBar() {
-    skipBar.classList.add("translate-y-[-120%]", "pointer-events-none");
+    skipBar.classList.add("-translate-y-40", "pointer-events-none");
     skipBar.classList.remove("translate-y-0");
+    if (confetti) confetti.clear();
   }
 
-  // Keyboard Controls
   window.addEventListener("keydown", (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === "ArrowUp") {
-      e.preventDefault();
-      showSkipBar();
-    }
-    if (e.key === "Escape") {
-      hideSkipBar();
-    }
+    if ((e.metaKey||e.ctrlKey)&&e.key==="ArrowUp") { e.preventDefault(); showSkipBar(); }
+    if (e.key==="Escape") hideSkipBar();
   });
-
   closeBtn.addEventListener("click", hideSkipBar);
 })();
 </script>
-

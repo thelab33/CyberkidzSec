@@ -1,69 +1,92 @@
-<script>
+// static/js/ghost-mode.js
 (() => {
-  const html = document.documentElement;
-  const ghostKey = "vaultGhostMode";
+  const GHOST_KEY = 'vaultGhostMode';
+  const html      = document.documentElement;
+  let   keyBuffer = [];
 
-  /* Enable hacker mode */
-  function activateGhost() {
-    html.dataset.ghostMode = "true";
-    localStorage.setItem(ghostKey, "1");
+  // ── Boot Animation Messages ──
+  const bootLines = [
+    'Bootloader initializing...',
+    'Decrypting vault memory...',
+    'Establishing encrypted connection to Vault...',
+    '🛰️ Live Vault Feed secured.',
+    'Decrypting Ghost Mode payload...',
+    '🧪 Injecting Neon Hacker DNA...',
+    '🌌 CyberForge system calibration complete.',
+    '🚀 Launching Vault Ghost Mode Sequence...',
+    '👻 Ghost Mode Activated: Terminal Override Engaged.'
+  ];
+
+  // ── Utility: Typewriter for a line ──
+  function typeLine(line, container, delay = 50) {
+    let i = 0;
+    const iv = setInterval(() => {
+      container.textContent += line[i++] || '';
+      if (i > line.length) {
+        clearInterval(iv);
+        container.insertAdjacentHTML('beforeend', '<br>');
+      }
+    }, delay);
   }
 
-  /* Disable hacker mode */
-  function deactivateGhost() {
-    delete html.dataset.ghostMode;
-    localStorage.removeItem(ghostKey);
+  // ── Start Full‐Screen Boot Animation ──
+  function startBootAnimation() {
+    if (document.getElementById('ghostBootScreen')) return;
+    const screen = document.createElement('div');
+    screen.id = 'ghostBootScreen';
+    screen.className = 'fixed inset-0 z-[99999] bg-black text-neonGreen font-mono text-sm p-6 overflow-auto';
+    const log = document.createElement('pre');
+    log.id = 'ghostBootLog';
+    screen.appendChild(log);
+    document.body.appendChild(screen);
+
+    let idx = 0;
+    const next = () => {
+      if (idx >= bootLines.length) {
+        setTimeout(() => screen.remove(), 1200);
+      } else {
+        typeLine(bootLines[idx++], log);
+        setTimeout(next, 1200);
+      }
+    };
+    next();
   }
 
-  /* Check saved */
-  if (localStorage.getItem(ghostKey) === "1") {
-    activateGhost();
-  }
-
-  /* Listen for secret unlock: ghost + enter */
-  let keys = [];
-  window.addEventListener("keydown", (e) => {
-    keys.push(e.key.toLowerCase());
-    if (keys.join("").includes("ghost")) {
-      activateGhost();
-      spawnConfetti();
-    }
-    if (keys.length > 10) keys.shift();
-  });
-
-  /* Neon Confetti on Unlock */
-  function spawnConfetti() {
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.inset = '0';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '9999';
-    document.body.appendChild(canvas);
-
-    const ctx = canvas.getContext('2d');
-    const particles = Array.from({ length: 150 }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: Math.random() * 3 + 1,
-      speedY: Math.random() * 2 + 1,
-      color: '#00FF00'
-    }));
-
-    function render() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        p.y += p.speedY;
-        if (p.y > window.innerHeight) p.y = 0;
+  // ── Spawn Neon Confetti ──
+  function spawnNeonConfetti() {
+    import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js')
+      .then(({ default: confetti }) => {
+        confetti({ particleCount: 200, spread: 100, decay: 0.9, gravity: 0.3, origin: { y: 0.3 } });
       });
-      requestAnimationFrame(render);
-    }
-    render();
-    setTimeout(() => canvas.remove(), 4000);
   }
+
+  // ── Activate Ghost Mode ──
+  function activateGhostMode() {
+    html.dataset.ghostMode = 'true';
+    localStorage.setItem(GHOST_KEY, '1');
+    spawnNeonConfetti();
+    startBootAnimation();
+    // Optional: show any ghost‐badge overlay
+    document.getElementById('ghostMsg')?.classList.remove('hidden');
+  }
+
+  // ── Init on Page Load ──
+  function initGhostMode() {
+    // If already unlocked, fire animation immediately
+    if (localStorage.getItem(GHOST_KEY) === '1') {
+      activateGhostMode();
+    }
+    // Listen for typing “ghost”
+    window.addEventListener('keydown', e => {
+      keyBuffer.push(e.key.toLowerCase());
+      if (keyBuffer.length > 5) keyBuffer.shift();
+      if (keyBuffer.join('') === 'ghost') {
+        activateGhostMode();
+        keyBuffer = [];
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initGhostMode);
 })();
-</script>
 

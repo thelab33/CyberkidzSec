@@ -1,121 +1,184 @@
-/* sections/header.css — CYBERKIDZSEC Header & Nav Styles */
+/* static/css/header.css — Elite CYBERKIDZSEC Header & Nav Styles */
 
-/* ─── Palette Variables (sync with design tokens) ─── */
+/*────────────────── Palette & Vars ──────────────────*/
 :root {
-  --color-night: #0f111a;
-  --color-night-75: rgb(15 17 26 / 75%);
-  --color-night-phantom: #090a11;
-  --color-orange-luxe: #ff7f00;
-  --color-orange-luxe-light: #ff9350;
-  --color-emerald-ghost: #34d399;
-  --glow-green: #0f8;
+  --clr-night:           #0f111a;
+  --clr-night-75:        rgba(15,17,26,0.75);
+  --clr-night-phantom:   #090a11;
+  --clr-orange-luxe:     #ff7f00;
+  --clr-orange-luxe-light:#ff9350;
+  --clr-emerald-ghost:   #34d399;
+  --header-height:       4rem;
 }
 
-@layer components {
-  /* ── Main Header Shell ── */
-  .site-header {
-    @apply fixed inset-x-0 top-0 z-50 bg-[var(--color-night-75)] dark:bg-[var(--color-night-phantom)]
-           backdrop-blur-md border-b border-[var(--color-night-phantom)]
-           transition-transform duration-300;
-
-    animation: headerReveal 0.6s ease-out;
-  }
-
-  .site-header.hide {
-    @apply -translate-y-full;
-  }
-
-  /* ── Brand Link ── */
-  .site-header__branding a {
-    @apply text-orangeLuxe font-black tracking-widest text-lg
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200;
-
-    animation: glitchText 1.5s infinite alternate;
-  }
-
-  /* ── Desktop Widgets ── */
-  .site-header__widgets {
-    @apply hidden lg:flex items-center gap-4;
-  }
-
-  .site-header__widgets .vault-status {
-    @apply text-sm font-mono text-orange-300;
-
-    text-shadow: 0 0 5px var(--color-orange-luxe-light);
-    animation: pulseGlow 2s ease-in-out infinite;
-  }
-
-  .site-header__widgets kbd {
-    @apply bg-[var(--color-night-phantom)] text-zinc-200 font-mono text-xs rounded px-2 py-1;
-  }
-
-  /* ── Mobile Nav Toggle ── */
-  #menuToggle {
-    @apply lg:hidden text-2xl p-1 rounded hover:bg-orange-500/20
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200;
-  }
-
-  .mobile-nav {
-    @apply hidden lg:hidden fixed inset-x-0 top-full bg-black/90 backdrop-blur p-6 z-40;
-
-    animation: slideInNav 0.5s ease-out;
-  }
-
-  .mobile-nav.show {
-    @apply block;
-  }
+/*────────────────── Header Shell ──────────────────*/
+#siteHeader {
+  position: fixed;
+  inset: 0 0 auto;
+  height: var(--header-height);
+  background: var(--clr-night-75);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  border-bottom: 1px solid var(--clr-night-phantom);
+  transition: transform 0.3s ease, background 0.3s ease, height 0.3s ease;
+  z-index: 9999;
+}
+#siteHeader.hide {
+  transform: translateY(-100%);
+}
+#siteHeader.scrolled {
+  background: var(--clr-night-phantom);
+  height: calc(var(--header-height) - 0.5rem);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.7);
 }
 
-@layer utilities {
-  /* ── Scroll Progress Bar Utility ── */
-  .scroll-progress {
-    @apply fixed inset-x-0 top-0 h-1 bg-orangeLuxe origin-left scale-x-0 transition-transform duration-150;
-  }
-
-  /* ── Ghost Mode Badge ── */
-  .ghost-badge {
-    @apply absolute right-6 top-3 text-xs font-semibold text-emeraldLuxe;
-
-    animation: pulseGhost 0.9s cubic-bezier(.4,0,.6,1) infinite;
-  }
-
-  /* ── Keyframe for Ghost Pulse ── */
-  @keyframes pulseGhost {
-    0%,100% { opacity: 1; }
-    50%     { opacity: 0.35; }
-  }
-
-  /* ── Pulse Glow FX ── */
-  @keyframes pulseGlow {
-    0%, 100% {
-      text-shadow: 0 0 5px var(--color-orange-luxe-light);
-    }
-
-    50% {
-      text-shadow: 0 0 12px var(--color-orange-luxe);
-    }
-  }
-
-  /* ── Glitch Title Animation ── */
-  @keyframes glitchText {
-    0%   { transform: translate(0); }
-    20%  { transform: translate(-1px, 1px); }
-    40%  { transform: translate(1px, -1px); }
-    60%  { transform: translate(-1px, 0); }
-    80%  { transform: translate(1px, 1px); }
-    100% { transform: translate(0); }
-  }
-
-  /* ── Mobile Nav Slide In ── */
-  @keyframes slideInNav {
-    0%   { transform: translateY(-10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-
-  /* ── Header Reveal ── */
-  @keyframes headerReveal {
-    0%   { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
+/*────────────────── Container & Layout ──────────────────*/
+#siteHeader .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 1.5rem;
 }
+
+/*────────────────── Logo & Brand ──────────────────*/
+#siteHeader .logo-link {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--clr-orange-luxe);
+  transition: transform 0.3s ease;
+}
+#siteHeader .logo-link:hover {
+  transform: scale(1.05);
+}
+#siteHeader .logo-icon {
+  animation: spin-slow 6s linear infinite;
+}
+
+/*────────────────── Global Search ──────────────────*/
+#globalSearch {
+  width: 100%;
+  max-width: 24rem;
+  padding: .5rem 1rem .5rem 2.5rem;
+  font: 400 .875rem system-ui, sans-serif;
+  color: #eee;
+  background: rgba(30,30,40,0.8);
+  border: 1px solid #333;
+  border-radius: .5rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+#globalSearch:focus {
+  background: rgba(30,30,40,1);
+  border-color: var(--clr-orange-luxe);
+  outline: none;
+}
+
+/*────────────────── Desktop Nav ──────────────────*/
+#siteHeader nav {
+  display: flex;
+  gap: 1.5rem;
+}
+#siteHeader nav a {
+  position: relative;
+  font: 500 .75rem system-ui, sans-serif;
+  text-transform: uppercase;
+  color: #ccc;
+  transition: color 0.2s;
+}
+#siteHeader nav a:hover {
+  color: var(--clr-orange-luxe-light);
+}
+#siteHeader nav a.active {
+  color: var(--clr-orange-luxe);
+}
+#siteHeader nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -0.25rem;
+  width: 100%; height: 2px;
+  background: var(--clr-orange-luxe);
+  border-radius: 1px;
+  animation: underlineGrow 0.4s ease-out;
+}
+
+/*────────────────── Action Buttons ──────────────────*/
+#siteHeader .actions > * {
+  margin-left: 1rem;
+  background: rgba(15,15,20,0.8);
+  color: #ccc;
+  padding: .5rem;
+  border-radius: .5rem;
+  transition: background 0.2s, color 0.2s;
+}
+#siteHeader .actions > *:hover {
+  background: rgba(15,15,20,1);
+  color: var(--clr-orange-luxe-light);
+}
+
+/*────────────────── Mobile Nav ──────────────────*/
+#menuToggle {
+  font-size: 1.5rem;
+  color: #ccc;
+  transition: color 0.2s;
+}
+#menuToggle:hover { color: var(--clr-orange-luxe-light); }
+#mobileNav {
+  position: fixed;
+  inset: var(--header-height) 0 0 0;
+  background: var(--clr-night);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 9998;
+}
+#mobileNav.show {
+  transform: translateY(0);
+}
+#mobileNav a {
+  font: 600 1rem system-ui, sans-serif;
+  color: #ccc;
+  transition: color 0.2s;
+}
+#mobileNav a:hover { color: var(--clr-orange-luxe-light); }
+
+/*────────────────── Scroll Progress Bar ──────────────────*/
+#scrollProgress {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  height: 3px;
+  background: var(--clr-emerald-ghost);
+  width: 0;
+  transition: width 0.25s ease;
+  z-index: 9999;
+}
+
+/*────────────────── Keyframes ──────────────────*/
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes underlineGrow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+```
+
+This CSS:
+- Handles **header reveal/hide on scroll** (`.hide`, `.scrolled`).
+- Shrinks height and darkens background when scrolled.
+- Adds **neon underline** animation for active nav items.
+- Styles **action cluster** buttons uniformly.
+- Manages **mobile nav slide**, toggle and link styles.
+- Implements a **scroll progress bar** just below the header.
+- Contains utility keyframes (`spin-slow`, `underlineGrow`).
+
+Drop this into `static/css/header.css` and pair with the JS you already have for toggling classes. Let me know how it looks! You’re now fully decked in Elite-Level header styling.  
+
+Next up: any global utilities or footer CSS?  
 

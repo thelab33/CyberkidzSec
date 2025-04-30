@@ -1,0 +1,19 @@
+<section id="bug-tales" class="prose mx-auto my-12 p-6 bg-zinc-900/90 rounded-lg shadow-lg text-zinc-100">
+  <h2 class="text-2xl font-bold mb-4">🎙️ Bug Tales Audio Story</h2>
+
+  <!-- Hidden background SFX -->
+  <audio id="bt-sfx" loop preload="auto" class="hidden">
+    <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg">
+  </audio>
+
+  <!-- Controls -->
+  <div class="flex items-center gap-4">
+    <button id="bt-play" class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded">
+      ▶️ Play Story
+    </button>
+    <button id="bt-stop" class="px-4 py-2 bg-red-600 hover:bg-red-500 rounded" disabled>
+      ⏹️ Stop
+    </button>
+  </div>
+</section>
+
