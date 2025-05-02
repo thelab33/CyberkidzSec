@@ -30,7 +30,7 @@ from src.blueprints.api_playground.routes import bp as api_playground_bp
 from src.blueprints.smart_contract_playground.routes import bp as sc_playground_bp
 from src.blueprints.ai_assistant.routes import bp as ai_assistant_bp
 from src.blueprints.status.routes import status  # ✅ Healthcheck/Status Route
-
+from blueprints.copilot import copilot
 # ─── Paths ───────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR.parent / "templates"
@@ -91,6 +91,7 @@ def register_blueprints(app):
     app.register_blueprint(sc_playground_bp,      url_prefix='/contracts')
     app.register_blueprint(ai_assistant_bp,       url_prefix='/assistant')
     app.register_blueprint(status)  # ✅ /ws/status route
+    app.register_blueprint(copilot)
 
 
 # ─── Error Handlers ──────────────────────────────────────────────────────────
