@@ -1,104 +1,97 @@
-<!-- filter_bar.html -->
-<div
-  id="filterBar"
-  class="sticky top-0 z-50 border-b border-orangeLuxe/30
-         bg-gradient-to-r from-cyberNight via-cyberNight.glow to-cyberNight.phantom
-         backdrop-blur-md shadow-lg px-4 py-3 rounded-md mb-10"
-></div>
+{# templates/components/filter_bar.html — Reports Filter & Sort Toolbar #}
+<nav id="filterBar"
+     role="toolbar"
+     aria-label="Filter and sort reports"
+     class="sticky top-0 z-50 mb-10 bg-gradient-to-r from-cyberNight via-cyberNight-glow to-cyberNight-phantom
+            backdrop-blur-md border-b border-orangeLuxe/30 shadow-lg rounded-md px-4 py-3">
+  <div class="flex items-center overflow-x-auto no-scrollbar gap-4 pr-6" id="filterScroll">
+    <div role="radiogroup" aria-label="Filter Reports" class="flex gap-2">
+      {# Buttons rendered by JS #}
+    </div>
+    <div class="ml-auto flex items-center gap-4 min-w-fit">
+      <div class="flex items-center gap-2 relative">
+        <label for="sortSel" class="sr-only">Sort reports by</label>
+        <select id="sortSel"
+                class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6 text-sm rounded
+                       text-orange-200 focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+                aria-label="Sort reports">
+          {# Options rendered by JS #}
+        </select>
+        <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-orange-400">▼</span>
+      </div>
+      <button id="themeToggle"
+              class="rounded-full border border-orangeLuxe p-1 text-xl hover:bg-orangeLuxe/20
+                     focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+              aria-label="Toggle light/dark theme">
+        {# Icon rendered by JS #}
+      </button>
+    </div>
+  </div>
+</nav>
 
 <script>
-/* ---- config – tweak freely ---- */
-const FILTERS      = ["All","XSS","Injection","Misconfiguration","Race Condition"];
-const SORT_OPTIONS = ["cvss","severity","date"];
+document.addEventListener('DOMContentLoaded', ()=> {
+  const FILTERS      = ["All","XSS","Injection","Misconfiguration","Race Condition"];
+  const SORT_OPTIONS = ["cvss","severity","date"];
+  let filter   = "All";
+  let sortBy   = "date";
+  let theme    = localStorage.theme || "dark";
+  const bar     = document.getElementById("filterBar");
+  const radiogroup = bar.querySelector('[role="radiogroup"]');
+  const sortSel = document.getElementById("sortSel");
+  const themeBtn = document.getElementById("themeToggle");
+  const live    = document.createElement("div");
+  live.className = "sr-only"; live.setAttribute("aria-live","polite");
+  document.body.appendChild(live);
 
-/* ---- state ---- */
-let filter   = "All";
-let sortBy   = "date";
-let theme    = localStorage.getItem("theme") || "dark";
-const elBar  = document.getElementById("filterBar");
+  function announce(msg){ live.textContent = msg; }
 
-/* ---- render ---- */
-function renderBar() {
-  elBar.innerHTML = `
-    <div class="relative flex items-center w-full overflow-x-auto no-scrollbar
-                gap-4 md:gap-6 scroll-smooth pr-6" id="filterScroll">
-      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports">
-        ${FILTERS.map(
-          (f) => `<button
-                    class="${btnClasses(f === filter)}"
-                    data-filter="${f}"
-                    role="radio" aria-checked="${f === filter}" title="Filter by ${f}">
-                    ${f}
-                  </button>`
-        ).join("")}
-      </div>
-
-      <div class="ml-auto flex items-center gap-4 min-w-fit">
-        <div class="flex items-center gap-2">
-          <label class="text-xs uppercase tracking-widest text-orange-300 font-mono">Sort</label>
-          <select id="sortSel"
-            class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6
-                   text-sm rounded text-orange-200 focus:outline-none"
-            title="Sort reports">
-            ${SORT_OPTIONS.map(
-              (o) => `<option value="${o}" ${o === sortBy ? "selected" : ""}>${o}</option>`
-            ).join("")}
-          </select>
-          <span class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-orange-400">▼</span>
-        </div>
-
-        <button id="themeToggle"
-          class="text-2xl px-2 py-1 rounded-full border border-orangeLuxe
-                 hover:bg-orangeLuxe/20 focus:ring-2 focus:ring-orange-400 transition"
-          aria-label="Toggle dark/light">
-          ${theme === "dark" ? "☀️" : "🌙"}
-        </button>
-      </div>
-    </div>`;
-}
-function btnClasses(active) {
-  return [
-    "px-4 py-1.5 text-sm font-mono rounded-full transition-all border whitespace-nowrap",
-    active
-      ? "bg-orangeLuxe text-white border-orangeLuxe shadow-md"
-      : "bg-zinc-900 text-orange-300 border-orangeLuxe hover:bg-orange-600 hover:text-white",
-  ].join(" ");
-}
-renderBar();
-
-/* ---- event handlers ---- */
-elBar.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-filter]");
-  if (btn) {
-    filter = btn.dataset.filter;
-    announce(`Filtered by ${filter}`);
-    renderBar();
-    elBar.dispatchEvent(new CustomEvent("filterchange", {detail:{filter}}));
+  function render() {
+    radiogroup.innerHTML = FILTERS.map(f => {
+      const active = f === filter;
+      return `<button
+                role="radio"
+                aria-checked="${active}"
+                data-filter="${f}"
+                class="px-4 py-1.5 text-sm font-mono rounded-full transition-border border whitespace-nowrap
+                       ${active
+                         ? 'bg-orangeLuxe text-white border-orangeLuxe shadow-md'
+                         : 'bg-zinc-900 text-orange-300 border-orangeLuxe hover:bg-orange-600 hover:text-white'}"
+                title="Filter by ${f}">
+                ${f}
+              </button>`;
+    }).join("");
+    sortSel.innerHTML = SORT_OPTIONS.map(o =>
+      `<option value="${o}" ${o===sortBy ? 'selected':''}>${o}</option>`
+    ).join("");
+    themeBtn.textContent = theme==="dark" ? "☀️" : "🌙";
   }
-});
-elBar.addEventListener("change", (e) => {
-  if (e.target.id === "sortSel") {
-    sortBy = e.target.value;
+
+  bar.addEventListener("click", e => {
+    if(e.target.dataset.filter) {
+      filter = e.target.dataset.filter;
+      announce(`Filtered by ${filter}`);
+      bar.dispatchEvent(new CustomEvent("filterchange", { detail:{ filter }}));
+      render();
+    }
+    if(e.target===themeBtn){
+      theme = theme==="dark" ? "light" : "dark";
+      document.documentElement.classList.toggle("dark", theme==="dark");
+      localStorage.theme = theme;
+      announce(`Switched to ${theme} mode`);
+      render();
+    }
+  });
+
+  sortSel.addEventListener("change", ()=>{
+    sortBy = sortSel.value;
     announce(`Sorted by ${sortBy}`);
-    elBar.dispatchEvent(new CustomEvent("sortchange",{detail:{sortBy}}));
-  }
-});
-document.getElementById("filterBar").addEventListener("click", (e) => {
-  if (e.target.id === "themeToggle") {
-    theme = theme === "dark" ? "light" : "dark";
-    localStorage.setItem("theme", theme);
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    renderBar();
-  }
-});
+    bar.dispatchEvent(new CustomEvent("sortchange",{ detail:{ sortBy }}));
+  });
 
-/* polite SR-only announcements */
-let live = document.createElement("div");
-live.className = "sr-only";
-live.setAttribute("aria-live", "polite");
-document.body.appendChild(live);
-function announce(msg) {
-  live.textContent = msg;
-}
+  // initial render
+  document.documentElement.classList.toggle("dark", theme==="dark");
+  render();
+});
 </script>
 

@@ -30,11 +30,11 @@
   },
   "scripts": {
     "postinstall": "npx browserslist@latest --update-db",
-    "clean": "rimraf ./src/static/css/app.min.css .stylelintcache",
-    "build:css": "tailwindcss -i ./src/static/css/app.css -o ./src/static/css/app.min.css --minify",
-    "watch:css": "tailwindcss -i ./src/static/css/app.css -o ./src/static/css/app.min.css --watch",
-    "lint:css": "stylelint \"src/static/css/**/*.css\"",
-    "lint:css:fix": "stylelint \"src/static/css/**/*.css\" --fix",
+    "clean": "rimraf ./static/css/app.min.css .stylelintcache",
+    "build:css": "tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.min.css --minify",
+    "watch:css": "tailwindcss -i ./static/css/tailwind.css -o ./static/css/app.min.css --watch",
+    "lint:css": "stylelint \"static/css/**/*.css\"",
+    "lint:css:fix": "stylelint \"static/css/**/*.css\" --fix",
     "serve": "FLASK_APP=run.py flask run --reload",
     "dev": "npm-run-all --parallel watch:css serve",
     "start": "npm run dev"
@@ -64,3 +64,4 @@
     "last 2 Safari versions"
   ]
 }
+

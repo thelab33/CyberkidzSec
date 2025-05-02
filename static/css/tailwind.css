@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🔮 CORE ENHANCEMENTS */
+@import "cyber-enhancements.css";  /* Tokens, colors, globals */
+@import "ghost-boot.css";
+@import "ghost-mode.css";
+@import "back_to_top.css";
+@import "bug_tales.css";
+
+/* 🧠 COMPONENT STYLING */
+@import "sections/header.css";
+@import "hero.css";
+@import "footer.css";
+@import "skip_nav.css";
+@import "console.css";
+
+/* 🛰️ AOS + Effects */
+@import "animations.css"; /* Optional: split from cyber-enhancements.css */
+
+/* 🎯 GLOBAL OVERRIDES */
+@import "app.css"; /* If needed */
+

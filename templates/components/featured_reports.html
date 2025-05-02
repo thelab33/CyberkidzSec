@@ -1,120 +1,107 @@
-<!-- featured_reports.html -->
+{# templates/components/featured_reports.html — Polished Featured Reports #}
+
+{# Fallback demo data if none provided #}
+{% set reports = featured_reports if featured_reports is defined else [
+  {'slug':'demo-1','title':'Demo Report 1','summary':'Lorem ipsum dolor sit amet consectetur adipisicing elit.','tags':['xss','race','web3']},
+  {'slug':'demo-2','title':'Demo Report 2','summary':'Lorem ipsum dolor sit amet consectetur adipisicing elit.','tags':['xss','injection']},
+  {'slug':'demo-3','title':'Demo Report 3','summary':'Lorem ipsum dolor sit amet consectetur adipisicing elit.','tags':['misconfiguration','race']},
+] %}
+
 <section
   id="featured"
   aria-labelledby="featured-heading"
   class="relative isolate py-20 px-4 sm:px-6 lg:px-8
          bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e]
          border border-orangeLuxe/25 shadow-2xl overflow-hidden
-         rounded-[2.5rem] ring-1 ring-orangeLuxe/10 backdrop-blur"
+         rounded-2xl ring-1 ring-orangeLuxe/10 backdrop-blur-lg"
 >
-  <!-- aurora flare -->
+  <!-- Aurora flare -->
   <div
-    aria-hidden
+    aria-hidden="true"
     id="featuredAurora"
     class="absolute -inset-20 bg-[conic-gradient(at_top_right,_#ff7f00_0%,_#ff00e0_45%,_transparent_70%)]
            opacity-10 will-change-transform"
   ></div>
 
-  <!-- header -->
+  <!-- Header -->
   <header class="relative z-10 text-center space-y-4 mb-12">
     <h2
       id="featured-heading"
       class="text-4xl sm:text-5xl font-extrabold tracking-tight
              bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500
-             bg-clip-text text-transparent animate-glow"
+             bg-clip-text text-transparent animate-pulse-glow"
     >
       🧠 Featured Vault Reports
     </h2>
     <p class="mx-auto max-w-2xl text-sm sm:text-base font-mono text-orangeLuxe-light/80">
-      Hand-picked exploits, rare bugs &amp; security artforms — straight from the archive.
+      Hand-picked exploits, rare bugs & security artforms — straight from the archive.
     </p>
   </header>
 
-  <!-- grid -->
+  <!-- Grid -->
   <ul
     id="featuredGrid"
     class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
     role="list"
-  ></ul>
+  >
+    {% for r in reports %}
+    <li>
+      <a href="{{ url_for('views.report_detail', slug=r.slug) }}"
+         class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-xl"
+      >
+        <article class="tiltCard h-full rounded-xl bg-gradient-to-br from-cyberNightGlow to-zinc-900/90
+                         border border-orangeLuxe/20 shadow-lg transition-shadow
+                         group-hover:shadow-orangeLuxe/40 p-0 overflow-hidden"
+                 data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+          <div class="relative h-40 overflow-hidden">
+            <img
+              src="{{ url_for('static', filename='images/og/' ~ r.slug ~ '.png') }}"
+              alt="{{ r.title }}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out shimmer"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-lg font-semibold text-orangeLuxe-light
+                       group-hover:text-orangeLuxe transition-colors">
+              {{ r.title }}
+            </h3>
+            <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
+              {{ r.summary }}
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+              {% for tag in r.tags[:4] %}
+                <span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">
+                  #{{ tag }}
+                </span>
+              {% endfor %}
+            </div>
+          </div>
+        </article>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
 </section>
 
 <script>
-/* --------------------------------------------------
-   👉 dynamic build (replace with Jinja if you like)
--------------------------------------------------- */
-const reports = window.FEATURED_REPORTS || []; // inject via Jinja/Flask if desired
-// Example mock (delete in prod):
-if (!reports.length)
-  for (let i = 0; i < 9; i++)
-    reports.push({
-      slug: "demo-" + i,
-      title: "Demo Report " + (i + 1),
-      summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      tags: ["xss", "race", "web3", "pwn"].slice(0, Math.random() * 4),
-    });
-
-/* ----------  tilt + shimmer util  ---------- */
-function makeCard(r) {
-  const li = document.createElement("li");
-  li.innerHTML = `
-    <a href="/reports/${r.slug}"
-       class="group block focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-2xl">
-      <article class="tiltCard h-full rounded-2xl bg-gradient-to-br" data-aos="fade-up"
-                      from-cyberNight.glow via-cyberNight to-zinc-900/90
-                      border border-orangeLuxe/20 shadow-lg transition-shadow
-                      group-hover:shadow-orangeLuxe/40">
-        <div class="relative h-40 overflow-hidden rounded-t-2xl">
-          <img
-            src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}"
-            alt=""
-            class="object-cover w-full h-full group-hover:scale-[1.08]
-                   transition-transform duration-500 ease-out shimmer"
-            loading="lazy"
-          />
-        </div>
-        <div class="p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-orangeLuxe-light
-                     group-hover:text-orangeLuxe transition-colors">
-            ${r.title}
-          </h3>
-          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
-            ${r.summary}
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
-            ${r.tags
-              .slice(0, 4)
-              .map(
-                (t) =>
-                  `<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`
-              )
-              .join("")}
-          </div>
-        </div>
-      </article>
-    </a>`;
-  return li;
-}
-
+// Tilt interaction
 const grid = document.getElementById("featuredGrid");
-reports.forEach((r) => grid.appendChild(makeCard(r)));
-
-/* ---------- tiny tilt interaction ---------- */
-grid.addEventListener("pointermove", (e) => {
+grid.addEventListener("pointermove", e => {
   const card = e.target.closest(".tiltCard");
   if (!card) return;
   const rect = card.getBoundingClientRect();
-  const x = (e.clientX - rect.left) / rect.width - 0.5;
-  const y = (e.clientY - rect.top) / rect.height - 0.5;
-  card.style.transform = `perspective(700px) rotateX(${y * -12}deg) rotateY(${x * 12}deg)`;
+  const x = (e.clientX - rect.left) / rect.width  - 0.5;
+  const y = (e.clientY - rect.top ) / rect.height - 0.5;
+  card.style.transform = `perspective(700px) rotateX(${-y*12}deg) rotateY(${x*12}deg)`;
 });
-grid.addEventListener("pointerleave", (e) => {
+grid.addEventListener("pointerleave", e => {
   const card = e.target.closest(".tiltCard");
   if (card) card.style.transform = "";
 });
 
-/* ---------- slow aurora spin ---------- */
-(function spin() {
+// Aurora spin
+(function spinAurora(){
   const el = document.getElementById("featuredAurora");
   let deg = 0;
   setInterval(() => {
@@ -124,10 +111,10 @@ grid.addEventListener("pointerleave", (e) => {
 })();
 </script>
 
-<!-- optional shimmer CSS -->
 <style>
+/* scoped shimmer effect */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
+  0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 .shimmer {
@@ -136,12 +123,11 @@ grid.addEventListener("pointerleave", (e) => {
 }
 .shimmer::after {
   content: "";
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(
     110deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255,255,255,0.4) 50%,
     transparent 100%
   );
   background-size: 200% 100%;

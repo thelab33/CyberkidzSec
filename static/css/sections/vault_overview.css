@@ -1,0 +1,18 @@
+/* static/css/sections/vault_overview.css */
+
+#vault-overview {
+  /* any extra spacing or background you want */
+}
+
+#vaultXpProgress {
+  /* hide native progress bar */
+  -webkit-appearance: none;
+  appearance: none;
+}
+#vaultXpProgress::-webkit-progress-bar {
+  display: none;
+}
+#vaultXpProgress::-moz-progress-bar {
+  display: none;
+}
+

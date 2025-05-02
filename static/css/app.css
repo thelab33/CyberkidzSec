@@ -1,1119 +1,200 @@
+/* ────────────────────────────────────────────────────────────────
+   ⚙️ CYBERKIDZSEC STARFORGE CSS ENTRY — ELITE EDITION
+───────────────────────────────────────────────────────────────── */
+
+/* ─── Tailwind Core Layers ───────────────────────────────────── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import "css/sections/report-grid.css";
+@import "css/components/hud-status.css";
+/* etc. */
+
 /* ────────────────────────────────────────────────────────────────
-   ⚙️ Custom Utilities & Visual Identity — CYBERKIDZSEC STARFORGE
+   📦 Module Imports — neatly sorted into Base & Components
 ───────────────────────────────────────────────────────────────── */
 
-/* Your STYLES start here — already fire 🔥 */
+/* Base-level resets & design tokens */
+@layer base {
+  @import "cyber-enhancements.css";    /* global resets, fonts, normalize */
 
-:root {
-  --warp-overlay-opacity: 0.88;
-  --warp-overlay-scale: 1.07;
-  --warp-overlay-color: rgb(20 20 35 / 50%);
-  --starfield-opacity: 0.9;
-  --spark-color: #0fc;
-  --hud-bg: rgb(15 17 26 / 80%);
-  --hud-shadow: 0 0 40px rgb(249 115 22 / 30%);
-  --transition-fast: 0.2s ease-out;
-  --transition-med: 0.3s ease-in-out;
-  --orange: #f97316;
-  --emerald: #34d399;
-  --orange-luxe-light: #fbbf77;
-  --skull-glow: rgb(255 127 0 / 80%);
-  --skull-stroke: rgb(255 200 100 / 60%);
-}
-
-html.dark {
-  --orange: #ff7f00;
-  --orange-luxe-light: #ffc78c;
-}
-
-.text-orange-luxe-light {
-  color: var(--orange-luxe-light);
-}
-
-.hover-lift {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  will-change: transform, box-shadow;
-}
-.hover-lift:hover {
-  transform: scale(1.03) rotate(0.5deg);
-  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
-}
-
-/* 🌌 Warp Overlay FX */
-#warp-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at center, var(--warp-overlay-color), transparent 70%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'><circle cx='1' cy='1' r='1' fill='white' fill-opacity='0.2'/></svg>")
-    repeat;
-  animation: warpBlur 30s linear infinite;
-  mix-blend-mode: overlay;
-}
-
-@keyframes warpBlur {
-  0%, 100% {
-    transform: scale(1) translate(0, 0);
-    opacity: var(--warp-overlay-opacity);
+  /* Design tokens */
+  :root {
+    --warp-overlay-opacity: 0.88;
+    --warp-overlay-scale: 1.07;
+    --warp-overlay-color: rgb(20 20 35 / 50%);
+    --starfield-opacity: 0.9;
+    --spark-color: #0fc;
+    --hud-bg: rgb(15 17 26 / 80%);
+    --hud-shadow: 0 0 40px rgb(249 115 22 / 30%);
+    --transition-fast: 0.2s ease-out;
+    --transition-med: 0.3s ease-in-out;
+    --orange: #f97316;
+    --emerald: #34d399;
+    --orange-luxe-light: #fbbf77;
+    --skull-glow: rgb(255 127 0 / 80%);
+    --skull-stroke: rgb(255 200 100 / 60%);
   }
-  50% {
-    transform: scale(1.1) translate(-10px, -10px);
-    opacity: calc(var(--warp-overlay-opacity) + 0.1);
+  html.dark {
+    --orange: #ff7f00;
+    --orange-luxe-light: #ffc78c;
   }
 }
 
-/* 🚀 AOS Animations */
-[data-aos] {
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity var(--transition-med), transform var(--transition-med);
-}
-.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 🖱️ Hover Lift FX */
-.hover-lift {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  will-change: transform, box-shadow;
-}
-.hover-lift:hover {
-  transform: scale(1.03) rotate(0.5deg);
-  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
+/* Component-level partials */
+@layer components {
+  @import "sections/header.css";
+  @import "hero.css";
+  @import "skip_nav.css";
+  @import "console.css";
+  @import "footer.css";
+  @import "ghost-mode.css";
+  @import "ghost-boot.css";
+  @import "back_to_top.css";
+  @import "bug_tales.css";
 }
 
-/* ✨ Animated Gradient Border */
-@keyframes gradientBorder {
-  0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
-  50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
-  100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
-}
-.animated-border {
-  border: 4px solid transparent;
-  border-image-slice: 1;
-  animation: gradientBorder 6s ease infinite;
-}
+/* ────────────────────────────────────────────────────────────────
+   🛠️ Custom Utilities & Helpers — all in one Utilities layer
+───────────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Text & hover helpers */
+  .text-orange-luxe-light { color: var(--orange-luxe-light) !important; }
+  .hover-lift {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    will-change: transform, box-shadow;
+  }
+  .hover-lift:hover {
+    transform: scale(1.03) rotate(0.5deg);
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
+  }
 
-/* 📈 Scroll Progress Bar */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: var(--orange);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--transition-fast);
-  z-index: 9999;
-}
-html.dark .scroll-progress {
-  background: rgb(255 127 0 / 60%);
-  backdrop-filter: blur(2px);
-}
-
-/* 📌 Sticky Header FX */
-#siteHeader {
-  backdrop-filter: saturate(180%) blur(12px);
-  transition: padding var(--transition-med), box-shadow var(--transition-med);
-}
-#siteHeader.scrolled {
-  padding-block: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-nav a.relative {
-  position: relative;
-}
-nav a.relative::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--orange);
-  transition: width var(--transition-fast);
-}
-nav a.relative:hover::after,
-nav a.relative[data-active]::after {
-  width: 100%;
-}
-
-/* 📱 Responsive Typography Tweaks */
-@media (width <= 768px) {
-  #globalSearch { font-size: 0.875rem; }
-  kbd { display: none; }
-}
-
-/* 🌠 Starfield FX */
-#heroStarfield {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: var(--starfield-opacity);
-  mix-blend-mode: screen;
-}
-
-/* 🚀 Hero Warp-in Animation */
-@keyframes warpStabilize {
-  0%   { opacity: 0; transform: scale(1.05) skewY(1deg); filter: brightness(0.7) blur(2px); }
-  50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg); filter: brightness(1.2) blur(0); }
-  100% { opacity: 1; transform: scale(1) skewY(0); filter: brightness(1) blur(0); }
-}
-.animate-warpStabilize {
-  animation: warpStabilize 1.8s ease-out forwards;
-  animation-delay: 0.4s;
-}
-
-/* ⚡ Ghost Sparks Float */
-.ghost-sparks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 30;
-}
-.spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--spark-color);
-  opacity: 0.8;
-  animation: floatSpark 3s linear infinite;
-}
-@keyframes floatSpark {
-  0%   { transform: translateY(0) scale(1); opacity: 0.9; }
-  50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
-  100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
-}
-
-/* 🌘 Dark Mode Hero Refinements */
-html.dark #hero {
-  backdrop-filter: blur(4px) brightness(0.85);
-  transition: backdrop-filter var(--transition-med);
-}
-
-/* 💀 Skull FX */
-.hero-skull {
-  display: inline-block;
-  font-size: 1.2em;
-  margin-right: 0.5ch;
-  background: radial-gradient(circle at center, var(--skull-glow), transparent 70%);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 6px var(--skull-glow),
-    0 0 12px var(--skull-stroke),
-    0 0 20px var(--skull-glow);
-}
-html.dark .hero-skull {
-  text-shadow:
-    0 0 8px var(--skull-glow),
-    0 0 16px var(--skull-stroke),
-    0 0 24px var(--skull-glow);
-}
-body[data-ghost-mode="true"] .hero-skull {
-  color: #0f8 !important;
-  background: none !important;
-  text-shadow:
-    0 0 4px #0f8,
-    0 0 8px #0f8,
-    0 0 12px #0f8;
-}
-
-/* 🎮 Neon Button Base */
-.neon-button {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease-in-out;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   ⚙️ BASE TOKENS & VARIABLES — STARFORGE EDITION
-────────────────────────────────────────────────────────────────── */
-:root {
-  /* Global Glow & Depth */
-  --warp-overlay-opacity: 0.88;
-  --warp-overlay-scale: 1.05;
-  --warp-overlay-color: rgb(18 20 30 / 50%);
-  --starfield-opacity: 0.9;
-
-  /* FX Colors */
-  --spark-color: #0fc;
-  --skull-glow: rgb(255 127 0 / 80%);
-  --skull-stroke: rgb(255 200 100 / 60%);
-
-  /* Theme BG & Shadow */
-  --hud-bg: rgb(15 17 26 / 75%);
-  --hud-shadow: 0 0 40px rgb(249 115 22 / 30%);
-
-  /* Transitions */
-  --transition-fast: 0.2s ease-out;
-  --transition-med: 0.3s ease-in-out;
-
-  /* Brand Identity */
-  --orange: #f97316;
-  --emerald: #34d399;
-  --orange-luxe-light: #fbbf77;
-}
-
-html.dark {
-  --orange: #ff7f00;
-  --orange-luxe-light: #ffc78c;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🔸 UTILITY: Luxe Colors
-────────────────────────────────────────────────────────────────── */
-.text-orange-luxe-light {
-  color: var(--orange-luxe-light);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🌌 WARP OVERLAY & STARFIELD CANVAS
-────────────────────────────────────────────────────────────────── */
-#warp-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(circle at center, var(--warp-overlay-color), transparent 70%),
-    url("data:image/svg+xml;utf8,\
+  /* Warp overlay FX */
+  #warp-overlay {
+    @apply absolute inset-0 pointer-events-none mix-blend-overlay;
+    z-index: -1;
+    background:
+      radial-gradient(circle at center, var(--warp-overlay-color), transparent 70%),
+      url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'>\
 <circle cx='1' cy='1' r='1' fill='white' fill-opacity='0.2'/></svg>")
-    repeat;
-  animation: warpBlur 30s linear infinite;
-  mix-blend-mode: overlay;
-}
-
-@keyframes warpBlur {
-  0%, 100% {
-    transform: scale(1) translate(0);
-    opacity: var(--warp-overlay-opacity);
+      repeat;
+    animation: warpBlur var(--transition-med) linear infinite;
   }
-  50% {
-    transform: scale(1.1) translate(-10px, -10px);
-    opacity: calc(var(--warp-overlay-opacity) + 0.1);
+  @keyframes warpBlur {
+    0%,100% { transform: scale(1) translate(0); opacity: var(--warp-overlay-opacity); }
+    50%     { transform: scale(1.1) translate(-10px,-10px); opacity: calc(var(--warp-overlay-opacity) + 0.1); }
+  }
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    @apply fixed top-0 left-0 h-1 w-full origin-[left_center] z-50;
+    background: var(--orange);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+  }
+  html.dark .scroll-progress {
+    background: rgba(255 127 0 / 0.6);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Sticky header FX */
+  #siteHeader {
+    @apply backdrop-saturate-180 backdrop-blur-lg transition-[padding,box-shadow];
+  }
+  #siteHeader.scrolled {
+    padding-block: 0.25rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  /* Animated gradient border */
+  .animated-border {
+    border: 4px solid transparent;
+    border-image-slice: 1;
+    animation: gradientBorder 6s ease infinite;
+  }
+  @keyframes gradientBorder {
+    0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+    50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
+    100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+  }
+
+  /* AOS fade-in */
+  [data-aos] {
+    opacity: 0; transform: translateY(1rem);
+    transition: opacity var(--transition-med), transform var(--transition-med);
+  }
+  .aos-animate {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* Hero warp-in animation */
+  .animate-warpStabilize {
+    animation: warpStabilize 1.8s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  @keyframes warpStabilize {
+    0%   { opacity: 0; transform: scale(1.05) skewY(1deg); filter: brightness(0.7) blur(2px); }
+    50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg); filter: brightness(1.2) blur(0); }
+    100% { opacity: 1; transform: scale(1) skewY(0); filter: brightness(1) blur(0); }
+  }
+
+  /* Ghost sparks */
+  .ghost-sparks { position: absolute; inset: 0; pointer-events: none; z-index: 30; }
+  .spark {
+    position: absolute; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--spark-color); opacity: 0.8;
+    animation: floatSpark 3s linear infinite;
+  }
+  @keyframes floatSpark {
+    0%   { transform: translateY(0) scale(1);   opacity: 0.9; }
+    50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
+    100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
   }
 }
 
-#heroStarfield {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: var(--starfield-opacity);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🎬 AOS ENTRY ANIMATIONS
-────────────────────────────────────────────────────────────────── */
-[data-aos] {
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity var(--transition-med), transform var(--transition-med);
-}
-
-.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🧲 HOVER MICRO-INTERACTION
-────────────────────────────────────────────────────────────────── */
-.hover-lift {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  will-change: transform, box-shadow;
-}
-
-.hover-lift:hover {
-  transform: scale(1.03) rotate(0.5deg);
-  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🎨 GRADIENT BORDER ANIMATION
-────────────────────────────────────────────────────────────────── */
-@keyframes gradientBorder {
-  0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
-  50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
-  100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
-}
-
-.animated-border {
-  border: 4px solid transparent;
-  border-image-slice: 1;
-  animation: gradientBorder 6s ease infinite;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   📈 SCROLL PROGRESS BAR
-────────────────────────────────────────────────────────────────── */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: var(--orange);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--transition-fast);
-  z-index: 9999;
-}
-
-html.dark .scroll-progress {
-  background: rgb(255 127 0 / 60%);
-  backdrop-filter: blur(2px);
-}
-
-/* ───────────────────────────────────────────────────────────────
-   📎 STICKY HEADER + NAV FX
-────────────────────────────────────────────────────────────────── */
-#siteHeader {
-  backdrop-filter: saturate(180%) blur(12px);
-  transition: padding var(--transition-med), box-shadow var(--transition-med);
-}
-
-#siteHeader.scrolled {
-  padding-block: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-nav a.relative {
-  position: relative;
-}
-
-nav a.relative::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--orange);
-  transition: width var(--transition-fast);
-}
-
-nav a.relative:hover::after,
-nav a.relative[data-active]::after {
-  width: 100%;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   📱 MOBILE RESPONSIVE OPTIMIZATION
-────────────────────────────────────────────────────────────────── */
-@media (width <= 768px) {
-  #globalSearch { font-size: 0.875rem; }
-  kbd { display: none; }
-}
-
-/* ───────────────────────────────────────────────────────────────
-   🚀 HERO WARP-IN ENTRANCE FX
-────────────────────────────────────────────────────────────────── */
-@keyframes warpStabilize {
-  0%   { opacity: 0; transform: scale(1.05) skewY(1deg); filter: brightness(0.7) blur(2px); }
-  50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg); filter: brightness(1.2) blur(0); }
-  100% { opacity: 1; transform: scale(1) skewY(0); filter: brightness(1) blur(0); }
-}
-
-.animate-warpStabilize {
-  animation: warpStabilize 1.8s ease-out forwards;
-  animation-delay: 0.4s;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   ✨ GHOST SPARK PARTICLES
-────────────────────────────────────────────────────────────────── */
-.ghost-sparks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 30;
-}
-
-.spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--spark-color);
-  opacity: 0.8;
-  animation: floatSpark 3s linear infinite;
-}
-
-@keyframes floatSpark {
-  0%   { transform: translateY(0) scale(1); opacity: 0.9; }
-  50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
-  100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
-}
-
-/* ───────────────────────────────────────────────────────────────
-   💀 SKULL ICON GLOW
-────────────────────────────────────────────────────────────────── */
-.hero-skull {
-  display: inline-block;
-  font-size: 1.2em;
-  margin-right: 0.5ch;
-  background: radial-gradient(circle at 50% 50%, var(--skull-glow), transparent 70%);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 6px var(--skull-glow),
-    0 0 12px var(--skull-stroke),
-    0 0 20px var(--skull-glow);
-  color: var(--skull-glow);
-}
-
-html.dark .hero-skull {
-  text-shadow:
-    0 0 8px var(--skull-glow),
-    0 0 16px var(--skull-stroke),
-    0 0 24px var(--skull-glow);
-}
-
-body[data-ghost-mode="true"] .hero-skull {
-  color: #0f8 !important;
-  background: none !important;
-  text-shadow:
-    0 0 4px #0f8,
-    0 0 8px #0f8,
-    0 0 12px #0f8;
-}
-
-/* ───────────────────────────────────────────────────────────────
-   ⚡ BUTTON BASE STYLE: NEON FORMAT
-────────────────────────────────────────────────────────────────── */
-.neon-button {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease-in-out;
-}
-
-
-/* 🛠️ Ensure emoji visibility */
-.hero-skull {
-  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Fira Code', monospace !important;
-  font-size: 1.5em;
-  display: inline-block;
-  margin-right: 0.5ch;
-  line-height: 1;
-  text-shadow:
-    0 0 6px #ff7f00,
-    0 0 10px #ffb347,
-    0 0 14px #ffa500;
-  color: white;
-}
-.hero-skull { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Fira Code", monospace !important; font-size: 1.5em; display: inline-block; margin-right: 0.3ch; text-shadow: 0 0 6px #ff7f00, 0 0 12px #ffb347; color: white; }
-.hero-skull { line-height: 1.1; padding-inline: 0.2em; margin-right: 0.3ch; display: inline-block; font-size: 1.5em; text-shadow: 0 0 6px #ff7f00, 0 0 12px #ffb347; }
-
-/* ───────────────────────────────────────────────────────────────
-   👻 Hacker Vault Skin: Ghost Mode — STARFORGE Edition
-────────────────────────────────────────────────────────────────── */
-
-/* 🧠 Global Ghost Base */
-body[data-ghost-mode="true"] {
-  background-color: #000;
-  color: #0f0;
-  font-family: 'Fira Code', monospace;
-  text-shadow: 0 0 2px #0f0, 0 0 6px #0f0;
-  transition: background-color 0.5s ease, color 0.3s ease;
-}
-
-/* 🧩 Greened-Out Interactive Elements */
-[data-ghost-mode="true"] a,
-[data-ghost-mode="true"] button,
-[data-ghost-mode="true"] .btn,
-[data-ghost-mode="true"] .text-orangeLuxe,
-[data-ghost-mode="true"] .text-orangeLuxe-light,
-[data-ghost-mode="true"] .border-orangeLuxe {
-  color: #0f0 !important;
-  border-color: #0f0 !important;
-  background-color: transparent !important;
-  text-shadow: 0 0 4px #0f0a, 0 0 6px #0f07;
-}
-
-/* 🛰️ Terminal Shell UI Panels */
-[data-ghost-mode="true"] .vault-status,
-[data-ghost-mode="true"] .hud-toolbar,
-[data-ghost-mode="true"] .footer,
-[data-ghost-mode="true"] .hero,
-[data-ghost-mode="true"] #siteHeader,
-[data-ghost-mode="true"] .cta-card,
-[data-ghost-mode="true"] .card,
-[data-ghost-mode="true"] .tiltCard,
-[data-ghost-mode="true"] .hudToolbar,
-[data-ghost-mode="true"] #filterBar {
-  background-color: #000 !important;
-  border-color: #0f0 !important;
-  box-shadow: 0 0 20px #0f06, 0 0 10px #0f03;
-  transition: all 0.4s ease-in-out;
-}
-
-/* 🔡 Typewriter Cursor */
-[data-ghost-mode="true"] #heroTyper::after {
-  content: '|';
-  animation: blinkGhost 1s infinite steps(2, start);
-  color: #0f0;
-  margin-left: 4px;
-}
-
-/* 📺 Matrix Scanline Overlay */
-[data-ghost-mode="true"]::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 255, 0, 0.03) 0px,
-    rgba(0, 255, 0, 0.03) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  animation: scanlinesGhost 4s linear infinite;
-  mix-blend-mode: overlay;
-}
-
-/* ✨ Ghost Blinker + Scanlines Animations */
-@keyframes blinkGhost {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
-}
-
-@keyframes scanlinesGhost {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 10px; }
-}
-
-/* ────────────────────────────────────────────────────────────────
-   🌌 HERO FX — CYBERKIDZSEC VAULT ENTRY SEQUENCE — STARFORGE EDITION
-───────────────────────────────────────────────────────────────── */
-
-/* 💾 Tokens & Variables */
-:root {
-  --hero-orange-luxe-light: #fbbf77;
-  --skull-glow: rgb(255 127 0 / 80%);
-  --skull-stroke: rgb(255 200 100 / 60%);
-  --starfield-opacity: 0.9;
-}
-
-html.dark {
-  --hero-orange-luxe-light: #ffc78c;
-}
-
-.text-orange-luxe-light {
-  color: var(--hero-orange-luxe-light);
-}
-
-/* 📦 Hero Section */
-#hero {
-  position: relative;
-  overflow: hidden;
-  background-color: #000;
-  background-image: radial-gradient(circle at center, #0f111a 0%, #090a11 100%);
-  background-size: cover;
-  background-blend-mode: normal;
-}
-
-/* 🌠 Starfield Layer */
-#heroStarfield {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  animation: fade-in 2s ease-out forwards;
-  opacity: var(--starfield-opacity);
-}
-
-/* 🌌 Starfield Fade-In */
-@keyframes fade-in {
-  from { opacity: 0; transform: scale(1.02); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* 🌀 Warp Overlay */
-#warp-overlay {
+/* ─── Parallax Orbit Rings — match .orbit.small / .orbit.med / .orbit.large ─────────────────── */
+#heroParallax {
   position: absolute;
   inset: 0;
   z-index: 10;
-  background:
-    radial-gradient(circle at center, rgb(30 30 50 / 40%), transparent 70%),
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'>\
-<circle cx='1' cy='1' r='1' fill='white' fill-opacity='0.1' /></svg>")
-    repeat;
-  animation: warp-blur 30s linear infinite;
-  mix-blend-mode: overlay;
-  opacity: 0.8;
+  will-change: transform;
 }
 
-/* 🌪️ Warp Blur Keyframes */
-@keyframes warp-blur {
-  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.8; }
-  50% { transform: scale(1.1) translate(-10px, -10px); opacity: 0.9; }
-}
-
-/* 🛬 Hero Warp Stabilize FX */
-@keyframes warp-stabilize {
-  0%   { opacity: 0; transform: scale(1.05) skewY(1deg); filter: brightness(0.7) blur(2px); }
-  50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg); filter: brightness(1.2) blur(0); }
-  100% { opacity: 1; transform: scale(1) skewY(0); filter: brightness(1) blur(0); }
-}
-
-.animate-warpStabilize {
-  animation: warp-stabilize 1.8s ease-out forwards;
-  animation-delay: 0.4s;
-}
-
-/* ✍️ Typewriter FX */
-@keyframes typewriter {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-
-.animate-typewriter {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typewriter 2s steps(40, end) forwards;
-}
-
-/* 📡 Scanline FX */
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.animate-shimmer {
-  animation: shimmer 6s linear infinite;
-  background-size: auto 4px;
-}
-
-/* 💡 Pulse Glow */
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-/* ✨ Ghost Sparks */
-.ghost-sparks {
+#heroParallax .orbit {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 20;
-}
-
-.spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
   border-radius: 50%;
-  background: #0f9;
-  opacity: 0.8;
-  animation: spark-float 3s linear infinite;
-}
-
-@keyframes spark-float {
-  0%   { transform: translateY(100%) scale(0.5); opacity: 0.8; }
-  50%  { transform: translateY(50%) scale(1.2); opacity: 0.4; }
-  100% { transform: translateY(0%) scale(0.8); opacity: 0; }
-}
-
-/* 🌟 Hero Halo Glow */
-#heroHalo {
-  position: absolute;
-  inset: 0;
-  z-index: 15;
+  animation: spin linear infinite;
   pointer-events: none;
-  background: radial-gradient(circle at center, rgb(16 185 129 / 20%), transparent 70%);
-  filter: blur(3rem);
-  opacity: 0;
-  transition: opacity 1s ease;
 }
 
-/* 💀 Skull Glow — Enhanced */
-.hero-skull {
-  display: inline-block;
-  font-size: 1.35em;
-  margin-right: 0.25em;
-  vertical-align: middle;
-  line-height: 1;
-  color: white;
-  text-shadow:
-    0 0 4px var(--skull-glow),
-    0 0 10px var(--skull-stroke),
-    0 0 16px rgba(255, 127, 0, 0.6);
-  filter: drop-shadow(0 0 6px orange);
-  animation: glow-skull 2.5s ease-in-out infinite;
+#heroParallax .orbit.small {
+  width: 40%;
+  height: 40%;
+  top: 30%;
+  left: 30%;
+  animation-duration: 60s;
 }
 
-@keyframes glow-skull {
-  0%, 100% {
-    text-shadow: 0 0 4px var(--skull-glow), 0 0 10px var(--skull-stroke);
-  }
-  50% {
-    text-shadow: 0 0 8px #ffd580, 0 0 16px #ffa500;
-  }
+#heroParallax .orbit.med {
+  width: 70%;
+  height: 70%;
+  top: 15%;
+  left: 15%;
+  animation-duration: 90s;
 }
 
-/* ⚡ Neon Button */
-.neon-button {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease-in-out;
-}
-
-/* ===================================================================================
-   🔧 GLOBAL CSS VARIABLES — STARFORGE
-=================================================================================== */
-:root {
-  --color-night: #0f111a;
-  --color-night-glow: #151827;
-  --color-night-phantom: #090a11;
-
-  --color-orange: #f97316;
-  --color-orange-light: #ff9350;
-  --color-cyan: #22d3ee;
-  --color-magenta: #ec4899;
-  --color-emerald: #34d399;
-  --color-orange-luxe-light: #fbbf77;
-
-  --warp-duration: 30s;
-  --flicker-duration: 6s;
-  --pulse-duration: 3s;
-  --spark-color: #0fc;
-  --star-opacity: 0.85;
-  --star-speed: 8000;
-}
-
-/* 🔘 Dark Mode Overrides */
-html.dark {
-  --color-night: #090a11;
-  --color-night-glow: #181924;
-  --color-orange-luxe-light: #ffc78c;
-}
-
-/* ===================================================================================
-   🔸 UTILITIES
-=================================================================================== */
-.text-orange-luxe-light {
-  color: var(--color-orange-luxe-light) !important;
-}
-
-.bg-clip-text {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-}
-
-/* 💀 Skull Glow */
-.hero-skull {
-  font-size: 1.25em;
-  text-shadow: 0 0 6px var(--color-orange), 0 0 12px var(--color-orange-light);
-  background: radial-gradient(circle at center, rgba(255,127,0,0.8), transparent 70%);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ===================================================================================
-   1️⃣ WARP OVERLAY + STARFIELD
-=================================================================================== */
-#warp-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-  background:
-    radial-gradient(circle at center, rgba(30, 30, 50, 0.4), transparent 70%),
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='2' height='2'>\
-<circle cx='1' cy='1' r='1' fill='white' fill-opacity='.2'/></svg>")
-    repeat;
-  animation: warpBlur var(--warp-duration) linear infinite;
-}
-
-@keyframes warpBlur {
-  0%,100% { transform: scale(1) translate(0); opacity: var(--star-opacity); }
-  50%     { transform: scale(1.1) translate(-10px, -10px); opacity: calc(var(--star-opacity) + 0.1); }
-}
-
-/* ===================================================================================
-   2️⃣ AOS FADE + MOTION
-=================================================================================== */
-[data-aos] {
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-aos], .aos-animate {
-    transition: none;
-  }
-}
-
-/* ===================================================================================
-   3️⃣ HOVER-LIFT INTERACTIONS
-=================================================================================== */
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: scale(1.05) rotate(0.5deg);
-  box-shadow: 0 12px 30px rgba(255, 127, 0, 0.2);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hover-lift, .hover-lift:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-/* ===================================================================================
-   4️⃣ ANIMATED GRADIENT BORDERS
-=================================================================================== */
-@keyframes gradientBorder {
-  0%   { border-image-source: linear-gradient(45deg, var(--color-orange), var(--color-cyan)); }
-  50%  { border-image-source: linear-gradient(135deg, var(--color-cyan), var(--color-magenta)); }
-  100% { border-image-source: linear-gradient(45deg, var(--color-orange), var(--color-cyan)); }
-}
-
-.animated-border {
-  border: 3px solid transparent;
-  border-image-slice: 1;
-  animation: gradientBorder var(--flicker-duration) ease infinite;
-}
-
-/* ===================================================================================
-   5️⃣ AUDIO FX OFF (Silent Init)
-=================================================================================== */
-#audio-clacks,
-#audio-unlock,
-#audio-swoosh {
-  display: none !important;
-}
-
-/* ===================================================================================
-   6️⃣ HEADER BEHAVIOR
-=================================================================================== */
-#siteHeader {
-  backdrop-filter: saturate(180%) blur(12px);
-  transition: padding 0.3s ease, box-shadow 0.3s ease;
-}
-
-#siteHeader.scrolled {
-  padding-block: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-}
-
-nav a.relative {
-  position: relative;
-}
-
-nav a.relative::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--color-orange);
-  transition: width 0.2s ease;
-}
-
-nav a.relative:hover::after,
-nav a.relative[data-active]::after {
-  width: 100%;
-}
-
-/* ===================================================================================
-   7️⃣ RESPONSIVE UX TWEAKS
-=================================================================================== */
-@media (width <= 768px) {
-  #globalSearch { font-size: 0.875rem; }
-  kbd { display: none; }
-}
-
-/* ===================================================================================
-   8️⃣ HERO STARFIELD CANVAS
-=================================================================================== */
-#heroStarfield {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+#heroParallax .orbit.large {
   width: 100%;
   height: 100%;
-  mix-blend-mode: screen;
+  top: 0;
+  left: 0;
+  animation-duration: 120s;
 }
 
-/* ===================================================================================
-   9️⃣ GHOST SPARKS EFFECT
-=================================================================================== */
-.ghost-sparks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 30;
-}
-
-.spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--spark-color);
-  opacity: 0.9;
-  animation: floatSpark 3s linear infinite;
-}
-
-@keyframes floatSpark {
-  0%   { transform: translateY(0) scale(1);   opacity: 0.9; }
-  50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
-  100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
-}
-
-/* ===================================================================================
-   🔟 DARK ENHANCEMENTS
-=================================================================================== */
-html.dark #hero {
-  backdrop-filter: blur(4px) brightness(0.85);
-  transition: backdrop-filter 0.5s ease;
-}
-
-html.dark #warp-overlay {
-  animation: warpBlur var(--warp-duration) linear infinite,
-             gradientBorder var(--flicker-duration) ease infinite;
-}
-
-html.dark .scroll-progress {
-  background: rgba(255, 127, 0, 0.4);
-  backdrop-filter: blur(2px);
-}
-
-/* ===================================================================================
-   🎮 NEON BUTTON STYLE
-=================================================================================== */
-.neon-button {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease-in-out;
-}
-
-/* ────────────────────────────────────────────────────────────────
-   🌠 HERO ENHANCEMENTS — STARFORGE ADD-ONS
-───────────────────────────────────────────────────────────────── */
-
-/* 1️⃣ Orbiting Particle Rings */
-.orbit-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-.orbit {
-  position: absolute;
-  border: 2px dashed rgba(255,255,255,0.1);
-  border-radius: 50%;
-  animation: spin 30s linear infinite;
-}
-.orbit--small { width: 60%; height: 60%; top:20%; left:20%; animation-duration: 45s; }
-.orbit--med   { width: 80%; height: 80%; top:10%; left:10%; animation-duration: 60s; }
-.orbit--large { width:100%; height:100%; top: 0;  left: 0;  animation-duration: 75s; }
-
-/* 2️⃣ Cosmic Lens Flare */
-#lensFlare {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 75% 25%, rgba(255,255,255,0.15) 0, transparent 50%);
-  mix-blend-mode: screen;
-  filter: blur(2rem);
-  animation: flarePulse 4s ease-in-out infinite;
-}
-@keyframes flarePulse {
-  0%,100% { opacity: 0.3; transform: scale(1); }
-  50%     { opacity: 0.6; transform: scale(1.1); }
-}
-
-/* 3️⃣ Glitch Text Effect */
-.glitch {
-  position: relative;
-  color: white;
-  animation: glitchGlitch 2s infinite;
-}
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0; top: 0;
-  width: 100%; overflow: hidden;
-}
-.glitch::before {
-  clip: rect(0,100%,33%,0);
-  color: var(--orange);
-  animation: glitchTop 2s infinite;
-}
-.glitch::after {
-  clip: rect(66%,100%,100%,0);
-  color: var(--emerald);
-  animation: glitchBot 2.5s infinite;
-}
-@keyframes glitchGlitch {
-  0%,100% { transform: none; }
-  20%, 80% { transform: translateX(-2px); }
-  40%, 60% { transform: translateX(2px); }
-}
-@keyframes glitchTop {
-  0%,100% { transform: translate(0,0); }
-  10%,30%  { transform: translate(-2px,-2px); }
-  20%,50%  { transform: translate(2px,2px); }
-}
-@keyframes glitchBot {
-  0%,100% { transform: translate(0,0); }
-  10%,30%  { transform: translate(2px,2px); }
-  20%,50%  { transform: translate(-2px,-2px); }
-}
-
-/* keyframe for spinning rings */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-
 

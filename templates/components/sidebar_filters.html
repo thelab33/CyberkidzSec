@@ -1,41 +1,73 @@
-<!-- templates/components/sidebar_filters.html -->
-<aside class="space-y-4 bg-cyberNightGlow p-5 rounded-2xl shadow-inner" id="sideFilter" data-aos="fade-up">
-  <input type="search" id="tagSearch" placeholder="Search tags..."
-    class="w-full px-4 py-2 rounded-md bg-zinc-800 text-orangeLuxe-light text-sm placeholder-orangeLuxe-light/50 focus:ring-2 focus:ring-orangeLuxe">
+{# templates/components/sidebar_filters.html — Tag Explorer #}
+<aside id="sideFilter"
+       role="region"
+       aria-labelledby="tagFilter-label"
+       class="space-y-4 bg-cyberNightGlow p-5 rounded-2xl shadow-inner"
+       data-aos="fade-up">
+  <h2 id="tagFilter-label" class="sr-only">Filter by tag</h2>
+  <label for="tagSearch" class="sr-only">Search tags</label>
+  <input type="search"
+         id="tagSearch"
+         placeholder="Search tags…"
+         class="w-full px-4 py-2 rounded-md bg-zinc-800 text-orangeLuxe-light text-sm placeholder-orangeLuxe-light/50 focus:ring-2 focus:ring-orangeLuxe"
+         aria-label="Search tags">
 
-  <div id="tagList" class="max-h-64 overflow-y-auto pr-1 space-y-2"></div>
+  <div id="tagList"
+       role="list"
+       class="max-h-64 overflow-y-auto pr-1 space-y-2 mt-2">
+    {# Buttons injected by JS #}
+  </div>
 </aside>
 
 <script>
-const TAGS_ALL = TAGS;    // reuse global tag list
-const out = document.getElementById("tagList");
-const search = document.getElementById("tagSearch");
-let selected = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const TAGS_ALL = window.TAGS || [];  // expect global TAGS array
+  let selected = null;
+  const output = document.getElementById('tagList');
+  const search = document.getElementById('tagSearch');
 
-function draw(list) {
-  out.innerHTML = "";
-  list.forEach(t => {
-    const btn = document.createElement("button");
-    btn.textContent = "#" + t;
-    btn.className = `block w-full text-left px-4 py-2 rounded font-mono text-sm ${
-      t === selected
-        ? "bg-orangeLuxe text-black font-bold"
-        : "text-orangeLuxe-light hover:bg-orangeLuxe/10"
-    } transition-all`;
-    btn.onclick = () => {
-      selected = t;
-      draw(filter(search.value));
-      out.dispatchEvent(new CustomEvent("tagselect", { detail: { tag: t } }));
-    };
-    out.appendChild(btn);
-  });
-}
+  function announce(msg) {
+    const live = document.getElementById('tagFilter-live') ||
+                 Object.assign(document.createElement('div'), {
+                   id: 'tagFilter-live',
+                   className: 'sr-only',
+                   role: 'status',
+                   'aria-live': 'polite'
+                 });
+    if (!live.parentNode) document.body.appendChild(live);
+    live.textContent = msg;
+  }
 
-function filter(q) {
-  return TAGS_ALL.filter(t => t.toLowerCase().includes(q.toLowerCase()));
-}
+  function draw(list) {
+    output.innerHTML = '';
+    list.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = `#${tag}`;
+      btn.className = [
+        'block w-full text-left px-4 py-2 rounded font-mono text-sm transition-all',
+        tag === selected
+          ? 'bg-orangeLuxe text-black font-bold'
+          : 'text-orangeLuxe-light hover:bg-orangeLuxe/10'
+      ].join(' ');
+      btn.addEventListener('click', () => {
+        selected = tag;
+        announce(`Filtered by #${tag}`);
+        draw(filter(search.value));
+        output.dispatchEvent(new CustomEvent('tagselect', { detail: { tag } }));
+      });
+      output.appendChild(btn);
+    });
+  }
 
-search.oninput = () => draw(filter(search.value));
-draw(TAGS_ALL);
+  function filter(q) {
+    return TAGS_ALL.filter(t => t.toLowerCase().includes(q.toLowerCase()));
+  }
+
+  search.addEventListener('input', () => draw(filter(search.value)));
+
+  // initial render
+  draw(TAGS_ALL);
+});
 </script>
 

@@ -1,4 +1,4 @@
-{# templates/components/hero.html #}
+{# Corrected: #}
 {% set hero = {
   'typer_phrases': [
     '🔐 Zero-Day Archive Updating…',
@@ -18,46 +18,46 @@
   ]
 } %}
 
-<section id="hero"
-         role="banner"
-         aria-labelledby="hero-heading hero-subheading"
-         class="relative isolate flex flex-col justify-center items-center text-center
-                rounded-3xl border border-orangeLuxe/30 backdrop-blur-lg bg-black/95
-                px-6 py-28 sm:py-36 lg:py-48 shadow-2xl shadow-orange-900/10 group perspective-container"
-         data-aos="zoom-in" data-aos-delay="200">
-
-  {# Parallax & Starfield Canvas #}
+<section
+  id="hero"
+  role="banner"
+  aria-labelledby="hero-heading hero-subheading"
+  class="relative isolate flex flex-col items-center text-center rounded-3xl border border-orangeLuxe/30 bg-black/95 backdrop-blur-lg px-6 py-28 sm:py-36 lg:py-48 shadow-2xl shadow-orange-900/10 group perspective-600"
+  data-aos="zoom-in"
+  data-aos-delay="200"
+>
+  {# Starfield Canvas #}
   <canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+  {# Parallax Orbits #}
   <div id="heroParallax" class="absolute inset-0 z-10 will-change-transform">
-    <div class="orbit orbit--small rotate-slow"></div>
-    <div class="orbit orbit--med rotate-slower"></div>
-    <div class="orbit orbit--large rotate-slowest"></div>
+    <div class="orbit small animate-spin-slow"></div>
+    <div class="orbit med   animate-spin-slower"></div>
+    <div class="orbit large animate-spin-slowest"></div>
   </div>
 
   {# Overlay Effects #}
-  <div aria-hidden="true" class="absolute inset-0 pointer-events-none z-20">
+  <div aria-hidden="true" class="absolute inset-0 z-20 pointer-events-none">
     <div class="absolute inset-0 mix-blend-overlay animate-warpBlur"></div>
     <div class="absolute inset-0 bg-[url('/static/images/scanlines.svg')] bg-repeat opacity-5 animate-shimmer"></div>
-    <div id="heroHalo" class="absolute inset-0 opacity-0 transition-opacity duration-1000 ease-out blur-2xl"></div>
+    <div id="heroHalo"     class="absolute inset-0 blur-2xl opacity-0 transition-opacity duration-1000 ease-out"></div>
     <div id="quantumGrid" class="absolute inset-0 bg-[url('/static/images/grid.svg')] opacity-5 mix-blend-color-dodge animate-pulse"></div>
   </div>
 
-  {# Hero Content #}
+  {# Content #}
   <div class="relative z-30 max-w-4xl space-y-8 text-orangeLuxe-light drop-shadow-[0_0_2px_orange]">
+    {# Typewriter #}
+    <p
+      id="heroTyper"
+      class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe"
+      aria-live="polite"
+    ></p>
 
-    {# Typewriter Phrases #}
-    <p id="heroTyper"
-       class="text-sm sm:text-base font-mono uppercase tracking-widest animate-typewriter text-emeraldLuxe"
-       aria-live="polite">
-      {% for phrase in hero.typer_phrases %}
-        <span data-text="{{ phrase }}">{{ phrase }}</span>
-      {% endfor %}
-    </p>
-
-    {# Main Heading #}
-    <h1 id="hero-heading"
-        class="text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent
-               bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch">
+    {# Heading #}
+    <h1
+      id="hero-heading"
+      class="text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch"
+    >
       <span class="hero-skull inline-block align-middle text-[1.2em] px-1">💀</span>
       {{ hero.heading }}
     </h1>
@@ -68,7 +68,7 @@
     </p>
 
     {# Stats Bar #}
-    <div class="w-full flex flex-col sm:flex-row sm:justify-center sm:space-x-6 space-y-4 sm:space-y-0">
+    <div class="flex flex-col sm:flex-row sm:justify-center sm:space-x-6 space-y-4 sm:space-y-0">
       {% for stat in hero.stats %}
       <div class="flex items-center space-x-2">
         <span class="text-emeraldLuxe animate-pulse-glow">{{ stat.icon }}</span>
@@ -84,37 +84,24 @@
     <div class="mt-6 flex flex-wrap justify-center gap-6">
       {% for cta in hero.ctas %}
         {% if cta.type == 'button' %}
-        <button id="{{ cta.id }}"
-                class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
-                aria-label="{{ cta.label }}">
+        <button
+          id="{{ cta.id }}"
+          class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
+        >
           {{ cta.label }}
         </button>
         {% else %}
-        <a href="{{ cta.href }}"
-           class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
-           aria-label="{{ cta.label }}">
+        <a
+          href="{{ cta.href }}"
+          class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
+        >
           {{ cta.label }}
         </a>
         {% endif %}
       {% endfor %}
     </div>
-
   </div>
 </section>
 
-<script>
-import { initStarfield, initParallax } from '/static/js/hero-effects.js';
-(() => {
-  initStarfield('heroStarfield');
-  initParallax('heroParallax', { strength: 20 });
-})();
-</script>
-
-<style>
-.perspective-container { perspective: 600px; }
-.rotate-slow   { animation: spin 60s linear infinite; }
-.rotate-slower { animation: spin 120s linear infinite; }
-.rotate-slowest{ animation: spin 180s linear infinite; }
-@keyframes spin { from{ transform: rotate(0); } to{ transform: rotate(360deg);} }
-</style>
+<script type="module" src="{{ url_for('static', filename='js/hero-effects.js') }}"></script>
 

@@ -1,5 +1,3 @@
-# src/blueprints/views.py
-
 from flask import Blueprint, render_template
 
 views = Blueprint("views", __name__)
@@ -12,6 +10,25 @@ def home():
     operative_level = determine_operative_level(vault_xp_percentage)
     status_message = determine_status_message(vault_xp_percentage)
 
+    hero = {
+        'heading': "CYBERKIDZSEC VAULT",
+        'subheading': "“Ghosted but not gone.”",
+        'typer_phrases': [
+            "🔐 Zero-Day Archive Updating…",
+            "💀 CYBERKIDZSEC VAULT",
+            "“Ghosted but not gone.”"
+        ],
+        'stats': [
+            {'icon': '🛰️', 'label': 'Operative Title', 'value': operative_title},
+            {'icon': '⬆️', 'label': 'Level', 'value': operative_level},
+            {'icon': '🛡️', 'label': 'Vault Stability', 'value': f"{vault_xp_percentage}%"}
+        ],
+        'ctas': [
+            {'type': 'button', 'id': 'searchBtn', 'label': '⌘ Cmd + K — Search', 'classes': 'btn--outline'},
+            {'type': 'link', 'href': '#playground', 'label': '🎮 Hack the Vault', 'classes': 'btn--solid'}
+        ]
+    }
+
     return render_template(
         "index.html",
         title="Home — CyberKidzSec Vault",
@@ -19,6 +36,7 @@ def home():
         operative_title=operative_title,
         operative_level=operative_level,
         status_message=status_message,
+        hero=hero,  # ✅ Add this to fix the template error
     )
 
 # ─── About Page ───────────────────────────────────────────────
@@ -36,11 +54,19 @@ def reports_list():
 def playground():
     return render_template("playground.html", title="Playground — CyberKidzSec Vault")
 
+# ─── Report Detail ────────────────────────────────────────────
+@views.route("/reports/<slug>")
+def report_detail(slug: str):
+    return render_template("report_detail.html", slug=slug, title=f"Vault Report — {slug}")
+
+# ─── Charts / Analytics ───────────────────────────────────────
+@views.route("/charts")
+def charts():
+    return render_template("charts.html", title="Vault Analytics — CyberKidzSec Vault")
 
 # ─── Helper Functions (XP + Status Logic) ─────────────────────
 def calculate_vault_xp():
-    # Later this will be dynamic based on actual posted reports
-    return 45  # Example: 45% XP
+    return 45  # Example XP
 
 def get_operative_title(xp: int) -> str:
     if xp < 25:

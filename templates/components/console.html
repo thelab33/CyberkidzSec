@@ -9,7 +9,7 @@
       🔐 Decrypting Vault… <span class="tracking-wider">WARP MODE ENGAGED</span>
     </p>
     <div class="flex justify-center">
-      <div class="loader-dots">
+      <div class="loader-dots flex gap-2">
         <span class="dot bg-orange-400"></span>
         <span class="dot bg-yellow-400"></span>
         <span class="dot bg-emerald-400"></span>
@@ -31,10 +31,6 @@
 
 <!-- 🔄 Loader Animation Styles -->
 <style>
-  .loader-dots {
-    display: flex;
-    gap: 0.5rem;
-  }
   .loader-dots .dot {
     width: 12px;
     height: 12px;
@@ -49,4 +45,13 @@
     50%      { transform: translateY(-8px); opacity: 1; }
   }
 </style>
+
+<!-- 🔧 Loader Close Script -->
+<script>
+  document.getElementById('loaderClose').addEventListener('click', () => {
+    const loader = document.getElementById('vault-loader');
+    loader.classList.add('opacity-0');
+    setTimeout(() => loader.remove(), 700);
+  });
+</script>
 

@@ -1,8 +1,163 @@
-/* Elite CSS Module: header.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ─── Elite Header Styles – CYBERKIDZSEC ─────────────────────── */
 
-/* Section: header */
+/* 1️⃣ Define your header height as a CSS variable */
+:root {
+  --header-height: 4rem; /* adjust this to match your actual header’s total height */
+}
 
-/* Add your luxury, elite styles here */
+/* 2️⃣ Make the header sticky at the top */
+#siteHeader {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  backdrop-filter: saturate(180%) blur(12px);
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;              /* above hero, below skip-nav */
+  padding-inline: 1rem;       /* horizontal padding */
+  display: flex;
+  align-items: center;
+  /* vertical padding is baked into --header-height so remove padding-block */
+}
+
+/* 3️⃣ Shrink & shadow once you scroll */
+#siteHeader.scrolled {
+  /* if you want it to shrink, reduce height and adjust padding */
+  height: calc(var(--header-height) * 0.75);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 4️⃣ Push all main content down by the header’s height */
+main, 
+#hero {
+  margin-top: var(--header-height);
+}
+
+/* ─── Logo ───────────────────────────────────────────────────── */
+#siteHeader a[aria-label="Go to Home"] {
+  min-width: 220px;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Search Bar ─────────────────────────────────────────────── */
+#globalSearch {
+  position: relative;
+  flex: 1 1 320px;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  max-width: 100%;
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #f4f4f5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#globalSearch::placeholder {
+  color: #71717a;
+}
+#globalSearch:focus {
+  border-color: var(--orange);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--orange);
+}
+
+/* Search Icon */
+#globalSearch + span i {
+  color: #a1a1aa;
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Cmd+K Badge */
+kbd {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #1f2937;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  color: #a1a1aa;
+}
+
+/* ─── Navigation Links ───────────────────────────────────────── */
+nav a.relative {
+  position: relative;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #d1d5db;
+  transition: color 0.2s;
+}
+nav a.relative:hover {
+  color: var(--orange-luxe-light);
+}
+nav a.relative::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--orange);
+  transition: width 0.2s ease;
+}
+nav a.relative:hover::after,
+nav a.relative[data-active]::after {
+  width: 100%;
+}
+
+/* ─── Icon Buttons ───────────────────────────────────────────── */
+#siteHeader .icon-button {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: #27272a;
+  color: #f4f4f5;
+  transition: background-color 0.2s ease;
+}
+#siteHeader .icon-button:hover {
+  background-color: #3f3f46;
+}
+#siteHeader .icon-button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+/* Notification Count Badge */
+#siteHeader .notif-count {
+  font-size: 0.65rem;
+  background: var(--orange);
+  color: black;
+  padding: 0.1rem 0.35rem;
+  border-radius: 9999px;
+  margin-left: 0.25rem;
+  line-height: 1;
+}
+
+/* ─── Responsive Adjustments ─────────────────────────────────── */
+@media (max-width: 1024px) {
+  #globalSearch {
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+  }
+  #siteHeader a[aria-label="Go to Home"] {
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #globalSearch,
+  kbd {
+    display: none;
+  }
+}
+
