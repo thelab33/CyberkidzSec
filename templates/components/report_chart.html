@@ -1,38 +1,92 @@
-<!-- report_chart.html -->
-<div class="w-full max-w-md mx-auto" data-aos="zoom-in" data-aos-delay="150">
-  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4">Report Distribution</h3>
-  <canvas id="reportChart" height="280"></canvas>
-</div>
+<section id="chartContainer" class="w-full max-w-md mx-auto mt-12" role="region" aria-labelledby="chartTitle" data-aos="zoom-in" data-aos-delay="150">
+  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4 text-orangeLuxe-light">📊 Report Type Distribution</h3>
+
+  <!-- Inline stat legend -->
+  <ul id="chartStats" class="text-sm font-mono text-orangeLuxe-light/80 space-y-1 text-center mb-4" aria-live="polite"></ul>
+
+  <div class="relative rounded-lg shadow-lg bg-zinc-900 p-4 border border-orangeLuxe/20">
+    <canvas id="reportChart" height="280" aria-label="Report Type Chart" role="img"></canvas>
+
+    <!-- Chart Controls -->
+    <div class="mt-4 text-center">
+      <button id="exportChart" class="text-xs font-bold text-orangeLuxe hover:underline">⬇️ Download Chart as PNG</button>
+    </div>
+  </div>
+</section>
 
 <script type="module">
 import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
 
-/* Mock sample or server-injected data */
+/* Dynamic sample (or injected by server) */
 const DATA = window.CHART_DATA || [
   { name: "XSS", value: 12 },
   { name: "Injection", value: 8 },
-  { name: "Misconfig", value: 6 },
-  { name: "Race", value: 4 },
+  { name: "Misconfiguration", value: 6 },
+  { name: "Race Condition", value: 4 },
 ];
 
-document.getElementById("chartTitle").textContent = "Report Distribution";
+const labels = DATA.map(d => d.name);
+const values = DATA.map(d => d.value);
+const colors = ["#f97316", "#ec4899", "#8b5cf6", "#22d3ee"];
 
-new Chart(document.getElementById("reportChart"), {
+const ctx = document.getElementById("reportChart").getContext("2d");
+const stats = document.getElementById("chartStats");
+
+let chart = new Chart(ctx, {
   type: "doughnut",
   data: {
-    labels: DATA.map(d => d.name),
+    labels,
     datasets: [{
-      data: DATA.map(d => d.value),
-      backgroundColor: ["#f97316", "#ec4899", "#8b5cf6", "#22d3ee"],
-      borderWidth: 1,
+      data: values,
+      backgroundColor: colors,
+      borderColor: "#0f172a",
+      borderWidth: 2,
     }],
   },
   options: {
     plugins: {
-      legend: { display: true, position: "bottom", labels: { color: "#f8fafc", font: { family: "monospace" } } },
-      tooltip: { backgroundColor: "#020617" },
+      legend: {
+        display: true,
+        position: "bottom",
+        labels: {
+          color: "#f8fafc",
+          font: { family: "monospace", size: 12 },
+          padding: 15,
+        }
+      },
+      tooltip: {
+        backgroundColor: "#020617",
+        titleColor: "#f97316",
+        bodyColor: "#f8fafc",
+        callbacks: {
+          label: (tooltipItem) => {
+            const label = labels[tooltipItem.dataIndex];
+            const val = values[tooltipItem.dataIndex];
+            const pct = ((val / values.reduce((a,b) => a + b, 0)) * 100).toFixed(1);
+            return `${label}: ${val} (${pct}%)`;
+          }
+        }
+      },
     },
-  },
+    animation: {
+      duration: 1200,
+      easing: 'easeOutBounce'
+    },
+    responsive: true,
+  }
+});
+
+/* Display inline stats */
+stats.innerHTML = DATA.map((d, i) =>
+  `<li><span class="text-orangeLuxe">${d.name}</span>: <strong>${d.value}</strong> (${((d.value / values.reduce((a,b) => a + b, 0)) * 100).toFixed(1)}%)</li>`
+).join("");
+
+/* Download chart image */
+document.getElementById("exportChart").addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.href = chart.toBase64Image("image/png", 1);
+  link.download = "report-distribution.png";
+  link.click();
 });
 </script>
 

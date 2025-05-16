@@ -16,7 +16,6 @@
       <p class="text-xs tracking-widest text-orange-400 font-bold select-none">CYBERKIDZSEC VAULT</p>
       <p class="text-sm text-orangeLuxe-light">© {{ current_year }} CyberKidzSec</p>
       <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[16rem]">“Ghosted but not gone.”</p>
-      <!-- 🧠 Terminal Prompt -->
       <p class="terminal-footer-prompt">~$ system.exit(0) — stay ghosted 🧠</p>
     </div>
 
@@ -57,16 +56,153 @@
   </div>
 
   <!-- 🚨 Ghost Breach Alert -->
-  <div id="ghostBreachWarning" class="ghost-breach-warning" style="display: none;">
+  <div id="ghostBreachWarning" class="ghost-breach-warning hidden animate-pulse mt-6 px-4 py-2 border border-red-400 text-red-400 rounded-lg text-center text-sm font-bold font-mono">
     ⚠️ VAULT BREACH DETECTED
   </div>
 
   <!-- 🧠 Vault Stability Bar -->
   <div class="relative mt-10 max-w-6xl mx-auto">
     <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
-      <div class="h-full" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(to right, #f59e0b, #facc15, #34d399);"></div>
+      <div class="h-full transition-all duration-1000 ease-in-out" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(to right, #f59e0b, #facc15, #34d399);"></div>
     </div>
     <p class="text-center text-xs text-orange-400 mt-2">Vault Stability: {{ vault_xp_percentage }}%</p>
   </div>
 </footer>
+
+<style>
+.ghost-breach-warning {
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(255, 71, 71, 0.08);
+  color: #f87171;
+  font-weight: bold;
+  font-family: var(--font-mono, monospace);
+  margin-top: 2rem;
+  border: 1px solid #f87171;
+  border-radius: 0.75rem;
+  animation: pulse 2s infinite;
+}
+@keyframes toastFade {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.toast {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #10b981;
+  color: white;
+  font-family: monospace;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px rgba(16,185,129,0.5);
+  animation: toastFade 4s ease-in-out forwards;
+  z-index: 9999;
+}
+</style>
+
+<script type="module">
+import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+(() => {
+  const vaultXP = parseInt("{{ vault_xp_percentage }}") || 0;
+
+  // Animate Vault XP bar
+  const bar = document.querySelector('#footer .h-full[style*="width"]');
+  if (bar) {
+    bar.style.width = "0%";
+    setTimeout(() => {
+      bar.style.transition = "width 2.2s ease-in-out";
+      bar.style.width = vaultXP + "%";
+    }, 200);
+  }
+
+  // CVE shimmer while fetching
+  const cveCounter = document.getElementById("cveCounter");
+  if (cveCounter) {
+    cveCounter.textContent = "…";
+    fetch("https://cve.circl.lu/api/last")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          cveCounter.textContent = data.length.toLocaleString();
+          cveCounter.title = `${data.length} CVEs in last 24h`;
+        }
+      })
+      .catch(() => {
+        cveCounter.textContent = "⚠️";
+        cveCounter.title = "CVE feed unavailable";
+      });
+  }
+
+  // Ghost Breach Detection (persistent session-based)
+  const breachFlag = sessionStorage.getItem("vault_breach");
+  const ghostWarning = document.getElementById("ghostBreachWarning");
+  if (window.location.search.includes("breach=true")) {
+    sessionStorage.setItem("vault_breach", "1");
+  }
+  if (breachFlag === "1" && ghostWarning) {
+    ghostWarning.style.display = "block";
+    ghostWarning.classList.add("animate-pulse");
+    ghostWarning.setAttribute("role", "alert");
+    ghostWarning.setAttribute("aria-live", "assertive");
+  }
+
+  // Autosave email for newsletter
+  const emailInput = document.querySelector('input[name="email"]');
+  if (emailInput) {
+    const savedEmail = localStorage.getItem("vault_newsletter_email");
+    if (savedEmail) emailInput.value = savedEmail;
+    emailInput.addEventListener("input", e => {
+      localStorage.setItem("vault_newsletter_email", e.target.value.trim());
+    });
+  }
+
+  // Confetti + toast on subscribe
+  const form = document.querySelector('form[action*="buttondown.email"]');
+  if (form) {
+    form.addEventListener("submit", () => {
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = "📬 Subscribed! GhostMail en route.";
+      document.body.appendChild(toast);
+      confetti({
+        particleCount: 70,
+        spread: 90,
+        origin: { y: 0.6 },
+      });
+    });
+  }
+
+  // Persistent Theme Toggler + URL override
+  const themeBtn = document.getElementById("themeToggler");
+  const html = document.documentElement;
+  const setTheme = (theme) => {
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  };
+  const urlTheme = new URLSearchParams(window.location.search).get("theme");
+  if (urlTheme && (urlTheme === "light" || urlTheme === "dark")) {
+    setTheme(urlTheme);
+  } else {
+    const current = localStorage.getItem("theme") || html.getAttribute("data-theme") || "dark";
+    setTheme(current);
+  }
+  themeBtn?.addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    setTheme(next);
+  });
+
+  // Optional: Scroll to newsletter form if ?subscribe=true
+  if (window.location.search.includes("subscribe=true")) {
+    setTimeout(() => {
+      form?.scrollIntoView({ behavior: "smooth", block: "center" });
+      emailInput?.focus();
+    }, 600);
+  }
+})();
+</script>
+
 

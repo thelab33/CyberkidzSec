@@ -1,4 +1,4 @@
-<!-- Updated skip_nav.html -->
+<!-- 🚀 Forgemaster Tier Skip Navigation -->
 <div id="skipBar"
      class="fixed top-0 left-0 right-0 z-[9998] flex items-center justify-between
             bg-gradient-to-r from-green-400 via-cyan-400 to-green-400
@@ -6,7 +6,7 @@
             transform -translate-y-40 transition-transform duration-500 ease-out pointer-events-none"
      role="navigation" aria-label="Skip Navigation Bar">
 
-  <!-- 🚀 Warp Text + Shake -->
+  <!-- 🌌 Warp Mode Title -->
   <div id="warpText"
        class="absolute top-0 inset-x-0 text-center text-green-400 font-black tracking-widest
               text-lg mix-blend-difference opacity-0 scale-90 -translate-y-1/2
@@ -14,18 +14,21 @@
     WARP MODE ENGAGED
   </div>
 
-  <!-- Skip Links -->
+  <!-- 🧭 Skip Links -->
   <div class="flex gap-6">
-    <a href="#main" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
+    <a href="#main"
+       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Main
     </a>
-    <a href="#footer" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
+    <a href="#footer"
+       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Footer
     </a>
   </div>
 
-  <!-- ✖️ Close Button -->
-  <button id="skipBarClose" aria-label="Close Skip Navigation"
+  <!-- ❌ Close Button -->
+  <button id="skipBarClose"
+          aria-label="Close Skip Navigation"
           class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black">
     ✖️
   </button>
@@ -34,18 +37,33 @@
   <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none"></canvas>
 </div>
 
+<!-- 🎨 Styles -->
 <style>
-  @keyframes cyberpunkFlicker { /* unchanged */ }
-  .glitch-flicker { animation: cyberpunkFlicker 2.5s infinite alternate; }
-  .shake-on-show { animation: shake 0.6s ease-in-out; }
-  @keyframes shake {
-    0%,100%{ transform: translateX(0); }
-    20%,60%{ transform: translateX(-4px); }
-    40%,80%{ transform: translateX(4px); }
+  .glitch-flicker {
+    animation: cyberpunkFlicker 2.5s infinite alternate;
   }
-  canvas#confettiCanvas { z-index: 9997; }
+
+  .shake-on-show {
+    animation: shake 0.6s ease-in-out;
+  }
+
+  @keyframes cyberpunkFlicker {
+    0%, 100% { opacity: 0.85; text-shadow: 0 0 1px lime; }
+    25% { opacity: 0.95; text-shadow: 0 0 4px cyan; }
+    50% { opacity: 1; text-shadow: 0 0 6px hotpink; }
+    75% { opacity: 0.9; text-shadow: 0 0 3px white; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+
+  canvas#confettiCanvas { z-index: 9997; pointer-events: none; }
 </style>
 
+<!-- 🧠 Logic -->
 <script>
 (() => {
   const skipBar = document.getElementById("skipBar");
@@ -60,31 +78,42 @@
     warpText.classList.remove("opacity-0", "scale-90", "-translate-y-1/2");
     warpText.classList.add("opacity-100", "scale-100", "translate-y-0");
 
-    // play sound
-    new Audio('/static/audio/warp-sound.mp3').play().catch(()=>{});
+    // play warp sound
+    new Audio('/static/audio/warp-sound.mp3').play().catch(() => {});
 
-    // trigger confetti
-    confetti = ConfettiGenerator({ target: confettiCanvas, max: 80 });
-    confetti.render();
+    // confetti (uses ConfettiGenerator or fallback to canvas-confetti)
+    if (window.ConfettiGenerator) {
+      confetti = new ConfettiGenerator({ target: confettiCanvas, max: 80 });
+      confetti.render();
+    }
 
+    // hide glitch title after 1.5s
     setTimeout(() => {
       warpText.classList.add("opacity-0", "scale-90", "-translate-y-1/2");
       warpText.classList.remove("opacity-100", "scale-100", "translate-y-0");
     }, 1500);
 
+    // auto focus first skip link
     setTimeout(() => document.querySelector("#skipBar a")?.focus(), 400);
   }
 
   function hideSkipBar() {
     skipBar.classList.add("-translate-y-40", "pointer-events-none");
     skipBar.classList.remove("translate-y-0");
-    if (confetti) confetti.clear();
+    if (confetti?.clear) confetti.clear();
   }
 
+  // keyboard triggers
   window.addEventListener("keydown", (e) => {
-    if ((e.metaKey||e.ctrlKey)&&e.key==="ArrowUp") { e.preventDefault(); showSkipBar(); }
-    if (e.key==="Escape") hideSkipBar();
+    if ((e.metaKey || e.ctrlKey) && e.key === "ArrowUp") {
+      e.preventDefault();
+      showSkipBar();
+    }
+    if (e.key === "Escape") hideSkipBar();
   });
+
+  // close button
   closeBtn.addEventListener("click", hideSkipBar);
 })();
 </script>
+

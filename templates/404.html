@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}404 Not Found · CYBERKIDZSEC{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-10 px-6 py-20 animate-fade-in" role="alert" aria-labelledby="errorTitle">
+
+  <!-- 💀 ASCII Terminal Error -->
+  <pre class="font-mono text-orangeLuxe-light text-sm bg-zinc-900 p-6 rounded-xl shadow-md w-full max-w-2xl overflow-x-auto border border-orangeLuxe/30">
+<span class="text-red-400">[FATAL]</span> vault.system.error 0x404:
+┌──────────────────────────────┐
+│   RESOURCE NOT FOUND (404)   │
+└──────────────────────────────┘
+
+> The page you tried to access is ghosted...
+> It's either classified, moved, or purged from the Vault.
+  </pre>
+
+  <!-- 🛰️ Hero Message -->
+  <div class="space-y-3" data-aos="zoom-in">
+    <h1 id="errorTitle" class="text-4xl font-black text-orangeLuxe-light tracking-tight">404 · Ghost Signal Lost</h1>
+    <p class="text-orangeLuxe-light/70 max-w-xl mx-auto">
+      We couldn't locate that endpoint in the archive.<br class="hidden sm:inline" />
+      If this was a bounty target, it may have already been claimed.
+    </p>
+  </div>
+
+  <!-- ⌨️ Suggested Actions -->
+  <div class="flex flex-wrap justify-center gap-4 mt-6" data-aos="fade-up">
+    <a href="{{ url_for('views.home') }}" class="btn btn--solid">🏠 Return to Mainframe</a>
+    <a href="{{ url_for('views.reports_list') }}" class="btn btn--outline">📚 Browse Reports</a>
+    <a href="{{ url_for('playground.index') }}" class="btn btn--secondary">🎮 Hack the Playground</a>
+  </div>
+
+</section>
+{% endblock %}
+

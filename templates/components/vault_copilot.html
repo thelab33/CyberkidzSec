@@ -1,34 +1,106 @@
-<div id="copilot" class="fixed bottom-6 right-6 z-50 bg-zinc-900/90 backdrop-blur-lg border border-orangeLuxe px-4 py-3 rounded-xl shadow-2xl w-80 hidden">
-  <h3 class="font-mono text-orangeLuxe-light mb-2">🤖 Vault Copilot</h3>
-  <textarea id="copilotInput" placeholder="Ask the Vault…" class="w-full p-2 rounded bg-zinc-800 text-white"></textarea>
-  <button onclick="askCopilot()" class="mt-2 w-full btn btn--solid">Submit</button>
-  <pre id="copilotResponse" class="mt-3 text-xs text-emeraldLuxe whitespace-pre-wrap"></pre>
+<!-- 🤖 vault_copilot.html — Copilot Panel Forgemaster Edition -->
+<div id="copilot" class="fixed bottom-6 right-6 z-50 bg-zinc-900/90 backdrop-blur-lg border border-orangeLuxe px-4 py-4 rounded-2xl shadow-2xl w-80 hidden" role="dialog" aria-modal="true">
+  <h3 class="font-mono text-orangeLuxe-light text-sm mb-3">🤖 Vault Copilot</h3>
+
+  <textarea id="copilotInput" placeholder="Ask the Vault…" rows="3"
+            class="w-full resize-none p-2 rounded bg-zinc-800 text-white placeholder-zinc-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+            aria-label="Copilot prompt input"></textarea>
+
+  <div class="mt-2 flex items-center justify-between gap-2">
+    <button id="copilotSubmit" class="btn btn--solid flex-1 py-2 text-sm">Submit</button>
+    <button id="copilotClear" class="btn btn--outline px-3 py-2 text-xs" title="Clear">✖</button>
+  </div>
+
+  <pre id="copilotResponse" class="mt-3 text-xs text-emeraldLuxe font-mono whitespace-pre-wrap max-h-48 overflow-y-auto custom-scrollbar" aria-live="polite"></pre>
 </div>
-<button id="copilotToggle" class="fixed bottom-6 right-6 z-40 btn btn--outline rounded-full p-3">
+
+<!-- 🧠 Copilot Toggle Button -->
+<button id="copilotToggle"
+        class="fixed bottom-6 right-6 z-40 btn btn--outline rounded-full p-3 shadow-xl hover:scale-105 transition-transform"
+        aria-label="Toggle Vault Copilot">
   🧠
 </button>
 
 <script>
-  const toggle = document.getElementById("copilotToggle");
-  const copilot = document.getElementById("copilot");
-  toggle.onclick = () => copilot.classList.toggle("hidden");
+(() => {
+  const toggleBtn = document.getElementById("copilotToggle");
+  const panel = document.getElementById("copilot");
+  const input = document.getElementById("copilotInput");
+  const submit = document.getElementById("copilotSubmit");
+  const clear = document.getElementById("copilotClear");
+  const output = document.getElementById("copilotResponse");
 
-  async function askCopilot() {
-    const input = document.getElementById("copilotInput").value;
-    const resBox = document.getElementById("copilotResponse");
-    resBox.textContent = "Thinking…";
+  let controller = null;
 
-    const res = await fetch("/api/copilot/query", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": "ghostmode-supersecure"
-      },
-      body: JSON.stringify({ prompt: input })
-    });
+  toggleBtn.onclick = () => panel.classList.toggle("hidden");
+  clear.onclick = () => {
+    input.value = '';
+    output.textContent = '';
+    input.focus();
+  };
 
-    const data = await res.json();
-    resBox.textContent = data.content || "Something went wrong.";
+  submit.onclick = async () => {
+    const prompt = input.value.trim();
+    if (!prompt) return input.focus();
+
+    output.textContent = "🤔 Thinking...";
+    submit.disabled = true;
+
+    controller?.abort(); // cancel previous
+    controller = new AbortController();
+
+    try {
+      const res = await fetch("/api/copilot/query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": "ghostmode-supersecure"
+        },
+        signal: controller.signal,
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+      if (data.content) {
+        simulateTyping(data.content, output);
+      } else {
+        output.textContent = "⚠️ No response received.";
+      }
+    } catch (err) {
+      output.textContent = "❌ Error: Copilot offline or query failed.";
+    } finally {
+      submit.disabled = false;
+    }
+  };
+
+  // Typing animation
+  function simulateTyping(text, el, delay = 20) {
+    el.textContent = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      el.textContent += text[i++];
+      if (i >= text.length) clearInterval(interval);
+    }, delay);
   }
+
+  // ⌨️ Keyboard shortcut (Ctrl+I)
+  document.addEventListener("keydown", e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "i") {
+      e.preventDefault();
+      toggleBtn.click();
+    }
+  });
+})();
 </script>
+
+<style>
+/* Optional: Pretty scroll for long answers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f59e0b, #facc15);
+  border-radius: 9999px;
+}
+</style>
 

@@ -1,39 +1,32 @@
-<!-- vault_popup.html -->
+<!-- 🔐 components/vault_popup.html — Forgemaster Tier -->
 <template id="vaultTpl">
-  <div id="vaultOverlay" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur
-                                backdrop-saturate-150 backdrop-brightness-90 p-4
-                                opacity-0 scale-95 transition-all duration-300 ease-out"
+  <div id="vaultOverlay"
+       class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 p-4 backdrop-blur-lg opacity-0 scale-95 transition-all duration-300 ease-out"
        role="dialog" aria-modal="true">
     <span tabindex="0"></span>
 
-    <div id="vaultPanel" class="relative w-full max-w-xl rounded-2xl overflow-hidden border border-orangeLuxe/30
-                                bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom
-                                text-orangeLuxe-light shadow-[0_0_40px_rgba(249,115,22,0.25)] font-mono">
+    <div id="vaultPanel"
+         class="relative w-full max-w-xl rounded-2xl border border-orangeLuxe/30
+                bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom
+                text-orangeLuxe-light shadow-[0_0_40px_rgba(249,115,22,0.25)] font-mono p-6 space-y-4 overflow-hidden">
       <div class="absolute inset-0 pointer-events-none vhsMask"></div>
-      <div class="relative z-10 p-6 space-y-4" id="vaultBody"></div>
+      <div id="vaultBody" class="relative z-10 space-y-2 text-sm"></div>
     </div>
 
     <span tabindex="0"></span>
   </div>
 </template>
 
-<!-- 🔊 Vault Sounds -->
-<audio id="vaultSfxOpen" src="/sfx/vhs-open.mp3" preload="auto"></audio>
+<audio id="vaultSfxOpen"   src="/sfx/vhs-open.mp3"   preload="auto"></audio>
 <audio id="vaultSfxGlitch" src="/sfx/vhs-glitch.mp3" preload="auto"></audio>
-<audio id="vaultSfxClose" src="/sfx/vhs-close.mp3" preload="auto"></audio>
+<audio id="vaultSfxClose"  src="/sfx/vhs-close.mp3"  preload="auto"></audio>
 
 <style>
 @keyframes pulse-glow { 0%,100% { opacity: .05; } 50% { opacity: .15; } }
 @keyframes glitch { to { clip-path: inset(50% 0 0 0); } }
-
 .vhsMask {
-  mask-image: url("data:image/svg+xml;base64,PHN2ZyB3aW...");
-  -webkit-mask-image: inherit;
+  mask-image: url("/static/images/vhs-mask.svg");
   animation: pulse-glow 4s linear infinite;
-}
-
-.glitch-text {
-  position: relative;
 }
 .glitch-text::after {
   content: attr(data-text);
@@ -55,7 +48,7 @@
     const sfx = document.getElementById(id);
     if (sfx && !new URLSearchParams(location.search).has("mute")) {
       sfx.currentTime = 0;
-      sfx.play().catch(() => null);
+      sfx.play().catch(() => {});
     }
   }
 
@@ -73,9 +66,7 @@
           &gt; Access Level: <strong>${mode === "admin" ? "🧠 DEVELOPER" : "VAULT VIEW"}</strong>
         </p>
       </div>
-      <button id="vaultClose" class="mt-6 btn btn--primary w-full">
-        🛰️ Continue Monitoring
-      </button>
+      <button id="vaultClose" class="mt-6 btn btn--primary w-full">🛰️ Continue Monitoring</button>
     `;
     document.getElementById('vaultClose')?.addEventListener('click', close);
   }
@@ -106,7 +97,6 @@
     if (!visible) return;
     visible = false;
     clearTimeout(timerId);
-
     const overlay = document.getElementById('vaultOverlay');
     if (overlay) {
       overlay.classList.remove('opacity-100', 'scale-100');

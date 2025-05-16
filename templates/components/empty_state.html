@@ -1,31 +1,35 @@
-<!-- empty_state.html -->
-<div id="emptyWrap" class="flex flex-col items-center justify-center py-24 text-center">
-  <div class="w-24 h-24 mb-4 opacity-60 animate-spin-slow">🙀</div>
-  <p class="text-lg text-orangeLuxe-light font-mono mb-4">
-    Nothing to see here—try adjusting your filters.
+<!-- templates/components/empty_state.html -->
+<div
+  id="emptyWrap"
+  class="hidden flex-col items-center justify-center py-24 px-4 text-center space-y-4
+         text-orangeLuxe-light animate-fade-in"
+  role="status"
+  aria-live="polite"
+>
+  <!-- Emoji Spinner -->
+  <div
+    class="text-6xl opacity-50 animate-spin-slow motion-reduce:animate-none"
+    aria-hidden="true"
+  >
+    🙀
+  </div>
+
+  <!-- Message -->
+  <p
+    id="emptyMsg"
+    class="text-base sm:text-lg font-mono max-w-xl mx-auto text-orangeLuxe-light/80"
+  >
+    Nothing to see here — try adjusting your filters.
   </p>
-  <!-- toggle the reset button by adding data-reset -->
-  <button id="resetBtn" class="hidden px-4 py-1.5 rounded-full bg-orangeLuxe text-black font-semibold hover:bg-orangeLuxe.dark">
-    Reset filters
+
+  <!-- Reset Button (optional) -->
+  <button
+    id="resetBtn"
+    class="hidden px-5 py-2 rounded-full text-sm font-semibold
+           bg-orangeLuxe text-black shadow hover:bg-orangeLuxe-dark
+           focus:outline-none focus:ring-2 focus:ring-orangeLuxe-light focus:ring-offset-2 transition"
+  >
+    Reset Filters
   </button>
 </div>
-
-<style>
-@keyframes spin-slow{ to{ transform:rotate(360deg);} }
-.animate-spin-slow{ animation:spin-slow 6s linear infinite; }
-</style>
-
-<script>
-/* Call emptyState.show(msg, resetHandler) anywhere */
-window.emptyState = {
-  show(msg="Nothing to see here—try adjusting your filters.", onReset){
-    document.querySelector("#emptyWrap p").textContent = msg;
-    const btn=document.getElementById("resetBtn");
-    if(onReset){ btn.classList.remove("hidden"); btn.onclick=onReset; }
-    else       { btn.classList.add("hidden");     btn.onclick=null;   }
-    document.getElementById("emptyWrap").style.display="flex";
-  },
-  hide(){ document.getElementById("emptyWrap").style.display="none"; }
-};
-</script>
 

@@ -1,113 +1,123 @@
-<!doctype html>
-<html lang="en" class="scroll-smooth" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en"
+      class="scroll-smooth motion-safe:scroll-auto bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen"
+      data-theme="dark">
 <head>
-  <!-- 🌐 Core Meta -->
+  <!-- 🌐 Meta -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0f172a" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}" />
   <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
 
-  <!-- 🔌 PWA Support -->
+  <!-- 📲 PWA & Icons -->
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-
-  <!-- 🖼 Favicons -->
-  <link rel="icon"        href="{{ url_for('static', filename='favicon-32.png') }}" sizes="32x32" />
-  <link rel="icon"        href="{{ url_for('static', filename='favicon-16.png') }}" sizes="16x16" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon-32.png') }}" sizes="32x32" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon-16.png') }}" sizes="16x16" />
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
 
   <!-- 🌐 Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preload"    as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" as="style" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-  <!-- 🎨 Compiled Tailwind + Your Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.min.css') }}" />
+  <!-- 🎨 Core Styles -->
+  {% set styles = [
+    'css/app.min.css',
+    'css/ghost-mode.css',
+    'css/ghost-boot.css',
+    'css/bug_tales.css',
+    'css/back_to_top.css',
+    'css/cyber-enhancements.css'
+  ] %}
+  {% for sheet in styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename=sheet) }}" />
+  {% endfor %}
 
-  <!-- 🔧 Always-on Overrides -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/ghost-mode.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/ghost-boot.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bug_tales.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/back_to_top.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/cyber-enhancements.css') }}" />
-
-  <!-- 📦 3rd-Party -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- 📦 External Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
   {% block head_extra %}{% endblock %}
 
-  <!-- No-JS Fallback for AOS -->
+  <!-- 🦾 AOS No-JS Fallback -->
   <noscript>
-    <style>
-      .aos-init[data-aos] { opacity:1!important; transform:none!important; }
-    </style>
+    <style>.aos-init[data-aos] { opacity: 1 !important; transform: none !important; }</style>
   </noscript>
 </head>
 
-<body class="bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen">
-  <!-- ⌨️ Skip-to-content for accessibility -->
+<body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe">
+  <!-- ⌨️ Skip Links -->
   {% include "components/skip_nav.html" %}
 
-  <!-- 🛰️ Operative Title Banner -->
+  <!-- 🛰️ Dynamic Banner -->
   {% if operative_title %}
-    <p class="text-orange-400 text-sm text-center font-bold uppercase mb-4 tracking-wider">
+    <p class="text-orange-400 text-sm text-center font-bold uppercase mb-4 tracking-wider" role="banner">
       {{ operative_title }}
     </p>
   {% endif %}
 
-  <!-- 🔝 Header + Scroll-progress bar -->
+  <!-- 🔝 Header -->
   {% include "components/header.html" %}
-  <div id="scrollProgress" class="scroll-progress"></div>
+  <div id="scrollProgress" class="scroll-progress fixed top-0 left-0 h-1 bg-orangeLuxe transition-all duration-300 ease-out z-40"></div>
 
-  <!-- 🚀 Main Content -->
+  <!-- 🚀 Main -->
   <main id="main" class="flex-1">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- 🎛 Modals & Overlays -->
+  <!-- 🧩 Dynamic Components -->
   {% include "components/vault_popup.html" %}
+  {% include "components/vault_copilot.html" %}
+  {% include "components/section_skeleton.html" %}
   {% include "components/quick_view_modal.html" %}
   {% include "components/hud_toolbar.html" %}
   {% include "components/command_palette.html" %}
 
-  <!-- 🧭 Footer + Back-to-top -->
+  <!-- 🧭 Footer -->
   {% include "components/footer.html" %}
   {% include "components/back_to_top.html" %}
 
-  <!-- ⚙️ Scripts -->
-  <script src="{{ url_for('static', filename='js/app.min.js') }}" defer></script>
-  <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/ghost-mode.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/cyber-enhancements.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/init.js') }}" defer></script>
+  <!-- 🧭 Optional Breadcrumbs -->
+  {% block breadcrumbs %}{% endblock %}
 
-  <!-- 🎨 AOS Animations -->
+  <!-- ⚙️ JavaScript Core -->
+  {% set scripts = [
+    'js/app.min.js',
+    'js/ghost-mode.js',
+    'js/cyber-enhancements.js',
+    'js/init.js'
+  ] %}
+  {% for script in scripts %}
+    <script src="{{ url_for('static', filename=script) }}" defer></script>
+  {% endfor %}
+
+  <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      AOS.init({ duration: 800, easing: 'ease-in-out', once: true, mirror: false, offset: 120 });
+      AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 120 });
     });
   </script>
 
-  <!-- 🔒 Service Worker -->
+  <!-- 🔐 Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () =>
-        navigator.serviceWorker.register('/sw.js').catch(e => console.warn('SW failed:', e))
+        navigator.serviceWorker.register('/sw.js')
+          .catch(e => console.warn('🔒 Service Worker registration failed:', e))
       );
     }
   </script>
 
+  <!-- ✨ Extra Scripts -->
   {% block scripts_extra %}{% endblock %}
 
+  <!-- 📊 Analytics (Production Only) -->
   {% if config['ENV'] == 'production' %}
-    <script defer data-domain="cyberkidzsec.com"
-            src="https://plausible.io/js/script.js"></script>
+    <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
   {% endif %}
 </body>
 </html>

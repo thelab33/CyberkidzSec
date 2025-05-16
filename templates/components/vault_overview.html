@@ -1,15 +1,14 @@
-{# templates/components/vault_overview.html #}
 <section
   id="vault-overview"
-  class="section-container my-24 space-y-12"
+  class="section-container my-24 space-y-16"
   data-aos="fade-up"
 >
-  {# — Vault XP Bar — #}
-  <div aria-label="Vault XP Status" class="mx-auto max-w-lg space-y-2">
+  <!-- Vault XP Bar -->
+  <div aria-label="Vault XP Status" class="mx-auto max-w-2xl text-center space-y-4">
     <p class="text-sm text-orange-300 font-mono tracking-widest uppercase">
       Operative Level: {{ operative_level }}
     </p>
-    <div class="relative bg-zinc-800 rounded-full h-4 overflow-hidden">
+    <div class="relative bg-zinc-800 rounded-full h-4 overflow-hidden shadow-inner">
       <progress
         id="vaultXpProgress"
         class="absolute inset-0 w-full h-full appearance-none"
@@ -25,23 +24,21 @@
     <p
       id="vaultXpText"
       role="status"
-      class="text-center text-xs text-orange-400 font-mono tracking-wide"
+      class="text-xs text-orange-400 font-mono tracking-wide"
     >
-      Vault Operational Status: <span id="vaultXpNum">0</span>%
+      Vault Operational Status: <span id="vaultXpNum">{{ vault_xp_percentage }}</span>%
     </p>
   </div>
 
-  {# — Vault Banners — #}
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+  <!-- Vault Banners -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {% set banners = [
       ('images/og/main_vault_banner.png', 'Main Vault Banner'),
       ('images/og/hacker_underground_banner.png', 'Hacker Underground Banner'),
       ('images/og/zero_day_archive_banner.png', 'Zero-Day Archive Banner')
     ] %}
     {% for src, alt in banners %}
-      <figure
-        class="overflow-hidden rounded-2xl shadow-lg group hover:shadow-orangeLuxe/30 transition-all duration-300"
-      >
+      <figure class="overflow-hidden rounded-xl shadow-lg group hover:shadow-orange-400/30 transition-shadow duration-300">
         <img
           src="{{ url_for('static', filename=src) }}"
           alt="{{ alt }}"

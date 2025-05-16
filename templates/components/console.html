@@ -1,57 +1,110 @@
-{# templates/components/console.html — Polished Warp Loader 🌌 #}
+{# templates/components/console.html — Forgemaster Warp Loader 🌌 #}
 
-<!-- 🖥️ Vault Loader Overlay: Warp Mode -->
+<!-- 🖥️ Vault Loader Overlay -->
 <div id="vault-loader"
-     class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-black via-zinc-900 to-zinc-950 backdrop-blur-md transition-opacity duration-700 opacity-100"
-     role="status" aria-live="assertive" aria-label="Vault loading screen">
-  <div class="text-center space-y-4">
-    <p class="text-xl sm:text-2xl font-mono text-orange-400 animate-pulse flex items-center justify-center gap-2">
-      🔐 Decrypting Vault… <span class="tracking-wider">WARP MODE ENGAGED</span>
+     class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b
+            from-black via-zinc-900 to-zinc-950 backdrop-blur-md transition-opacity duration-700 opacity-100"
+     role="status"
+     aria-label="Vault loading screen"
+     aria-live="assertive">
+  <div class="text-center space-y-5 max-w-md">
+    <p id="vaultStatus"
+       class="text-xl sm:text-2xl font-mono text-orange-400 animate-pulse flex flex-col sm:flex-row items-center justify-center gap-2">
+      🔐 <span class="typewriter"></span>
+      <span class="tracking-widest hidden sm:inline"> · WARP MODE ENGAGED</span>
     </p>
-    <div class="flex justify-center">
-      <div class="loader-dots flex gap-2">
-        <span class="dot bg-orange-400"></span>
-        <span class="dot bg-yellow-400"></span>
-        <span class="dot bg-emerald-400"></span>
-      </div>
+
+    <!-- Vault Loader Dots -->
+    <div class="loader-dots flex gap-2 justify-center">
+      <span class="dot bg-orange-400"></span>
+      <span class="dot bg-yellow-400"></span>
+      <span class="dot bg-emerald-400"></span>
     </div>
+
+    <!-- Manual Close -->
     <button id="loaderClose"
-            class="mt-4 text-xl text-orange-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded transition"
-            aria-label="Close loader">
+            class="mt-6 text-xl text-orange-300 hover:text-white focus:outline-none
+                   focus:ring-2 focus:ring-orange-500 rounded transition"
+            aria-label="Close warp loader">
       ✖ Close Loader
     </button>
   </div>
 </div>
 
-<!-- 🔗 Skip Navigation Links -->
+<!-- 🔗 Skip Links for Accessibility -->
 <div class="sr-only focus-within:not-sr-only absolute top-0 left-0 bg-zinc-900 text-orange-300 px-4 py-2 rounded-b shadow-md z-[9999]">
   <a href="#main" class="underline focus:outline-none focus:ring-2 focus:ring-orange-500 mr-4">Skip to Main</a>
   <a href="#footer" class="underline focus:outline-none focus:ring-2 focus:ring-orange-500">Skip to Footer</a>
 </div>
 
-<!-- 🔄 Loader Animation Styles -->
+<!-- 🌠 Loader Styles -->
 <style>
-  .loader-dots .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 9999px;
-    animation: bounce 0.9s infinite ease-in-out;
-  }
-  .loader-dots .dot:nth-child(2) { animation-delay: 0.2s; }
-  .loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+.loader-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  animation: bounce 0.9s infinite ease-in-out;
+}
+.loader-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); opacity: 0.5; }
-    50%      { transform: translateY(-8px); opacity: 1; }
-  }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(-8px); opacity: 1; }
+}
+
+.typewriter::after {
+  content: "|";
+  animation: blink 1.2s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
 </style>
 
-<!-- 🔧 Loader Close Script -->
+<!-- 🧠 Smart Loader Logic -->
 <script>
-  document.getElementById('loaderClose').addEventListener('click', () => {
-    const loader = document.getElementById('vault-loader');
-    loader.classList.add('opacity-0');
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("vault-loader");
+  const closeBtn = document.getElementById("loaderClose");
+  const typer = document.querySelector(".typewriter");
+  const steps = [
+    "Initializing Warp Systems...",
+    "Decrypting Vault OS Kernel...",
+    "Bootstrapping Memory Nodes...",
+    "Finalizing Operative Overlay...",
+    "✓ Vault Access Granted"
+  ];
+
+  // Prevent repeated loads in session
+  if (sessionStorage.getItem("warpLoaded")) {
+    loader.remove();
+    return;
+  }
+
+  sessionStorage.setItem("warpLoaded", "true");
+
+  // Typing simulation
+  let i = 0;
+  const typeLine = () => {
+    if (i >= steps.length) {
+      setTimeout(closeLoader, 800);
+      return;
+    }
+    typer.textContent = steps[i];
+    i++;
+    setTimeout(typeLine, 1400);
+  };
+  typeLine();
+
+  // Close logic
+  const closeLoader = () => {
+    loader.classList.add("opacity-0");
     setTimeout(() => loader.remove(), 700);
-  });
+  };
+
+  // Manual close
+  closeBtn.onclick = closeLoader;
+});
 </script>
 

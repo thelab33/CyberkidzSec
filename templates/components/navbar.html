@@ -1,1 +1,81 @@
-<nav id="siteHeader" class="sticky top-0 z-50 bg-cyberNight backdrop-blur shadow-sm px-6 py-4 border-b border-orangeLuxe/20"><div class="flex items-center justify-between max-w-7xl mx-auto"><a href="/" class="text-orange-400 font-bold text-xl flex items-center gap-2">💀 CYBERKIDZSEC</a><div class="space-x-4 text-sm font-semibold"><a href="/" class="relative hover:text-orange-300">Home</a><a href="/reports" class="relative hover:text-orange-300">Vault</a><a href="/playground" class="relative hover:text-orange-300">Playground</a><a href="/academy" class="relative hover:text-orange-300">Academy</a></div></div></nav>
+<nav
+  id="siteHeader"
+  class="sticky top-0 z-50 bg-cyberNight backdrop-blur-lg shadow border-b border-orangeLuxe/20
+         transition-all duration-300 px-6 py-4"
+  role="navigation"
+  aria-label="Main site navigation"
+>
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 text-orangeLuxe font-black text-xl tracking-wide hover:scale-105 transition-transform">
+      💀 CYBERKIDZSEC
+    </a>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex space-x-6 text-sm font-semibold">
+      {% set nav_items = [
+        ("Home", "/"),
+        ("Vault", "/reports"),
+        ("Playground", "/playground"),
+        ("Academy", "/academy")
+      ] %}
+      {% for label, href in nav_items %}
+        <a
+          href="{{ href }}"
+          class="relative group transition-colors text-orange-300 hover:text-orangeLuxe"
+          aria-current="{{ 'page' if request.path == href else '' }}"
+        >
+          {{ label }}
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orangeLuxe transition-all group-hover:w-full"></span>
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button
+      id="menuToggle"
+      class="md:hidden p-2 text-orange-400 focus:outline-none focus:ring-2 focus:ring-orangeLuxe rounded"
+      aria-label="Open mobile menu"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobileNav"
+    class="md:hidden mt-4 hidden flex-col space-y-4 px-2 text-orange-300"
+  >
+    {% for label, href in nav_items %}
+      <a
+        href="{{ href }}"
+        class="block py-2 border-b border-orangeLuxe/20 hover:text-orangeLuxe transition"
+      >
+        {{ label }}
+      </a>
+    {% endfor %}
+  </div>
+</nav>
+
+<script>
+(() => {
+  const toggle = document.getElementById("menuToggle");
+  const menu = document.getElementById("mobileNav");
+
+  toggle?.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", menu.classList.contains("hidden") ? "false" : "true");
+  });
+
+  // Optional: shrink on scroll
+  const header = document.getElementById("siteHeader");
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    const scrolled = window.scrollY > 60;
+    header.style.padding = scrolled ? "0.5rem 1.5rem" : "1rem 1.5rem";
+    lastScrollY = window.scrollY;
+  });
+})();
+</script>
+

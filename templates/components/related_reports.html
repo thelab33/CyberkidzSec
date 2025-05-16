@@ -1,47 +1,51 @@
-<!-- related_reports.html -->
-<section id="relatedWrap" class="my-16" data-aos="fade-up""></section>
+<section id="relatedWrap" class="my-20" data-aos="fade-up"></section>
 
 <script>
-const RPTS = window.ALL_REPORTS || [];
-const CUR = RPTS.find(r => r.slug === window.CURRENT_REPORT);
+const ALL = window.ALL_REPORTS || [];
+const CURRENT = ALL.find(r => r.slug === window.CURRENT_REPORT);
 
-function getRelated(src, max = 3) {
-  const set = new Set(src.tags);
-  return RPTS.filter(r => r.slug !== src.slug)
-             .map(r => ({ r, score: r.tags.reduce((s, t) => s + (set.has(t) ? 1 : 0), 0) }))
-             .filter(x => x.score)
-             .sort((a, b) => b.score - a.score)
-             .slice(0, max)
-             .map(x => x.r);
+function getRelated(base, max = 3) {
+  const set = new Set(base.tags);
+  return ALL.filter(r => r.slug !== base.slug)
+    .map(r => ({
+      r,
+      score: r.tags.reduce((acc, t) => acc + (set.has(t) ? 1 : 0), 0)
+    }))
+    .filter(x => x.score)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, max)
+    .map(x => x.r);
 }
 
-const rel = CUR ? getRelated(CUR, 3) : [];
+const results = CURRENT ? getRelated(CURRENT) : [];
 const wrap = document.getElementById("relatedWrap");
 
 wrap.innerHTML = `
-  <h2 class="text-2xl font-extrabold mb-6 tracking-tight text-orangeLuxe-light">🔗 Related Reports</h2>
+  <h2 class="text-3xl font-bold mb-6 tracking-tight text-orangeLuxe-light">🔗 Related Reports</h2>
   ${
-    !rel.length
-      ? `<p class="text-sm text-orangeLuxe-light/70">No related reports found… yet 👀</p>`
-      : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up"">
-          ${rel.map((r, i) => `
-            <a href="/reports/${r.slug}" data-aos="fade-up" data-aos-delay="${i * 150}"
-               class="block group rounded-xl bg-night-glow/60 border border-orangeLuxe/20 p-5
-                      hover:shadow-lg hover:border-orangeLuxe/40 transition">
-              <h3 class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2">${r.title}</h3>
-              <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3">${new Date(r.date).toLocaleDateString()}</p>
-              <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
-                CVSS ${(typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A")}
-              </span>
-            </a>
-          `).join("")}
-        </div>`
+    results.length === 0
+    ? `<p class="text-sm text-orangeLuxe-light/70">No related reports found… yet 👀</p>`
+    : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        ${results.map((r, i) => `
+          <a href="/reports/${r.slug}" data-aos="fade-up" data-aos-delay="${i * 150}"
+             class="group block p-5 rounded-xl bg-zinc-900/80 border border-orangeLuxe/20 hover:border-orangeLuxe hover:shadow-lg transition-all">
+            <h3 class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2">${r.title}</h3>
+            <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3">${new Date(r.date).toLocaleDateString()}</p>
+            <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+              CVSS ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"}
+            </span>
+          </a>
+        `).join("")}
+      </div>`
   }
 `;
 
 function cvssColor(v) {
   if (typeof v !== "number") return "text-zinc-400";
-  return v >= 9 ? "text-red-400" : v >= 7 ? "text-orange-400" : v >= 4 ? "text-yellow-400" : "text-emerald-400";
+  if (v >= 9) return "text-red-400";
+  if (v >= 7) return "text-orange-400";
+  if (v >= 4) return "text-yellow-400";
+  return "text-emerald-400";
 }
 </script>
 

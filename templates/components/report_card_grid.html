@@ -1,44 +1,107 @@
-<!-- report_card_grid.html -->
-<section class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap" data-aos="fade-up" data-aos-delay="100">
-  <h2 class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange">
+<section
+  id="cardGridWrap"
+  class="max-w-7xl mx-auto py-20 px-6"
+  role="region"
+  aria-labelledby="cardGridHeading"
+  data-aos="fade-up"
+>
+  <h2
+    id="cardGridHeading"
+    class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange"
+  >
     🧠 Featured Vulnerability Reports
   </h2>
 
-  <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" data-aos="fade-up""></div>
+  <div
+    id="cardGrid"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+    role="list"
+  ></div>
 </section>
 
 <script>
-const CARDS = (window.ALL_REPORTS || []).slice(0, 9);
+const CARDS = (window.ALL_REPORTS || []).slice(0, 100);
 const grid = document.getElementById("cardGrid");
+
+if (!CARDS.length) {
+  grid.innerHTML = `<p class="text-center text-orange-300 col-span-full font-mono text-sm">
+    ⚠️ No vulnerability reports found.
+  </p>`;
+}
 
 CARDS.forEach((r, i) => {
   const el = document.createElement("a");
   el.href = `/reports/${r.slug}`;
-  el.className = `group rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br
-                  from-cyberNightGlow via-cyberNight to-zinc-900/90
-                  border border-orangeLuxe/25 hover:border-orangeLuxe/60
-                  transition-transform hover:scale-[1.02] focus:ring-2
-                  focus:ring-orangeLuxe-light`;
+  el.setAttribute("role", "listitem");
+  el.className = `group relative rounded-2xl overflow-hidden shadow-xl
+    bg-gradient-to-br from-cyberNightGlow via-cyberNight to-zinc-900/90
+    border border-orangeLuxe/25 hover:border-orangeLuxe/60
+    transition-transform focus:outline-none focus-visible:ring-2
+    focus-visible:ring-orangeLuxe-light transform hover:scale-[1.02]`;
+
   el.setAttribute("data-aos", "fade-up");
   el.setAttribute("data-aos-delay", `${i * 100}`);
+
+  const tagHTML = r.tags.slice(0, 3).map(tag =>
+    `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full bg-orangeLuxe/10 text-orangeLuxe-light font-mono">
+      #${tag}
+    </span>`
+  ).join("");
+
+  const extraTag = r.tags.length > 3
+    ? `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full border border-orangeLuxe/30 text-orangeLuxe-light/60 font-mono">
+        +${r.tags.length - 3}
+      </span>`
+    : "";
+
+  const date = new Date(r.date).toLocaleDateString();
+
   el.innerHTML = `
     <figure class="relative h-44 w-full overflow-hidden">
-      <img src="https://cdn.example.com/thumbnails/${r.slug}.jpg" alt="${r.title}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" loading="lazy">
+      <img
+        src="https://cdn.example.com/thumbnails/${r.slug}.jpg"
+        alt="Screenshot of ${r.title}"
+        loading="lazy"
+        decoding="async"
+        onerror="this.src='/static/img/fallback.jpg'; this.alt='Report image unavailable';"
+        class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+      />
+      <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-4 text-sm text-white font-mono line-clamp-4">
+        ${r.summary || "No summary available."}
+      </div>
     </figure>
+
     <div class="p-6 space-y-3">
-      <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">${r.title}</h3>
-      <p class="text-xs text-orangeLuxe-light/60 font-mono">${new Date(r.date).toLocaleDateString()} • ${r.reportType}</p>
-      <div class="flex flex-wrap gap-2">${r.tags.slice(0,3).map(t => `<span class="badge">${t}</span>`).join("")}${r.tags.length>3 ? `<span class="badge">+${r.tags.length-3}</span>` : ""}</div>
-      <span class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+      <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">
+        ${r.title}
+      </h3>
+
+      <p class="text-xs text-orangeLuxe-light/60 font-mono">
+        ${date} • ${r.reportType}
+      </p>
+
+      <div class="flex flex-wrap gap-1.5">${tagHTML}${extraTag}</div>
+
+      <span
+        class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}"
+        aria-label="CVSS score ${r.cvss}"
+      >
         CVSS ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"}
       </span>
-    </div>`;
+    </div>
+  `;
   grid.appendChild(el);
 });
 
 function cvssColor(v) {
   if (typeof v !== "number") return "text-zinc-400";
-  return v >= 9 ? "text-red-400" : v >= 7 ? "text-orange-400" : v >= 4 ? "text-yellow-400" : "text-emerald-400";
+  return v >= 9
+    ? "text-red-400"
+    : v >= 7
+    ? "text-orange-400"
+    : v >= 4
+    ? "text-yellow-400"
+    : "text-emerald-400";
 }
 </script>
 

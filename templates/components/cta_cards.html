@@ -1,28 +1,41 @@
-<div class="grid md:grid-cols-2 gap-8 mt-16 px-4" data-aos="fade-up"" data-aos="fade-up">
-  <!-- 🎓 Ghost Academy -->
-  <div class="rounded-2xl bg-cyberNight border border-orangeLuxe/30 p-8 text-center shadow-lg hover:shadow-glow-orange transition-all duration-300 group">
-    <h3 class="text-sm font-bold uppercase text-orange-300 mb-3 group-hover:text-orangeLuxe-light transition-colors">
-      🎓 Join Ghost Academy
-    </h3>
-    <p class="text-xs text-orangeLuxe-light/70 mb-6">
-      Sharpen your skills. Earn XP. Become a legend.
-    </p>
-    <a href="/academy" class="btn btn--primary btn--outline w-full text-xs">
-      Enter Academy
-    </a>
-  </div>
-
-  <!-- 🛰️ Operative Dashboard -->
-  <div class="rounded-2xl bg-cyberNight border border-orangeLuxe/30 p-8 text-center shadow-lg hover:shadow-glow-orange transition-all duration-300 group">
-    <h3 class="text-sm font-bold uppercase text-orange-300 mb-3 group-hover:text-emeraldLuxe transition-colors">
-      🛰️ Operative Stats
-    </h3>
-    <p class="text-xs text-orangeLuxe-light/70 mb-6">
-      Track your Vault Journey + XP Growth.
-    </p>
-    <a href="/dashboard" class="btn btn--primary btn--outline w-full text-xs">
-      Launch Dashboard
-    </a>
-  </div>
-</div>
+<section aria-label="Primary actions"
+         class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
+         data-aos="fade-up">
+  {% set ctas = [
+    {
+      "id": "academy",
+      "emoji": "🎓",
+      "title": "Join Ghost Academy",
+      "desc": "Sharpen your skills. Earn XP. Become a legend.",
+      "href": "/academy",
+      "label": "Enter Academy",
+      "btn_shadow": "group-hover:shadow-glow-orange focus:ring-orangeLuxe"
+    },
+    {
+      "id": "dashboard",
+      "emoji": "🛰️",
+      "title": "View Operative Stats",
+      "desc": "Track your vault journey + XP history.",
+      "href": "/dashboard",
+      "label": "Launch Dashboard",
+      "btn_shadow": "group-hover:shadow-hud-panel focus:ring-emeraldLuxe"
+    }
+  ] %}
+  {% for cta in ctas %}
+    <article role="region"
+             aria-labelledby="{{ cta.id }}-title"
+             class="cta-card group p-6 bg-cyberNight rounded-2xl border border-orangeLuxe/30 shadow-md transition-all hover:shadow-orangeLuxe/20 focus-within:ring-2">
+      <h2 id="{{ cta.id }}-title"
+          class="text-xs uppercase font-bold text-orange-300 mb-2 tracking-wide">
+        {{ cta.emoji }} {{ cta.title }}
+      </h2>
+      <p class="text-xs text-orangeLuxe-light/70 mb-4">{{ cta.desc }}</p>
+      <a href="{{ cta.href }}"
+         aria-labelledby="{{ cta.id }}-title"
+         class="w-full inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded border border-orangeLuxe text-orangeLuxe hover:bg-orangeLuxe hover:text-black transition-all {{ cta.btn_shadow }}">
+        {{ cta.label }}
+      </a>
+    </article>
+  {% endfor %}
+</section>
 

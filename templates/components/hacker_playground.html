@@ -1,26 +1,34 @@
-<!-- hacker_playground.html -->
 <section
   id="playground"
   class="relative mx-auto my-24 max-w-3xl px-6 py-12 rounded-2xl border border-orangeLuxe/40
-         bg-gradient-to-b from-cyberNight to-black shadow-xl"
+         bg-gradient-to-b from-cyberNight to-black shadow-xl space-y-12"
 >
-  <h2 class="text-center text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2">
-    🧠 Hacker Playground
-  </h2>
-  <p class="text-center text-orangeLuxe-light/80 mb-10 font-mono text-sm">
-    Think you’ve got what it takes? Hack the vault – only the curious survive.
-  </p>
+  <!-- ✨ Header with Typewriter Effect -->
+  <div class="text-center">
+    <h2 id="hackIntro" class="text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2 font-mono">
+      ▓▒░ Loading Hacker Playground…
+    </h2>
+    <p class="text-orangeLuxe-light/80 font-mono text-sm">
+      Think you’ve got what it takes? Hack the vault – only the curious survive.
+    </p>
+  </div>
 
-  <!-- Hack button -->
-  <button id="hackBtn"
-    class="block mx-auto mb-10 bg-orangeLuxe hover:bg-orangeLuxe-dark text-black px-8 py-3
-           rounded-full font-semibold shadow-lg focus:ring-2 focus:ring-orange-400 transition">
-    Hack Me 🔓
-  </button>
-  <pre id="flagOut" class="hidden mt-4 text-center text-emerald-400 font-mono text-sm break-all"></pre>
+  <!-- 🔓 Hack Me Button + XP Bar -->
+  <div class="text-center space-y-4">
+    <button id="hackBtn"
+      class="bg-orangeLuxe hover:bg-orangeLuxe-dark text-black px-8 py-3 rounded-full
+             font-semibold shadow-lg focus:ring-2 focus:ring-orange-400 transition">
+      Hack Me 🔓
+    </button>
+    <p id="hackXPText" class="text-xs text-orangeLuxe-light font-mono">Hacks Triggered: <span id="hackCount">0</span></p>
+    <div class="w-full max-w-xs mx-auto bg-zinc-800 rounded-full h-2 overflow-hidden">
+      <div id="hackXPBar" class="h-full bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out" style="width: 0%"></div>
+    </div>
+    <pre id="flagOut" class="hidden mt-4 text-emerald-400 font-mono text-sm break-all"></pre>
+  </div>
 
-  <!-- Terminal scan -->
-  <div class="mt-16">
+  <!-- 🛰️ Terminal Scanner -->
+  <div>
     <h3 class="text-orangeLuxe text-lg font-semibold mb-3">🛰️ Terminal-Scan™ Interface</h3>
     <form id="scanForm" class="flex flex-col sm:flex-row gap-3">
       <input id="scanInput" type="text"
@@ -33,59 +41,119 @@
         Run Scan 🛰️
       </button>
     </form>
-    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light"></pre>
+    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light transition-all"></pre>
   </div>
 
-  <!-- ghost flag -->
+  <!-- 👻 Ghost Easter Egg -->
   <div id="ghostFlag" class="hidden mt-16 text-center bg-cyberNight.glow/70 rounded-xl p-6
-        border border-orangeLuxe/40 shadow-lg animate-pulse-glow"></div>
+        border border-orangeLuxe/40 shadow-lg animate-pulse-glow text-orangeLuxe-light font-mono">
+  </div>
 
-  <!-- returnee easter-egg -->
+  <!-- 🕶️ Return Egg -->
   <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60">
     welcome back, operative
   </p>
 </section>
 
 <script>
-/* tiny helpers --------------------------------------------------- */
-const $ = (sel) => document.querySelector(sel);
+const $ = (q) => document.querySelector(q);
 const makeFlag = (txt) => `FLAG{${btoa(txt)}}`;
-const COLORS = ["text-red-400","text-emerald-400","text-sky-400","text-yellow-400"];
+const XP_TOTAL = 5;
+let hackCount = +localStorage.getItem("hackCount") || 0;
+let ghostUnlocked = localStorage.getItem("ghostUnlocked") === "1";
+let keyBuf = [];
+let commandHistory = [], historyIndex = -1;
 
-/* state ---------------------------------------------------------- */
-let ghostUnlocked = false, keyBuf = [];
+// Typewriter intro effect
+window.addEventListener("DOMContentLoaded", () => {
+  const intro = $("#hackIntro");
+  const msg = "🧠 Hacker Playground";
+  let i = 0;
+  const type = () => {
+    if (i < msg.length) {
+      intro.textContent += msg.charAt(i++);
+      setTimeout(type, 40);
+    }
+  };
+  intro.textContent = "";
+  type();
 
-/* return visitor? */
-if(localStorage.getItem("firstHack")) $("#returnEgg").style.display="block";
+  if (localStorage.getItem("firstHack")) $("#returnEgg").style.display = "block";
+  if (ghostUnlocked) {
+    $("#ghostFlag").innerHTML = `👻 <strong>Ghost Mode Active!</strong><br>${makeFlag("ghost_mode_persist")}`;
+    $("#ghostFlag").classList.remove("hidden");
+  }
+  updateXP();
+});
 
-/* Hack button ---------------------------------------------------- */
+// Hack Me
 $("#hackBtn").onclick = () => {
+  hackCount++;
+  localStorage.setItem("hackCount", hackCount);
+  $("#hackCount").textContent = hackCount;
   const secret = Math.random().toString(16).slice(2,10);
   $("#flagOut").textContent = makeFlag(`you_triggered_${secret}`);
   $("#flagOut").classList.remove("hidden");
   localStorage.setItem("firstHack", "1");
+  updateXP();
 };
 
-/* Terminal scan -------------------------------------------------- */
+// XP Progress
+function updateXP() {
+  const pct = Math.min((hackCount / XP_TOTAL) * 100, 100);
+  $("#hackXPBar").style.width = pct + "%";
+}
+
+// Terminal Scan
 $("#scanForm").onsubmit = (e) => {
   e.preventDefault();
   const q = $("#scanInput").value.trim().toLowerCase();
+  if (!q) return;
+
+  commandHistory.unshift(q);
+  historyIndex = -1;
   $("#scanInput").value = "";
-  if(!q) return;
+
   const good = ["admin","dev","console","vault"].some(k => q.includes(k));
-  $("#scanOut").textContent = good
+  const output = good
     ? "🟢 Access Granted – " + makeFlag("access_terminal_scan_success")
     : "🔴 Access Denied – Endpoint not in routing table.";
-  $("#scanOut").classList.remove("hidden");
+
+  const el = $("#scanOut");
+  el.textContent = "";
+  el.classList.remove("hidden");
+
+  let i = 0;
+  const typer = setInterval(() => {
+    if (i < output.length) {
+      el.textContent += output.charAt(i++);
+    } else {
+      clearInterval(typer);
+    }
+  }, 15);
 };
 
-/* Keyboard shortcuts -------------------------------------------- */
-window.addEventListener("keydown", (e)=>{
-  if(e.key==="/"){ e.preventDefault(); $("#scanInput").focus(); }
-  if(e.key==="Escape"){ $("#scanInput").blur(); $("#scanOut").classList.add("hidden"); }
+// Terminal shortcuts
+window.addEventListener("keydown", (e) => {
+  if (e.key === "/") {
+    e.preventDefault();
+    $("#scanInput").focus();
+  }
+  if (e.key === "Escape") {
+    $("#scanInput").blur();
+    $("#scanOut").classList.add("hidden");
+  }
+  if (e.key === "ArrowUp" && commandHistory.length) {
+    e.preventDefault();
+    historyIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
+    $("#scanInput").value = commandHistory[historyIndex];
+  }
+
+  // ghost sequence
   keyBuf = [...keyBuf.slice(-1), e.key.toLowerCase()];
-  if(keyBuf.join("")==="gh" && !ghostUnlocked){
+  if (keyBuf.join("") === "gh" && !ghostUnlocked) {
     ghostUnlocked = true;
+    localStorage.setItem("ghostUnlocked", "1");
     $("#ghostFlag").innerHTML = `👻 <strong>Ghost Sequence Unlocked!</strong><br>${makeFlag("you_found_the_ghost_sequence")}`;
     $("#ghostFlag").classList.remove("hidden");
   }

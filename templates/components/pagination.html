@@ -1,86 +1,85 @@
-<!-- pagination.html -->
+<!-- templates/components/pagination.html -->
 <nav
   id="pagination"
-  data-page="1"      <!-- current page -->
-  data-total="10"    <!-- total pages -->
-  class="flex justify-center items-center gap-2 mt-10"
+  data-page="1"       <!-- Current page (set dynamically) -->
+  data-total="10"     <!-- Total pages (set dynamically) -->
   aria-label="Pagination"
-></nav>
+  class="mt-14 flex justify-center items-center gap-2 flex-wrap"
+>
+  <!-- Buttons injected by JS -->
+</nav>
 
 <script>
-/**
- * Emit a “pagechange” CustomEvent whenever the user picks a new page.
- *   nav.addEventListener("pagechange", e => console.log(e.detail.page))
- */
 (function () {
-  const nav   = document.getElementById("pagination");
-  let page    = +nav.dataset.page  || 1;
+  const nav = document.getElementById("pagination");
+  let page = +nav.dataset.page || 1;
   const total = +nav.dataset.total || 1;
+  const delta = 1; // How many siblings to show
 
-  const delta = 1; // how many siblings to show around the current page
-
-  function makeBtn(txt, aria, disabled, active, click) {
+  function makeBtn(label, aria, disabled, active, onClick) {
     const btn = document.createElement("button");
-    btn.textContent = txt;
-    btn.type        = "button";
-    btn.ariaLabel   = aria;
+    btn.type = "button";
+    btn.textContent = label;
+    btn.ariaLabel = aria;
     if (active) btn.setAttribute("aria-current", "page");
+
     btn.className = [
-      "px-3.5 py-1.5 rounded-full font-mono text-sm transition-all",
+      "px-4 py-1.5 rounded-full font-mono text-sm min-w-[40px] text-center",
+      "transition-colors duration-200 ease-out",
       disabled
-        ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+        ? "cursor-not-allowed bg-zinc-800 text-zinc-500 opacity-50"
         : active
-          ? "bg-orangeLuxe text-black shadow-[0_0_10px_#f97316]"
-          : "bg-cyberNight.phantom text-orangeLuxe hover:bg-cyberNight.glow"
+        ? "bg-orangeLuxe text-black shadow-[0_0_12px_#f97316]/70 ring-2 ring-orangeLuxe"
+        : "bg-cyberNight text-orangeLuxe hover:bg-orangeLuxe/10 hover:text-orangeLuxe-light"
     ].join(" ");
-    if (!disabled) btn.onclick = click;
+
+    if (!disabled) btn.onclick = onClick;
     return btn;
   }
 
   function render() {
     nav.innerHTML = "";
 
-    /* ← Prev */
+    // ← Prev
     nav.appendChild(
       makeBtn("← Prev", "Previous page", page === 1, false, () => set(page - 1))
     );
 
-    /* middle range */
-    const elems = [];
+    // Page range with ellipses
+    const visible = [];
     for (let i = 1; i <= total; i++) {
-      if (i === 1 || i === total || Math.abs(i - page) <= delta) elems.push(i);
-      else if (elems[elems.length - 1] !== "...") elems.push("...");
+      if (i === 1 || i === total || Math.abs(i - page) <= delta) visible.push(i);
+      else if (visible[visible.length - 1] !== "...") visible.push("...");
     }
 
-    elems.forEach((i) => {
-      if (i === "...") {
-        const span = document.createElement("span");
-        span.textContent = "…";
-        span.className   = "px-2 text-orangeLuxe-light/60";
-        nav.appendChild(span);
+    visible.forEach((item) => {
+      if (item === "...") {
+        const dots = document.createElement("span");
+        dots.textContent = "…";
+        dots.className = "px-2 text-orangeLuxe-light/60 font-mono";
+        nav.appendChild(dots);
       } else {
         nav.appendChild(
-          makeBtn(i, `Page ${i}`, false, i === page, () => set(i))
+          makeBtn(item, `Page ${item}`, false, item === page, () => set(item))
         );
       }
     });
 
-    /* Next → */
+    // Next →
     nav.appendChild(
       makeBtn("Next →", "Next page", page === total, false, () => set(page + 1))
     );
   }
 
-  function set(p) {
-    if (p < 1 || p > total || p === page) return;
-    page = p;
-    nav.dataset.page = p;
+  function set(newPage) {
+    if (newPage < 1 || newPage > total || newPage === page) return;
+    page = newPage;
+    nav.dataset.page = newPage;
     render();
-    nav.dispatchEvent(new CustomEvent("pagechange", { detail: { page: p } }));
+    nav.dispatchEvent(new CustomEvent("pagechange", { detail: { page: newPage } }));
   }
 
-  /* initial paint */
-  render();
+  render(); // Initial render
 })();
 </script>
 

@@ -1,4 +1,4 @@
-{# templates/components/header.html #}
+{# Forgemaster Enhanced Header Navigation #}
 {% set nav_items = [
   {'name':'Home',          'endpoint':'views.home',              'blueprint':None},
   {'name':'Bug Vault',     'endpoint':'bug_vault.index',         'blueprint':'bug_vault'},
@@ -8,36 +8,48 @@
 ] %}
 
 {% set actions = [
-  {'id':'liveStatus',   'label':'Online','html':'<span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" role="status" aria-label="Online"></span>'},
-  {'id':'notifToggle',  'label':'Notifications','html':'<i class="fas fa-bell" aria-hidden="true"></i><span class="sr-only">Notifications</span><span class="notif-count">3</span>'},
-  {'id':'cmdPalette',   'label':'Command Palette','html':'<i class="fas fa-terminal" aria-hidden="true"></i><span class="sr-only">Open Command Palette</span>'},
-  {'id':'themeToggle',  'label':'Toggle Theme','html':'<i class="fas fa-moon" aria-hidden="true"></i><span class="sr-only">Toggle Light/Dark Theme</span>'},
+  {'id':'liveStatus','label':'Online','html':'<span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" role="status" aria-label="Online"></span>'},
+  {'id':'notifToggle','label':'Notifications','html':'<i class="fas fa-bell" aria-hidden="true"></i><span class="sr-only">Notifications</span><span class="notif-count">3</span>'},
+  {'id':'cmdPalette','label':'Command Palette','html':'<i class="fas fa-terminal" aria-hidden="true"></i><span class="sr-only">Command Palette</span>'},
+  {'id':'themeToggle','label':'Toggle Theme','html':'<i class="fas fa-moon" aria-hidden="true"></i><span class="sr-only">Toggle Theme</span>'},
 ] %}
 
-<header id="siteHeader" class="fixed inset-x-0 top-0 z-50 bg-zinc-900/80 backdrop-blur-md transition-all duration-300 shrinkable-header" role="banner">
+<header id="siteHeader"
+        class="fixed inset-x-0 top-0 z-50 bg-zinc-900/80 backdrop-blur-md transition-all duration-300 shrinkable-header"
+        role="banner">
   <div class="container mx-auto flex items-center justify-between px-6 py-3 gap-8">
 
     <!-- Logo -->
-    <a href="{{ url_for('views.home') }}" class="flex items-center space-x-2 text-2xl font-black text-orangeLuxe hover:scale-105 transition-transform mr-auto" aria-label="Go to Home">
+    <a href="{{ url_for('views.home') }}"
+       class="flex items-center space-x-2 text-2xl font-black text-orangeLuxe hover:scale-105 transition-transform mr-auto"
+       aria-label="Go to Home">
       <svg class="h-8 w-8 animate-spin-slow text-orangeLuxe" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M12 2L2 7v7c0 5 4 9 10 9s10-4 10-9V7l-10-5z"/>
       </svg>
       <span class="hidden sm:inline">CYBERKIDZSEC VAULT</span>
     </a>
 
-    <!-- Search + Nav -->
+    <!-- Search & Primary Nav -->
     <div class="flex-1 flex items-center justify-center lg:justify-start gap-10 min-w-0">
+      <!-- 🔍 Global Search -->
       <div class="relative hidden lg:block w-full max-w-md">
-        <input id="globalSearch" type="search" placeholder="Search the Vault…" aria-label="Search the Vault" class="w-full pl-10 pr-4 bg-zinc-800 border border-zinc-700 rounded focus:border-orangeLuxe focus:ring-orangeLuxe placeholder-zinc-500 transition" />
+        <input id="globalSearch" type="search"
+               placeholder="Search the Vault…"
+               aria-label="Search the Vault"
+               class="w-full pl-10 pr-4 bg-zinc-800 border border-zinc-700 rounded focus:border-orangeLuxe focus:ring-2 focus:ring-orangeLuxe placeholder-zinc-500 text-sm font-mono transition" />
         <span class="absolute inset-y-0 left-3 flex items-center text-zinc-500">
           <i class="fas fa-search" aria-hidden="true"></i>
         </span>
         <kbd class="absolute right-3 top-1/2 -translate-y-1/2 bg-zinc-800 text-xs font-mono px-1 rounded text-zinc-400">⌘ K</kbd>
       </div>
+
+      <!-- 🧭 Nav Items -->
       <nav class="hidden lg:flex space-x-6" aria-label="Primary Navigation">
         {% for item in nav_items %}
           {% set active = request.endpoint == item.endpoint or (item.blueprint and request.blueprint == item.blueprint) %}
-          <a href="{{ url_for(item.endpoint) }}" class="relative text-sm uppercase font-mono tracking-wide py-1 transition focus:outline-none focus:ring-2 focus:ring-orangeLuxe {{ 'text-orangeLuxe' if active else 'text-zinc-300 hover:text-orangeLuxe-light' }}" aria-current="{{ 'page' if active else '' }}">
+          <a href="{{ url_for(item.endpoint) }}"
+             class="relative text-sm uppercase font-mono tracking-wide py-1 transition focus:outline-none focus:ring-2 focus:ring-orangeLuxe {{ 'text-orangeLuxe' if active else 'text-zinc-300 hover:text-orangeLuxe-light' }}"
+             aria-current="{{ 'page' if active else '' }}">
             {{ item.name }}
             {% if active %}
               <span class="absolute inset-x-0 -bottom-1 h-0.5 bg-orangeLuxe rounded-full"></span>
@@ -47,48 +59,80 @@
       </nav>
     </div>
 
-    <!-- Action Cluster -->
+    <!-- ⚙️ Action Buttons -->
     <div class="flex items-center gap-3 justify-end min-w-[11rem] shrink-0">
       {% for act in actions %}
-      <button id="{{ act.id }}" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition" title="{{ act.label }}">
-        {{ act.html|safe }}
-      </button>
+        <button id="{{ act.id }}"
+                class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition"
+                title="{{ act.label }}">
+          {{ act.html|safe }}
+        </button>
       {% endfor %}
 
-      <!-- Mobile Menu Toggle -->
-      <button id="menuToggle" class="lg:hidden p-2 text-2xl text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle mobile menu">
+      <!-- 📱 Mobile Menu Toggle -->
+      <button id="menuToggle"
+              class="lg:hidden p-2 text-2xl text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-orangeLuxe transition"
+              aria-controls="mobileNav"
+              aria-expanded="false"
+              aria-label="Toggle mobile menu">
         ☰
       </button>
     </div>
   </div>
 
-  <!-- Mobile Navigation -->
-  <nav id="mobileNav" class="fixed inset-x-0 top-full transform -translate-y-full bg-zinc-900/95 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-transform duration-300 lg:hidden" aria-label="Mobile Navigation">
+  <!-- 📱 Mobile Navigation -->
+  <nav id="mobileNav"
+       class="fixed inset-x-0 top-full transform -translate-y-full bg-zinc-900/95 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-transform duration-300 lg:hidden"
+       aria-label="Mobile Navigation">
     <ul class="flex flex-col gap-4">
       {% for item in nav_items %}
-      <li>
-        <a href="{{ url_for(item.endpoint) }}" class="block text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-orangeLuxe">
-          {{ item.name }}
-        </a>
-      </li>
+        <li>
+          <a href="{{ url_for(item.endpoint) }}"
+             class="block text-zinc-300 hover:text-orangeLuxe focus:outline-none focus:ring-2 focus:ring-orangeLuxe">
+            {{ item.name }}
+          </a>
+        </li>
       {% endfor %}
     </ul>
   </nav>
 </header>
 
+<!-- 🧠 Forgemaster Logic -->
 <script>
 (() => {
   const header = document.querySelector('.shrinkable-header');
+  let lastY = 0;
+
+  // Responsive header shrink
   window.addEventListener('scroll', () => {
-    header.style.padding = window.scrollY > 50 ? '0.25rem 1.5rem' : '0.75rem 1.5rem';
+    window.requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y > 50 && y > lastY) {
+        header.classList.add("py-1");
+        header.classList.remove("py-3");
+      } else {
+        header.classList.remove("py-1");
+        header.classList.add("py-3");
+      }
+      lastY = y;
+    });
   });
 
+  // Mobile nav toggle
   const btn = document.getElementById('menuToggle');
   const nav = document.getElementById('mobileNav');
   btn.addEventListener('click', () => {
     const expanded = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', !expanded);
     nav.classList.toggle('-translate-y-full');
+  });
+
+  // Command Palette & Keyboard Shortcuts
+  window.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      document.getElementById('cmdPalette')?.click();
+    }
   });
 })();
 </script>

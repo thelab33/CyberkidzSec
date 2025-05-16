@@ -1,19 +1,105 @@
-<section id="bug-tales" class="prose mx-auto my-12 p-6 bg-zinc-900/90 rounded-lg shadow-lg text-zinc-100">
-  <h2 class="text-2xl font-bold mb-4">🎙️ Bug Tales Audio Story</h2>
+<section id="bug-tales"
+         class="prose mx-auto my-12 p-6 rounded-xl border border-orangeLuxe/30 bg-gradient-to-br from-zinc-900 via-cyberNight-glow to-black
+                shadow-[0_0_20px_rgba(249,115,22,0.15)] text-orangeLuxe-light font-mono"
+         role="region" aria-labelledby="bt-heading">
+  <!-- 🧠 Heading -->
+  <h2 id="bt-heading" class="text-3xl font-extrabold tracking-tight flex items-center gap-2 mb-4">
+    🎙️ Bug Tales: <span class="text-orange-400">Zero-Day Chronicles</span>
+  </h2>
+  <p class="text-sm text-orangeLuxe-light/80 mb-6 max-w-prose">
+    Sit back and listen as ghost-mode operatives recall their most haunting vulnerability finds.
+  </p>
 
-  <!-- Hidden background SFX -->
-  <audio id="bt-sfx" loop preload="auto" class="hidden">
+  <!-- 🌌 Audio Visualizer Canvas -->
+  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden"></canvas>
+
+  <!-- 🔉 Hidden Ambient Audio -->
+  <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
     <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg">
   </audio>
 
-  <!-- Controls -->
-  <div class="flex items-center gap-4">
-    <button id="bt-play" class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded">
+  <!-- 🎛 Controls -->
+  <div class="flex flex-wrap items-center gap-4 mt-6">
+    <button id="bt-play"
+            class="btn btn--solid bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-5 py-2 rounded shadow transition"
+            aria-label="Play Bug Tale">
       ▶️ Play Story
     </button>
-    <button id="bt-stop" class="px-4 py-2 bg-red-600 hover:bg-red-500 rounded" disabled>
+    <button id="bt-stop"
+            class="btn btn--outline bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2 rounded shadow transition"
+            disabled
+            aria-label="Stop Bug Tale">
       ⏹️ Stop
     </button>
+    <div class="ml-auto text-xs italic text-orangeLuxe-light/60 hidden sm:block">
+      🔁 Looping ambient keyboard audio
+    </div>
   </div>
 </section>
+
+<script>
+(() => {
+  const playBtn = document.getElementById("bt-play");
+  const stopBtn = document.getElementById("bt-stop");
+  const audio = document.getElementById("bt-sfx");
+  const canvas = document.getElementById("bt-visualizer");
+  let ctx, analyser, source, dataArray, animationId;
+
+  function setupVisualizer() {
+    if (!canvas || !audio) return;
+    canvas.classList.remove("hidden");
+    ctx = canvas.getContext("2d");
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = ac.createAnalyser();
+    source = ac.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(ac.destination);
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    function draw() {
+      animationId = requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = dataArray[i] / 2;
+        ctx.fillStyle = `hsl(${i * 4}, 100%, 50%)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+    draw();
+  }
+
+  playBtn.addEventListener("click", () => {
+    audio.play().then(() => {
+      playBtn.disabled = true;
+      stopBtn.disabled = false;
+      setupVisualizer();
+    });
+  });
+
+  stopBtn.addEventListener("click", () => {
+    audio.pause();
+    audio.currentTime = 0;
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+    if (animationId) cancelAnimationFrame(animationId);
+    canvas?.classList.add("hidden");
+  });
+
+  // Auto-restore from localStorage if user left playback on
+  if (localStorage.getItem("bugTaleAutoPlay") === "true") {
+    audio.play().catch(() => null);
+  }
+
+  // Save state
+  audio.addEventListener("play", () => localStorage.setItem("bugTaleAutoPlay", "true"));
+  audio.addEventListener("pause", () => localStorage.setItem("bugTaleAutoPlay", "false"));
+})();
+</script>
 

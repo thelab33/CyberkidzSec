@@ -1,73 +1,76 @@
-<!-- breadcrumbs.html -->
+<!-- templates/components/breadcrumbs.html -->
 <nav
   id="breadcrumbs"
-  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light"
+  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light opacity-0 transition-opacity duration-500 ease-in-out"
   aria-label="Breadcrumb"
   itemScope
   itemType="https://schema.org/BreadcrumbList"
 ></nav>
 
 <script>
-/**
- * Call this once you know the crumbs.
- * items = [{label:'Home', href:'/'}, {label:'Reports', href:'/reports'}, …]
- */
-function renderBreadcrumbs(items) {
-  const nav = document.getElementById("breadcrumbs");
-  const ol  = document.createElement("ol");
-  ol.className = "inline-flex items-center gap-1 whitespace-nowrap";
+(() => {
+  /**
+   * renderBreadcrumbs
+   * @param {Array} items - Each item: { label: string, href?: string }
+   */
+  function renderBreadcrumbs(items = []) {
+    const nav = document.getElementById("breadcrumbs");
+    const ol = document.createElement("ol");
+    ol.className = "inline-flex items-center gap-1 whitespace-nowrap";
 
-  items.forEach((item, idx) => {
-    const last = idx === items.length - 1;
-    const li   = document.createElement("li");
-    li.className = "inline-flex items-center";
-    li.setAttribute("itemProp", "itemListElement");
-    li.setAttribute("itemScope", "");
-    li.setAttribute("itemType", "https://schema.org/ListItem");
+    items.forEach((item, idx) => {
+      const last = idx === items.length - 1;
 
-    if (item.href && !last) {
-      const a = document.createElement("a");
-      a.href  = item.href;
-      a.textContent = item.label;
-      a.className   = "hover:text-white";
-      a.setAttribute("itemProp", "item");
-      const span = document.createElement("span");
-      span.textContent = item.label;
-      span.setAttribute("itemProp", "name");
-      a.appendChild(span);
-      li.appendChild(a);
-    } else {
-      const span = document.createElement("span");
-      span.textContent = item.label;
-      span.setAttribute("itemProp", "name");
-      span.setAttribute("aria-current", "page");
-      li.appendChild(span);
-    }
+      const li = document.createElement("li");
+      li.className = "inline-flex items-center";
+      li.setAttribute("itemProp", "itemListElement");
+      li.setAttribute("itemScope", "");
+      li.setAttribute("itemType", "https://schema.org/ListItem");
 
-    const meta = document.createElement("meta");
-    meta.setAttribute("itemProp", "position");
-    meta.content = idx + 1;
-    li.appendChild(meta);
+      const content = document.createElement(last || !item.href ? "span" : "a");
+      content.textContent = item.label;
+      content.className = last
+        ? "text-orangeLuxe font-bold"
+        : "hover:text-white transition";
+      if (item.href && !last) content.href = item.href;
 
-    ol.appendChild(li);
+      content.setAttribute("itemProp", "name");
+      if (!last) content.setAttribute("itemProp", "item");
+      if (last) content.setAttribute("aria-current", "page");
 
-    if (!last) {
-      const slash = document.createElement("span");
-      slash.className = "px-1 text-orangeLuxe/50";
-      slash.textContent = "/";
-      ol.appendChild(slash);
-    }
-  });
+      li.appendChild(content);
 
-  nav.innerHTML = "";          // clear any previous markup
-  nav.appendChild(ol);
-}
+      const meta = document.createElement("meta");
+      meta.setAttribute("itemProp", "position");
+      meta.content = idx + 1;
+      li.appendChild(meta);
 
-/* Example usage (delete in production) */
-renderBreadcrumbs([
-  { label: "Home", href: "/" },
-  { label: "Reports", href: "/reports" },
-  { label: "Proxy Vuln" }              // current page (no href)
-]);
+      ol.appendChild(li);
+
+      if (!last) {
+        const slash = document.createElement("span");
+        slash.className = "px-1 text-orangeLuxe/50 select-none";
+        slash.textContent = "/";
+        ol.appendChild(slash);
+      }
+    });
+
+    nav.innerHTML = "";
+    nav.appendChild(ol);
+    nav.classList.add("opacity-100"); // fade in
+  }
+
+  // 🔁 Optional test usage — remove before prod
+  if (location.pathname.includes("/reports")) {
+    renderBreadcrumbs([
+      { label: "Home", href: "/" },
+      { label: "Reports", href: "/reports" },
+      { label: "Proxy Vuln" }
+    ]);
+  }
+
+  // Export globally if needed
+  window.renderBreadcrumbs = renderBreadcrumbs;
+})();
 </script>
 

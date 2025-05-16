@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Blog · CYBERKIDZSEC{% endblock %}
+
+{% block content %}
+<section class="section-container py-20 space-y-16" aria-labelledby="blogTitle">
+  <!-- 🧠 Hero Header -->
+  <header class="text-center space-y-4 max-w-4xl mx-auto" data-aos="fade-down">
+    <h1 id="blogTitle" class="hero-title text-orangeLuxe-light">CyberKidzSec Blog</h1>
+    <p class="text-lg sm:text-xl text-orangeLuxe-light/80 font-mono">
+      Insights, tools, bounty stories, and hacker reflections — <strong>coming soon</strong>.
+    </p>
+  </header>
+
+  <!-- 📚 Posts Grid -->
+  <div id="postsGrid"
+       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+       aria-live="polite" aria-busy="{{ 'false' if posts else 'true' }}">
+    {% if posts %}
+      {% for post in posts %}
+        <article class="card hover-lift animate-fade-in group transition-all"
+                 data-aos="zoom-in"
+                 data-aos-delay="{{ loop.index0 * 100 }}"
+                 role="article" aria-labelledby="post-{{ loop.index0 }}-title">
+          <img src="{{ post.thumb_url or '/static/img/default-thumb.jpg' }}"
+               alt="Thumbnail for {{ post.title }}"
+               class="w-full h-40 object-cover rounded-t" loading="lazy" />
+          <div class="p-4 flex flex-col space-y-3">
+            <h2 id="post-{{ loop.index0 }}-title"
+                class="font-semibold text-lg text-orangeLuxe-light group-hover:text-orangeLuxe transition">
+              {{ post.title }}
+            </h2>
+            <p class="text-sm text-orangeLuxe-light/70 font-mono line-clamp-3 flex-grow">
+              {{ post.excerpt }}
+            </p>
+            <a href="{{ url_for('blog_detail', slug=post.slug) }}"
+               class="mt-auto btn btn--outline w-max">
+              Read More →
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+    {% else %}
+      {% for _ in range(6) %}
+        <div class="rounded-lg bg-zinc-800 animate-pulse h-64 shadow-md"
+             aria-hidden="true"></div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- 📈 Pagination CTA -->
+  {% if posts %}
+    <div class="text-center mt-12" data-aos="fade-up">
+      <a href="{{ url_for('all_posts') }}" class="btn btn--secondary hover-lift">
+        📖 View All Posts
+      </a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
+

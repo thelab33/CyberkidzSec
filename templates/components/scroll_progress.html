@@ -1,14 +1,48 @@
-<!-- Cyber Scroll Progress Bar -->
+<!-- 🌐 CyberKidzSec Scroll Progress Indicator -->
 <div id="scrollProgress"
-     class="fixed inset-x-0 top-0 z-50 h-1 bg-gradient-to-r from-orange-400 via-pink-400 to-fuchsia-400 origin-left scale-x-0 transform-gpu transition-transform duration-300 ease-linear">
+     role="presentation"
+     aria-hidden="true"
+     class="fixed inset-x-0 top-0 z-[9999] h-1 origin-left scale-x-0 transform-gpu
+            bg-gradient-to-r from-orange-400 via-pink-400 to-fuchsia-400
+            transition-transform duration-300 ease-linear">
 </div>
 
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    #scrollProgress {
+      transition: none !important;
+    }
+  }
+</style>
+
 <script>
-const scrollProgress = document.getElementById("scrollProgress");
-window.addEventListener("scroll", () => {
-  const max = document.body.scrollHeight - window.innerHeight;
-  const percent = (window.scrollY / max) || 0;
-  scrollProgress.style.transform = `scaleX(${percent})`;
-});
+(() => {
+  const bar = document.getElementById("scrollProgress");
+
+  /** 📉 Smooth scroll tracking */
+  let ticking = false;
+  const update = () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    const percent = (window.scrollY / max) || 0;
+    bar.style.transform = `scaleX(${percent.toFixed(4)})`;
+    ticking = false;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  });
+
+  /** 🧪 Initial render animation (fade-in + grow) */
+  window.addEventListener("load", () => {
+    bar.style.transition = "transform 0.5s ease-out";
+    setTimeout(() => {
+      update();
+      bar.classList.remove("scale-x-0");
+    }, 200);
+  });
+})();
 </script>
 

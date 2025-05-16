@@ -1,4 +1,3 @@
-{# Corrected: #}
 {% set hero = {
   'typer_phrases': [
     '🔐 Zero-Day Archive Updating…',
@@ -26,82 +25,94 @@
   data-aos="zoom-in"
   data-aos-delay="200"
 >
-  {# Starfield Canvas #}
   <canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
 
-  {# Parallax Orbits #}
   <div id="heroParallax" class="absolute inset-0 z-10 will-change-transform">
     <div class="orbit small animate-spin-slow"></div>
-    <div class="orbit med   animate-spin-slower"></div>
+    <div class="orbit med animate-spin-slower"></div>
     <div class="orbit large animate-spin-slowest"></div>
   </div>
 
-  {# Overlay Effects #}
   <div aria-hidden="true" class="absolute inset-0 z-20 pointer-events-none">
     <div class="absolute inset-0 mix-blend-overlay animate-warpBlur"></div>
     <div class="absolute inset-0 bg-[url('/static/images/scanlines.svg')] bg-repeat opacity-5 animate-shimmer"></div>
-    <div id="heroHalo"     class="absolute inset-0 blur-2xl opacity-0 transition-opacity duration-1000 ease-out"></div>
+    <div id="heroHalo" class="absolute inset-0 blur-2xl opacity-0 transition-opacity duration-1000 ease-out"></div>
     <div id="quantumGrid" class="absolute inset-0 bg-[url('/static/images/grid.svg')] opacity-5 mix-blend-color-dodge animate-pulse"></div>
   </div>
 
-  {# Content #}
   <div class="relative z-30 max-w-4xl space-y-8 text-orangeLuxe-light drop-shadow-[0_0_2px_orange]">
-    {# Typewriter #}
-    <p
-      id="heroTyper"
-      class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe"
-      aria-live="polite"
-    ></p>
+    <p id="heroTyper" class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe" aria-live="polite"></p>
 
-    {# Heading #}
-    <h1
-      id="hero-heading"
-      class="text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch"
-    >
-      <span class="hero-skull inline-block align-middle text-[1.2em] px-1">💀</span>
-      {{ hero.heading }}
+    <h1 id="hero-heading" class="text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch">
+      <span class="hero-skull inline-block align-middle text-[1.2em] px-1">💀</span> {{ hero.heading }}
     </h1>
 
-    {# Subheading #}
-    <p id="hero-subheading" class="text-lg sm:text-xl font-mono text-white/80">
-      {{ hero.subheading }}
-    </p>
+    <p id="hero-subheading" class="text-lg sm:text-xl font-mono text-white/80">{{ hero.subheading }}</p>
 
-    {# Stats Bar #}
-    <div class="flex flex-col sm:flex-row sm:justify-center sm:space-x-6 space-y-4 sm:space-y-0">
+    <div class="flex flex-col sm:flex-row sm:justify-center sm:space-x-6 space-y-4 sm:space-y-0" id="heroStats">
       {% for stat in hero.stats %}
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 stat-countup" data-value="{{ stat.value | replace('%', '') }}">
         <span class="text-emeraldLuxe animate-pulse-glow">{{ stat.icon }}</span>
         <div class="text-xs text-left">
           <div class="font-mono uppercase">{{ stat.label }}</div>
-          <div class="font-bold">{{ stat.value }}</div>
+          <div class="font-bold"><span class="countup-target">{{ stat.value }}</span></div>
         </div>
       </div>
       {% endfor %}
     </div>
 
-    {# CTA Buttons #}
     <div class="mt-6 flex flex-wrap justify-center gap-6">
       {% for cta in hero.ctas %}
         {% if cta.type == 'button' %}
-        <button
-          id="{{ cta.id }}"
-          class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
-        >
-          {{ cta.label }}
-        </button>
+        <button id="{{ cta.id }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</button>
         {% else %}
-        <a
-          href="{{ cta.href }}"
-          class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg"
-        >
-          {{ cta.label }}
-        </a>
+        <a href="{{ cta.href }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</a>
         {% endif %}
       {% endfor %}
     </div>
   </div>
 </section>
 
-<script type="module" src="{{ url_for('static', filename='js/hero-effects.js') }}"></script>
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    const typer = document.getElementById("heroTyper");
+    const phrases = {{ hero.typer_phrases | tojson | safe }};
+    let index = 0, char = 0;
+
+    const typeNext = () => {
+      if (!typer) return;
+      if (char < phrases[index].length) {
+        typer.textContent += phrases[index][char++];
+        setTimeout(typeNext, 50);
+      } else {
+        setTimeout(() => {
+          typer.textContent = "";
+          char = 0;
+          index = (index + 1) % phrases.length;
+          typeNext();
+        }, 1600);
+      }
+    };
+    typeNext();
+
+    // Count-Up Animation
+    const counters = document.querySelectorAll(".stat-countup");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target.querySelector(".countup-target");
+          const value = parseFloat(entry.target.dataset.value);
+          let i = 0;
+          const interval = setInterval(() => {
+            i += 1;
+            target.textContent = i >= value ? value + "%" : i + "%";
+            if (i >= value) clearInterval(interval);
+          }, 30);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(el => observer.observe(el));
+  });
+</script>
 

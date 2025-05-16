@@ -1,14 +1,12 @@
-<!-- components/quick_view_modal.html -->
+\<!-- 🔍 components/quick_view_modal.html — Forgemaster Tier -->
 <template id="quickViewTpl">
-  <div class="fixed inset-0 z-[9999] flex items-center justify-center p-8 bg-black/70 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true">
-    <div class="relative w-full max-w-2xl bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom border border-orangeLuxe/30 rounded-2xl shadow-[0_0_40px_rgba(249,115,22,0.25)] animate-fade-in">
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center p-8 bg-black/70 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="qvTitle">
+    <div class="relative w-full max-w-2xl bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom border border-orangeLuxe/30 rounded-2xl shadow-[0_0_40px_rgba(249,115,22,0.25)] animate-fade-in ring-1 ring-orangeLuxe/20">
 
       <!-- Modal Header -->
       <div class="flex items-center justify-between p-6 border-b border-orangeLuxe/20">
         <h2 id="qvTitle" class="text-2xl sm:text-3xl font-extrabold text-orangeLuxe-light">Report Preview</h2>
-        <button data-close aria-label="Close modal" class="text-2xl text-orange-300 hover:text-orangeLuxe transition">
-          ✖
-        </button>
+        <button data-close aria-label="Close modal" class="text-2xl text-orange-300 hover:text-orangeLuxe transition">✖</button>
       </div>
 
       <!-- Modal Body -->
@@ -28,23 +26,17 @@
 </template>
 
 <style>
-/* QuickView Modular Enhancements */
 .navBtn {
   @apply rounded-md border border-orangeLuxe/60 px-3 py-1.5 text-sm text-orangeLuxe-light hover:bg-orangeLuxe/10 transition;
 }
-
-/* Fade Entrance */
 @keyframes fade-in {
   0% { opacity: 0; transform: scale(0.95); }
   100% { opacity: 1; transform: scale(1); }
 }
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
-}
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
 </style>
 
 <script>
-/* 🚀 QuickView Modal System */
 (() => {
   const tpl = document.getElementById("quickViewTpl");
   let current = null;
@@ -53,13 +45,12 @@
     document.getElementById("qvTitle").textContent = report.title || "Report Preview";
     document.getElementById("qvBody").innerHTML = `
       <p>${report.description || "⚠️ No description available."}</p>
-      <div class="grid sm:grid-cols-2 gap-4 mt-4" data-aos="fade-up"">
+      <div class="grid sm:grid-cols-2 gap-4 mt-4" data-aos="fade-up">
         ${report.date ? `<div><b>📅 Date:</b> ${new Date(report.date).toLocaleDateString()}</div>` : ""}
         ${report.severity ? `<div><b>🧪 Severity:</b> ${report.severity}</div>` : ""}
         <div><b>📈 CVSS:</b> ${typeof report.cvss === "number" ? report.cvss.toFixed(1) : "N/A"}</div>
-        ${report.tags?.length ? `<div class="col-span-2 flex flex-wrap gap-2"><b class="mr-2">🏷️ Tags:</b> ${report.tags.map(t => 
-          `<span class="px-2 py-0.5 bg-orangeLuxe/10 rounded text-xs">${t}</span>`
-        ).join("")}</div>` : ""}
+        ${report.tags?.length ? `<div class="col-span-2 flex flex-wrap gap-2"><b class="mr-2">🏷️ Tags:</b> ${report.tags.map(t =>
+          `<span class="px-2 py-0.5 bg-orangeLuxe/10 rounded text-xs">${t}</span>`).join("")}</div>` : ""}
       </div>
     `;
     document.getElementById("qvFullLink").href = `/reports/${report.slug || ""}`;

@@ -1,0 +1,98 @@
+<section id="tagsSection" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+  <h2 class="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+    🏷️ Browse by Tag
+  </h2>
+
+  <div class="relative mb-6">
+    <input type="search" id="tagSearchInput"
+           placeholder="🔍 Search tags..."
+           class="block w-full rounded-full px-4 py-2 text-sm bg-zinc-800 text-orangeLuxe-light/90 border border-orangeLuxe/30 focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+           aria-label="Search tags" />
+  </div>
+
+  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 snap-x snap-mandatory no-scrollbar">
+    <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-cyberNight to-transparent"></div>
+    <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-cyberNight to-transparent"></div>
+  </div>
+
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up"></div>
+</section>
+
+<script>
+const REPORTS = window.ALL_REPORTS || [];
+let activeTag = null;
+
+const TAGS = [...new Set(REPORTS.flatMap(r => r.tags))].sort();
+const tagFrequency = TAGS.map(t => ({
+  tag: t,
+  count: REPORTS.filter(r => r.tags.includes(t)).length
+})).sort((a, b) => b.count - a.count);
+
+const rail = document.getElementById("tagRail");
+const grid = document.getElementById("tagGrid");
+const searchInput = document.getElementById("tagSearchInput");
+
+function makeTag(label, active = false, onClick = null) {
+  const span = document.createElement("span");
+  span.className = "tagCmp";
+  span.textContent = `#${label}`;
+  span.dataset.active = active;
+  span.setAttribute("role", "button");
+  span.setAttribute("tabindex", "0");
+  span.onclick = () => onClick?.(label);
+  span.onkeydown = e => { if (e.key === "Enter") span.click(); };
+  return span;
+}
+
+function drawRail(filter = "") {
+  rail.querySelectorAll("[role=button]").forEach(n => n.remove());
+  rail.prepend(makeTag("All", activeTag === null, () => { activeTag = null; render(); }));
+
+  tagFrequency.filter(t => t.tag.toLowerCase().includes(filter.toLowerCase())).forEach(({ tag, count }) => {
+    const el = makeTag(tag, activeTag === tag, () => { activeTag = tag; render(); });
+    el.title = `${count} reports tagged`;
+    el.setAttribute("data-tag", tag);
+    rail.appendChild(el);
+  });
+}
+
+function render() {
+  drawRail(searchInput.value);
+  grid.innerHTML = "";
+  const list = activeTag ? REPORTS.filter(r => r.tags.includes(activeTag)) : REPORTS;
+
+  list.forEach((r, i) => {
+    const card = document.createElement("article");
+    card.className = "p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNightGlow to-zinc-900/90 shadow-lg transition hover:shadow-orangeLuxe/30";
+    card.setAttribute("data-aos", "fade-up");
+    card.setAttribute("data-aos-delay", i * 100);
+    card.innerHTML = `
+      <h3 class="font-bold text-orangeLuxe-light mb-1">${r.title}</h3>
+      <p class="text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary || "No summary."}</p>
+    `;
+    grid.appendChild(card);
+  });
+
+  if (activeTag) {
+    const tagEl = rail.querySelector(`[data-tag="${activeTag}"]`);
+    tagEl?.scrollIntoView({ inline: "center", behavior: "smooth" });
+  }
+}
+
+searchInput.addEventListener("input", () => drawRail(searchInput.value));
+render();
+</script>
+
+<style>
+.tagCmp {
+  @apply inline-block px-3 py-1 text-[11px] font-bold font-mono uppercase rounded-full border
+         cursor-pointer select-none transition-all duration-300 ease-in-out hover:scale-105;
+}
+.tagCmp[data-active="false"] {
+  @apply border-orangeLuxe/30 text-orangeLuxe-light/80 bg-orangeLuxe/10 hover:bg-orangeLuxe/20;
+}
+.tagCmp[data-active="true"] {
+  @apply border-orangeLuxe bg-orangeLuxe text-black shadow-[0_0_8px_#f97316] animate-pulse;
+}
+</style>
+
