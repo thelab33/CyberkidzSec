@@ -4,12 +4,12 @@
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  border: 1px solid rgba(251, 191, 77, 0.3); /* orangeLuxe/30 */
-  background-color: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgb(251 191 77 / 30%); /* orangeLuxe/30 */
+  background-color: rgb(0 0 0 / 95%);
   backdrop-filter: blur(20px);
   padding: 7rem 1.5rem;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(255, 115, 22, 0.1);
+  box-shadow: 0 20px 60px rgb(255 115 22 / 10%);
 }
 
 /* Starfield Canvas */
@@ -34,7 +34,7 @@
 
 #heroParallax .orbit {
   position: absolute;
-  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgb(255 255 255 / 8%);
   border-radius: 50%;
   animation: spin linear infinite;
   pointer-events: none;
@@ -74,6 +74,7 @@
   mix-blend-mode: color-dodge;
   animation: pulse 6s ease-in-out infinite;
 }
+
 @keyframes pulse {
   0%, 100% { opacity: 0.05; }
   50% { opacity: 0.1; }
@@ -82,7 +83,7 @@
 /* Hero Halo */
 #heroHalo {
   opacity: 0.25;
-  background: radial-gradient(circle at center, rgba(251, 191, 77, 0.2), transparent 70%);
+  background: radial-gradient(circle at center, rgb(251 191 77 / 20%), transparent 70%);
   filter: blur(80px);
 }
 
@@ -94,6 +95,7 @@
   color: var(--emerald);
   animation: fade-in 1.5s ease-out both;
 }
+
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(1rem); }
   to { opacity: 1; transform: translateY(0); }
@@ -104,20 +106,21 @@
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 900;
   background: linear-gradient(to right, #fb923c, #facc15, #fdba74);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 6px rgba(251, 191, 77, 0.3);
+  text-shadow: 0 0 6px rgb(251 191 77 / 30%);
   animation: glow-text 4s ease-in-out infinite alternate;
 }
+
 @keyframes glow-text {
-  from { text-shadow: 0 0 6px rgba(251, 191, 77, 0.3); }
-  to   { text-shadow: 0 0 12px rgba(251, 191, 77, 0.7); }
+  from { text-shadow: 0 0 6px rgb(251 191 77 / 30%); }
+  to   { text-shadow: 0 0 12px rgb(251 191 77 / 70%); }
 }
 
 /* Subheading */
 #hero-subheading {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgb(255 255 255 / 75%);
 }
 
 /* Stats Row */
@@ -127,23 +130,27 @@
   gap: 1rem;
   align-items: center;
 }
-@media (min-width: 640px) {
+
+@media (width >= 640px) {
   #hero .stats {
     flex-direction: row;
     justify-content: center;
   }
 }
+
 #hero .stats div {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: var(--emerald);
 }
+
 #hero .stats div .label {
   font-size: 0.65rem;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgb(255 255 255 / 65%);
 }
+
 #hero .stats div .value {
   font-weight: bold;
   font-size: 0.85rem;
@@ -162,19 +169,23 @@
   transition: all 0.3s ease-in-out;
   backdrop-filter: blur(8px);
 }
+
 #hero .btn--solid {
   background: var(--orange);
   color: black;
 }
+
 #hero .btn--solid:hover {
   background: #fb923c;
 }
+
 #hero .btn--outline {
   border: 2px solid var(--orange);
   color: var(--orange);
 }
+
 #hero .btn--outline:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(255 255 255 / 5%);
 }
 
 /* Hero Skull Icon */
@@ -184,17 +195,19 @@
   vertical-align: middle;
   color: transparent;
   background: radial-gradient(circle, var(--skull-glow), transparent 60%);
-  -webkit-background-clip: text;
+  background-clip: text;
   text-shadow:
     0 0 6px var(--skull-glow),
     0 0 12px var(--skull-stroke),
     0 0 20px var(--skull-glow);
   animation: skull-pulse 3s ease-in-out infinite;
 }
+
 @keyframes skull-pulse {
   0%, 100% {
     text-shadow: 0 0 6px var(--skull-glow), 0 0 12px var(--skull-stroke);
   }
+
   50% {
     text-shadow: 0 0 12px var(--skull-glow), 0 0 20px var(--skull-stroke);
   }

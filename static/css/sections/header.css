@@ -13,12 +13,13 @@
   right: 0;
   height: var(--header-height);
   backdrop-filter: saturate(180%) blur(12px);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgb(0 0 0 / 80%);
   transition: padding 0.3s ease, box-shadow 0.3s ease;
   z-index: 1000;              /* above hero, below skip-nav */
   padding-inline: 1rem;       /* horizontal padding */
   display: flex;
   align-items: center;
+
   /* vertical padding is baked into --header-height so remove padding-block */
 }
 
@@ -26,7 +27,7 @@
 #siteHeader.scrolled {
   /* if you want it to shrink, reduce height and adjust padding */
   height: calc(var(--header-height) * 0.75);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 50%);
 }
 
 /* 4️⃣ Push all main content down by the header’s height */
@@ -59,9 +60,11 @@ main,
   color: #f4f4f5;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 #globalSearch::placeholder {
   color: #71717a;
 }
+
 #globalSearch:focus {
   border-color: var(--orange);
   outline: none;
@@ -99,9 +102,11 @@ nav a.relative {
   color: #d1d5db;
   transition: color 0.2s;
 }
+
 nav a.relative:hover {
   color: var(--orange-luxe-light);
 }
+
 nav a.relative::after {
   content: '';
   position: absolute;
@@ -112,6 +117,7 @@ nav a.relative::after {
   background-color: var(--orange);
   transition: width 0.2s ease;
 }
+
 nav a.relative:hover::after,
 nav a.relative[data-active]::after {
   width: 100%;
@@ -125,9 +131,11 @@ nav a.relative[data-active]::after {
   color: #f4f4f5;
   transition: background-color 0.2s ease;
 }
+
 #siteHeader .icon-button:hover {
   background-color: #3f3f46;
 }
+
 #siteHeader .icon-button:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 2px;
@@ -145,16 +153,17 @@ nav a.relative[data-active]::after {
 }
 
 /* ─── Responsive Adjustments ─────────────────────────────────── */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   #globalSearch {
     padding: 0.5rem 0.75rem 0.5rem 2.25rem;
   }
+
   #siteHeader a[aria-label="Go to Home"] {
     margin-right: 1rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #globalSearch,
   kbd {
     display: none;

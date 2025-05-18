@@ -1,7 +1,8 @@
 #bug-tales {
-  background: rgba(15,15,15,0.9);
+  background: rgb(15 15 15 / 90%);
   border: 1px solid #334155;
 }
+
 #bug-tales button {
   font-family: system-ui, sans-serif;
   font-weight: 600;

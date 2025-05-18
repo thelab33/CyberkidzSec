@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 /* 🔮 CORE ENHANCEMENTS */
-@import "cyber-enhancements.css";  /* Tokens, colors, globals */
-@import "ghost-boot.css";
-@import "ghost-mode.css";
-@import "back_to_top.css";
-@import "bug_tales.css";
+@import url("cyber-enhancements.css");  /* Tokens, colors, globals */
+@import url("ghost-boot.css");
+@import url("ghost-mode.css");
+@import url("back_to_top.css");
+@import url("bug_tales.css");
 
 /* 🧠 COMPONENT STYLING */
-@import "sections/header.css";
-@import "hero.css";
-@import "footer.css";
-@import "skip_nav.css";
-@import "console.css";
+@import url("sections/header.css");
+@import url("hero.css");
+@import url("footer.css");
+@import url("skip_nav.css");
+@import url("console.css");
 
 /* 🛰️ AOS + Effects */
-@import "animations.css"; /* Optional: split from cyber-enhancements.css */
+@import url("animations.css"); /* Optional: split from cyber-enhancements.css */
 
 /* 🎯 GLOBAL OVERRIDES */
-@import "app.css"; /* If needed */
+@import url("app.css"); /* If needed */
 

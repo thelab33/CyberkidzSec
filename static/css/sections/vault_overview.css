@@ -6,12 +6,14 @@
 
 #vaultXpProgress {
   /* hide native progress bar */
-  -webkit-appearance: none;
+  appearance: none;
   appearance: none;
 }
+
 #vaultXpProgress::-webkit-progress-bar {
   display: none;
 }
+
 #vaultXpProgress::-moz-progress-bar {
   display: none;
 }
