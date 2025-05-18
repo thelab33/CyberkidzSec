@@ -11,7 +11,7 @@
   <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}" />
   <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
 
-  <!-- 📲 PWA & Icons -->
+  <!-- 📲 Icons & PWA -->
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="icon" href="{{ url_for('static', filename='favicon-32.png') }}" sizes="32x32" />
@@ -36,8 +36,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename=sheet) }}" />
   {% endfor %}
 
-  <!-- 📦 External Libraries -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
+  <!-- 📦 External Libs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
   {% block head_extra %}{% endblock %}
@@ -48,27 +48,27 @@
   </noscript>
 </head>
 
-<body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe">
+<body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe" data-page="vault">
   <!-- ⌨️ Skip Links -->
   {% include "components/skip_nav.html" %}
 
-  <!-- 🛰️ Dynamic Banner -->
-  {% if operative_title %}
-    <p class="text-orange-400 text-sm text-center font-bold uppercase mb-4 tracking-wider" role="banner">
-      {{ operative_title }}
-    </p>
-  {% endif %}
+  <!-- 🛰️ Top Section -->
+  <header role="banner" class="z-50">
+    {% if operative_title %}
+      <p class="text-orange-400 text-sm text-center font-bold uppercase mb-2 tracking-wider sr-only" aria-live="polite">
+        {{ operative_title }}
+      </p>
+    {% endif %}
+    {% include "components/header.html" %}
+    <div id="scrollProgress" class="scroll-progress fixed top-0 left-0 h-1 bg-orangeLuxe transition-all duration-300 ease-out z-40"></div>
+  </header>
 
-  <!-- 🔝 Header -->
-  {% include "components/header.html" %}
-  <div id="scrollProgress" class="scroll-progress fixed top-0 left-0 h-1 bg-orangeLuxe transition-all duration-300 ease-out z-40"></div>
-
-  <!-- 🚀 Main -->
-  <main id="main" class="flex-1">
+  <!-- 🚀 Main Page Content -->
+  <main id="main" class="flex-1" role="main" tabindex="-1">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- 🧩 Dynamic Components -->
+  <!-- 🎛️ HUD Components -->
   {% include "components/vault_popup.html" %}
   {% include "components/vault_copilot.html" %}
   {% include "components/section_skeleton.html" %}
@@ -79,11 +79,9 @@
   <!-- 🧭 Footer -->
   {% include "components/footer.html" %}
   {% include "components/back_to_top.html" %}
-
-  <!-- 🧭 Optional Breadcrumbs -->
   {% block breadcrumbs %}{% endblock %}
 
-  <!-- ⚙️ JavaScript Core -->
+  <!-- ⚙️ Scripts -->
   {% set scripts = [
     'js/app.min.js',
     'js/ghost-mode.js',
@@ -93,29 +91,44 @@
   {% for script in scripts %}
     <script src="{{ url_for('static', filename=script) }}" defer></script>
   {% endfor %}
-
   <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+  <!-- 🧠 Local Enhancements -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 120 });
+
+      // 🌗 Restore Theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+
+      // 🧠 Scroll Restore
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+      // ⌨️ Shortcut prompt
+      if (window.matchMedia('(hover: hover)').matches) {
+        const hint = document.createElement("div");
+        hint.textContent = "⌘ Cmd + K — Search";
+        hint.className = "fixed bottom-2 right-4 z-[999] text-xs text-orange-400 font-mono animate-pulse";
+        document.body.appendChild(hint);
+        setTimeout(() => hint.remove(), 4000);
+      }
     });
   </script>
 
-  <!-- 🔐 Service Worker -->
+  <!-- 🔐 PWA Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () =>
+      window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-          .catch(e => console.warn('🔒 Service Worker registration failed:', e))
-      );
+          .catch(e => console.warn('🔒 Service Worker registration failed:', e));
+      });
     }
   </script>
 
-  <!-- ✨ Extra Scripts -->
   {% block scripts_extra %}{% endblock %}
 
-  <!-- 📊 Analytics (Production Only) -->
   {% if config['ENV'] == 'production' %}
     <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
   {% endif %}
