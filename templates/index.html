@@ -3,17 +3,25 @@
 {% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
 
 {% block content %}
-  {# -- HERO SECTION: Header, Banner, and Console -- #}
+
+  {# ───────────────────────────────
+     🪓 HERO SECTION: Branding, Console, CTA
+  ─────────────────────────────── #}
   <header id="siteHeader" class="sticky top-0 z-40">
     {% include "components/header.html" %}
   </header>
 
-  <section id="hero" class="relative isolate flex flex-col items-center text-center rounded-3xl border border-orangeLuxe/30 bg-black/95 backdrop-blur-lg px-6 py-24 sm:py-36 lg:py-48 shadow-2xl group perspective-600 space-y-8">
+  <section id="hero"
+           class="relative isolate flex flex-col items-center text-center rounded-3xl border border-orangeLuxe/30 bg-black/95 backdrop-blur-lg px-6 py-24 sm:py-36 lg:py-48 shadow-2xl group perspective-600 space-y-8"
+           aria-labelledby="heroTyper">
     <canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
     <div class="relative z-30 max-w-4xl mx-auto">
-      <p id="heroTyper" class="text-base sm:text-lg font-mono uppercase tracking-widest text-emeraldLuxe animate-pulse" aria-live="polite"></p>
+      <p id="heroTyper"
+         class="text-base sm:text-lg font-mono uppercase tracking-widest text-emeraldLuxe animate-pulse"
+         aria-live="polite"></p>
       <h1 class="text-6xl sm:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch drop-shadow">
-        <span class="hero-skull align-middle text-[1.2em] px-1">💀</span> CYBERKIDZSEC VAULT
+        <span class="hero-skull align-middle text-[1.2em] px-1">💀</span>
+        CYBERKIDZSEC VAULT
       </h1>
       <p class="text-lg sm:text-xl font-mono text-white/80 mt-2">“Ghosted but not gone.”</p>
       <div class="flex flex-wrap justify-center gap-6 mt-8">
@@ -40,29 +48,48 @@
     </div>
   </section>
 
-    {# STATUS STRIP: #}
-  <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
+  {# ───────────────────────────────
+     🛰️ STATUS STRIP
+  ─────────────────────────────── #}
+  <section id="vault-status"
+           role="status"
+           class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md"
+           data-aos="fade"
+           data-test="section-status">
     <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse select-none">
       🛰️ Zero-Day Archive Updating · Stay Ghosted.
     </div>
   </section>
 
-{# BUG TALES section (or other storytelling/audio): #}
+  {# ───────────────────────────────
+     🎙️ BUG TALES (Audio/Stories)
+  ─────────────────────────────── #}
   {% include "components/bug_tales.html" %}
 
-  {# VAULT OVERVIEW (XP, About, Banners, Blog): #}
+  {# ───────────────────────────────
+     🏆 VAULT OVERVIEW (XP/About/Banners/Blog)
+  ─────────────────────────────── #}
   {% include "components/vault_overview_section.html" %}
 
-  {# MAIN FEED: filters, report grid, analytics, tags: #}
+  {# ───────────────────────────────
+     📚 MAIN FEED: Filters, Reports, Analytics, Tags
+  ─────────────────────────────── #}
   {% include "components/vault_feed.html" %}
 
-  {# PLAYGROUND & HUD: #}
+  {# ───────────────────────────────
+     👾 PLAYGROUND & HUD
+  ─────────────────────────────── #}
   {% include "components/hacker_playground_section.html" %}
 
-  {# UTILITIES/POPUPS: #}
+  {# ───────────────────────────────
+     🛠️ UTILITIES / POPUPS / MODALS
+  ─────────────────────────────── #}
   {% include "components/utility_modals.html" %}
 
-  {# (Optional) HIDDEN/DEBUG: #}
+  {# ───────────────────────────────
+     👻 (Optional) HIDDEN/DEBUG TOOLS
+  ─────────────────────────────── #}
   {% include "components/hidden_extras.html" %}
+
 {% endblock %}
 

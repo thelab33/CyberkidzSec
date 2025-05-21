@@ -3,23 +3,30 @@
       class="scroll-smooth motion-safe:scroll-auto bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen"
       data-theme="dark">
 <head>
-  <!-- 🌐 Meta, Icons, Fonts as before ... -->
+  {# ────────────────────────────────
+     🪪 Meta / SEO / Icons / Fonts
+  ──────────────────────────────── #}
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}" />
   <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
+
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="icon" href="{{ url_for('static', filename='favicon-32.png') }}" sizes="32x32" />
   <link rel="icon" href="{{ url_for('static', filename='favicon-16.png') }}" sizes="16x16" />
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+  {# Fonts - preconnect and load Inter fast #}
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" as="style" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-  {# --- Core & Section Styles --- #}
+  {# ────────────────────────────────
+     🧬 Core & Section Styles (modular)
+  ──────────────────────────────── #}
   {% set styles = [
     'css/app.min.css',
     'css/ghost-mode.css',
@@ -35,11 +42,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
+  {# --- Extensibility Hooks #}
   {% block head_extra %}{% endblock %}
   {% block style_includes %}{% endblock %}
+
+  {# AOS fallback for no-JS users #}
   <noscript>
     <style>.aos-init[data-aos] { opacity: 1 !important; transform: none !important; }</style>
   </noscript>
+
+  {# Favicon swap on theme change (light/dark) #}
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const theme = localStorage.getItem("theme");
@@ -51,10 +63,14 @@
 </head>
 <body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe" data-page="vault">
 
-  <!-- ⌨️ Skip Navigation: Always Top, Only Once -->
+  {# ────────────────
+     ⌨️ Skip Navigation (a11y)
+  ──────────────── #}
   {% include "components/skip_nav.html" %}
 
-  <!-- 🎉 Page Fade (not in flow) -->
+  {# ────────────────
+     🎉 Page Fade Overlay (progressive)
+  ──────────────── #}
   <div id="page-fade-overlay" class="fixed inset-0 pointer-events-none z-50 bg-black opacity-0 transition-opacity duration-500"></div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -65,10 +81,12 @@
     });
   </script>
 
-  <!-- 🚀 Main Content (Semantic Order) -->
+  {# ────────────────
+     🚀 Main Content Layout
+  ──────────────── #}
   <main id="main" class="flex-1" role="main" tabindex="-1">
     {% block content %}
-      {# 1. HERO (with its own starfield/canvas only here!) #}
+      {# 1. HERO SECTION #}
       {% include "components/intro_layer.html" %}
       {# 2. STATUS BANNER #}
       <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
@@ -91,12 +109,16 @@
     {% endblock %}
   </main>
 
-  <!-- 🧭 Footer: Always Last, Out of Flow -->
+  {# ────────────────
+     🧭 Footer & Out-of-flow Utilities
+  ──────────────── #}
   {% include "components/footer.html" %}
   {% include "components/back_to_top.html" %}
   {% block breadcrumbs %}{% endblock %}
 
-  <!-- 🎛️ HUD & Modals: Just Once, End of <body> -->
+  {# ────────────────
+     🎛️ HUD, Modals & Command Palette
+  ──────────────── #}
   {% include "components/vault_popup.html" %}
   {% include "components/vault_copilot.html" %}
   {% include "components/section_skeleton.html" %}
@@ -104,7 +126,9 @@
   {% include "components/hud_toolbar.html" %}
   {% include "components/command_palette.html" %}
 
-  <!-- ⚙️ JS: App, Vendor, Section Scripts -->
+  {# ────────────────
+     ⚙️ JS: App, Vendor, Section Scripts
+  ──────────────── #}
   {% set scripts = [
     'js/app.min.js',
     'js/ghost-mode.js',
@@ -118,10 +142,14 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // AOS animation setup
       AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 120 });
+      // Theme restoration
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+      // Disable scroll restoration
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      // Toast helper
       window.showToast = function(msg, type="info") {
         const toast = document.createElement('div');
         toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg font-mono text-sm shadow-xl z-[9999] animate-fade-in
@@ -130,6 +158,7 @@
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3200);
       };
+      // Cmd+K open command palette
       window.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
           e.preventDefault();
@@ -137,6 +166,7 @@
           if (cmdPalette) cmdPalette.classList.remove('hidden');
         }
       });
+      // Scroll progress bar
       window.addEventListener('scroll', () => {
         const sp = document.getElementById('scrollProgress');
         if (sp) {
@@ -145,6 +175,7 @@
           sp.style.width = sh ? (st / sh * 100) + "%" : "0%";
         }
       });
+      // Hover hint for Cmd+K (only desktop)
       if (window.matchMedia('(hover: hover)').matches) {
         const hint = document.createElement("div");
         hint.textContent = "⌘ Cmd + K — Search";
@@ -155,6 +186,7 @@
     });
   </script>
   <script>
+    // Register Service Worker if available
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -167,6 +199,17 @@
   {% if config['ENV'] == 'production' %}
     <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
   {% endif %}
+  <script>
+  // Always scroll to top on page reload or navigation, even after browser "remembers" scroll!
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 10); // 10ms ensures after layout
+  });
+</script>
+
 </body>
 </html>
 
