@@ -1,0 +1,195 @@
+about-section
+about_section space-y-4
+academyMissions
+academy-title space-y-4
+{{ act.id }}
+backToTopBtn
+barCanvas
+barTitle
+barTitle space-y-4
+barView
+blog_section space-y-4
+blogTitle
+breadcrumbs
+bt-heading
+bt-play
+bt-sfx
+bt-stop
+bt-visualizer
+bug-tales
+cardGrid
+cardGridHeading
+cardGridWrap
+catch-all-extras
+chartContainer
+chart-section
+chartStats
+chartTitle
+cmdBackdrop
+cmdResults
+cmdSearch
+cmdTpl
+cmdWrapper
+combined-vault-components space-y-4
+confettiCanvas
+copilot
+copilotClear
+copilotInput
+copilotResponse
+copilotSubmit
+copilotToggle
+{{ cta.id }}
+{{ cta.id }}-title space-y-4
+cveCounter
+cvssChart
+cvssLoader
+dashboard-title space-y-4
+dynamicGrid
+emptyMsg
+emptyWrap
+errorTitle
+exportChart
+featured
+featuredAurora
+featuredGrid
+featured-heading
+featuredSkeleton
+filterBar
+filterScroll
+filterScroll space-y-4
+flagOut
+footer
+ghostBadge
+ghostBreachWarning
+ghostFlag
+ghostMsg
+ghostSparks
+globalSearch
+hackBtn
+hackCount space-y-4
+hacker-playground
+hackIntro
+hackXPBar
+hackXPText
+hero
+heroHalo
+hero-heading
+heroParallax
+heroStarfield
+heroStats
+heroStats space-y-4
+hero-subheading
+heroTyper
+heroXpFill
+hudAdmin
+hudAdminStatus
+hudBadge
+hudBody
+hudChevron
+hudFeed
+hudFeedStatus
+hudGhost
+hudGhostStatus
+hudLog
+hudProgress
+hudScrollArc
+hudScrollPercent
+hudToggle
+hudToolbar
+hudTooltip
+loaderClose
+main
+menuToggle
+mobileNav
+operativeLevel
+overviewTitle
+page-fade-overlay
+pagination
+playground
+playground-heading
+playgroundSection
+playground space-y-4
+post-{{ loop.index0 }}-title
+post-{{ loop.index0 }}-title space-y-4
+postsGrid
+quantumGrid
+quickViewTpl
+qvBody
+qvFullLink
+qvNext
+qvPrev
+qvTitle
+radarCanvas
+related_reports space-y-4
+relatedWrap
+reportChart
+report_chart space-y-4
+report_detail space-y-4
+reports-heading
+reportsHolder
+report-skeleton
+resetBtn
+returnEgg
+scanForm
+scanInput
+scanOut
+scrollGrad
+scrollProgress
+searchBtn
+sidebar_cta space-y-4
+sidebar space-y-4
+sideFilter
+sideFilter space-y-4
+siteHeader
+skipBar
+skipBarClose
+skipNav
+sortSel
+tagFilter-label
+tagGrid
+tagList
+tagRail
+tagSearch
+tagSearchInput
+tag_section space-y-4
+tagsSection
+tags_section space-y-4
+terminalBox
+terminalBuffer
+terminalForm
+terminalInput
+terminalOutput
+terminalScan
+themeToggle
+themeToggler
+toggleAmbience
+typeChart
+typeLoader
+utility-modals
+vault-ambience
+vault-banners
+vaultBody
+vaultBody space-y-4
+vaultClose
+vault-feed
+vault-intro
+vault-loader
+vaultOverlay
+vault-overview
+vaultPanel
+vaultSfx
+vaultSfxClose
+vaultSfxGlitch
+vaultSfxOpen
+vault-status
+vaultStatus
+vaultStatusEvents
+vaultTpl
+vaultXpBar
+vaultXpFill
+vaultXpNum
+vaultXpProgress
+vaultXpText
+warp-overlay
+warpText
+xpFeedback

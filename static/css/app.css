@@ -102,7 +102,7 @@
   }
 
   #siteHeader {
-    @apply backdrop-saturate-180 backdrop-blur-lg transition-[padding,box-shadow];
+    @apply backdrop-saturate-150 backdrop-blur-lg transition-[padding,box-shadow];
   }
 
   #siteHeader.scrolled {
