@@ -1,0 +1,39 @@
+/* ───── Command Palette Overlay ───── */
+.command-palette {
+  background: rgba(16, 18, 24, 0.96);
+  border-radius: 1rem;
+  box-shadow: 0 8px 48px #fb923c18, 0 0 0 2px #fb923c66;
+  padding: 1.75rem 1.5rem;
+  max-width: 480px;
+  margin: 2rem auto;
+  font-size: 1.04rem;
+  color: #fff;
+  position: fixed;
+  left: 50%; top: 10vh; z-index: 9999;
+  transform: translateX(-50%) scale(0.98);
+  animation: palette-in .3s cubic-bezier(.32,1.27,.42,1.01);
+}
+@keyframes palette-in {
+  from { opacity: 0; transform: translateX(-50%) scale(0.93);}
+  to   { opacity: 1; transform: translateX(-50%) scale(1);}
+}
+.command-palette input {
+  background: #23272f;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  color: #fbbf24;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1rem;
+  width: 100%;
+  box-shadow: 0 2px 8px #fb923c22;
+}
+.command-palette .highlight {
+  color: #34d399;
+  background: #fb923c22;
+  border-radius: 4px;
+  padding: 0.15em 0.3em;
+}
+

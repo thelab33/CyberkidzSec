@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
+
+{% block head_extra %}
+  {{ super() }}
+  {# ... keep your existing style includes here ... #}
+{% endblock %}
+
+{% block content %}
+  {% include "components/intro_layer.html" %}
+  {% include "components/status_strip.html" %}
+  {% include "components/vault_overview_section.html" %}
+  {% include "components/vault_feed.html" %}
+  {% include "components/hacker_playground_section.html" %}
+  {% include "components/utility_modals.html" %}
+  {% include "components/hidden_extras.html" %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="module">
+    document.getElementById('featuredSkeleton')?.addEventListener('skeleton-visible', async () => {
+      const start = performance.now();
+      const html = await fetch('/fragment/featured').then(r => r.text());
+      document.getElementById('reportsHolder').innerHTML = html.trim();
+      document.getElementById('featuredSkeleton').done();
+      navigator.sendBeacon('/api/analytics/skeleton', `section=featured&ms=${Math.round(performance.now() - start)}`);
+    });
+  </script>
+{% endblock %}

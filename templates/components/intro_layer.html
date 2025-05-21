@@ -1,0 +1,342 @@
+<!-- 🚀 Forgemaster Loader -->
+<div id="vault-loader"
+     class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-black via-zinc-900 to-zinc-950 backdrop-blur-md transition-opacity duration-700 opacity-100"
+     role="status" aria-label="Vault loading screen" aria-live="assertive">
+  <div class="text-center space-y-6 max-w-md">
+    <p id="vaultStatus" class="text-xl sm:text-2xl font-mono text-orange-400 animate-pulse flex flex-col sm:flex-row items-center justify-center gap-2">
+      <span class="typewriter"></span>
+      <span class="tracking-widest hidden sm:inline">WARP MODE ENGAGED</span>
+    </p>
+    <div id="vaultStatusEvents" class="my-2 min-h-[1.5em]"></div>
+    <div class="loader-dots flex gap-2 justify-center">
+      <span class="dot bg-orange-400"></span>
+      <span class="dot bg-yellow-400"></span>
+      <span class="dot bg-emerald-400"></span>
+    </div>
+    <button id="loaderClose"
+            class="mt-7 text-xl text-orange-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded transition shadow"
+            aria-label="Close warp loader">
+      ✖️ Close Loader
+    </button>
+    <button id="toggleAmbience" class="block mx-auto mt-3 text-xs font-mono bg-zinc-800/80 px-3 py-1 rounded hover:bg-orange-500 focus:ring-2 focus:ring-orange-500 transition">
+      🔊 Ambience
+    </button>
+    <audio id="vault-ambience" src="{{ url_for('static', filename='audio/vault-ambience.mp3') }}" loop preload="auto"></audio>
+  </div>
+</div>
+
+<!-- ♿ Forgemaster Luxury Skip Navigation -->
+<nav id="skipNav" tabindex="0"
+     class="sr-only focus-within:not-sr-only focus:translate-y-2 focus:scale-105 transition-all duration-300 absolute top-0 left-0 bg-zinc-900 text-orange-300 px-4 py-2 rounded-b shadow-md z-[9999]">
+  <a href="#main" class="hover-glow underline focus:outline-none focus:ring-2 focus:ring-orange-500 mr-4">Skip to Main</a>
+  <a href="#footer" class="hover-glow underline focus:outline-none focus:ring-2 focus:ring-orange-500">Skip to Footer</a>
+</nav>
+
+<!-- 🎨 Loader & Hero Styles -->
+<style>
+  .loader-dots .dot {
+    width: 14px; height: 14px;
+    border-radius: 9999px;
+    animation: bounce 0.9s infinite ease-in-out;
+    box-shadow: 0 0 12px 2px #f59e42a0;
+  }
+  .loader-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+  .loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(-9px); opacity: 1; }
+  }
+  .typewriter::after {
+    content: "|";
+    animation: blink 1.2s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+
+<!-- ⚡ Forgemaster Loader + Ambience + Parallax Script -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Loader with Typewriter Steps & Ghost Events ---
+  const loader = document.getElementById("vault-loader");
+  const closeBtn = document.getElementById("loaderClose");
+  const typer = loader.querySelector(".typewriter");
+  const steps = [
+    "Initializing Warp Systems...",
+    "Decrypting Vault OS Kernel...",
+    "Bootstrapping Memory Nodes...",
+    "Finalizing Operative Overlay...",
+    "Vault Access Granted"
+  ];
+  const vaultEvents = [
+    "👻 Ghost signatures detected.",
+    "🛡️ Integrity beacon stabilized.",
+    "🌐 Tunnel handshake verified.",
+    "💡 AI agent connected.",
+    "🔑 Secure enclave unlocked.",
+    "🛰️ Network fallback online."
+  ];
+  const statusBox = document.getElementById("vaultStatusEvents");
+
+  if (sessionStorage.getItem("warpLoaded")) {
+    loader.remove();
+  } else {
+    sessionStorage.setItem("warpLoaded", "true");
+    // Loader stepper
+    let i = 0;
+    const typeLine = () => {
+      if (i >= steps.length) {
+        setTimeout(closeLoader, 800);
+        return;
+      }
+      typer.textContent = steps[i++];
+      setTimeout(typeLine, 1450);
+    };
+    typeLine();
+    // Animated random Ghost Events
+    const nextVaultEvent = () => {
+      if (!statusBox) return;
+      const event = vaultEvents[Math.floor(Math.random() * vaultEvents.length)];
+      statusBox.innerHTML = `<span class="text-xs text-emerald-400 animate-pulse-glow">${event}</span>`;
+      setTimeout(nextVaultEvent, 1000 + Math.random()*600);
+    };
+    nextVaultEvent();
+    // Ambience Sound + Vibration
+    const ambience = document.getElementById("vault-ambience");
+    const ambienceBtn = document.getElementById("toggleAmbience");
+    ambienceBtn.onclick = function() {
+      if (ambience.paused) {
+        ambience.play();
+        this.textContent = "🔇 Ambience";
+        navigator.vibrate?.([80, 40, 80]);
+      } else {
+        ambience.pause();
+        this.textContent = "🔊 Ambience";
+      }
+    }
+    // Loader close
+    function closeLoader() {
+      loader.classList.add("opacity-0");
+      setTimeout(() => loader.remove(), 700);
+      ambience.pause();
+    }
+    closeBtn.onclick = closeLoader;
+  }
+
+  // --- Hero Parallax Effect (motion-safe) ---
+  const parallax = document.getElementById("heroParallax");
+  if (parallax && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener("pointermove", e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      parallax.style.transform = `translate3d(${x}px,${y}px,0) scale(1.04)`;
+    });
+  }
+});
+</script>
+
+{# -------------- HERO SECTION -------------- #}
+{% set hero_phrases = typer_phrases or [
+  '🔐 Zero-Day Archive Updating…',
+  '💀 CYBERKIDZSEC VAULT',
+  '“Ghosted but not gone.”',
+  '“Stay Ghosted, Stay Secure.”',
+  '“Bug bounty legends forged here.”'
+] %}
+{% set hero = {
+  'typer_phrases': hero_phrases,
+  'heading': 'CYBERKIDZSEC VAULT',
+  'subheading': '“Ghosted but not gone.”',
+  'stats': [
+    {'icon':'🛰️','label':'Operative Title','value': operative_title},
+    {'icon':'⬆️','label':'Level','value': operative_level},
+    {'icon':'🛡️','label':'Vault Stability','value': vault_xp_percentage ~ '%'}
+  ],
+  'ctas': [
+    {'type':'button','id':'searchBtn','label':'⌘ Cmd + K — Search','classes':'btn--outline'},
+    {'type':'link','href':'#playground','label':'🎮 Hack the Vault','classes':'btn--solid'}
+  ]
+} %}
+
+<section role="region" data-aos="fade-up"
+  id="hero"
+  aria-labelledby="hero-heading hero-subheading"
+  class="relative isolate flex flex-col items-center text-center rounded-3xl border border-orangeLuxe/30 bg-black/95 backdrop-blur-lg px-6 py-28 sm:py-36 lg:py-48 shadow-2xl shadow-orange-900/10 group perspective-600"
+  data-aos="zoom-in"
+  data-aos-delay="200"
+>
+  <canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+  <div id="heroParallax" class="absolute inset-0 z-10 will-change-transform">
+    <div class="orbit small animate-spin-slow"></div>
+    <div class="orbit med animate-spin-slower"></div>
+    <div class="orbit large animate-spin-slowest"></div>
+  </div>
+  <div aria-hidden="true" class="absolute inset-0 z-20 pointer-events-none">
+    <div class="absolute inset-0 mix-blend-overlay animate-warpBlur"></div>
+    <div class="absolute inset-0 bg-[url('/static/images/scanlines.svg')] bg-repeat opacity-5 animate-shimmer"></div>
+    <div id="heroHalo" class="absolute inset-0 blur-2xl opacity-0 transition-opacity duration-1000 ease-out"></div>
+    <div id="quantumGrid" class="absolute inset-0 bg-[url('/static/images/grid.svg')] opacity-5 mix-blend-color-dodge animate-pulse"></div>
+  </div>
+  <div class="relative z-30 max-w-4xl space-y-8 text-orangeLuxe-light drop-shadow-[0_0_2px_orange]">
+    <p id="heroTyper" class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe" aria-live="polite"></p>
+    <h1 id="hero-heading" class="text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch">
+      <span class="hero-skull inline-block align-middle text-[1.2em] px-1">💀</span> {{ hero.heading }}
+    </h1>
+    <p id="hero-subheading" class="text-lg sm:text-xl font-mono text-white/80">{{ hero.subheading }}</p>
+    <div class="flex flex-col sm:flex-row sm:justify-center sm:space-x-6" id="heroStats">
+      {% for stat in hero.stats %}
+      <div class="flex items-center space-x-2 stat-countup" data-value="{{ stat.value | replace('%', '') }}">
+        <span class="text-emeraldLuxe animate-pulse-glow">{{ stat.icon }}</span>
+        <div class="text-xs text-left">
+          <div class="font-mono uppercase">{{ stat.label }}</div>
+          <div class="font-bold"><span class="countup-target">{{ stat.value }}</span></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-6 flex flex-wrap justify-center gap-6">
+      {% for cta in hero.ctas %}
+        {% if cta.type == 'button' %}
+        <button id="{{ cta.id }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</button>
+        {% else %}
+        <a href="{{ cta.href }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    // Typewriter effect
+    const typer = document.getElementById("heroTyper");
+    const phrases = {{ hero.typer_phrases | tojson | safe }};
+    let index = 0, char = 0;
+    const typeNext = () => {
+      if (!typer) return;
+      if (char < phrases[index].length) {
+        typer.textContent += phrases[index][char++];
+        setTimeout(typeNext, 50);
+      } else {
+        setTimeout(() => {
+          typer.textContent = "";
+          char = 0;
+          index = (index + 1) % phrases.length;
+          typeNext();
+        }, 1600);
+      }
+    };
+    typeNext();
+
+    // Count-Up Animation
+    const counters = document.querySelectorAll(".stat-countup");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target.querySelector(".countup-target");
+          const value = parseFloat(entry.target.dataset.value);
+          let i = 0;
+          const interval = setInterval(() => {
+            i += 1;
+            target.textContent = i >= value ? value + "%" : i + "%";
+            if (i >= value) clearInterval(interval);
+          }, 30);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(el => observer.observe(el));
+  });
+</script>
+
+<section role="region" data-aos="fade-up" id="bug-tales"
+         class="prose mx-auto my-12 p-6 rounded-xl border border-orangeLuxe/30 bg-gradient-to-br from-zinc-900 via-cyberNight-glow to-black shadow-[0_0_20px_rgba(249,115,22,0.15)] text-orangeLuxe-light font-mono"
+         aria-labelledby="bt-heading">
+  <h2 class="text-2xl font-bold mb-4" id="bt-heading">
+    🎙️ Bug Tales: <span class="text-orange-400">Zero-Day Chronicles</span>
+  </h2>
+  <p class="text-sm text-orangeLuxe-light/80 mb-6 max-w-prose">
+    Sit back and listen as ghost-mode operatives recall their most haunting vulnerability finds.
+  </p>
+  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden"></canvas>
+  <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
+    <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg">
+  </audio>
+  <div class="flex flex-wrap items-center gap-4 mt-6">
+    <button id="bt-play"
+            class="btn btn--solid bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-5 py-2 rounded shadow transition"
+            aria-label="Play Bug Tale">
+      ▶️ Play Story
+    </button>
+    <button id="bt-stop"
+            class="btn btn--outline bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2 rounded shadow transition"
+            disabled
+            aria-label="Stop Bug Tale">
+      ⏹️ Stop
+    </button>
+    <div class="ml-auto text-xs italic text-orangeLuxe-light/60 hidden sm:block">
+      🔁 Looping ambient keyboard audio
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const playBtn = document.getElementById("bt-play");
+  const stopBtn = document.getElementById("bt-stop");
+  const audio = document.getElementById("bt-sfx");
+  const canvas = document.getElementById("bt-visualizer");
+  let ctx, analyser, source, dataArray, animationId;
+
+  function setupVisualizer() {
+    if (!canvas || !audio) return;
+    canvas.classList.remove("hidden");
+    ctx = canvas.getContext("2d");
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = ac.createAnalyser();
+    source = ac.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(ac.destination);
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+    function draw() {
+      animationId = requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = dataArray[i] / 2;
+        ctx.fillStyle = `hsl(${i * 4}, 100%, 50%)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+    draw();
+  }
+
+  playBtn.addEventListener("click", () => {
+    audio.play().then(() => {
+      playBtn.disabled = true;
+      stopBtn.disabled = false;
+      setupVisualizer();
+    });
+  });
+
+  stopBtn.addEventListener("click", () => {
+    audio.pause();
+    audio.currentTime = 0;
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+    if (animationId) cancelAnimationFrame(animationId);
+    canvas?.classList.add("hidden");
+  });
+
+  if (localStorage.getItem("bugTaleAutoPlay") === "true") {
+    audio.play().catch(() => null);
+  }
+  audio.addEventListener("play", () => localStorage.setItem("bugTaleAutoPlay", "true"));
+  audio.addEventListener("pause", () => localStorage.setItem("bugTaleAutoPlay", "false"));
+})();
+</script>
+

@@ -1,4 +1,4 @@
-<section id="relatedWrap" class="my-20" data-aos="fade-up"></section>
+<section role="region" data-aos="fade-up" id="relatedWrap" class="my-20" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up"></section data-testid="related_reports space-y-4" >
 
 <script>
 const ALL = window.ALL_REPORTS || [];
@@ -21,17 +21,17 @@ const results = CURRENT ? getRelated(CURRENT) : [];
 const wrap = document.getElementById("relatedWrap");
 
 wrap.innerHTML = `
-  <h2 class="text-3xl font-bold mb-6 tracking-tight text-orangeLuxe-light">🔗 Related Reports</h2>
+  <h2 class="text-2xl font-bold mb-4" class="text-3xl font-bold mb-6 tracking-tight text-orangeLuxe-light space-y-4">🔗 Related Reports</h2>
   ${
     results.length === 0
-    ? `<p class="text-sm text-orangeLuxe-light/70">No related reports found… yet 👀</p>`
-    : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    ? `<p class="text-sm text-orangeLuxe-light/70 space-y-4">No related reports found… yet 👀</p>`
+    : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 space-y-4">
         ${results.map((r, i) => `
           <a href="/reports/${r.slug}" data-aos="fade-up" data-aos-delay="${i * 150}"
-             class="group block p-5 rounded-xl bg-zinc-900/80 border border-orangeLuxe/20 hover:border-orangeLuxe hover:shadow-lg transition-all">
-            <h3 class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2">${r.title}</h3>
-            <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3">${new Date(r.date).toLocaleDateString()}</p>
-            <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+             class="group block p-5 rounded-xl bg-zinc-900/80 border border-orangeLuxe/20 hover:border-orangeLuxe hover:shadow-lg transition-all space-y-4">
+            <h3 class="text-xl font-semibold mb-2" class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2 space-y-4">${r.title}</h3>
+            <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3 space-y-4">${new Date(r.date).toLocaleDateString()}</p>
+            <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)} space-y-4">
               CVSS ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"}
             </span>
           </a>

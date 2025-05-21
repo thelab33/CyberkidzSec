@@ -1,22 +1,22 @@
 <nav id="filterBar"
      role="toolbar"
      aria-label="Filter and sort reports"
-     class="sticky top-0 z-40 bg-cyberNight/80 backdrop-blur border-b border-orangeLuxe/30 shadow-sm px-4 py-3 mb-12 rounded-md">
-  <div class="flex flex-wrap items-center gap-4 overflow-x-auto no-scrollbar" id="filterScroll">
-    <div role="radiogroup" aria-label="Filter Reports" class="flex gap-2 flex-wrap">
+     class="sticky top-0 z-40 bg-cyberNight/80 backdrop-blur border-b border-orangeLuxe/30 shadow-sm px-4 py-3 mb-12 rounded-md space-y-4">
+  <div class="flex flex-wrap items-center gap-4 overflow-x-auto no-scrollbar" id="filterScroll space-y-4">
+    <div role="radiogroup" aria-label="Filter Reports" class="flex gap-2 flex-wrap space-y-4">
       {# Buttons rendered by JS #}
     </div>
-    <div class="ml-auto flex items-center gap-4 min-w-fit">
-      <div class="relative flex items-center gap-1">
-        <label for="sortSel" class="sr-only">Sort reports by</label>
+    <div class="ml-auto flex items-center gap-4 min-w-fit space-y-4">
+      <div class="relative flex items-center gap-1 space-y-4">
+        <label for="sortSel" class="sr-only space-y-4">Sort reports by</label>
         <select id="sortSel"
-                class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6 text-sm rounded text-orange-200 focus:outline-none focus:ring-2 focus:ring-orangeLuxe">
+                class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6 text-sm rounded text-orange-200 focus:outline-none focus:ring-2 focus:ring-orangeLuxe space-y-4">
           {# Options rendered by JS #}
         </select>
-        <span class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-orange-400">▼</span>
+        <span class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-orange-400 space-y-4">▼</span>
       </div>
       <button id="themeToggle"
-              class="rounded-full border border-orangeLuxe p-1 text-xl hover:bg-orangeLuxe/20 transition focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+              class="rounded-full border border-orangeLuxe p-1 text-xl hover:bg-orangeLuxe/20 transition focus:outline-none focus:ring-2 focus:ring-orangeLuxe space-y-4"
               aria-label="Toggle light/dark theme">
         {# Icon rendered by JS #}
       </button>

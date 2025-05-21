@@ -1,0 +1,21 @@
+{# templates/components/hacker_playground_section.html – Forgemaster Playground & HUD #}
+
+<section id="hacker-playground"
+         class="max-w-7xl mx-auto px-6 md:px-10 py-20 text-center rounded-3xl border border-orangeLuxe/30 backdrop-blur-lg bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom shadow-xl space-y-8"
+         data-aos="zoom-in"
+         data-test="section-playground"
+         aria-labelledby="playground-heading">
+
+  <h2 id="playground-heading" class="sr-only">Hacker Playground & HUD</h2>
+
+  {% include "components/hacker_playground.html" %}
+  {% include "components/cta_cards.html" %}
+  {% include "components/playground.html" %}
+  {% include "components/dashboard_card.html" %}
+  {% include "components/hud_toolbar.html" %}
+  {% include "components/hud_status.html" %}
+  {% include "components/terminal_scan.html" %}
+  {% include "components/scroll_progress.html" %}
+
+</section>
+

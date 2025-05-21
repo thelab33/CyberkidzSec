@@ -1,36 +1,36 @@
-<section
+<section role="region" data-aos="fade-up"
   id="playground"
   class="relative mx-auto my-24 max-w-3xl px-6 py-12 rounded-2xl border border-orangeLuxe/40
          bg-gradient-to-b from-cyberNight to-black shadow-xl space-y-12"
 >
   <!-- ✨ Header with Typewriter Effect -->
-  <div class="text-center">
-    <h2 id="hackIntro" class="text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2 font-mono">
+  <div class="text-center space-y-4">
+    <h2 class="text-2xl font-bold mb-4" id="hackIntro" class="text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2 font-mono space-y-4">
       ▓▒░ Loading Hacker Playground…
     </h2>
-    <p class="text-orangeLuxe-light/80 font-mono text-sm">
+    <p class="text-orangeLuxe-light/80 font-mono text-sm space-y-4">
       Think you’ve got what it takes? Hack the vault – only the curious survive.
     </p>
   </div>
 
   <!-- 🔓 Hack Me Button + XP Bar -->
-  <div class="text-center space-y-4">
+  <div class="text-center space-y-4 space-y-4">
     <button id="hackBtn"
       class="bg-orangeLuxe hover:bg-orangeLuxe-dark text-black px-8 py-3 rounded-full
              font-semibold shadow-lg focus:ring-2 focus:ring-orange-400 transition">
       Hack Me 🔓
     </button>
-    <p id="hackXPText" class="text-xs text-orangeLuxe-light font-mono">Hacks Triggered: <span id="hackCount">0</span></p>
-    <div class="w-full max-w-xs mx-auto bg-zinc-800 rounded-full h-2 overflow-hidden">
-      <div id="hackXPBar" class="h-full bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out" style="width: 0%"></div>
+    <p id="hackXPText" class="text-xs text-orangeLuxe-light font-mono">Hacks Triggered: <span id="hackCount space-y-4">0</span></p>
+    <div class="w-full max-w-xs mx-auto bg-zinc-800 rounded-full h-2 overflow-hidden space-y-4">
+      <div id="hackXPBar" class="h-full bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out" style="width: 0% space-y-4"></div>
     </div>
-    <pre id="flagOut" class="hidden mt-4 text-emerald-400 font-mono text-sm break-all"></pre>
+    <pre id="flagOut" class="hidden mt-4 text-emerald-400 font-mono text-sm break-all space-y-4"></pre>
   </div>
 
   <!-- 🛰️ Terminal Scanner -->
   <div>
-    <h3 class="text-orangeLuxe text-lg font-semibold mb-3">🛰️ Terminal-Scan™ Interface</h3>
-    <form id="scanForm" class="flex flex-col sm:flex-row gap-3">
+    <h3 class="text-xl font-semibold mb-2" class="text-orangeLuxe text-lg font-semibold mb-3 space-y-4">🛰️ Terminal-Scan™ Interface</h3>
+    <form id="scanForm" class="flex flex-col sm:flex-row gap-3 space-y-4">
       <input id="scanInput" type="text"
         placeholder="> scan /api/dev/console …"
         class="flex-1 font-mono bg-black/80 rounded border border-orangeLuxe/40
@@ -41,7 +41,7 @@
         Run Scan 🛰️
       </button>
     </form>
-    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light transition-all"></pre>
+    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light transition-all space-y-4"></pre>
   </div>
 
   <!-- 👻 Ghost Easter Egg -->
@@ -50,7 +50,7 @@
   </div>
 
   <!-- 🕶️ Return Egg -->
-  <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60">
+  <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60 space-y-4">
     welcome back, operative
   </p>
 </section>

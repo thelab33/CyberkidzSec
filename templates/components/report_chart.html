@@ -1,15 +1,15 @@
-<section id="chartContainer" class="w-full max-w-md mx-auto mt-12" role="region" aria-labelledby="chartTitle" data-aos="zoom-in" data-aos-delay="150">
-  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4 text-orangeLuxe-light">📊 Report Type Distribution</h3>
+<section role="region" data-aos="fade-up" id="chartContainer" class="w-full max-w-md mx-auto mt-12" role="region" aria-labelledby="chartTitle" data-aos="zoom-in" data-aos-delay="150" data-aos="fade-up" data-aos="fade-up" data-testid="report_chart space-y-4" >
+  <h3 class="text-xl font-semibold mb-2" id="chartTitle" class="text-center text-lg font-semibold mb-4 text-orangeLuxe-light space-y-4">📊 Report Type Distribution</h3>
 
   <!-- Inline stat legend -->
-  <ul id="chartStats" class="text-sm font-mono text-orangeLuxe-light/80 space-y-1 text-center mb-4" aria-live="polite"></ul>
+  <ul id="chartStats" class="text-sm font-mono text-orangeLuxe-light/80 space-y-1 text-center mb-4" aria-live="polite space-y-4"></ul>
 
-  <div class="relative rounded-lg shadow-lg bg-zinc-900 p-4 border border-orangeLuxe/20">
+  <div class="relative rounded-lg shadow-lg bg-zinc-900 p-4 border border-orangeLuxe/20 space-y-4">
     <canvas id="reportChart" height="280" aria-label="Report Type Chart" role="img"></canvas>
 
     <!-- Chart Controls -->
-    <div class="mt-4 text-center">
-      <button id="exportChart" class="text-xs font-bold text-orangeLuxe hover:underline">⬇️ Download Chart as PNG</button>
+    <div class="mt-4 text-center space-y-4">
+      <button id="exportChart" class="text-xs font-bold text-orangeLuxe hover:underline space-y-4">⬇️ Download Chart as PNG</button>
     </div>
   </div>
 </section>
@@ -78,7 +78,7 @@ let chart = new Chart(ctx, {
 
 /* Display inline stats */
 stats.innerHTML = DATA.map((d, i) =>
-  `<li><span class="text-orangeLuxe">${d.name}</span>: <strong>${d.value}</strong> (${((d.value / values.reduce((a,b) => a + b, 0)) * 100).toFixed(1)}%)</li>`
+  `<li><span class="text-orangeLuxe space-y-4">${d.name}</span>: <strong>${d.value}</strong> (${((d.value / values.reduce((a,b) => a + b, 0)) * 100).toFixed(1)}%)</li>`
 ).join("");
 
 /* Download chart image */

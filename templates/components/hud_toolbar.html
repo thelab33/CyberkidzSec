@@ -13,40 +13,40 @@
                  hover:bg-zinc-800/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orangeLuxe
                  rounded-t-2xl transition-colors duration-200"
           aria-expanded="true">
-    <span class="tracking-widest">💻 HUD STATUS</span>
-    <i id="hudChevron" class="fas fa-chevron-down transition-transform duration-300"></i>
+    <span class="tracking-widest space-y-4">💻 HUD STATUS</span>
+    <i id="hudChevron" class="fas fa-chevron-down transition-transform duration-300 space-y-4"></i>
   </button>
 
   <!-- Toolbar Body -->
-  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-3">
-    <div class="flex justify-between">
-      👻 Ghost Mode: <span id="hudGhost" class="font-semibold">Loading…</span>
+  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-3 space-y-4">
+    <div class="flex justify-between space-y-4">
+      👻 Ghost Mode: <span id="hudGhost" class="font-semibold space-y-4">Loading…</span>
     </div>
-    <div class="flex justify-between">
-      🔓 Admin: <span id="hudAdmin" class="font-semibold">Loading…</span>
+    <div class="flex justify-between space-y-4">
+      🔓 Admin: <span id="hudAdmin" class="font-semibold space-y-4">Loading…</span>
     </div>
-    <div class="flex justify-between">
-      🛰️ Vault Feed: <span id="hudFeed" class="font-semibold">CONNECTING…</span>
+    <div class="flex justify-between space-y-4">
+      🛰️ Vault Feed: <span id="hudFeed" class="font-semibold space-y-4">CONNECTING…</span>
     </div>
 
-    <hr class="border-orangeLuxe/20 my-3">
+    <hr class="border-orangeLuxe/20 my-3 space-y-4">
 
-    <p id="hudLog" class="min-h-[1.3rem] animate-pulse">⏳ Initializing HUD...</p>
+    <p id="hudLog" class="min-h-[1.3rem] animate-pulse space-y-4">⏳ Initializing HUD...</p>
 
-    <div class="w-full bg-zinc-700 rounded-full overflow-hidden h-2 mt-3">
+    <div class="w-full bg-zinc-700 rounded-full overflow-hidden h-2 mt-3 space-y-4">
       <div id="hudProgress"
-           class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all duration-700 ease-out"
+           class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all duration-700 ease-out space-y-4"
            style="width: {{ vault_xp_percentage }}%">
       </div>
     </div>
-    <p class="text-[10px] text-center mt-2 text-orangeLuxe">
+    <p class="text-[10px] text-center mt-2 text-orangeLuxe space-y-4">
       {{ vault_xp_percentage }}% Vault Stability
     </p>
 
     <!-- 🛰️ Circular Scroll Tracker -->
-    <div class="relative mx-auto w-20 h-20 mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="Scroll Progress">
-      <svg class="w-full h-full" viewBox="0 0 36 36">
-        <path class="text-zinc-700" d="M18 2.0845
+    <div class="relative mx-auto w-20 h-20 mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="Scroll Progress space-y-4">
+      <svg class="w-full h-full" viewBox="0 0 36 36 space-y-4">
+        <path class="text-zinc-700" d= space-y-4"M18 2.0845
               a 15.9155 15.9155 0 0 1 0 31.831
               a 15.9155 15.9155 0 0 1 0 -31.831"
               fill="none" stroke="currentColor" stroke-width="2.5" />
@@ -64,7 +64,7 @@
         </defs>
       </svg>
       <div id="hudScrollPercent"
-           class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-orangeLuxe-light">
+           class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-orangeLuxe-light space-y-4">
         0%
       </div>
     </div>

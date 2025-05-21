@@ -1,97 +1,68 @@
-{# templates/index.html #}
 {% extends "base.html" %}
 
 {% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
 
-{% block head_extra %}
-  {{ super() }}
-  {% set extra_styles = [
-    'sections/vault_overview.css',
-    'sections/featured_reports.css',
-    'sections/report_grid.css',
-    'sections/filter_bar.css',
-    'sections/pagination.css',
-    'sections/sidebar_filters.css',
-    'sections/sidebar_cta.css',
-    'sections/empty_state.css',
-    'sections/report_charts_grid.css',
-    'sections/tags_section.css',
-    'sections/related_reports.css',
-    'sections/hacker_playground.css',
-    'components/hero.css',
-    'components/terminal_scan.css',
-    'components/hud_status.css'
-  ] %}
-  {% for sheet in extra_styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ sheet) }}" crossorigin />
-  {% endfor %}
-{% endblock %}
-
 {% block content %}
-  <!-- 🌌 Intro Console & Hero Layer -->
-  <section aria-labelledby="hero-section" class="overflow-hidden relative">
-    {% include "components/console.html" %}
-    {% include "components/hero.html" %}
-    {% include "components/bug_tales.html" %}
-    {% include "components/report_card_grid.html" %}
-    {% include "components/report_chart.html" %}
-    {% include "components/scroll_progress.html" %}
-  </section>
+  {# -- HERO SECTION: Header, Banner, and Console -- #}
+  <header id="siteHeader" class="sticky top-0 z-40">
+    {% include "components/header.html" %}
+  </header>
 
-  <!-- 🛰️ Vault Status Strip -->
-  <section id="vault-status" aria-live="polite" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-lg">
-    <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse">
-      Zero-Day Archive Updating · Stay Ghosted
+  <section id="hero" class="relative isolate flex flex-col items-center text-center rounded-3xl border border-orangeLuxe/30 bg-black/95 backdrop-blur-lg px-6 py-24 sm:py-36 lg:py-48 shadow-2xl group perspective-600 space-y-8">
+    <canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+    <div class="relative z-30 max-w-4xl mx-auto">
+      <p id="heroTyper" class="text-base sm:text-lg font-mono uppercase tracking-widest text-emeraldLuxe animate-pulse" aria-live="polite"></p>
+      <h1 class="text-6xl sm:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 animate-pulse-glow glitch drop-shadow">
+        <span class="hero-skull align-middle text-[1.2em] px-1">💀</span> CYBERKIDZSEC VAULT
+      </h1>
+      <p class="text-lg sm:text-xl font-mono text-white/80 mt-2">“Ghosted but not gone.”</p>
+      <div class="flex flex-wrap justify-center gap-6 mt-8">
+        <button id="searchBtn" class="btn btn--outline px-8 py-3 rounded-lg">⌘ Cmd + K — Search</button>
+        <a href="#playground" class="btn btn--solid px-8 py-3 rounded-lg">🎮 Hack the Vault</a>
+      </div>
+      <div class="flex justify-center gap-8 mt-8 text-center">
+        <div>
+          <span class="text-emeraldLuxe">🛰️</span>
+          <div class="font-mono uppercase text-xs">Operative Title</div>
+          <div class="font-bold">{{ operative_title }}</div>
+        </div>
+        <div>
+          <span class="text-orange-400">⬆️</span>
+          <div class="font-mono uppercase text-xs">Level</div>
+          <div class="font-bold">{{ operative_level }}</div>
+        </div>
+        <div>
+          <span class="text-yellow-400">🛡️</span>
+          <div class="font-mono uppercase text-xs">Vault Stability</div>
+          <div class="font-bold">{{ vault_xp_percentage }}%</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 🔐 Vault Overview + XP + About -->
-  <section aria-labelledby="overview" class="max-w-7xl mx-auto px-6 space-y-12">
-    <div id="overview" class="sr-only">Vault Overview and About</div>
-    {% include "components/vault_overview.html" %}
-    {% include "components/vault_banners.html" %}
-    {% include "components/vault_xp_bar.html" %}
-    {% include "components/blog_section.html" %}
-    {% include "components/about_section.html" %}
-  </section>
-
-  <!-- 📂 Vault Reports Grid -->
-  <section id="vault-feed" class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-12" aria-labelledby="reports-heading">
-    <aside class="space-y-8 lg:sticky lg:top-24" role="complementary">
-      {% include "components/filter_bar.html" %}
-      {% include "components/sidebar_filters.html" %}
-      {% include "components/sidebar_cta.html" %}
-    </aside>
-
-    <div class="lg:col-span-3 space-y-14" role="region" aria-labelledby="reports-heading">
-      <h2 id="reports-heading" class="sr-only">Reports & Analytics</h2>
-      {% include "components/featured_reports.html" %}
-      {% include "components/report_grid.html" %}
-      {% include "components/empty_state.html" %}
-      {% include "components/pagination.html" %}
-      {% include "components/report_charts_grid.html" %}
-      {% include "components/tags_section.html" %}
-      {% include "components/related_reports.html" %}
+    {# STATUS STRIP: #}
+  <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
+    <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse select-none">
+      🛰️ Zero-Day Archive Updating · Stay Ghosted.
     </div>
   </section>
 
-  <!-- 🎮 Hacker Playground -->
-  <section class="max-w-7xl mx-auto px-6 py-20 text-center rounded-3xl border border-orangeLuxe/30 backdrop-blur-lg bg-gradient-to-br from-cyberNight via-cyberNightGlow to-cyberNightPhantom shadow-2xl">
-    {% include "components/hacker_playground.html" %}
-  </section>
-{% endblock %}
+{# BUG TALES section (or other storytelling/audio): #}
+  {% include "components/bug_tales.html" %}
 
-{% block scripts_extra %}
-  {{ super() }}
-  <script src="{{ url_for('static', filename='js/console.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/hero_starfield_debug.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/vault_overview.js') }}" defer></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if (window.PAGE_REPORTS?.length < 3) {
-        document.getElementById("vault-feed")?.classList.add("opacity-60");
-      }
-    });
-  </script>
+  {# VAULT OVERVIEW (XP, About, Banners, Blog): #}
+  {% include "components/vault_overview_section.html" %}
+
+  {# MAIN FEED: filters, report grid, analytics, tags: #}
+  {% include "components/vault_feed.html" %}
+
+  {# PLAYGROUND & HUD: #}
+  {% include "components/hacker_playground_section.html" %}
+
+  {# UTILITIES/POPUPS: #}
+  {% include "components/utility_modals.html" %}
+
+  {# (Optional) HIDDEN/DEBUG: #}
+  {% include "components/hidden_extras.html" %}
 {% endblock %}
 

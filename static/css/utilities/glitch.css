@@ -2,26 +2,66 @@
    ✨ Glitch / Warp / Pulse Text Animations
 ============================================= */
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-1px, 1px); }
-  40% { transform: translate(-2px, -1px); }
-  60% { transform: translate(2px, 1px); }
-  80% { transform: translate(1px, -2px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-1px, 1px);
+  }
+
+  40% {
+    transform: translate(-2px, -1px);
+  }
+
+  60% {
+    transform: translate(2px, 1px);
+  }
+
+  80% {
+    transform: translate(1px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
 @keyframes glitch-fast {
-  0% { transform: translate(0); }
-  10% { transform: translate(1px, -2px); }
-  20% { transform: translate(-1px, 2px); }
-  30% { transform: translate(2px, 1px); }
-  40% { transform: translate(-2px, -1px); }
-  50% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+
+  10% {
+    transform: translate(1px, -2px);
+  }
+
+  20% {
+    transform: translate(-1px, 2px);
+  }
+
+  30% {
+    transform: translate(2px, 1px);
+  }
+
+  40% {
+    transform: translate(-2px, -1px);
+  }
+
+  50% {
+    transform: translate(0);
+  }
 }
 
 @keyframes glitch-slow {
-  0%, 100% { transform: translate(0); }
-  50% { transform: translate(1px, 1px); }
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  50% {
+    transform: translate(1px, 1px);
+  }
 }
 
 .glitch-text {
@@ -39,13 +79,24 @@
   width: 100%;
   height: 100%;
   clip-path: inset(10% 0 90% 0);
-  text-shadow: -1px 0 red, 1px 0 blue;
+  text-shadow:
+    -1px 0 red,
+    1px 0 blue;
   opacity: 0.8;
   pointer-events: none;
 }
-.animate-glitch { animation: glitch 1s infinite; }
-.animate-glitch-fast { animation: glitch-fast 0.5s infinite; }
-.animate-glitch-slow { animation: glitch-slow 2s infinite; }
+
+.animate-glitch {
+  animation: glitch 1s infinite;
+}
+
+.animate-glitch-fast {
+  animation: glitch-fast 0.5s infinite;
+}
+
+.animate-glitch-slow {
+  animation: glitch-slow 2s infinite;
+}
 
 /* pulse glow */
 .pulse-glow {
@@ -53,6 +104,12 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }

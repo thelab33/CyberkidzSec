@@ -1,71 +1,71 @@
 <footer id="footer"
-        class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-black to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden"
+        class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-black to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden space-y-4"
         data-vault-stability="{{ vault_xp_percentage }}">
 
   <!-- 🌌 Animated Aurora Ribbon -->
-  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite]"></div>
+  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite] space-y-4"></div>
 
   <!-- 🌫️ Noise Overlay -->
-  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay"></div>
+  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay space-y-4"></div>
 
   <!-- 📚 Content Grid -->
-  <div class="relative z-10 max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 xl:grid-cols-4" data-aos="fade-up">
+  <div class="relative z-10 max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 xl:grid-cols-4" data-aos="fade-up space-y-4">
 
     <!-- 🛡️ Brand & Motto -->
-    <div class="space-y-2">
-      <p class="text-xs tracking-widest text-orange-400 font-bold select-none">CYBERKIDZSEC VAULT</p>
-      <p class="text-sm text-orangeLuxe-light">© {{ current_year }} CyberKidzSec</p>
-      <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[16rem]">“Ghosted but not gone.”</p>
-      <p class="terminal-footer-prompt">~$ system.exit(0) — stay ghosted 🧠</p>
+    <div class="space-y-2 space-y-4">
+      <p class="text-xs tracking-widest text-orange-400 font-bold select-none space-y-4">CYBERKIDZSEC VAULT</p>
+      <p class="text-sm text-orangeLuxe-light space-y-4">© {{ current_year }} CyberKidzSec</p>
+      <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[16rem] space-y-4">“Ghosted but not gone.”</p>
+      <p class="terminal-footer-prompt space-y-4">~$ system.exit(0) — stay ghosted 🧠</p>
     </div>
 
     <!-- 🧭 Quick Navigation -->
-    <nav class="flex flex-col gap-2 text-orange-300">
+    <nav class="flex flex-col gap-2 text-orange-300 space-y-4">
       {% set nav = [("Home","/"),("About","/about"),("Reports","/reports"),("Playground","/playground"),("Analytics","/charts")] %}
       {% for label, href in nav %}
-        <a href="{{ href }}" class="w-max hover:text-orangeLuxe hover:underline transition">{{ label }}</a>
+        <a href="{{ href }}" class="w-max hover:text-orangeLuxe hover:underline transition space-y-4">{{ label }}</a>
       {% endfor %}
     </nav>
 
     <!-- 📈 Vault Analytics -->
-    <div class="space-y-3">
-      <p class="text-xs tracking-wide text-orange-300/80">🛰️ Latest CVEs (24h)</p>
-      <p id="cveCounter" class="text-4xl font-black text-orangeLuxe-light animate-pulse">--</p>
-      <a href="/charts" class="btn-secondary w-max text-xs">View Analytics →</a>
+    <div class="space-y-3 space-y-4">
+      <p class="text-xs tracking-wide text-orange-300/80 space-y-4">🛰️ Latest CVEs (24h)</p>
+      <p id="cveCounter" class="text-4xl font-black text-orangeLuxe-light animate-pulse space-y-4">--</p>
+      <a href="/charts" class="btn-secondary w-max text-xs space-y-4">View Analytics →</a>
     </div>
 
     <!-- 📨 Newsletter + Socials -->
-    <div class="space-y-5">
+    <div class="space-y-5 space-y-4">
       <form action="https://buttondown.email/api/emails/embed-subscribe/cyberkidzsec" method="post" target="popupwindow"
-            class="flex gap-2" onsubmit="window.open('https://buttondown.email/cyberkidzsec','popupwindow')">
+            class="flex gap-2" onsubmit="window.open('https://buttondown.email/cyberkidzsec','popupwindow') space-y-4">
         <input required type="email" name="email" placeholder="your@domain.tld"
-               class="flex-1 rounded-md bg-zinc-800 border border-orangeLuxe/40 px-3 py-2 text-xs placeholder-orangeLuxe-light focus:outline-none" />
-        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orange-500" aria-label="Subscribe">Join</button>
+               class="flex-1 rounded-md bg-zinc-800 border border-orangeLuxe/40 px-3 py-2 text-xs placeholder-orangeLuxe-light focus:outline-none space-y-4" />
+        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orange-500" aria-label="Subscribe space-y-4">Join</button>
       </form>
 
-      <div class="flex gap-4 text-xl text-orange-400">
-        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github"></i></a>
-        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug"></i></a>
+      <div class="flex gap-4 text-xl text-orange-400 space-y-4">
+        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github space-y-4"></i></a>
+        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin space-y-4"></i></a>
+        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug space-y-4"></i></a>
       </div>
 
-      <button id="themeToggler" class="inline-flex items-center gap-2 text-xs btn-secondary mt-3">
-        <i class="fa-solid fa-circle-half-stroke"></i> Toggle Theme
+      <button id="themeToggler" class="inline-flex items-center gap-2 text-xs btn-secondary mt-3 space-y-4">
+        <i class="fa-solid fa-circle-half-stroke space-y-4"></i> Toggle Theme
       </button>
     </div>
   </div>
 
   <!-- 🚨 Ghost Breach Alert -->
-  <div id="ghostBreachWarning" class="ghost-breach-warning hidden animate-pulse mt-6 px-4 py-2 border border-red-400 text-red-400 rounded-lg text-center text-sm font-bold font-mono">
+  <div id="ghostBreachWarning" class="ghost-breach-warning hidden animate-pulse mt-6 px-4 py-2 border border-red-400 text-red-400 rounded-lg text-center text-sm font-bold font-mono space-y-4">
     ⚠️ VAULT BREACH DETECTED
   </div>
 
   <!-- 🧠 Vault Stability Bar -->
-  <div class="relative mt-10 max-w-6xl mx-auto">
-    <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
-      <div class="h-full transition-all duration-1000 ease-in-out" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(to right, #f59e0b, #facc15, #34d399);"></div>
+  <div class="relative mt-10 max-w-6xl mx-auto space-y-4">
+    <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden space-y-4">
+      <div class="h-full transition-all duration-1000 ease-in-out" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(to right, #f59e0b, #facc15, #34d399); space-y-4"></div>
     </div>
-    <p class="text-center text-xs text-orange-400 mt-2">Vault Stability: {{ vault_xp_percentage }}%</p>
+    <p class="text-center text-xs text-orange-400 mt-2 space-y-4">Vault Stability: {{ vault_xp_percentage }}%</p>
   </div>
 </footer>
 

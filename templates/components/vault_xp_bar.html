@@ -1,16 +1,16 @@
-<section aria-label="Vault XP Status"
-         class="max-w-md mx-auto p-6 space-y-3 rounded-xl bg-zinc-900/80 border border-orangeLuxe/20 backdrop-blur shadow-lg"
+<section role="region" data-aos="fade-up" aria-label="Vault XP Status"
+         class="max-w-md mx-auto p-6 space-y-3 rounded-xl bg-zinc-900/80 border border-orangeLuxe/20 backdrop-blur shadow-lg space-y-4"
          data-aos="fade-up">
 
   <!-- 🛰️ Operative Level -->
-  <p class="text-sm text-orangeLuxe font-mono tracking-widest uppercase text-center">
+  <p class="text-sm text-orangeLuxe font-mono tracking-widest uppercase text-center space-y-4">
     Operative Level: <span id="operativeLevel">{{ operative_level }}</span>
   </p>
 
   <!-- 🧠 Animated XP Bar -->
-  <div class="relative h-5 bg-zinc-800 rounded-full overflow-hidden">
+  <div class="relative h-5 bg-zinc-800 rounded-full overflow-hidden space-y-4">
     <progress id="vaultXpProgress"
-              class="absolute inset-0 w-full h-full appearance-none opacity-0"
+              class="absolute inset-0 w-full h-full appearance-none opacity-0 space-y-4"
               value="{{ vault_xp_percentage }}"
               max="100"
               aria-describedby="vaultXpText">
@@ -23,9 +23,9 @@
 
   <!-- 📡 Status Text -->
   <p id="vaultXpText"
-     class="text-xs text-orange-200 text-center font-mono tracking-wide"
+     class="text-xs text-orange-200 text-center font-mono tracking-wide space-y-4"
      role="status" aria-live="polite">
-    Vault Operational Status: <span id="vaultXpNum" class="font-bold">0</span>%
+    Vault Operational Status: <span id="vaultXpNum" class="font-bold space-y-4">0</span>%
   </p>
 </section>
 

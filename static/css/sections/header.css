@@ -14,9 +14,11 @@
   height: var(--header-height);
   backdrop-filter: saturate(180%) blur(12px);
   background-color: rgb(0 0 0 / 80%);
-  transition: padding 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1000;              /* above hero, below skip-nav */
-  padding-inline: 1rem;       /* horizontal padding */
+  transition:
+    padding 0.3s ease,
+    box-shadow 0.3s ease;
+  z-index: 1000; /* above hero, below skip-nav */
+  padding-inline: 1rem; /* horizontal padding */
   display: flex;
   align-items: center;
 
@@ -31,7 +33,7 @@
 }
 
 /* 4️⃣ Push all main content down by the header’s height */
-main, 
+main,
 #hero {
   margin-top: var(--header-height);
 }
@@ -58,7 +60,9 @@ main,
   border-radius: 0.375rem;
   font-size: 0.875rem;
   color: #f4f4f5;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #globalSearch::placeholder {
@@ -108,7 +112,7 @@ nav a.relative:hover {
 }
 
 nav a.relative::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -169,4 +173,3 @@ nav a.relative[data-active]::after {
     display: none;
   }
 }
-

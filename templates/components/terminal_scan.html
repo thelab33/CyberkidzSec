@@ -1,18 +1,18 @@
-<section
+<section role="region" data-aos="fade-up"
   id="terminalScan"
   class="relative mx-auto my-24 max-w-4xl px-6 py-12 rounded-2xl border border-orangeLuxe/30
          bg-black text-orange-100 font-mono shadow-xl"
 >
   <!-- 🛰️ Terminal Shell -->
-  <div class="bg-zinc-900 rounded-lg overflow-hidden border border-orangeLuxe/20">
-    <div class="flex items-center space-x-2 px-4 py-2 bg-zinc-800 border-b border-orangeLuxe/10">
-      <div class="w-3 h-3 rounded-full bg-red-500"></div>
-      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-      <div class="w-3 h-3 rounded-full bg-green-500"></div>
-      <span class="ml-auto text-xs text-orangeLuxe-light/50">~/GhostLabs</span>
+  <div class="bg-zinc-900 rounded-lg overflow-hidden border border-orangeLuxe/20 space-y-4">
+    <div class="flex items-center space-x-2 px-4 py-2 bg-zinc-800 border-b border-orangeLuxe/10 space-y-4">
+      <div class="w-3 h-3 rounded-full bg-red-500 space-y-4"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-500 space-y-4"></div>
+      <div class="w-3 h-3 rounded-full bg-green-500 space-y-4"></div>
+      <span class="ml-auto text-xs text-orangeLuxe-light/50 space-y-4">~/GhostLabs</span>
     </div>
     <div id="terminalBuffer"
-         class="h-80 overflow-y-auto p-4 space-y-2 text-sm leading-snug tracking-wide"
+         class="h-80 overflow-y-auto p-4 space-y-2 text-sm leading-snug tracking-wide space-y-4"
          aria-label="Hacker terminal output"
     >
       <p>👻 Booting Terminal-Scan™ Interface...</p>
@@ -21,14 +21,14 @@
       <p>Type <kbd>help</kbd> to see available commands.</p>
     </div>
 
-    <form id="terminalForm" class="flex items-center px-4 py-3 border-t border-orangeLuxe/10 bg-zinc-950">
-      <label for="terminalInput" class="sr-only">Enter command</label>
-      <span class="text-orangeLuxe mr-2">$</span>
+    <form id="terminalForm" class="flex items-center px-4 py-3 border-t border-orangeLuxe/10 bg-zinc-950 space-y-4">
+      <label for="terminalInput" class="sr-only space-y-4">Enter command</label>
+      <span class="text-orangeLuxe mr-2 space-y-4">$</span>
       <input id="terminalInput"
              type="text"
              autocomplete="off"
              placeholder="> scan /vault/core"
-             class="flex-1 bg-transparent text-orange-100 outline-none placeholder:text-orangeLuxe-light/50" />
+             class="flex-1 bg-transparent text-orange-100 outline-none placeholder:text-orangeLuxe-light/50 space-y-4" />
     </form>
   </div>
 </section>

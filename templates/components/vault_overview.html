@@ -1,51 +1,51 @@
-<section
+<section role="region" data-aos="fade-up"
   id="vault-overview"
-  class="section-container my-24 space-y-16"
+  class="section-container my-24 space-y-16 space-y-4"
   data-aos="fade-up"
 >
   <!-- Vault XP Bar -->
-  <div aria-label="Vault XP Status" class="mx-auto max-w-2xl text-center space-y-4">
-    <p class="text-sm text-orange-300 font-mono tracking-widest uppercase">
+  <div aria-label="Vault XP Status" class="mx-auto max-w-2xl text-center space-y-4 space-y-4">
+    <p class="text-sm text-orange-300 font-mono tracking-widest uppercase space-y-4">
       Operative Level: {{ operative_level }}
     </p>
-    <div class="relative bg-zinc-800 rounded-full h-4 overflow-hidden shadow-inner">
+    <div class="relative bg-zinc-800 rounded-full h-4 overflow-hidden shadow-inner space-y-4">
       <progress
         id="vaultXpProgress"
-        class="absolute inset-0 w-full h-full appearance-none"
+        class="absolute inset-0 w-full h-full appearance-none space-y-4"
         value="{{ vault_xp_percentage }}"
         max="100"
         aria-describedby="vaultXpText"
       ></progress>
       <div
         id="vaultXpFill"
-        class="h-4 bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out"
+        class="h-4 bg-gradient-to-r from-orangeLuxe to-emeraldLuxe transition-all duration-700 ease-out space-y-4"
       ></div>
     </div>
     <p
       id="vaultXpText"
       role="status"
-      class="text-xs text-orange-400 font-mono tracking-wide"
+      class="text-xs text-orange-400 font-mono tracking-wide space-y-4"
     >
       Vault Operational Status: <span id="vaultXpNum">{{ vault_xp_percentage }}</span>%
     </p>
   </div>
 
   <!-- Vault Banners -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 space-y-4">
     {% set banners = [
       ('images/og/main_vault_banner.png', 'Main Vault Banner'),
       ('images/og/hacker_underground_banner.png', 'Hacker Underground Banner'),
       ('images/og/zero_day_archive_banner.png', 'Zero-Day Archive Banner')
     ] %}
     {% for src, alt in banners %}
-      <figure class="overflow-hidden rounded-xl shadow-lg group hover:shadow-orange-400/30 transition-shadow duration-300">
+      <figure class="overflow-hidden rounded-xl shadow-lg group hover:shadow-orange-400/30 transition-shadow duration-300 space-y-4">
         <img
           src="{{ url_for('static', filename=src) }}"
           alt="{{ alt }}"
           loading="lazy"
-          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out"
+          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out space-y-4"
         />
-        <figcaption class="sr-only">{{ alt }}</figcaption>
+        <figcaption class="sr-only space-y-4">{{ alt }}</figcaption>
       </figure>
     {% endfor %}
   </div>

@@ -3,27 +3,23 @@
       class="scroll-smooth motion-safe:scroll-auto bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen"
       data-theme="dark">
 <head>
-  <!-- 🌐 Meta -->
+  <!-- 🌐 Meta, Icons, Fonts as before ... -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}" />
   <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
-
-  <!-- 📲 Icons & PWA -->
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="icon" href="{{ url_for('static', filename='favicon-32.png') }}" sizes="32x32" />
   <link rel="icon" href="{{ url_for('static', filename='favicon-16.png') }}" sizes="16x16" />
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
-
-  <!-- 🌐 Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" as="style" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-  <!-- 🎨 Core Styles -->
+  {# --- Core & Section Styles --- #}
   {% set styles = [
     'css/app.min.css',
     'css/ghost-mode.css',
@@ -36,39 +32,71 @@
     <link rel="stylesheet" href="{{ url_for('static', filename=sheet) }}" />
   {% endfor %}
 
-  <!-- 📦 External Libs -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
   {% block head_extra %}{% endblock %}
-
-  <!-- 🦾 AOS No-JS Fallback -->
+  {% block style_includes %}{% endblock %}
   <noscript>
     <style>.aos-init[data-aos] { opacity: 1 !important; transform: none !important; }</style>
   </noscript>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light") {
+        document.querySelector('link[rel="icon"]').setAttribute('href', '{{ url_for("static", filename="favicon-light.png") }}');
+      }
+    });
+  </script>
 </head>
-
 <body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe" data-page="vault">
-  <!-- ⌨️ Skip Links -->
+
+  <!-- ⌨️ Skip Navigation: Always Top, Only Once -->
   {% include "components/skip_nav.html" %}
 
-  <!-- 🛰️ Top Section -->
-  <header role="banner" class="z-50">
-    {% if operative_title %}
-      <p class="text-orange-400 text-sm text-center font-bold uppercase mb-2 tracking-wider sr-only" aria-live="polite">
-        {{ operative_title }}
-      </p>
-    {% endif %}
-    {% include "components/header.html" %}
-    <div id="scrollProgress" class="scroll-progress fixed top-0 left-0 h-1 bg-orangeLuxe transition-all duration-300 ease-out z-40"></div>
-  </header>
+  <!-- 🎉 Page Fade (not in flow) -->
+  <div id="page-fade-overlay" class="fixed inset-0 pointer-events-none z-50 bg-black opacity-0 transition-opacity duration-500"></div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.getElementById("page-fade-overlay");
+      overlay.classList.remove('opacity-0');
+      overlay.classList.add('opacity-0');
+      setTimeout(() => overlay.remove(), 500);
+    });
+  </script>
 
-  <!-- 🚀 Main Page Content -->
+  <!-- 🚀 Main Content (Semantic Order) -->
   <main id="main" class="flex-1" role="main" tabindex="-1">
-    {% block content %}{% endblock %}
+    {% block content %}
+      {# 1. HERO (with its own starfield/canvas only here!) #}
+      {% include "components/intro_layer.html" %}
+      {# 2. STATUS BANNER #}
+      <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
+        <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse select-none">
+          🛰️ Zero-Day Archive Updating · Stay Ghosted.
+        </div>
+      </section>
+      {# 3. BUG TALES #}
+      {% include "components/bug_tales.html" %}
+      {# 4. VAULT OVERVIEW / ABOUT / XP / BANNERS #}
+      {% include "components/vault_overview_section.html" %}
+      {# 5. FEED / REPORTS / FILTERS #}
+      {% include "components/vault_feed.html" %}
+      {# 6. PLAYGROUND & HUD #}
+      {% include "components/hacker_playground_section.html" %}
+      {# 7. UTILITIES & POPUPS #}
+      {% include "components/utility_modals.html" %}
+      {# 8. HIDDEN EXTRAS #}
+      {% include "components/hidden_extras.html" %}
+    {% endblock %}
   </main>
 
-  <!-- 🎛️ HUD Components -->
+  <!-- 🧭 Footer: Always Last, Out of Flow -->
+  {% include "components/footer.html" %}
+  {% include "components/back_to_top.html" %}
+  {% block breadcrumbs %}{% endblock %}
+
+  <!-- 🎛️ HUD & Modals: Just Once, End of <body> -->
   {% include "components/vault_popup.html" %}
   {% include "components/vault_copilot.html" %}
   {% include "components/section_skeleton.html" %}
@@ -76,12 +104,7 @@
   {% include "components/hud_toolbar.html" %}
   {% include "components/command_palette.html" %}
 
-  <!-- 🧭 Footer -->
-  {% include "components/footer.html" %}
-  {% include "components/back_to_top.html" %}
-  {% block breadcrumbs %}{% endblock %}
-
-  <!-- ⚙️ Scripts -->
+  <!-- ⚙️ JS: App, Vendor, Section Scripts -->
   {% set scripts = [
     'js/app.min.js',
     'js/ghost-mode.js',
@@ -93,20 +116,35 @@
   {% endfor %}
   <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-
-  <!-- 🧠 Local Enhancements -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 120 });
-
-      // 🌗 Restore Theme
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
-
-      // 🧠 Scroll Restore
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-
-      // ⌨️ Shortcut prompt
+      window.showToast = function(msg, type="info") {
+        const toast = document.createElement('div');
+        toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg font-mono text-sm shadow-xl z-[9999] animate-fade-in
+          ${type==='error' ? 'bg-red-600/90 text-white' : type==='success' ? 'bg-emerald-600/90 text-white' : 'bg-zinc-800/90 text-orangeLuxe'}`;
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3200);
+      };
+      window.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          const cmdPalette = document.getElementById('command-palette');
+          if (cmdPalette) cmdPalette.classList.remove('hidden');
+        }
+      });
+      window.addEventListener('scroll', () => {
+        const sp = document.getElementById('scrollProgress');
+        if (sp) {
+          const h = document.documentElement, b = document.body;
+          const st = h.scrollTop || b.scrollTop, sh = h.scrollHeight - h.clientHeight;
+          sp.style.width = sh ? (st / sh * 100) + "%" : "0%";
+        }
+      });
       if (window.matchMedia('(hover: hover)').matches) {
         const hint = document.createElement("div");
         hint.textContent = "⌘ Cmd + K — Search";
@@ -116,8 +154,6 @@
       }
     });
   </script>
-
-  <!-- 🔐 PWA Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -126,9 +162,8 @@
       });
     }
   </script>
-
+  {% block script_includes %}{% endblock %}
   {% block scripts_extra %}{% endblock %}
-
   {% if config['ENV'] == 'production' %}
     <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
   {% endif %}

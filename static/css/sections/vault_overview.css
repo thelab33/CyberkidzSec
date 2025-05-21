@@ -7,7 +7,6 @@
 #vaultXpProgress {
   /* hide native progress bar */
   appearance: none;
-  appearance: none;
 }
 
 #vaultXpProgress::-webkit-progress-bar {
@@ -17,4 +16,3 @@
 #vaultXpProgress::-moz-progress-bar {
   display: none;
 }
-

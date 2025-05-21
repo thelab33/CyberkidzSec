@@ -5,14 +5,14 @@
   role="navigation"
   aria-label="Main site navigation"
 >
-  <div class="max-w-7xl mx-auto flex items-center justify-between">
+  <div class="max-w-7xl mx-auto flex items-center justify-between space-y-4">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 text-orangeLuxe font-black text-xl tracking-wide hover:scale-105 transition-transform">
+    <a href="/" class="flex items-center gap-2 text-orangeLuxe font-black text-xl tracking-wide hover:scale-105 transition-transform space-y-4">
       💀 CYBERKIDZSEC
     </a>
 
     <!-- Desktop Nav -->
-    <div class="hidden md:flex space-x-6 text-sm font-semibold">
+    <div class="hidden md:flex space-x-6 text-sm font-semibold space-y-4">
       {% set nav_items = [
         ("Home", "/"),
         ("Vault", "/reports"),
@@ -22,11 +22,11 @@
       {% for label, href in nav_items %}
         <a
           href="{{ href }}"
-          class="relative group transition-colors text-orange-300 hover:text-orangeLuxe"
+          class="relative group transition-colors text-orange-300 hover:text-orangeLuxe space-y-4"
           aria-current="{{ 'page' if request.path == href else '' }}"
         >
           {{ label }}
-          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orangeLuxe transition-all group-hover:w-full"></span>
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orangeLuxe transition-all group-hover:w-full space-y-4"></span>
         </a>
       {% endfor %}
     </div>
@@ -34,22 +34,22 @@
     <!-- Mobile Toggle -->
     <button
       id="menuToggle"
-      class="md:hidden p-2 text-orange-400 focus:outline-none focus:ring-2 focus:ring-orangeLuxe rounded"
+      class="md:hidden p-2 text-orange-400 focus:outline-none focus:ring-2 focus:ring-orangeLuxe rounded space-y-4"
       aria-label="Open mobile menu"
     >
-      <i class="fa-solid fa-bars"></i>
+      <i class="fa-solid fa-bars space-y-4"></i>
     </button>
   </div>
 
   <!-- Mobile Menu -->
   <div
     id="mobileNav"
-    class="md:hidden mt-4 hidden flex-col space-y-4 px-2 text-orange-300"
+    class="md:hidden mt-4 hidden flex-col space-y-4 px-2 text-orange-300 space-y-4"
   >
     {% for label, href in nav_items %}
       <a
         href="{{ href }}"
-        class="block py-2 border-b border-orangeLuxe/20 hover:text-orangeLuxe transition"
+        class="block py-2 border-b border-orangeLuxe/20 hover:text-orangeLuxe transition space-y-4"
       >
         {{ label }}
       </a>

@@ -5,18 +5,18 @@
      class="fixed bottom-4 right-4 z-50 flex items-center space-x-2 rounded-lg shadow-xl
             bg-zinc-900/90 backdrop-blur-sm text-orange-400 text-xs sm:text-sm font-mono px-4 py-2"
      role="status" aria-live="polite" aria-label="HUD System Status">
-  <span>👻 Ghost Mode: <strong id="hudGhostStatus" class="text-white">…</strong></span>
-  <span class="hidden sm:inline">·</span>
-  <span>🔓 Admin: <strong id="hudAdminStatus" class="text-white">…</strong></span>
-  <span class="hidden sm:inline">·</span>
-  <span>🛰️ Feed: <strong id="hudFeedStatus" class="text-emerald-400">…</strong></span>
-  <span class="hidden sm:inline">·</span>
+  <span>👻 Ghost Mode: <strong id="hudGhostStatus" class="text-white space-y-4">…</strong></span>
+  <span class="hidden sm:inline space-y-4">·</span>
+  <span>🔓 Admin: <strong id="hudAdminStatus" class="text-white space-y-4">…</strong></span>
+  <span class="hidden sm:inline space-y-4">·</span>
+  <span>🛰️ Feed: <strong id="hudFeedStatus" class="text-emerald-400 space-y-4">…</strong></span>
+  <span class="hidden sm:inline space-y-4">·</span>
   <span>Vault: <strong>{{ vault_xp_percentage }}%</strong></span>
 </div>
 
 <!-- 📈 XP Bar -->
-<div id="vaultXpBar" class="fixed top-0 left-0 right-0 z-50 h-1 bg-black/30 backdrop-blur-sm">
-  <div class="h-full bg-gradient-to-r from-orange-400 to-emeraldLuxe transition-all duration-700 ease-out"
+<div id="vaultXpBar" class="fixed top-0 left-0 right-0 z-50 h-1 bg-black/30 backdrop-blur-sm space-y-4">
+  <div class="h-full bg-gradient-to-r from-orange-400 to-emeraldLuxe transition-all duration-700 ease-out space-y-4"
        style="width: {{ vault_xp_percentage }}%"></div>
 </div>
 

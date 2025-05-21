@@ -4,7 +4,7 @@
   {'slug':'demo-3','title':'Demo Report 3','summary':'Lorem ipsum dolor sit amet consectetur adipisicing elit.','tags':['misconfiguration','race']},
 ] %}
 
-<section
+<section role="region" data-aos="fade-up"
   id="featured"
   aria-labelledby="featured-heading"
   class="section-container py-20 px-4 sm:px-6 lg:px-8
@@ -20,14 +20,14 @@
   ></div>
 
   <!-- Header -->
-  <header class="relative z-10 text-center mb-14 space-y-4">
+  <header class="relative z-10 text-center mb-14 space-y-4 space-y-4">
     <h2
       id="featured-heading"
-      class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent animate-pulse-glow"
+      class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent animate-pulse-glow space-y-4"
     >
       🧠 Featured Vault Reports
     </h2>
-    <p class="max-w-2xl mx-auto text-sm sm:text-base font-mono text-orangeLuxe-light/80">
+    <p class="max-w-2xl mx-auto text-sm sm:text-base font-mono text-orangeLuxe-light/80 space-y-4">
       Hand-picked exploits, rare bugs & security artforms — straight from the archive.
     </p>
   </header>
@@ -35,36 +35,36 @@
   <!-- Report Cards Grid -->
   <ul
     id="featuredGrid"
-    class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+    class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 space-y-4"
     role="list"
   >
     {% for r in reports %}
     <li>
       <a href="{{ url_for('views.report_detail', slug=r.slug) }}"
-         class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-xl"
+         class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-xl space-y-4"
       >
         <article class="tiltCard h-full overflow-hidden p-0 rounded-xl border border-orangeLuxe/20
                         bg-gradient-to-br from-cyberNightGlow to-zinc-900/90
                         shadow-md group-hover:shadow-orangeLuxe/40 transition-shadow duration-300"
                  data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
-          <div class="relative h-40">
+          <div class="relative h-40 space-y-4">
             <img
               src="{{ url_for('static', filename='images/og/' ~ r.slug ~ '.png') }}"
               alt="{{ r.title }}"
               loading="lazy"
-              class="w-full h-full object-cover shimmer group-hover:scale-105 transition-transform duration-500 ease-out"
+              class="w-full h-full object-cover shimmer group-hover:scale-105 transition-transform duration-500 ease-out space-y-4"
             />
           </div>
-          <div class="p-6 space-y-2">
-            <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors">
+          <div class="p-6 space-y-2 space-y-4">
+            <h3 class="text-xl font-semibold mb-2" class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors space-y-4">
               {{ r.title }}
             </h3>
-            <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
+            <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3 space-y-4">
               {{ r.summary }}
             </p>
-            <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+            <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold space-y-4">
               {% for tag in r.tags[:4] %}
-              <span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">
+              <span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full space-y-4">
                 #{{ tag }}
               </span>
               {% endfor %}

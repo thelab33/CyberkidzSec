@@ -13,31 +13,31 @@ function makeTiltCard(report, tagLimit = 4) {
   const tagCap = window.innerWidth < 640 ? 2 : tagLimit;
 
   li.innerHTML = `
-    <a href="/reports/${report.slug}" role="link" aria-label="View ${report.title}" class="group block rounded-2xl focus-visible:ring-2 focus-visible:ring-orangeLuxe transition-transform duration-300">
+    <a href="/reports/${report.slug}" role="link" aria-label="View ${report.title}" class="group block rounded-2xl focus-visible:ring-2 focus-visible:ring-orangeLuxe transition-transform duration-300 space-y-4">
       <article class="tilt relative overflow-hidden rounded-2xl bg-gradient-to-br
                       from-cyberNightGlow via-cyberNight to-zinc-900/90
                       border border-orangeLuxe/20 shadow-lg group-hover:shadow-orangeLuxe/50
                       transition-all transform-gpu group-hover:scale-[1.02]">
 
         <!-- Hero Image -->
-        <figure class="relative h-40 overflow-hidden">
+        <figure class="relative h-40 overflow-hidden space-y-4">
           <img src="${imgSrc}" alt="${altText}" loading="lazy"
-               class="object-cover w-full h-full group-hover:scale-[1.08] transition-transform duration-500 ease-out" />
+               class="object-cover w-full h-full group-hover:scale-[1.08] transition-transform duration-500 ease-out space-y-4" />
         </figure>
 
         <!-- Card Body -->
-        <div class="p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">
+        <div class="p-6 space-y-3 space-y-4">
+          <h3 class="text-xl font-semibold mb-2" class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition space-y-4">
             ${report.title}
           </h3>
-          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3 space-y-4">
             ${report.summary || "⚠️ No summary available."}
           </p>
-          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold space-y-4">
             ${(report.tags || []).slice(0, tagCap).map(tag => `
-              <span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${tag}</span>
+              <span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full space-y-4">#${tag}</span>
             `).join("")}
-            ${report.tags?.length > tagCap ? `<span class="bg-orangeLuxe/20 px-2 py-0.5 rounded-full text-orangeLuxe-light">+${report.tags.length - tagCap}</span>` : ""}
+            ${report.tags?.length > tagCap ? `<span class="bg-orangeLuxe/20 px-2 py-0.5 rounded-full text-orangeLuxe-light">+${report.tags.length - tagCap}</span>` : " space-y-4"}
           </div>
         </div>
       </article>

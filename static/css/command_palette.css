@@ -1,0 +1,53 @@
+#forge-command-palette {
+  animation: fadeIn 0.18s cubic-bezier(.47,1.64,.41,.8);
+}
+#forge-command-palette .bg-zinc-900 {
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.65), 0 0 0 2px #f97316;
+  background: linear-gradient(135deg, #18181b 65%, #23272f 100%);
+  border: 1.5px solid rgba(251,146,60,0.18);
+  backdrop-filter: blur(9px) brightness(1.05);
+}
+#forge-command-palette input {
+  background: rgba(34, 34, 36, 0.93);
+  color: #ffd699;
+  border-bottom: 1px solid #fbbf24;
+  font-family: "Fira Mono", "JetBrains Mono", "ui-monospace", monospace;
+  letter-spacing: 0.02em;
+  outline: none !important;
+  transition: border 0.15s;
+}
+#forge-command-palette input:focus {
+  border-bottom: 2px solid #f97316;
+  background: rgba(36, 37, 41, 0.97);
+}
+#forge-command-palette ul {
+  max-height: 16rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+#forge-command-palette li {
+  font-family: "Fira Mono", "JetBrains Mono", "ui-monospace", monospace;
+  font-size: 1rem;
+  transition: background 0.18s, color 0.18s;
+  user-select: none;
+}
+#forge-command-palette li.bg-orangeLuxe\/20 {
+  background: linear-gradient(90deg, #fbbf24 0%, #fb923c 100%) !important;
+  color: #1e1e22 !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-left: 3px solid #f97316;
+  box-shadow: 0 2px 18px 0 rgba(251, 191, 36, 0.09);
+}
+#forge-command-palette li:hover:not(.bg-orangeLuxe\/20) {
+  background: rgba(253,186,116,0.07);
+  color: #fdba74;
+}
+#forge-command-palette .text-xs {
+  color: #fbbf24;
+  opacity: 0.66;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97);}
+  to   { opacity: 1; transform: none; }
+}

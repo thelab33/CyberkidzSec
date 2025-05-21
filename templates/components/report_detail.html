@@ -14,28 +14,28 @@
 {% endblock %}
 
 {% block content %}
-<article class="prose dark:prose-invert max-w-4xl mx-auto py-10 px-6 space-y-8" data-aos="fade-up">
+<article class="prose dark:prose-invert max-w-4xl mx-auto py-10 px-6 space-y-8" data-aos="fade-up space-y-4">
 
-  <h1 class="text-4xl font-extrabold">{{ report.title }}</h1>
+  <h1 class="text-4xl font-extrabold space-y-4">{{ report.title }}</h1>
 
-  <div class="flex flex-wrap gap-4 text-sm text-orangeLuxe-light/70 font-mono uppercase tracking-wide">
+  <div class="flex flex-wrap gap-4 text-sm text-orangeLuxe-light/70 font-mono uppercase tracking-wide space-y-4">
     <time datetime="{{ report.date }}">{{ report.date|datetimeformat }}</time>
     <span>{{ report.type }}</span>
     <span>CVSS {{ report.cvss }}</span>
   </div>
 
-  <div class="flex flex-wrap gap-2 my-4">
+  <div class="flex flex-wrap gap-2 my-4 space-y-4">
     {% for t in report.tags %}
       <a href="{{ url_for('views.reports_list') }}?tag={{ t }}"
-         class="badge hover:bg-orangeLuxe transition">{{ t }}</a>
+         class="badge hover:bg-orangeLuxe transition space-y-4">{{ t }}</a>
     {% endfor %}
   </div>
 
   {{ body_html|safe }}
 
   <!-- 🔬 Enhanced Report Chart -->
-  <section aria-labelledby="chart-section" class="mt-12">
-    <h2 id="chart-section" class="text-2xl font-semibold mb-4">Severity Breakdown</h2>
+  <section role="region" data-aos="fade-up" aria-labelledby="chart-section" class="mt-12" data-aos="fade-up" data-aos="fade-up" data-testid="report_detail space-y-4" >
+    <h2 class="text-2xl font-bold mb-4" id="chart-section" class="text-2xl font-semibold mb-4 space-y-4">Severity Breakdown</h2>
     {% include "components/report_chart.html" %}
   </section>
 

@@ -1,22 +1,22 @@
 <!-- 🤖 vault_copilot.html — Copilot Panel Forgemaster Edition -->
-<div id="copilot" class="fixed bottom-6 right-6 z-50 bg-zinc-900/90 backdrop-blur-lg border border-orangeLuxe px-4 py-4 rounded-2xl shadow-2xl w-80 hidden" role="dialog" aria-modal="true">
-  <h3 class="font-mono text-orangeLuxe-light text-sm mb-3">🤖 Vault Copilot</h3>
+<div id="copilot" class="fixed bottom-6 right-6 z-50 bg-zinc-900/90 backdrop-blur-lg border border-orangeLuxe px-4 py-4 rounded-2xl shadow-2xl w-80 hidden" role="dialog" aria-modal="true space-y-4">
+  <h3 class="text-xl font-semibold mb-2" class="font-mono text-orangeLuxe-light text-sm mb-3 space-y-4">🤖 Vault Copilot</h3>
 
   <textarea id="copilotInput" placeholder="Ask the Vault…" rows="3"
-            class="w-full resize-none p-2 rounded bg-zinc-800 text-white placeholder-zinc-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+            class="w-full resize-none p-2 rounded bg-zinc-800 text-white placeholder-zinc-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orangeLuxe space-y-4"
             aria-label="Copilot prompt input"></textarea>
 
-  <div class="mt-2 flex items-center justify-between gap-2">
-    <button id="copilotSubmit" class="btn btn--solid flex-1 py-2 text-sm">Submit</button>
-    <button id="copilotClear" class="btn btn--outline px-3 py-2 text-xs" title="Clear">✖</button>
+  <div class="mt-2 flex items-center justify-between gap-2 space-y-4">
+    <button id="copilotSubmit" class="btn btn--solid flex-1 py-2 text-sm space-y-4">Submit</button>
+    <button id="copilotClear" class="btn btn--outline px-3 py-2 text-xs" title="Clear space-y-4">✖</button>
   </div>
 
-  <pre id="copilotResponse" class="mt-3 text-xs text-emeraldLuxe font-mono whitespace-pre-wrap max-h-48 overflow-y-auto custom-scrollbar" aria-live="polite"></pre>
+  <pre id="copilotResponse" class="mt-3 text-xs text-emeraldLuxe font-mono whitespace-pre-wrap max-h-48 overflow-y-auto custom-scrollbar" aria-live="polite space-y-4"></pre>
 </div>
 
 <!-- 🧠 Copilot Toggle Button -->
 <button id="copilotToggle"
-        class="fixed bottom-6 right-6 z-40 btn btn--outline rounded-full p-3 shadow-xl hover:scale-105 transition-transform"
+        class="fixed bottom-6 right-6 z-40 btn btn--outline rounded-full p-3 shadow-xl hover:scale-105 transition-transform space-y-4"
         aria-label="Toggle Vault Copilot">
   🧠
 </button>

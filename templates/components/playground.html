@@ -3,29 +3,29 @@
 {% block title %}Playground · CyberKidzSec{% endblock %}
 
 {% block content %}
-<section id="playgroundSection" class="ckz-hero min-h-screen flex flex-col justify-center items-center text-center gap-8 px-6" data-aos="fade-up"">
+<section role="region" data-aos="fade-up" id="playgroundSection" class="ckz-hero min-h-screen flex flex-col justify-center items-center text-center gap-8 px-6" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="playground space-y-4" >
 
   <!-- ✨ Title -->
-  <h1 class="ckz-hero-title animate-glow text-4xl sm:text-5xl font-extrabold">
+  <h1 class="ckz-hero-title animate-glow text-4xl sm:text-5xl font-extrabold space-y-4">
     Hacker Playground 👾
   </h1>
 
-  <p class="text-orange-300 font-mono text-sm">
+  <p class="text-orange-300 font-mono text-sm space-y-4">
     "Only the curious survive the Vault."
   </p>
 
   <!-- 💻 Hacker Terminal -->
-  <div id="terminalBox" class="w-full max-w-2xl bg-black rounded-lg p-6 border border-orange-500 text-green-400 font-mono text-sm text-left shadow-xl overflow-y-auto h-[400px] relative">
-    <div id="terminalOutput" class="whitespace-pre-wrap"></div>
-    <div class="flex items-center">
-      <span class="text-green-400">$</span>
+  <div id="terminalBox" class="w-full max-w-2xl bg-black rounded-lg p-6 border border-orange-500 text-green-400 font-mono text-sm text-left shadow-xl overflow-y-auto h-[400px] relative space-y-4">
+    <div id="terminalOutput" class="whitespace-pre-wrap space-y-4"></div>
+    <div class="flex items-center space-y-4">
+      <span class="text-green-400 space-y-4">$</span>
       <input id="terminalInput" type="text" autocomplete="off"
-             class="flex-1 bg-transparent outline-none text-green-400 pl-2 caret-green-400" />
+             class="flex-1 bg-transparent outline-none text-green-400 pl-2 caret-green-400 space-y-4" />
     </div>
   </div>
 
   <!-- 🛰️ Return Button -->
-  <a href="/" class="btn btn--secondary mt-10">
+  <a href="/" class="btn btn--secondary mt-10 space-y-4">
     🛰️ Return to Base
   </a>
 

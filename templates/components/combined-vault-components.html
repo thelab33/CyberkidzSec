@@ -6,7 +6,7 @@
          shadow-[0_0_20px_rgba(249,115,22,0.5)] opacity-0 translate-y-6
          transition-all duration-300 pointer-events-none"
 >
-  <i class="fas fa-rocket animate-bounce-slow"></i>
+  <i class="fas fa-rocket animate-bounce-slow space-y-4"></i>
 </button>
 
 <script>
@@ -32,67 +32,67 @@
 </script>
 
 <!-- components/footer.html -->
-<footer class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden">
+<footer class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden space-y-4">
   <!-- animated aurora ribbon -->
-  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite]"></div>
+  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite] space-y-4"></div>
 
   <!-- subtle noise texture -->
-  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay"></div>
+  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay space-y-4"></div>
 
-  <div class="relative z-10 max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 xl:grid-cols-4" data-aos="fade-up"">
+  <div class="relative z-10 max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 xl:grid-cols-4" data-aos="fade-up" space-y-4">
     <!-- Brand + quote -->
     <div>
-      <p class="text-xs tracking-widest text-orange-400 font-bold select-none">CYBERKIDZSEC&nbsp;VAULT</p>
-      <p class="mt-1 text-orangeLuxe-light">© {{ current_year }} CyberKidzSec</p>
-      <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[14rem]">“Ghosted&nbsp;but&nbsp;not&nbsp;gone.”</p>
+      <p class="text-xs tracking-widest text-orange-400 font-bold select-none space-y-4">CYBERKIDZSEC&nbsp;VAULT</p>
+      <p class="mt-1 text-orangeLuxe-light space-y-4">© {{ current_year }} CyberKidzSec</p>
+      <p class="mt-4 italic text-orangeLuxe-light/80 max-w-[14rem] space-y-4">“Ghosted&nbsp;but&nbsp;not&nbsp;gone.”</p>
     </div>
 
     <!-- Quick nav -->
-    <nav class="flex flex-col gap-2 text-orange-300">
+    <nav class="flex flex-col gap-2 text-orange-300 space-y-4">
       {% set nav = [("Home","/"),("About","/about"),("Reports","/reports"),("Playground","/playground"),("Analytics","/charts")] %}
       {% for label, href in nav %}
-        <a href="{{ href }}" class="w-max hover:text-orangeLuxe transition">{{ label }}</a>
+        <a href="{{ href }}" class="w-max hover:text-orangeLuxe transition space-y-4">{{ label }}</a>
       {% endfor %}
     </nav>
 
     <!-- Latest CVE count (placeholder updated by JS) -->
-    <div class="space-y-3">
-      <p class="text-xs tracking-wide text-orange-300/80">🛰️ Latest CVEs (24h)</p>
-      <p id="cveCounter" class="text-3xl font-black text-orangeLuxe-light animate-pulse">--</p>
-      <a href="/charts" class="btn-secondary w-max text-xs">View analytics →</a>
+    <div class="space-y-3 space-y-4">
+      <p class="text-xs tracking-wide text-orange-300/80 space-y-4">🛰️ Latest CVEs (24h)</p>
+      <p id="cveCounter" class="text-3xl font-black text-orangeLuxe-light animate-pulse space-y-4">--</p>
+      <a href="/charts" class="btn-secondary w-max text-xs space-y-4">View analytics →</a>
     </div>
 
     <!-- Newsletter & socials -->
-    <div class="space-y-4">
+    <div class="space-y-4 space-y-4">
       <!-- newsletter form -->
       <form action="https://buttondown.email/api/emails/embed-subscribe/cyberkidzsec" method="post" target="popupwindow"
-            class="flex gap-2"
+            class="flex gap-2 space-y-4"
             onsubmit="window.open('https://buttondown.email/cyberkidzsec','popupwindow')">
         <input required type="email" name="email" placeholder="your@domain.tld"
-               class="flex-1 rounded-md bg-zinc-800 border border-orangeLuxe/40 px-3 py-2 text-xs placeholder-orangeLuxe-light focus:outline-none" />
-        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orangeLuxe-dark" aria-label="Subscribe to newsletter">Join</button>
+               class="flex-1 rounded-md bg-zinc-800 border border-orangeLuxe/40 px-3 py-2 text-xs placeholder-orangeLuxe-light focus:outline-none space-y-4" />
+        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orangeLuxe-dark" aria-label="Subscribe to newsletter space-y-4">Join</button>
       </form>
 
       <!-- social icons -->
-      <div class="flex gap-4 text-xl text-orange-400">
-        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub repository" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github"></i></a>
-        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn profile" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug"></i></a>
+      <div class="flex gap-4 text-xl text-orange-400 space-y-4">
+        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub repository" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github space-y-4"></i></a>
+        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn profile" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin space-y-4"></i></a>
+        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug space-y-4"></i></a>
       </div>
 
       <!-- theme toggle -->
-      <button id="themeToggler" class="mt-3 inline-flex items-center gap-2 text-xs btn-secondary">
-        <i class="fa-solid fa-circle-half-stroke"></i> Toggle&nbsp;Theme
+      <button id="themeToggler" class="mt-3 inline-flex items-center gap-2 text-xs btn-secondary space-y-4">
+        <i class="fa-solid fa-circle-half-stroke space-y-4"></i> Toggle&nbsp;Theme
       </button>
     </div>
   </div>
 
   <!-- Vault XP Bar -->
-  <div class="micro-xp-bar mt-8 max-w-6xl mx-auto">
-    <div class="vault-xp-bar w-full h-2 rounded bg-gray-800 overflow-hidden">
-      <div class="vault-xp-fill h-full" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(90deg, red, orange, yellow, green, cyan);"></div>
+  <div class="micro-xp-bar mt-8 max-w-6xl mx-auto space-y-4">
+    <div class="vault-xp-bar w-full h-2 rounded bg-gray-800 overflow-hidden space-y-4">
+      <div class="vault-xp-fill h-full" style="width: {{ vault_xp_percentage }}%; background: linear-gradient(90deg, red, orange, yellow, green, cyan); space-y-4"></div>
     </div>
-    <p class="vault-xp-text text-center text-xs text-orange-400 mt-2">Vault Stability: {{ vault_xp_percentage }}%</p>
+    <p class="vault-xp-text text-center text-xs text-orange-400 mt-2 space-y-4">Vault Stability: {{ vault_xp_percentage }}%</p>
   </div>
 </footer>
 
@@ -120,27 +120,27 @@ fetch("/api/cve").then(r => r.json()).then(list => {
 {% block title %}Playground · CyberKidzSec{% endblock %}
 
 {% block content %}
-<section class="ckz-hero" data-aos="fade-up"">
-  <div class="max-w-3xl mx-auto flex flex-col items-center justify-center gap-6 text-center">
+<section role="region" data-aos="fade-up" class="ckz-hero" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+  <div class="max-w-3xl mx-auto flex flex-col items-center justify-center gap-6 text-center space-y-4">
 
-    <h1 class="ckz-hero-title">
+    <h1 class="ckz-hero-title space-y-4">
       Hacker Playground 👾
     </h1>
 
-    <p class="text-orange-300 font-mono text-sm">
+    <p class="text-orange-300 font-mono text-sm space-y-4">
       "Only the curious survive the Vault."
     </p>
 
-    <div class="mt-10 space-y-6">
-      <p class="text-orange-200">
+    <div class="mt-10 space-y-6 space-y-4">
+      <p class="text-orange-200 space-y-4">
         🧠 <strong>Challenge #1:</strong> Find the hidden flag in the source code of this page.
       </p>
-      <p class="text-orange-400 text-xs">
+      <p class="text-orange-400 text-xs space-y-4">
         Tip: Right-click → View Page Source 👀
       </p>
     </div>
 
-    <a href="/" class="btn-secondary mt-8">
+    <a href="/" class="btn-secondary mt-8 space-y-4">
       Return to Base 🛰️
     </a>
 
@@ -161,7 +161,7 @@ const LIST = window.FILTERED_REPORTS || [];
 
 const wrap = document.getElementById("dynamicGrid");
 if(!LIST.length){
-  wrap.innerHTML = `<p class="text-center text-orangeLuxe-light/60 py-12 text-sm font-mono">
+  wrap.innerHTML = `<p class="text-center text-orangeLuxe-light/60 py-12 text-sm font-mono space-y-4">
                      ⚠️ No reports match your filters. Try adjusting tags or sort order.
                     </p>`;
 } else {
@@ -171,16 +171,16 @@ if(!LIST.length){
     a.href=`/reports/${r.slug}`;
     a.className=`group card transition-transform`;
     a.innerHTML=`
-      <h3 class="text-lg font-bold mb-1 text-orangeLuxe-light group-hover:text-orangeLuxe transition">${r.title}</h3>
-      <time datetime="${r.date}" class="block text-xs font-mono text-orangeLuxe-light/60 mb-2">
+      <h3 class="text-xl font-semibold mb-2" class="text-lg font-bold mb-1 text-orangeLuxe-light group-hover:text-orangeLuxe transition space-y-4">${r.title}</h3>
+      <time datetime="${r.date}" class="block text-xs font-mono text-orangeLuxe-light/60 mb-2 space-y-4">
         ${new Date(r.date).toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"})}
       </time>
-      <p class="text-sm text-orangeLuxe-light/80 font-mono mb-4 line-clamp-3">${r.summary||"No summary provided."}</p>
-      <div class="flex justify-between items-center">
-        <span class="text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+      <p class="text-sm text-orangeLuxe-light/80 font-mono mb-4 line-clamp-3">${r.summary||"No summary provided. space-y-4"}</p>
+      <div class="flex justify-between items-center space-y-4">
+        <span class="text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)} space-y-4">
           CVSS ${typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A"}
         </span>
-        <span class="text-xs uppercase font-semibold tracking-wider text-orangeLuxe-light/70">${r.reportType}</span>
+        <span class="text-xs uppercase font-semibold tracking-wider text-orangeLuxe-light/70 space-y-4">${r.reportType}</span>
       </div>`;
     wrap.appendChild(a);
   });
@@ -191,19 +191,19 @@ function cvssColor(v){
 }
 </script>
 
-<header class="ckz-header">
-  <div class="flex items-center">
-    <a href="/" class="text-lg font-bold text-orange-400 hover:text-orange-300 transition">
+<header class="ckz-header space-y-4">
+  <div class="flex items-center space-y-4">
+    <a href="/" class="text-lg font-bold text-orange-400 hover:text-orange-300 transition space-y-4">
       CyberKidzSec ⚡ Vault
     </a>
   </div>
-  <div class="ckz-ghost-badge">LIVE</div>
+  <div class="ckz-ghost-badge space-y-4">LIVE</div>
 </header>
 
 <!-- breadcrumbs.html -->
 <nav
   id="breadcrumbs"
-  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light"
+  class="overflow-x-auto no-scrollbar text-sm font-mono text-orangeLuxe-light space-y-4"
   aria-label="Breadcrumb"
   itemScope
   itemType="https://schema.org/BreadcrumbList"
@@ -274,15 +274,15 @@ renderBreadcrumbs([
 </script>
 
 <!-- hacker_playground.html -->
-<section
+<section role="region" data-aos="fade-up"
   id="playground"
   class="relative mx-auto my-24 max-w-3xl px-6 py-12 rounded-2xl border border-orangeLuxe/40
          bg-gradient-to-b from-cyberNight to-black shadow-xl"
 >
-  <h2 class="text-center text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2">
+  <h2 class="text-2xl font-bold mb-4" class="text-center text-3xl sm:text-4xl font-extrabold text-orangeLuxe-light mb-2 space-y-4">
     🧠 Hacker Playground
   </h2>
-  <p class="text-center text-orangeLuxe-light/80 mb-10 font-mono text-sm">
+  <p class="text-center text-orangeLuxe-light/80 mb-10 font-mono text-sm space-y-4">
     Think you’ve got what it takes? Hack the vault – only the curious survive.
   </p>
 
@@ -292,12 +292,12 @@ renderBreadcrumbs([
            rounded-full font-semibold shadow-lg focus:ring-2 focus:ring-orange-400 transition">
     Hack Me 🔓
   </button>
-  <pre id="flagOut" class="hidden mt-4 text-center text-emerald-400 font-mono text-sm break-all"></pre>
+  <pre id="flagOut" class="hidden mt-4 text-center text-emerald-400 font-mono text-sm break-all space-y-4"></pre>
 
   <!-- Terminal scan -->
-  <div class="mt-16">
-    <h3 class="text-orangeLuxe text-lg font-semibold mb-3">🛰️ Terminal-Scan™ Interface</h3>
-    <form id="scanForm" class="flex flex-col sm:flex-row gap-3">
+  <div class="mt-16 space-y-4">
+    <h3 class="text-xl font-semibold mb-2" class="text-orangeLuxe text-lg font-semibold mb-3 space-y-4">🛰️ Terminal-Scan™ Interface</h3>
+    <form id="scanForm" class="flex flex-col sm:flex-row gap-3 space-y-4">
       <input id="scanInput" type="text"
         placeholder="> scan /api/dev/console …"
         class="flex-1 font-mono bg-black/80 rounded border border-orangeLuxe/40
@@ -308,7 +308,7 @@ renderBreadcrumbs([
         Run Scan 🛰️
       </button>
     </form>
-    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light"></pre>
+    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light space-y-4"></pre>
   </div>
 
   <!-- ghost flag -->
@@ -316,7 +316,7 @@ renderBreadcrumbs([
         border border-orangeLuxe/40 shadow-lg animate-pulse-glow"></div>
 
   <!-- returnee easter-egg -->
-  <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60">
+  <p id="returnEgg" class="hidden absolute -top-5 right-4 text-[10px] font-mono text-orangeLuxe-light/60 space-y-4">
     welcome back, operative
   </p>
 </section>
@@ -369,13 +369,13 @@ window.addEventListener("keydown", (e)=>{
 
 <!-- quick_view_modal.html -->
 <template id="quickViewTpl">
-  <div class="fixed inset-0 z-[9999] overflow-y-auto" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 z-[9999] overflow-y-auto" role="dialog" aria-modal="true space-y-4">
     <!-- overlay -->
-    <div class="fixed inset-0 bg-black/70 backdrop-blur-md" data-close></div>
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-md space-y-4" data-close></div>
 
     <!-- centering helper -->
-    <div class="min-h-screen px-4 text-center">
-      <span class="inline-block h-screen align-middle" aria-hidden="true"></span>
+    <div class="min-h-screen px-4 text-center space-y-4">
+      <span class="inline-block h-screen align-middle" aria-hidden="true space-y-4"></span>
       <!-- panel -->
       <div
         class="inline-block w-full max-w-2xl my-8 p-6 sm:p-8 align-middle
@@ -383,23 +383,23 @@ window.addEventListener("keydown", (e)=>{
                bg-gradient-to-br from-cyberNight via-cyberNight.glow to-cyberNight.phantom
                shadow-[0_0_35px_rgba(249,115,22,0.3)]"
       >
-        <h2 id="qvTitle" class="text-2xl sm:text-3xl font-extrabold text-orangeLuxe-light mb-4">
+        <h2 class="text-2xl font-bold mb-4" id="qvTitle" class="text-2xl sm:text-3xl font-extrabold text-orangeLuxe-light mb-4 space-y-4">
           Report Preview
         </h2>
 
-        <div id="qvBody" class="space-y-5 text-sm leading-relaxed font-mono"></div>
+        <div id="qvBody" class="space-y-5 text-sm leading-relaxed font-mono space-y-4"></div>
 
         <!-- footer -->
-        <div class="mt-8 flex justify-between items-center">
-          <a id="qvFullLink" href="#" class="text-sm font-semibold text-orangeLuxe hover:underline">
+        <div class="mt-8 flex justify-between items-center space-y-4">
+          <a id="qvFullLink" href="#" class="text-sm font-semibold text-orangeLuxe hover:underline space-y-4">
             View Full Report →
           </a>
 
-          <div class="flex gap-3">
-            <button id="qvPrev" class="navBtn hidden" aria-label="Previous report">← Prev</button>
-            <button id="qvNext" class="navBtn hidden" aria-label="Next report">Next →</button>
+          <div class="flex gap-3 space-y-4">
+            <button id="qvPrev" class="navBtn hidden" aria-label="Previous report space-y-4">← Prev</button>
+            <button id="qvNext" class="navBtn hidden" aria-label="Next report space-y-4">Next →</button>
             <button data-close
-              class="rounded-md bg-orangeLuxe px-4 py-2 text-sm font-semibold text-black hover:bg-orangeLuxe.dark">
+              class="rounded-md bg-orangeLuxe px-4 py-2 text-sm font-semibold text-black hover:bg-orangeLuxe.dark space-y-4">
               Close
             </button>
           </div>
@@ -423,14 +423,14 @@ window.addEventListener("keydown", (e)=>{
     document.getElementById("qvTitle").textContent = report.title || "Report Preview";
     document.getElementById("qvBody").innerHTML =
       `<p>${report.description || "⚠️ No description available."}</p>` +
-      `<div class="grid sm:grid-cols-2 gap-4 mt-4" data-aos="fade-up"">
+      `<div class="grid sm:grid-cols-2 gap-4 mt-4" data-aos="fade-up" space-y-4">
         ${report.date ? `<div><b>📅 Date:</b> ${new Date(report.date).toLocaleDateString()}</div>` : ""}
         ${report.severity ? `<div><b>🧪 Severity:</b> ${report.severity}</div>` : ""}
         <div><b>📈 CVSS:</b> ${typeof report.cvss === "number" ? report.cvss.toFixed(1) : "N/A"}</div>
         ${
           report.tags?.length
-            ? `<div class="col-span-2 flex flex-wrap gap-2"><b class="mr-2">🏷️ Tags:</b>${report.tags
-                .map((t) => `<span class="bg-orangeLuxe/10 px-2 py-0.5 rounded">${t}</span>`)
+            ? `<div class="col-span-2 flex flex-wrap gap-2"><b class="mr-2 space-y-4">🏷️ Tags:</b>${report.tags
+                .map((t) => `<span class="bg-orangeLuxe/10 px-2 py-0.5 rounded space-y-4">${t}</span>`)
                 .join("")}</div>`
             : ""
         }
@@ -476,10 +476,10 @@ window.addEventListener("keydown", (e)=>{
 
 {# components/scroll_progress.html #}
 <div id="scrollProgress"
-     class="fixed inset-x-0 top-0 h-1 bg-orangeLuxe origin-left scale-x-0">
+     class="fixed inset-x-0 top-0 h-1 bg-orangeLuxe origin-left scale-x-0 space-y-4">
 </div>
 <!-- tag.html -->
-<span class="tagCmp"></span>
+<span class="tagCmp space-y-4"></span>
 
 <style>
 .tagCmp{
@@ -507,14 +507,14 @@ function makeTag(label, active=false, onClick=null){
 </script>
 
 <!-- command_palette.html -->
-<div id="cmdBackdrop" class="fixed inset-0 z-[9999] hidden backdrop-blur bg-black/60 p-4"></div>
+<div id="cmdBackdrop" class="fixed inset-0 z-[9999] hidden backdrop-blur bg-black/60 p-4 space-y-4"></div>
 
 <template id="cmdTpl">
-  <div class="mx-auto w-full max-w-2xl bg-night border border-orangeLuxe/40 rounded-xl shadow-xl overflow-hidden">
+  <div class="mx-auto w-full max-w-2xl bg-night border border-orangeLuxe/40 rounded-xl shadow-xl overflow-hidden space-y-4">
     <input id="cmdSearch" type="search" placeholder="Search vault reports…"
            class="w-full px-5 py-4 text-lg font-mono bg-black text-orangeLuxe-light
                   border-b border-orangeLuxe/30 placeholder:text-orangeLuxe-light/60 outline-none" />
-    <div id="cmdResults" class="max-h-80 overflow-y-auto"></div>
+    <div id="cmdResults" class="max-h-80 overflow-y-auto space-y-4"></div>
   </div>
 </template>
 
@@ -563,13 +563,13 @@ function close(){
 /* ---- render helpers ---- */
 function render(arr){
   list.innerHTML=""; rows=[];
-  if(!arr.length){ list.innerHTML='<div class="cmdSection">Nothing found</div>'; return;}
-  list.insertAdjacentHTML("beforeend",'<div class="cmdSection">Reports</div>');
+  if(!arr.length){ list.innerHTML='<div class="cmdSection space-y-4">Nothing found</div>'; return;}
+  list.insertAdjacentHTML("beforeend",'<div class="cmdSection space-y-4">Reports</div>');
   arr.forEach((r,i)=>{
     const div=document.createElement("div");
     div.className="cmdRow"; div.dataset.active="false"; div.tabIndex=-1;
-    div.innerHTML=`<div class="text-sm font-semibold">${r.title}</div>
-                   <div class="text-xs opacity-70">CVSS ${r.cvss} • ${r.type}</div>`;
+    div.innerHTML=`<div class="text-sm font-semibold space-y-4">${r.title}</div>
+                   <div class="text-xs opacity-70 space-y-4">CVSS ${r.cvss} • ${r.type}</div>`;
     div.onclick=()=>location.href=`/reports/${r.slug}`;
     list.appendChild(div); rows.push(div);
   });
@@ -601,40 +601,40 @@ document.addEventListener("input",e=>{
 
 {# templates/components/header.html #}
 <header id="siteHeader"
-        class="site-header will-change-transform backdrop-blur-md bg-zinc-900/70 dark:bg-zinc-800/70 border-b border-orangeLuxe/30 fixed inset-x-0 top-0 z-50 transition-transform"
+        class="site-header will-change-transform backdrop-blur-md bg-zinc-900/70 dark:bg-zinc-800/70 border-b border-orangeLuxe/30 fixed inset-x-0 top-0 z-50 transition-transform space-y-4"
         role="banner"
         aria-label="Main Site Header">
 
-  <div class="container mx-auto flex items-center justify-between px-6 py-4">
+  <div class="container mx-auto flex items-center justify-between px-6 py-4 space-y-4">
     <!-- Brand Logo & Title -->
     <a href="/"
-       class="inline-flex items-center gap-2 text-2xl font-extrabold tracking-wider text-orangeLuxe hover:text-orangeLuxe-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe transition"
+       class="inline-flex items-center gap-2 text-2xl font-extrabold tracking-wider text-orangeLuxe hover:text-orangeLuxe-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe transition space-y-4"
        aria-label="CYBERKIDZSEC Vault Home">
-      <svg class="h-8 w-8 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <svg class="h-8 w-8 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true space-y-4">
         <path d="M12 2L2 7v7c0 5 4 9 10 9s10-4 10-9V7l-10-5z" />
       </svg>
-      <span class="hidden sm:inline">CYBERKIDZSEC VAULT</span>
+      <span class="hidden sm:inline space-y-4">CYBERKIDZSEC VAULT</span>
     </a>
 
     <!-- Desktop Controls -->
-    <div class="hidden lg:flex items-center space-x-5">
-      <span class="vault-status relative px-3 py-1 text-xs font-mono text-orange-300 rounded-full bg-zinc-800/40">
+    <div class="hidden lg:flex items-center space-x-5 space-y-4">
+      <span class="vault-status relative px-3 py-1 text-xs font-mono text-orange-300 rounded-full bg-zinc-800/40 space-y-4">
         📡 Vault: LIVE
       </span>
-      <kbd class="px-2 py-1 font-mono text-xs rounded border border-zinc-700 bg-zinc-800 text-orange-300">
+      <kbd class="px-2 py-1 font-mono text-xs rounded border border-zinc-700 bg-zinc-800 text-orange-300 space-y-4">
         ⌘ K
       </kbd>
       <button id="themeToggle"
-              class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition focus-visible:ring-2 focus-visible:ring-orangeLuxe"
+              class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition focus-visible:ring-2 focus-visible:ring-orangeLuxe space-y-4"
               aria-label="Toggle dark mode"
               data-action="toggle-dark-mode">
-        <span class="sr-only">Toggle dark mode</span>🌙
+        <span class="sr-only space-y-4">Toggle dark mode</span>🌙
       </button>
     </div>
 
     <!-- Mobile Menu Toggle -->
     <button id="menuToggle"
-            class="lg:hidden p-2 rounded-md text-2xl hover:bg-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orangeLuxe transition"
+            class="lg:hidden p-2 rounded-md text-2xl hover:bg-orange-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orangeLuxe transition space-y-4"
             aria-controls="mobileNav"
             aria-expanded="false"
             aria-label="Open mobile navigation">
@@ -643,11 +643,11 @@ document.addEventListener("input",e=>{
 
     <!-- Ghost Mode Badge -->
     <div id="ghostBadge"
-         class="hidden animate-pulse font-semibold text-emeraldLuxe text-xs ml-4"
+         class="hidden animate-pulse font-semibold text-emeraldLuxe text-xs ml-4 space-y-4"
          role="status"
          aria-live="polite">
-      <span class="inline-flex items-center gap-1">
-        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <span class="inline-flex items-center gap-1 space-y-4">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true space-y-4">
           <path d="M10 0C4.477 0 0 4.478 0 10s4.477 10 10 10 10-4.478 10-10S15.523 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
         </svg>
         Ghost Mode
@@ -657,21 +657,21 @@ document.addEventListener("input",e=>{
 
   <!-- Mobile Navigation Panel -->
   <nav id="mobileNav"
-       class="mobile-nav fixed inset-x-0 top-full transform -translate-y-full bg-black/90 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-all duration-300 lg:hidden z-40"
+       class="mobile-nav fixed inset-x-0 top-full transform -translate-y-full bg-black/90 backdrop-blur-lg p-6 space-y-4 text-lg font-semibold transition-all duration-300 lg:hidden z-40 space-y-4"
        role="navigation"
        aria-label="Mobile Navigation">
-    <ul class="flex flex-col gap-4">
-      <li><a href="/"        class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Home</a></li>
-      <li><a href="/reports" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Vault</a></li>
-      <li><a href="/playground" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Playground</a></li>
-      <li><a href="/academy" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Ghost Academy</a></li>
-      <li><a href="/dashboard" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition">Dashboard</a></li>
+    <ul class="flex flex-col gap-4 space-y-4">
+      <li><a href="/"        class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition space-y-4">Home</a></li>
+      <li><a href="/reports" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition space-y-4">Vault</a></li>
+      <li><a href="/playground" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition space-y-4">Playground</a></li>
+      <li><a href="/academy" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition space-y-4">Ghost Academy</a></li>
+      <li><a href="/dashboard" class="hover:text-orangeLuxe focus-visible:text-orangeLuxe transition space-y-4">Dashboard</a></li>
     </ul>
   </nav>
 
   <!-- Scroll Progress Indicator -->
   <div id="scrollProgress"
-       class="h-1 bg-orangeLuxe origin-left scale-x-0 transition-transform duration-150 ease-linear"
+       class="h-1 bg-orangeLuxe origin-left scale-x-0 transition-transform duration-150 ease-linear space-y-4"
        aria-hidden="true">
   </div>
 </header>
@@ -693,7 +693,7 @@ document.addEventListener("input",e=>{
 </script>
 
 <!-- related_reports.html -->
-<section id="relatedWrap" class="my-16" data-aos="fade-up""></section>
+<section role="region" data-aos="fade-up" id="relatedWrap" class="my-16" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up"></section data-testid="combined-vault-components space-y-4" >
 
 <script>
 /* expects window.ALL_REPORTS (array) & window.CURRENT_REPORT (slug) injected server-side */
@@ -713,18 +713,18 @@ const rel = CUR ? getRelated(CUR,3) : [];
 
 const wrap = document.getElementById("relatedWrap");
 wrap.innerHTML = `
-  <h2 class="text-2xl font-extrabold mb-6 tracking-tight text-orangeLuxe-light">🔗 Related Reports</h2>
+  <h2 class="text-2xl font-bold mb-4" class="text-2xl font-extrabold mb-6 tracking-tight text-orangeLuxe-light space-y-4">🔗 Related Reports</h2>
   ${
     !rel.length
-      ? `<p class="text-sm text-orangeLuxe-light/70">No directly-related reports found… yet 👀</p>`
-      : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up"">
+      ? `<p class="text-sm text-orangeLuxe-light/70 space-y-4">No directly-related reports found… yet 👀</p>`
+      : `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up" space-y-4">
           ${rel.map(r=>`
             <a href="/reports/${r.slug}"
                class="block group rounded-xl bg-night-glow/60 border border-orangeLuxe/20 p-5
                       hover:shadow-lg hover:border-orangeLuxe/40 transition">
-              <h3 class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2">${r.title}</h3>
-              <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3">${new Date(r.date).toLocaleDateString()}</p>
-              <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+              <h3 class="text-xl font-semibold mb-2" class="font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe mb-1 line-clamp-2 space-y-4">${r.title}</h3>
+              <p class="text-xs font-mono text-orangeLuxe-light/60 mb-3 space-y-4">${new Date(r.date).toLocaleDateString()}</p>
+              <span class="inline-block text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)} space-y-4">
                 CVSS ${(typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A")}
               </span>
             </a>`).join("")}
@@ -741,7 +741,7 @@ function cvssColor(v){
 </script>
 
 <!-- section_skeleton.html  (drop anywhere you need a loading placeholder) -->
-<div class="skeleton" data-lines="4"></div> <!-- change lines via data-lines -->
+<div class="skeleton" data-lines="4 space-y-4"></div> <!-- change lines via data-lines -->
 
 <style>
 @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
@@ -769,17 +769,17 @@ document.querySelectorAll(".skeleton").forEach(box=>{
 </script>
 
 <!-- tags_section.html -->
-<section class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection">
-  <h2 class="text-3xl sm:text-4xl font-extrabold text-center mb-8
+<section role="region" data-aos="fade-up" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+  <h2 class="text-2xl font-bold mb-4" class= space-y-4"text-3xl sm:text-4xl font-extrabold text-center mb-8
              bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
     🏷️ Browse by Tag
   </h2>
 
   <!-- horizontal rail -->
-  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory"></div>
+  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory space-y-4"></div>
 
   <!-- results grid -->
-  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up""></div>
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up" space-y-4"></div>
 </section>
 
 <script>
@@ -814,8 +814,8 @@ function render(){
   list.forEach(r=>{
     const el=document.createElement("article");
     el.className="p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNight.glow via-cyberNight to-zinc-900/80 shadow-lg";
-    el.innerHTML=`<h3 class="font-bold text-orangeLuxe-light">${r.title}</h3>
-      <p class="mt-1 text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary||"No summary."}</p>`;
+    el.innerHTML=`<h3 class="text-xl font-semibold mb-2" class="font-bold text-orangeLuxe-light space-y-4">${r.title}</h3>
+      <p class="mt-1 text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary||"No summary. space-y-4"}</p>`;
     grid.appendChild(el);
   });
   /* auto-scroll tag into view */
@@ -827,19 +827,19 @@ function render(){
 render();
 </script>
 
-<div class="grid md:grid-cols-2 gap-6 mt-12" data-aos="fade-up"">
+<div class="grid md:grid-cols-2 gap-6 mt-12" data-aos="fade-up" space-y-4">
   <!-- Ghost Academy -->
-  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition">
-    <h3 class="text-sm font-bold uppercase text-orange-300 mb-2">🎓 Join Ghost Academy</h3>
-    <p class="text-xs text-orange-400 mb-4">Sharpen your skills. Earn XP. Become a legend.</p>
-    <a href="/academy" class="btn-primary text-xs w-full">Enter Academy</a>
+  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition space-y-4">
+    <h3 class="text-xl font-semibold mb-2" class="text-sm font-bold uppercase text-orange-300 mb-2 space-y-4">🎓 Join Ghost Academy</h3>
+    <p class="text-xs text-orange-400 mb-4 space-y-4">Sharpen your skills. Earn XP. Become a legend.</p>
+    <a href="/academy" class="btn-primary text-xs w-full space-y-4">Enter Academy</a>
   </div>
 
   <!-- Operative Dashboard -->
-  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition">
-    <h3 class="text-sm font-bold uppercase text-orange-300 mb-2">🛰️ Operative Stats</h3>
-    <p class="text-xs text-orange-400 mb-4">Track your Vault Journey + XP growth.</p>
-    <a href="/dashboard" class="btn-primary text-xs w-full">Launch Dashboard</a>
+  <div class="rounded-lg bg-zinc-900 border border-orange-500/30 p-6 text-center shadow hover:shadow-orange-400/20 transition space-y-4">
+    <h3 class="text-xl font-semibold mb-2" class="text-sm font-bold uppercase text-orange-300 mb-2 space-y-4">🛰️ Operative Stats</h3>
+    <p class="text-xs text-orange-400 mb-4 space-y-4">Track your Vault Journey + XP growth.</p>
+    <a href="/dashboard" class="btn-primary text-xs w-full space-y-4">Launch Dashboard</a>
   </div>
 </div>
 
@@ -857,9 +857,9 @@ render();
   </a>
 
   <!-- desktop widgets -->
-  <div class="hidden lg:flex items-center gap-4">
-    <span class="text-sm font-mono text-orange-300">📡 Vault: LIVE</span>
-    <kbd class="px-2 py-1 font-mono text-xs bg-zinc-700 rounded">⌘ K</kbd>
+  <div class="hidden lg:flex items-center gap-4 space-y-4">
+    <span class="text-sm font-mono text-orange-300 space-y-4">📡 Vault: LIVE</span>
+    <kbd class="px-2 py-1 font-mono text-xs bg-zinc-700 rounded space-y-4">⌘ K</kbd>
     <button id="themeToggle"
             class="text-2xl rounded focus:outline-none
                    focus-visible:ring-2 focus-visible:ring-orange-200"
@@ -890,25 +890,25 @@ render();
 <nav id="mobileNav"
      class="lg:hidden fixed inset-x-0 top-14 bg-black/90 backdrop-blur p-6
             z-40 hidden">
-  <ul class="space-y-4 text-lg font-semibold">
-    <li><a href="/"        class="hover:text-orange-400">Home</a></li>
-    <li><a href="/reports" class="hover:text-orange-400">Vault</a></li>
-    <li><a href="/playground" class="hover:text-orange-400">Playground</a></li>
+  <ul class="space-y-4 text-lg font-semibold space-y-4">
+    <li><a href="/"        class="hover:text-orange-400 space-y-4">Home</a></li>
+    <li><a href="/reports" class="hover:text-orange-400 space-y-4">Vault</a></li>
+    <li><a href="/playground" class="hover:text-orange-400 space-y-4">Playground</a></li>
   </ul>
 </nav>
 
 <!-- scroll progress bar -->
 <div id="scrollProgress"
-     class="fixed inset-x-0 top-0 h-1 bg-orange-500 origin-left scale-x-0">
+     class="fixed inset-x-0 top-0 h-1 bg-orange-500 origin-left scale-x-0 space-y-4">
 </div>
 
 <!-- report_card_grid.html -->
-<section class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap">
-  <h2 class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange">
+<section role="region" data-aos="fade-up" class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+  <h2 class="text-2xl font-bold mb-4" class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange space-y-4">
     🧠 Featured Vulnerability Reports
   </h2>
 
-  <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" data-aos="fade-up""></div>
+  <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" data-aos="fade-up" space-y-4"></div>
 </section>
 
 <script>
@@ -927,17 +927,17 @@ function makeCard(r){
                   transition-transform hover:scale-[1.02] focus:ring-2
                   focus:ring-orangeLuxe-light`;
   el.innerHTML = `
-    <figure class="relative h-44 w-full overflow-hidden">
+    <figure class="relative h-44 w-full overflow-hidden space-y-4">
       <img src="https://cdn.example.com/thumbnails/${r.slug}.jpg" alt=""
-           class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" loading="lazy">
+           class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" loading="lazy space-y-4">
     </figure>
-    <div class="p-6 space-y-3">
-      <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">${r.title}</h3>
-      <p class="text-xs text-orangeLuxe-light/60 font-mono">${new Date(r.date).toLocaleDateString()} • ${r.reportType}</p>
-      <div class="flex flex-wrap gap-2">${r.tags.slice(0,3).map(t=>`<span class="badge">${t}</span>`).join("")}
-        ${r.tags.length>3?`<span class="badge">+${r.tags.length-3}</span>`:""}
+    <div class="p-6 space-y-3 space-y-4">
+      <h3 class="text-xl font-semibold mb-2" class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition space-y-4">${r.title}</h3>
+      <p class="text-xs text-orangeLuxe-light/60 font-mono space-y-4">${new Date(r.date).toLocaleDateString()} • ${r.reportType}</p>
+      <div class="flex flex-wrap gap-2">${r.tags.slice(0,3).map(t=>`<span class="badge">${t}</span>`).join(" space-y-4")}
+        ${r.tags.length>3?`<span class="badge">+${r.tags.length-3}</span>`:" space-y-4"}
       </div>
-      <span class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}">
+      <span class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)} space-y-4">
         CVSS ${typeof r.cvss==="number"?r.cvss.toFixed(1):"N/A"}
       </span>
     </div>`;
@@ -950,21 +950,21 @@ function cvssColor(v){
 </script>
 
 <!-- templates/components/cta_cards.html -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up"">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up" space-y-4">
   <!-- 🎓 Ghost Academy Invite -->
   <div
     role="region" aria-labelledby="academy-title"
-    class="cta-card group"
+    class="cta-card group space-y-4"
   >
-    <h2 id="academy-title"
-        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-orangeLuxe transition-colors duration-300">
+    <h2 class="text-2xl font-bold mb-4" id="academy-title space-y-4"
+        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-orangeLuxe transition-colors duration-300 space-y-4">
       🎓 Join Ghost Academy
     </h2>
-    <p class="text-xs text-orange-400 mb-4">
+    <p class="text-xs text-orange-400 mb-4 space-y-4">
       Sharpen your skills. Earn XP. Become a legend.
     </p>
     <a href="/academy"
-       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-glow-orange transition-shadow duration-300">
+       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-glow-orange transition-shadow duration-300 space-y-4">
       Enter Academy
     </a>
   </div>
@@ -972,43 +972,43 @@ function cvssColor(v){
   <!-- 🛰️ Operative Dashboard Invite -->
   <div
     role="region" aria-labelledby="dashboard-title"
-    class="cta-card group"
+    class="cta-card group space-y-4"
   >
-    <h2 id="dashboard-title"
-        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-emeraldLuxe transition-colors duration-300">
+    <h2 class="text-2xl font-bold mb-4" id="dashboard-title space-y-4"
+        class="text-sm font-bold uppercase text-orange-300 mb-2 group-hover:text-emeraldLuxe transition-colors duration-300 space-y-4">
       🛰️ View Operative Stats
     </h2>
-    <p class="text-xs text-orange-400 mb-4">
+    <p class="text-xs text-orange-400 mb-4 space-y-4">
       Track your vault journey + XP history.
     </p>
     <a href="/dashboard"
-       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-hud-panel transition-shadow duration-300">
+       class="btn btn--primary btn--outline w-full text-xs group-hover:shadow-hud-panel transition-shadow duration-300 space-y-4">
       Launch Dashboard
     </a>
   </div>
 </div>
 
-<section id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"">
+<section role="region" data-aos="fade-up" id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
   {% set banners = [
     ('images/og/main_vault_banner.png', "Main Vault Banner"),
     ('images/og/hacker_underground_banner.png', "Hacker Underground Banner"),
     ('images/og/zero_day_archive_banner.png', "Zero-Day Archive Banner")
   ] %}
   {% for src, alt in banners %}
-  <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-orange-400/30 transition-all duration-300 group">
-    <img src="{{ url_for('static', filename=src) }}" alt="{{ alt }}" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
+  <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-orange-400/30 transition-all duration-300 group space-y-4">
+    <img src="{{ url_for('static', filename=src) }}" alt="{{ alt }}" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105 space-y-4">
   </div>
   {% endfor %}
 </section>
 
 <!-- empty_state.html -->
-<div id="emptyWrap" class="flex flex-col items-center justify-center py-24 text-center">
-  <div class="w-24 h-24 mb-4 opacity-60 animate-spin-slow">🙀</div>
-  <p class="text-lg text-orangeLuxe-light font-mono mb-4">
+<div id="emptyWrap" class="flex flex-col items-center justify-center py-24 text-center space-y-4">
+  <div class="w-24 h-24 mb-4 opacity-60 animate-spin-slow space-y-4">🙀</div>
+  <p class="text-lg text-orangeLuxe-light font-mono mb-4 space-y-4">
     Nothing to see here—try adjusting your filters.
   </p>
   <!-- toggle the reset button by adding data-reset -->
-  <button id="resetBtn" class="hidden px-4 py-1.5 rounded-full bg-orangeLuxe text-black font-semibold hover:bg-orangeLuxe.dark">
+  <button id="resetBtn" class="hidden px-4 py-1.5 rounded-full bg-orangeLuxe text-black font-semibold hover:bg-orangeLuxe.dark space-y-4">
     Reset filters
   </button>
 </div>
@@ -1032,49 +1032,49 @@ window.emptyState = {
 };
 </script>
 
-<section id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"">
+<section role="region" data-aos="fade-up" id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
 
   <!-- Ambient FX -->
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.04),transparent)]"></div>
-    <div class="absolute inset-0 bg-[url('/scanlines.svg')] bg-repeat animate-shimmer opacity-5"></div>
+  <div class="absolute inset-0 pointer-events-none space-y-4">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.04),transparent)] space-y-4"></div>
+    <div class="absolute inset-0 bg-[url('/scanlines.svg')] bg-repeat animate-shimmer opacity-5 space-y-4"></div>
   </div>
 
   <!-- Main Content -->
-  <div class="relative z-10 max-w-3xl mx-auto">
-    <p id="heroTyper" class="text-xs sm:text-sm uppercase font-mono tracking-widest text-orangeLuxe-light animate-typewriter mb-6"></p>
+  <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+    <p id="heroTyper" class="text-xs sm:text-sm uppercase font-mono tracking-widest text-orangeLuxe-light animate-typewriter mb-6 space-y-4"></p>
 
-    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 bg-clip-text text-transparent drop-shadow-xl animate-glow mb-4">
+    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-300 bg-clip-text text-transparent drop-shadow-xl animate-glow mb-4 space-y-4">
       💀 CYBERKIDZSEC REPORT VAULT
     </h1>
 
-    <p class="text-lg sm:text-xl font-mono tracking-tight text-orangeLuxe-light mb-8">
-      “Ghosted but not gone.” — <span class="text-orangeLuxe font-semibold">cyberkidzsec</span>
+    <p class="text-lg sm:text-xl font-mono tracking-tight text-orangeLuxe-light mb-8 space-y-4">
+      “Ghosted but not gone.” — <span class="text-orangeLuxe font-semibold space-y-4">cyberkidzsec</span>
     </p>
 
     <!-- Operative -->
-    <div class="space-y-2 mb-8">
-      <p class="text-xs sm:text-sm animate-glow">🛰️ Operative Title: <strong>{{ operative_title }}</strong></p>
-      <div class="w-full bg-zinc-800 rounded-full overflow-hidden h-3">
-        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}%"></div>
+    <div class="space-y-2 mb-8 space-y-4">
+      <p class="text-xs sm:text-sm animate-glow space-y-4">🛰️ Operative Title: <strong>{{ operative_title }}</strong></p>
+      <div class="w-full bg-zinc-800 rounded-full overflow-hidden h-3 space-y-4">
+        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}% space-y-4"></div>
       </div>
-      <p class="text-xs text-center text-orangeLuxe-light mt-2">
+      <p class="text-xs text-center text-orangeLuxe-light mt-2 space-y-4">
         Level: {{ operative_level }} — Vault Stability: {{ vault_xp_percentage }}%
       </p>
     </div>
 
     <!-- Action Buttons -->
-    <div class="flex flex-wrap justify-center gap-4">
-      <button id="searchBtn" class="btn btn--outline px-6 py-2 rounded-full font-semibold hover:shadow-md transition">
+    <div class="flex flex-wrap justify-center gap-4 space-y-4">
+      <button id="searchBtn" class="btn btn--outline px-6 py-2 rounded-full font-semibold hover:shadow-md transition space-y-4">
         ⌘ Cmd + K — Search
       </button>
-      <a href="#playground" class="btn btn--primary px-6 py-2 rounded-full font-semibold hover:shadow-md transition">
+      <a href="#playground" class="btn btn--primary px-6 py-2 rounded-full font-semibold hover:shadow-md transition space-y-4">
         🎮 Hack the Vault
       </a>
     </div>
 
     <!-- Ghost Mode Easter Egg -->
-    <span id="ghostMsg" class="hidden mt-8 block animate-pulse font-mono text-xs text-emerald-400">
+    <span id="ghostMsg" class="hidden mt-8 block animate-pulse font-mono text-xs text-emerald-400 space-y-4">
       👻 Ghost Mode Activated
     </span>
   </div>
@@ -1111,23 +1111,23 @@ window.emptyState = {
 function makeTiltCard(r){
   const li = document.createElement("li");
   li.innerHTML = `
-    <a href="/reports/${r.slug}" class="group block rounded-2xl focus:ring-2 focus:ring-orangeLuxe">
-      <article class="tilt overflow-hidden rounded-2xl bg-gradient-to-br" data-aos="fade-up"
+    <a href="/reports/${r.slug}" class="group block rounded-2xl focus:ring-2 focus:ring-orangeLuxe space-y-4">
+      <article class="tilt overflow-hidden rounded-2xl bg-gradient-to-br" data-aos="fade-up space-y-4"
                       from-cyberNight.glow via-cyberNight to-zinc-900/90
                       border border-orangeLuxe/20 shadow-lg transition-shadow
                       group-hover:shadow-orangeLuxe/40">
-        <div class="relative h-40 overflow-hidden">
+        <div class="relative h-40 overflow-hidden space-y-4">
           <img src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}" alt="${r.title}"
                class="object-cover w-full h-full group-hover:scale-[1.08]
                       transition-transform duration-500 ease-out" loading="lazy">
         </div>
-        <div class="p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors">
+        <div class="p-6 space-y-3 space-y-4">
+          <h3 class="text-xl font-semibold mb-2" class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition-colors space-y-4">
             ${r.title}
           </h3>
-          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">${r.summary||"No summary provided."}</p>
-          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
-            ${r.tags.slice(0,4).map(t=>`<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`).join("")}
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">${r.summary||"No summary provided. space-y-4"}</p>
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold space-y-4">
+            ${r.tags.slice(0,4).map(t=>`<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`).join(" space-y-4")}
           </div>
         </div>
       </article>
@@ -1152,11 +1152,11 @@ document.addEventListener("pointerleave",e=>{
 </script>
 
 <!-- sidebar_filters.html -->
-<aside class="space-y-2 bg-cyberNight.phantom p-4 rounded-lg shadow-inner" id="sideFilter">
+<aside class="space-y-2 bg-cyberNight.phantom p-4 rounded-lg shadow-inner" id="sideFilter space-y-4">
   <input type="search" id="tagSearch" placeholder="Search tags…"
-    class="w-full mb-3 px-3 py-1.5 rounded bg-zinc-800 text-sm text-orangeLuxe-light">
+    class="w-full mb-3 px-3 py-1.5 rounded bg-zinc-800 text-sm text-orangeLuxe-light space-y-4">
 
-  <div id="tagList" class="max-h-60 overflow-y-auto pr-1 space-y-1"></div>
+  <div id="tagList" class="max-h-60 overflow-y-auto pr-1 space-y-1 space-y-4"></div>
 </aside>
 
 <script>
@@ -1184,7 +1184,7 @@ draw(TAGS_ALL);
 
 <!-- vault_popup.html -->
 <template id="vaultTpl">
-  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur p-4" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur p-4" role="dialog" aria-modal="true space-y-4">
     <!-- focus trap sentinels -->
     <span tabindex="0"></span>
 
@@ -1193,9 +1193,9 @@ draw(TAGS_ALL);
                 text-orangeLuxe-light shadow-[0_0_40px_rgba(249,115,22,0.25)] font-mono"
          id="vaultPanel">
       <!-- VHS noise mask -->
-      <div class="absolute inset-0 pointer-events-none vhsMask"></div>
+      <div class="absolute inset-0 pointer-events-none vhsMask space-y-4"></div>
 
-      <div class="relative z-10 p-6 space-y-4" id="vaultBody"></div>
+      <div class="relative z-10 p-6 space-y-4" id="vaultBody space-y-4"></div>
     </div>
 
     <span tabindex="0"></span>
@@ -1228,19 +1228,19 @@ draw(TAGS_ALL);
   /* -- render inner body -- */
   function fillBody() {
     panel.innerHTML = `
-      <header class="text-xs uppercase tracking-wide text-orangeLuxe-light animate-pulse">
+      <header class="text-xs uppercase tracking-wide text-orangeLuxe-light animate-pulse space-y-4">
         ${mode === "admin"
           ? "🔓 Developer Terminal · backtrace detected"
           : "📼 Playback Archive · Breach logs 07/14/2024"}
       </header>
 
-      <div class="space-y-1 text-sm">
-        <p class="glitch-text" data-text="> decrypting VAULT_RECORDS.LOG …">&gt; decrypting VAULT_RECORDS.LOG …</p>
-        <p class="glitch-text" data-text="> asset_vault.tsx | rootkit.backtrace">&gt; asset_vault.tsx | rootkit.backtrace</p>
-        <p class="glitch-text" data-text="> 🧠 MEMORY BLEED layer-3 – status: critical">
-          &gt; 🧠 MEMORY BLEED layer-3 – status: <span class="text-red-400">critical</span>
+      <div class="space-y-1 text-sm space-y-4">
+        <p class="glitch-text" data-text="> decrypting VAULT_RECORDS.LOG … space-y-4">&gt; decrypting VAULT_RECORDS.LOG …</p>
+        <p class="glitch-text" data-text="> asset_vault.tsx | rootkit.backtrace space-y-4">&gt; asset_vault.tsx | rootkit.backtrace</p>
+        <p class="glitch-text" data-text="> 🧠 MEMORY BLEED layer-3 – status: critical space-y-4">
+          &gt; 🧠 MEMORY BLEED layer-3 – status: <span class="text-red-400 space-y-4">critical</span>
         </p>
-        <p class="glitch-text text-emerald-400" data-text="> Access Level: X">
+        <p class="glitch-text text-emerald-400" data-text="> Access Level: X space-y-4">
           &gt; Access Level: <strong>${mode === "admin" ? "🧠 Developer" : "Vault View"}</strong>
         </p>
       </div>
@@ -1304,7 +1304,7 @@ draw(TAGS_ALL);
 </script>
 
 <!-- featured_reports.html -->
-<section
+<section role="region" data-aos="fade-up"
   id="featured"
   aria-labelledby="featured-heading"
   class="relative isolate py-20 px-4 sm:px-6 lg:px-8
@@ -1321,7 +1321,7 @@ draw(TAGS_ALL);
   ></div>
 
   <!-- header -->
-  <header class="relative z-10 text-center space-y-4 mb-12">
+  <header class="relative z-10 text-center space-y-4 mb-12 space-y-4">
     <h2
       id="featured-heading"
       class="text-4xl sm:text-5xl font-extrabold tracking-tight
@@ -1330,7 +1330,7 @@ draw(TAGS_ALL);
     >
       🧠 Featured Vault Reports
     </h2>
-    <p class="mx-auto max-w-2xl text-sm sm:text-base font-mono text-orangeLuxe-light/80">
+    <p class="mx-auto max-w-2xl text-sm sm:text-base font-mono text-orangeLuxe-light/80 space-y-4">
       Hand-picked exploits, rare bugs &amp; security artforms — straight from the archive.
     </p>
   </header>
@@ -1338,7 +1338,7 @@ draw(TAGS_ALL);
   <!-- grid -->
   <ul
     id="featuredGrid"
-    class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+    class="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 space-y-4"
     role="list"
   ></ul>
 </section>
@@ -1365,11 +1365,11 @@ function makeCard(r) {
     <a href="/reports/${r.slug}"
        class="group block focus-visible:outline-none focus-visible:ring-2
               focus-visible:ring-offset-2 focus-visible:ring-orangeLuxe rounded-2xl">
-      <article class="tiltCard h-full rounded-2xl bg-gradient-to-br" data-aos="fade-up"
+      <article class="tiltCard h-full rounded-2xl bg-gradient-to-br" data-aos="fade-up space-y-4"
                       from-cyberNight.glow via-cyberNight to-zinc-900/90
                       border border-orangeLuxe/20 shadow-lg transition-shadow
                       group-hover:shadow-orangeLuxe/40">
-        <div class="relative h-40 overflow-hidden rounded-t-2xl">
+        <div class="relative h-40 overflow-hidden rounded-t-2xl space-y-4">
           <img
             src="https://source.unsplash.com/512x300?cybersecurity,${r.slug}"
             alt=""
@@ -1378,20 +1378,20 @@ function makeCard(r) {
             loading="lazy"
           />
         </div>
-        <div class="p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-orangeLuxe-light
+        <div class="p-6 space-y-3 space-y-4">
+          <h3 class="text-xl font-semibold mb-2" class= space-y-4"text-lg font-semibold text-orangeLuxe-light
                      group-hover:text-orangeLuxe transition-colors">
             ${r.title}
           </h3>
-          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3">
+          <p class="text-xs text-orangeLuxe-light/70 font-mono line-clamp-3 space-y-4">
             ${r.summary}
           </p>
-          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold">
+          <div class="flex flex-wrap gap-1.5 text-[10px] uppercase font-semibold space-y-4">
             ${r.tags
               .slice(0, 4)
               .map(
                 (t) =>
-                  `<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full">#${t}</span>`
+                  `<span class="bg-orangeLuxe/10 text-orangeLuxe-light px-2 py-0.5 rounded-full space-y-4">#${t}</span>`
               )
               .join("")}
           </div>
@@ -1455,30 +1455,30 @@ grid.addEventListener("pointerleave", (e) => {
 </style>
 
 <!-- HUD Toolbar -->
-<div id="hudToolbar" class="fixed bottom-6 right-6 z-[9998] w-[280px] rounded-2xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom backdrop-blur-md shadow-glow opacity-0 translate-y-6 transition-all duration-500 cursor-grab">
+<div id="hudToolbar" class="fixed bottom-6 right-6 z-[9998] w-[280px] rounded-2xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNight via-cyberNight-glow to-cyberNight-phantom backdrop-blur-md shadow-glow opacity-0 translate-y-6 transition-all duration-500 cursor-grab space-y-4">
   
   <!-- Header -->
-  <button id="hudToggle" class="flex w-full items-center justify-between px-4 py-2 text-xs font-mono text-orangeLuxe-light hover:bg-orangeLuxe/10 rounded-t-2xl" aria-expanded="true">
-    <span class="tracking-widest">💻 HUD STATUS</span>
-    <i id="hudChevron" class="fas fa-chevron-down"></i>
+  <button id="hudToggle" class="flex w-full items-center justify-between px-4 py-2 text-xs font-mono text-orangeLuxe-light hover:bg-orangeLuxe/10 rounded-t-2xl" aria-expanded="true space-y-4">
+    <span class="tracking-widest space-y-4">💻 HUD STATUS</span>
+    <i id="hudChevron" class="fas fa-chevron-down space-y-4"></i>
   </button>
 
   <!-- Body -->
-  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-2">
-    <div class="flex justify-between">👻 Ghost Mode: <span id="hudGhost" class="font-semibold text-gray-500">OFF</span></div>
-    <div class="flex justify-between">🔓 Admin: <span id="hudAdmin" class="font-semibold text-gray-500">OFF</span></div>
-    <div class="flex justify-between">🛰️ Vault Feed: <span class="font-semibold text-sky-400">STABLE</span></div>
+  <div id="hudBody" class="px-5 py-4 text-xs font-mono text-orangeLuxe-light/90 space-y-2 space-y-4">
+    <div class="flex justify-between">👻 Ghost Mode: <span id="hudGhost" class="font-semibold text-gray-500 space-y-4">OFF</span></div>
+    <div class="flex justify-between">🔓 Admin: <span id="hudAdmin" class="font-semibold text-gray-500 space-y-4">OFF</span></div>
+    <div class="flex justify-between">🛰️ Vault Feed: <span class="font-semibold text-sky-400 space-y-4">STABLE</span></div>
 
-    <hr class="border-orangeLuxe/20 my-3">
+    <hr class="border-orangeLuxe/20 my-3 space-y-4">
 
-    <p id="hudLog" class="min-h-[1.3rem] animate-pulse">⏳ Initializing HUD…</p>
+    <p id="hudLog" class="min-h-[1.3rem] animate-pulse space-y-4">⏳ Initializing HUD…</p>
 
     <!-- XP Status Bar -->
-    <div class="mt-4">
-      <div class="w-full h-2 bg-zinc-700 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}%"></div>
+    <div class="mt-4 space-y-4">
+      <div class="w-full h-2 bg-zinc-700 rounded-full overflow-hidden space-y-4">
+        <div class="h-full bg-gradient-to-r from-orange-400 via-yellow-400 to-emerald-400 transition-all" style="width: {{ vault_xp_percentage }}% space-y-4"></div>
       </div>
-      <p class="text-[10px] text-center mt-1 text-orangeLuxe">{{ vault_xp_percentage }}% Vault Stability</p>
+      <p class="text-[10px] text-center mt-1 text-orangeLuxe space-y-4">{{ vault_xp_percentage }}% Vault Stability</p>
     </div>
   </div>
 
@@ -1543,8 +1543,8 @@ grid.addEventListener("pointerleave", (e) => {
 </script>
 
 <!-- report_chart.html -->
-<div class="w-full max-w-md mx-auto">
-  <h3 id="chartTitle" class="text-center text-lg font-semibold mb-4">Report Distribution</h3>
+<div class="w-full max-w-md mx-auto space-y-4">
+  <h3 class="text-xl font-semibold mb-2" id="chartTitle" class="text-center text-lg font-semibold mb-4 space-y-4">Report Distribution</h3>
   <canvas id="reportChart" height="280"></canvas>
 </div>
 
@@ -1587,17 +1587,17 @@ new Chart(document.getElementById("reportChart"), {
 {% include "components/sidebar_filters.html" %}
 
 <!-- 🎓 Ghost Academy Invite -->
-<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition">
-  <h2 class="text-sm font-bold uppercase text-orange-300 mb-2">🎓 Join Ghost Academy</h2>
-  <p class="text-xs text-orange-400 mb-4">Sharpen your skills. Earn XP. Become a legend.</p>
-  <a href="/academy" class="btn-primary text-xs w-full">Enter Academy</a>
+<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition space-y-4">
+  <h2 class="text-2xl font-bold mb-4" class="text-sm font-bold uppercase text-orange-300 mb-2 space-y-4">🎓 Join Ghost Academy</h2>
+  <p class="text-xs text-orange-400 mb-4 space-y-4">Sharpen your skills. Earn XP. Become a legend.</p>
+  <a href="/academy" class="btn-primary text-xs w-full space-y-4">Enter Academy</a>
 </div>
 
 <!-- 🛰️ Operative Dashboard Invite -->
-<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition">
-  <h2 class="text-sm font-bold uppercase text-orange-300 mb-2">🛰️ View Operative Stats</h2>
-  <p class="text-xs text-orange-400 mb-4">Track your vault journey + XP history.</p>
-  <a href="/dashboard" class="btn-primary text-xs w-full">Launch Dashboard</a>
+<div class="rounded-lg border border-orangeLuxe/30 bg-zinc-900 p-4 text-center shadow hover:shadow-orange-500/20 transition space-y-4">
+  <h2 class="text-2xl font-bold mb-4" class="text-sm font-bold uppercase text-orange-300 mb-2 space-y-4">🛰️ View Operative Stats</h2>
+  <p class="text-xs text-orange-400 mb-4 space-y-4">Track your vault journey + XP history.</p>
+  <a href="/dashboard" class="btn-primary text-xs w-full space-y-4">Launch Dashboard</a>
 </div>
 
 <!-- filter_bar.html -->
@@ -1624,10 +1624,10 @@ function renderBar() {
   elBar.innerHTML = `
     <div class="relative flex items-center w-full overflow-x-auto no-scrollbar
                 gap-4 md:gap-6 scroll-smooth pr-6" id="filterScroll">
-      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports">
+      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports space-y-4">
         ${FILTERS.map(
           (f) => `<button
-                    class="${btnClasses(f === filter)}"
+                    class="${btnClasses(f === filter)} space-y-4"
                     data-filter="${f}"
                     role="radio" aria-checked="${f === filter}" title="Filter by ${f}">
                     ${f}
@@ -1635,9 +1635,9 @@ function renderBar() {
         ).join("")}
       </div>
 
-      <div class="ml-auto flex items-center gap-4 min-w-fit">
-        <div class="flex items-center gap-2">
-          <label class="text-xs uppercase tracking-widest text-orange-300 font-mono">Sort</label>
+      <div class="ml-auto flex items-center gap-4 min-w-fit space-y-4">
+        <div class="flex items-center gap-2 space-y-4">
+          <label class="text-xs uppercase tracking-widest text-orange-300 font-mono space-y-4">Sort</label>
           <select id="sortSel"
             class="appearance-none bg-zinc-900 border border-orangeLuxe px-3 py-1 pr-6
                    text-sm rounded text-orange-200 focus:outline-none"
@@ -1646,7 +1646,7 @@ function renderBar() {
               (o) => `<option value="${o}" ${o === sortBy ? "selected" : ""}>${o}</option>`
             ).join("")}
           </select>
-          <span class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-orange-400">▼</span>
+          <span class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-orange-400 space-y-4">▼</span>
         </div>
 
         <button id="themeToggle"
@@ -1709,7 +1709,7 @@ function announce(msg) {
   id="pagination"
   data-page="1"      <!-- current page -->
   data-total="10"    <!-- total pages -->
-  class="flex justify-center items-center gap-2 mt-10"
+  class="flex justify-center items-center gap-2 mt-10 space-y-4"
   aria-label="Pagination"
 ></nav>
 
@@ -1791,13 +1791,13 @@ function announce(msg) {
 </script>
 
 <!-- report_charts_grid.html -->
-<section class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"">
+<section role="region" data-aos="fade-up" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
 
   <!-- Bar card -->
-  <article class="chart-card border-orangeLuxe" data-aos="fade-up"">
-    <header class="chart-header">
-      <h3 id="barTitle">CVSS Avg per Year</h3>
-      <select id="barView" class="bg-night-glow text-white text-sm px-3 py-1 rounded border border-night">
+  <article class="chart-card border-orangeLuxe" data-aos="fade-up" space-y-4">
+    <header class="chart-header space-y-4">
+      <h3 class="text-xl font-semibold mb-2" id="barTitle space-y-4">CVSS Avg per Year</h3>
+      <select id="barView" class="bg-night-glow text-white text-sm px-3 py-1 rounded border border-night space-y-4">
         <option value="yearly">Yearly</option>
         <option value="monthly">Monthly</option>
       </select>
@@ -1806,8 +1806,8 @@ function announce(msg) {
   </article>
 
   <!-- Radar card -->
-  <article class="chart-card border-pink-500" data-aos="fade-up"">
-    <header class="chart-header justify-center"><h3>Severity Distribution</h3></header>
+  <article class="chart-card border-pink-500" data-aos="fade-up" space-y-4">
+    <header class="chart-header justify-center space-y-4"><h3>Severity Distribution</h3></header>
     <canvas id="radarCanvas" height="320"></canvas>
   </article>
 </section>
@@ -1877,7 +1877,7 @@ function buildRadar(){
 
 {# templates/components/skip_nav.html #}
 <a href="#main"
-   class="skip-link"
+   class="skip-link space-y-4"
    aria-label="Skip to main content">
   ⏭️ Skip&nbsp;to&nbsp;main&nbsp;content
 </a>

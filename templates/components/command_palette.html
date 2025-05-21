@@ -1,6 +1,6 @@
 <!-- templates/components/command_palette.html -->
 <div id="cmdBackdrop"
-     class="fixed inset-0 z-[9999] hidden bg-black/80 backdrop-blur-sm p-6"
+     class="fixed inset-0 z-[9999] hidden bg-black/80 backdrop-blur-sm p-6 space-y-4"
      role="dialog" aria-modal="true" aria-label="Command Palette"></div>
 
 <template id="cmdTpl">
@@ -16,7 +16,7 @@
            focus:outline-none focus:ring-2 focus:ring-emerald-400" aria-label="Search the Vault" />
 
     <!-- Result Container -->
-    <div id="cmdResults" class="max-h-80 overflow-y-auto custom-scrollbar" role="listbox"></div>
+    <div id="cmdResults" class="max-h-80 overflow-y-auto custom-scrollbar" role="listbox space-y-4"></div>
   </div>
 </template>
 
@@ -104,19 +104,19 @@ function render(arr) {
   rows = [];
 
   if (!arr.length) {
-    list.innerHTML = `<div class="cmdSection">No matches found</div>`;
+    list.innerHTML = `<div class="cmdSection space-y-4">No matches found</div>`;
     return;
   }
 
-  list.insertAdjacentHTML("beforeend", `<div class="cmdSection">Results</div>`);
+  list.insertAdjacentHTML("beforeend", `<div class="cmdSection space-y-4">Results</div>`);
   arr.forEach((r, i) => {
     const div = document.createElement("div");
     div.className = "cmdRow";
     div.dataset.active = "false";
     div.tabIndex = -1;
     div.innerHTML = `
-      <div class="text-sm font-bold">${highlight(r.title)}</div>
-      <div class="text-xs opacity-70">CVSS: ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"} • ${r.type || "unknown"}</div>
+      <div class="text-sm font-bold space-y-4">${highlight(r.title)}</div>
+      <div class="text-xs opacity-70">CVSS: ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"} • ${r.type || "unknown space-y-4"}</div>
     `;
     div.onclick = () => location.href = `/reports/${r.slug}`;
     list.appendChild(div);
@@ -151,7 +151,7 @@ function highlight(text) {
   const q = search?.value?.trim();
   if (!q || !text.toLowerCase().includes(q.toLowerCase())) return text;
   const regex = new RegExp(`(${q})`, "gi");
-  return text.replace(regex, `<span class="text-emerald-400 underline">$1</span>`);
+  return text.replace(regex, `<span class="text-emerald-400 underline space-y-4">$1</span>`);
 }
 </script>
 

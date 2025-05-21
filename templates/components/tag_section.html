@@ -1,21 +1,21 @@
-<section id="tagsSection" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
-  <h2 class="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+<section role="region" data-aos="fade-up" id="tagsSection" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up" data-testid="tag_section space-y-4" >
+  <h2 class="text-2xl font-bold mb-4" class="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent space-y-4">
     🏷️ Browse by Tag
   </h2>
 
-  <div class="relative mb-6">
+  <div class="relative mb-6 space-y-4">
     <input type="search" id="tagSearchInput"
            placeholder="🔍 Search tags..."
-           class="block w-full rounded-full px-4 py-2 text-sm bg-zinc-800 text-orangeLuxe-light/90 border border-orangeLuxe/30 focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+           class="block w-full rounded-full px-4 py-2 text-sm bg-zinc-800 text-orangeLuxe-light/90 border border-orangeLuxe/30 focus:outline-none focus:ring-2 focus:ring-orangeLuxe space-y-4"
            aria-label="Search tags" />
   </div>
 
-  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 snap-x snap-mandatory no-scrollbar">
-    <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-cyberNight to-transparent"></div>
-    <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-cyberNight to-transparent"></div>
+  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 snap-x snap-mandatory no-scrollbar space-y-4">
+    <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-cyberNight to-transparent space-y-4"></div>
+    <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-cyberNight to-transparent space-y-4"></div>
   </div>
 
-  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up"></div>
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up space-y-4"></div>
 </section>
 
 <script>
@@ -67,8 +67,8 @@ function render() {
     card.setAttribute("data-aos", "fade-up");
     card.setAttribute("data-aos-delay", i * 100);
     card.innerHTML = `
-      <h3 class="font-bold text-orangeLuxe-light mb-1">${r.title}</h3>
-      <p class="text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary || "No summary."}</p>
+      <h3 class="text-xl font-semibold mb-2" class="font-bold text-orangeLuxe-light mb-1 space-y-4">${r.title}</h3>
+      <p class="text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary || "No summary. space-y-4"}</p>
     `;
     grid.appendChild(card);
   });

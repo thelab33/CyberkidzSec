@@ -266,3 +266,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+// ── Confetti Burst Helper ──
+window.confettiBurst=function(target,n=18){const b=document.createElement("div");b.className="confetti-burst";for(let i=0;i<n;i++){const d=document.createElement("span");d.style.left=50+30*Math.cos(2*Math.PI*i/n)+"%";d.style.top=50+30*Math.sin(2*Math.PI*i/n)+"%";b.appendChild(d)}(target||document.body).appendChild(b),setTimeout(()=>b.remove(),1200)};
+
+// ── Toast Notification Helper ──
+window.forgeToast=function(msg,type="info",timeout=2800){const t=document.createElement("div");t.className=`toast toast--${type}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.classList.add("hide"),timeout-400);setTimeout(()=>t.remove(),timeout)};
+
+
+// ── Command Palette Helper (Forge) ──
+window.forgePalette=(opts={})=>{let e=document.getElementById("forge-command-palette");if(!e){e=document.createElement("div"),e.id="forge-command-palette",e.innerHTML=`<div class="fixed inset-0 z-[9999] bg-black/70 backdrop-blur flex items-start justify-center pt-32 transition-all"><div class="bg-zinc-900 border border-orangeLuxe/40 rounded-2xl shadow-xl w-full max-w-md mx-auto"><input autofocus id="forge-cmd-in" type="text" autocomplete="off" placeholder="Type a command…" class="w-full px-5 py-4 bg-zinc-900/80 text-lg text-orange-200 outline-none rounded-t-2xl font-mono tracking-wide"/><ul id="forge-cmd-list" class="divide-y divide-zinc-800"></ul><div class="text-xs p-3 text-zinc-400 font-mono text-center border-t border-orangeLuxe/10">ESC to close • ↑↓ to move • Enter to run</div></div></div>`,document.body.appendChild(e)}const t=e.querySelector("#forge-cmd-in"),n=e.querySelector("#forge-cmd-list"),o=opts.items||[{label:"Home",action:()=>window.location.href="/"},{label:"Search",action:()=>document.getElementById("searchBtn")?.click()},{label:"Toggle Theme",action:()=>document.getElementById("themeToggle")?.click()},{label:"Ghost Mode",action:()=>window.dispatchEvent(new KeyboardEvent("keydown",{ctrlKey:!0,key:"m"}))},{label:"Dashboard",action:()=>window.location.href="/dashboard"},{label:"Playground",action:()=>window.location.href="/playground"}];let l=o,s=0;function d(){n.innerHTML="",l.forEach((e,t)=>{const o=document.createElement("li");o.textContent=e.label,o.className="px-5 py-3 cursor-pointer "+(t===s?"bg-orangeLuxe/20 text-orange-300":"hover:bg-zinc-800"),o.onclick=()=>{e.action(),c()},n.appendChild(o)})}function c(){e.remove()}function a(e){l=o.filter(t=>t.label.toLowerCase().includes(e.toLowerCase())),s=0,d()}t.oninput=e=>a(e.target.value),t.onkeydown=e=>{"ArrowDown"===e.key?(s=(s+1)%l.length,d()):"ArrowUp"===e.key?(s=(s-1+l.length)%l.length,d()):"Enter"===e.key?(l[s]?.action(),c()):"Escape"===e.key&&c()},d(),t.focus()};window.addEventListener("keydown",e=>{(e.ctrlKey||e.metaKey)&&"k"===e.key.toLowerCase()&&(e.preventDefault(),window.forgePalette())});
+

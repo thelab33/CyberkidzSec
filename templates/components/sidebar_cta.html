@@ -1,5 +1,5 @@
 {# templates/components/cta_cards.html — Spotlight CTAs #}
-<section aria-label="Primary actions" class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up">
+<section role="region" data-aos="fade-up" aria-label="Primary actions" class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up" data-testid="sidebar_cta space-y-4" >
   {% set ctas = [
     {
       "id": "academy",
@@ -23,12 +23,12 @@
   {% for cta in ctas %}
   <article role="region"
            aria-labelledby="{{ cta.id }}-title"
-           class="cta-card group rounded-2xl border border-orangeLuxe/30 p-6 bg-cyberNight shadow transition-all focus-within:ring-2">
-    <h2 id="{{ cta.id }}-title"
-        class="text-xs uppercase font-bold text-orange-300 mb-2 transition-colors group-hover:text-orangeLuxe-light">
+           class="cta-card group rounded-2xl border border-orangeLuxe/30 p-6 bg-cyberNight shadow transition-all focus-within:ring-2 space-y-4">
+    <h2 class="text-2xl font-bold mb-4" id="{{ cta.id }}-title space-y-4"
+        class="text-xs uppercase font-bold text-orange-300 mb-2 transition-colors group-hover:text-orangeLuxe-light space-y-4">
       {{ cta.emoji }} {{ cta.title }}
     </h2>
-    <p class="text-xs text-orangeLuxe-light/70 mb-4">{{ cta.desc }}</p>
+    <p class="text-xs text-orangeLuxe-light/70 mb-4 space-y-4">{{ cta.desc }}</p>
     <a href="{{ cta.href }}"
        aria-labelledby="{{ cta.id }}-title"
        class="inline-flex items-center justify-center w-full text-xs font-semibold px-4 py-2 rounded border-2 border-orangeLuxe text-orangeLuxe

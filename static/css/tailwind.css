@@ -1,24 +1,327 @@
+/* ──────────────────────────────────────────────
+   ⚙️ CYBERKIDZSEC STARFORGE CSS — FORGEMASTER+
+──────────────────────────────────────────────── */
+
+/* Tailwind Layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 🔮 CORE ENHANCEMENTS */
-@import url("cyber-enhancements.css");  /* Tokens, colors, globals */
+/* Modular Imports */
+@import url("cyber-enhancements.css");
 @import url("ghost-boot.css");
 @import url("ghost-mode.css");
 @import url("back_to_top.css");
 @import url("bug_tales.css");
 
-/* 🧠 COMPONENT STYLING */
+/* Core Layout */
 @import url("sections/header.css");
-@import url("hero.css");
-@import url("footer.css");
-@import url("skip_nav.css");
-@import url("console.css");
+@import url("sections/hero.css");
+@import url("sections/footer.css");
+@import url("sections/skip_nav.css");
+@import url("sections/console.css");
 
-/* 🛰️ AOS + Effects */
-@import url("animations.css"); /* Optional: split from cyber-enhancements.css */
+/* Animations & Effects */
+@import url("animations.css");
+@import url("components/hud-status.css");
+@import url("sections/report-grid.css");
 
-/* 🎯 GLOBAL OVERRIDES */
-@import url("app.css"); /* If needed */
+/* ──────────────────────────────
+   🎨 Base Variables & Dark Mode
+──────────────────────────────── */
+@layer base {
+  :root {
+    --warp-overlay-opacity: 0.88;
+    --warp-overlay-scale: 1.07;
+    --warp-overlay-color: rgb(20 20 35 / 50%);
+    --starfield-opacity: 0.9;
+    --spark-color: #0fc;
+    --hud-bg: rgb(15 17 26 / 80%);
+    --hud-shadow: 0 0 40px rgb(249 115 22 / 30%);
+    --transition-fast: 0.2s ease-out;
+    --transition-med: 0.3s ease-in-out;
+    --orange: #f97316;
+    --emerald: #34d399;
+    --orange-luxe-light: #fbbf77;
+    --skull-glow: rgb(255 127 0 / 80%);
+    --skull-stroke: rgb(255 200 100 / 60%);
+    --section-glow: 0 0 48px 0 rgb(249 115 22 / 10%);
+    --section-border: 1px solid rgb(253 186 116 / 15%);
+    --lux-bg: linear-gradient(135deg, #191923 60%, #1f2937 100%);
+  }
+  html.dark {
+    --orange: #ff7f00;
+    --orange-luxe-light: #ffc78c;
+    --lux-bg: linear-gradient(135deg, #16161e 60%, #232323 100%);
+  }
+}
+
+/* ───────────────────────────────
+   🧱 Components & Sections Layer
+───────────────────────────────── */
+@layer components {
+
+  /* General Section Styling */
+  section {
+    background: var(--lux-bg);
+    border-radius: 1.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--section-glow);
+    border: var(--section-border);
+    padding: 2.5rem 1.25rem;
+  }
+
+  /* Header/Sticky */
+  header.sticky, #siteHeader {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(16, 16, 22, 0.94);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px 0 #1e293b44;
+    border-bottom: 1.5px solid rgb(251 191 36 / 7%);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  /* Hero Section */
+  #hero {
+    margin-top: 1.25rem;
+    min-height: 420px;
+    position: relative;
+    background: radial-gradient(circle at 70% 30%, #232328 85%, #101018 100%);
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 8px 40px 0 #fb923c12;
+    z-index: 10;
+  }
+  #hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: var(--starfield-opacity);
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(0.8px) brightness(1.1);
+  }
+  #hero .relative {
+    z-index: 1;
+  }
+  #hero h1 {
+    font-size: 2.75rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--orange) 30%, #fffbe9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 20px #ff7f0040;
+    margin-bottom: 0.25em;
+  }
+  #hero .stats {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-family: 'Fira Mono', monospace;
+  }
+
+  /* Status Bar */
+  #vault-status {
+    margin-top: -0.75rem;
+    background: rgba(24, 24, 32, 0.96);
+    border-radius: 0 0 1.5rem 1.5rem;
+    border-bottom: 2px solid var(--orange);
+    box-shadow: 0 2px 12px 0 #fb923c18;
+    font-weight: bold;
+  }
+
+  /* Bug Tales Section */
+  #bug-tales {
+    background: linear-gradient(120deg, #14181f 80%, #22202c 100%);
+    border-left: 4px solid var(--orange);
+    box-shadow: 0 0 24px 0 #fbbf7712;
+    padding: 2rem 1.25rem 2rem 2.5rem;
+    border-radius: 1.25rem;
+    margin-bottom: 2.25rem;
+    font-style: italic;
+  }
+
+  /* Feed/Analytics */
+  #vault-feed, .vault-feed {
+    background: rgba(25, 25, 32, 0.97);
+    border-radius: 1rem;
+    box-shadow: 0 0 20px #fb923c08;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border: var(--section-border);
+  }
+
+  /* Playground/HUD */
+  #hacker-playground, .hacker-playground-section {
+    background: linear-gradient(110deg, #16182a 60%, #23232a 100%);
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 0 #0fc2cc22;
+    border: 2px dashed #34d39933;
+    padding: 2rem 1.25rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  /* Utilities & Modals */
+  .utility-modal, .vault-utility {
+    background: rgba(20, 20, 30, 0.97);
+    border: 1.5px solid #22d3ee40;
+    box-shadow: 0 0 18px 0 #0fc2cc44;
+    border-radius: 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  /* One skip nav at very top only */
+  .skip-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: #16181f;
+    color: #fbbf77;
+    font-size: 1rem;
+    padding: 0.4rem 1.3rem;
+    border-radius: 0 0 0.7em 0.7em;
+    box-shadow: 0 4px 16px 0 #fb923c20;
+    text-decoration: underline;
+    transition: background var(--transition-fast);
+  }
+}
+
+/* ───────────────────────────────
+   🎞️ FX & Animation Layer
+───────────────────────────────── */
+@layer utilities {
+  @keyframes warpBlur {
+    0%, 100% {
+      transform: scale(1) translate(0);
+      opacity: var(--warp-overlay-opacity);
+    }
+    50% {
+      transform: scale(1.1) translate(-10px, -10px);
+      opacity: calc(var(--warp-overlay-opacity) + 0.1);
+    }
+  }
+
+  @keyframes gradientBorder {
+    0% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+    50% { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
+    100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+  }
+
+  @keyframes warpStabilize {
+    0% {
+      opacity: 0;
+      transform: scale(1.05) skewY(1deg);
+      filter: brightness(0.7) blur(2px);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(0.98) skewY(-1deg);
+      filter: brightness(1.2) blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) skewY(0);
+      filter: brightness(1) blur(0);
+    }
+  }
+
+  @keyframes floatSpark {
+    0% { transform: translateY(0) scale(1); opacity: 0.9; }
+    50% { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
+    100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+}
+
+/* ─── Parallax Orbit FX ───────────────────────── */
+#heroParallax {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  will-change: transform;
+}
+#heroParallax .orbit {
+  position: absolute;
+  border: 1px dashed rgb(255 255 255 / 8%);
+  border-radius: 50%;
+  animation: spin linear infinite;
+  pointer-events: none;
+}
+#heroParallax .orbit.small { width: 40%; height: 40%; top: 30%; left: 30%; animation-duration: 60s; }
+#heroParallax .orbit.med { width: 70%; height: 70%; top: 15%; left: 15%; animation-duration: 90s; }
+#heroParallax .orbit.large { width: 100%; height: 100%; top: 0; left: 0; animation-duration: 120s; }
+
+
+/* ──────────────────────────────
+   ⭐️ 5 Bonus Features!
+───────────────────────────────── */
+
+/* 1. Section Headline Sparkle */
+.section-headline {
+  font-size: 2.15rem;
+  font-weight: 800;
+  position: relative;
+  background: linear-gradient(90deg, #f97316 40%, #fbbf24 60%, #fff0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-headline::after {
+  content: "✨";
+  position: absolute;
+  right: -2.2rem;
+  top: 0.1em;
+  font-size: 1.2em;
+  animation: floatSpark 2s infinite linear;
+}
+
+/* 2. Interactive Card Hover for Reports */
+.report-card, .vault-feed .card {
+  transition: box-shadow 0.22s cubic-bezier(.24,.8,.42,1), transform 0.18s;
+  border-radius: 1.15rem;
+  background: #23242e;
+  box-shadow: 0 4px 22px 0 #0fc2cc12;
+}
+.report-card:hover, .vault-feed .card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 30px 0 #f9731626;
+}
+
+/* 3. Pulse Effect for Live Status */
+#vault-status .pulse {
+  animation: pulseStatus 1.2s infinite alternate cubic-bezier(.4,.1,.2,1.1);
+}
+@keyframes pulseStatus {
+  from { opacity: 1; }
+  to { opacity: 0.62; }
+}
+
+/* 4. Confetti Burst (on success actions) */
+.confetti-burst {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  animation: confettiDrop 1.9s cubic-bezier(.36,1.4,.47,.97) forwards;
+}
+@keyframes confettiDrop {
+  0% { opacity: 1; transform: translateY(-50px) scale(1.2); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100vh) scale(0.85); }
+}
+
+/* 5. Glowing Focus Ring for Accessibility */
+:focus-visible {
+  outline: 2.5px solid var(--orange);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px #fbbf7733;
+  transition: outline-color 0.15s;
+}
+
 

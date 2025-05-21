@@ -5,7 +5,7 @@
 <article class="card flex flex-col h-full overflow-hidden rounded-2xl border border-orangeLuxe/20 shadow hover:shadow-orangeLuxe/40 transition-all group" role="article" tabindex="0">
   {% if image %}
     <figure class="relative h-40 w-full overflow-hidden">
-      <img src="{{ image }}" alt="{{ alt }}" class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500 ease-out"/>
+      <img src="{{ image }}" alt="{{ alt or title }}" class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500 ease-out"/>
       {% if badge %}
         <span class="absolute top-2 right-2 bg-orangeLuxe text-black text-[11px] font-bold px-2 py-0.5 rounded-full shadow">{{ badge }}</span>
       {% endif %}
@@ -31,7 +31,7 @@
 
 {# ░▒▓ 📊 Reusable Data Table ▓▒░ #}
 {% macro data_table(headers, rows, caption="Data Table", zebra=True) %}
-<div class="overflow-x-auto rounded-lg shadow border border-orangeLuxe/10">
+<div class="overflow-x-auto rounded-lg shadow border border-orangeLuxe/10 my-4">
   <table class="min-w-full text-sm text-left text-gray-900 dark:text-zinc-100 font-mono">
     {% if caption %}
       <caption class="sr-only">{{ caption }}</caption>
@@ -45,7 +45,7 @@
     </thead>
     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
       {% for row in rows %}
-        <tr class="{{ loop.index is even and zebra and 'bg-zinc-900/40' or '' }}">
+        <tr class="{{ 'bg-zinc-900/40' if loop.index is even and zebra else '' }}">
           {% for cell in row %}
             <td class="px-6 py-4 whitespace-nowrap text-zinc-300 dark:text-zinc-100">
               {{ cell }}

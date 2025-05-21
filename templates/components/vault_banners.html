@@ -1,23 +1,23 @@
-<section
+<section role="region" data-aos="fade-up"
   id="vault-banners"
-  class="section-container my-24"
+  class="section-container my-24 space-y-4"
   data-aos="fade-up"
 >
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 space-y-4">
     {% set banners = [
       ('images/og/main_vault_banner.png', "Main Vault Banner"),
       ('images/og/hacker_underground_banner.png', "Hacker Underground Banner"),
       ('images/og/zero_day_archive_banner.png', "Zero-Day Archive Banner")
     ] %}
     {% for src, alt in banners %}
-      <figure class="overflow-hidden rounded-2xl shadow-md group hover:shadow-orange-500/30 transition-all duration-300">
+      <figure class="overflow-hidden rounded-2xl shadow-md group hover:shadow-orange-500/30 transition-all duration-300 space-y-4">
         <img
           src="{{ url_for('static', filename=src) }}"
           alt="{{ alt }}"
           loading="lazy"
-          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out"
+          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out space-y-4"
         />
-        <figcaption class="sr-only">{{ alt }}</figcaption>
+        <figcaption class="sr-only space-y-4">{{ alt }}</figcaption>
       </figure>
     {% endfor %}
   </div>

@@ -6,9 +6,13 @@
 body[data-ghost-mode="true"] {
   background-color: #000;
   color: #0f0;
-  font-family: 'Fira Code', monospace;
-  text-shadow: 0 0 2px #0f0, 0 0 6px #0f0;
-  transition: background-color 0.5s ease, color 0.3s ease;
+  font-family: "Fira Code", monospace;
+  text-shadow:
+    0 0 2px #0f0,
+    0 0 6px #0f0;
+  transition:
+    background-color 0.5s ease,
+    color 0.3s ease;
 }
 
 /* 🧩 Greened-Out Interactive Elements */
@@ -21,7 +25,9 @@ body[data-ghost-mode="true"] {
   color: #0f0 !important;
   border-color: #0f0 !important;
   background-color: transparent !important;
-  text-shadow: 0 0 4px #0f0a, 0 0 6px #0f07;
+  text-shadow:
+    0 0 4px #0f0a,
+    0 0 6px #0f07;
 }
 
 /* 🛰️ Terminal Shell UI Panels */
@@ -37,13 +43,15 @@ body[data-ghost-mode="true"] {
 [data-ghost-mode="true"] #filterBar {
   background-color: #000 !important;
   border-color: #0f0 !important;
-  box-shadow: 0 0 20px #0f06, 0 0 10px #0f03;
+  box-shadow:
+    0 0 20px #0f06,
+    0 0 10px #0f03;
   transition: all 0.4s ease-in-out;
 }
 
 /* 🔡 Typewriter Cursor */
 [data-ghost-mode="true"] #heroTyper::after {
-  content: '|';
+  content: "|";
   animation: blinkGhost 1s infinite steps(2, start);
   color: #0f0;
   margin-left: 4px;
@@ -51,7 +59,7 @@ body[data-ghost-mode="true"] {
 
 /* 📺 Matrix Scanline Overlay */
 [data-ghost-mode="true"]::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   z-index: 999;
@@ -69,12 +77,22 @@ body[data-ghost-mode="true"] {
 
 /* ✨ Ghost Blinker + Scanlines Animations */
 @keyframes blinkGhost {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes scanlinesGhost {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 10px; }
-}
+  0% {
+    background-position: 0 0;
+  }
 
+  100% {
+    background-position: 0 10px;
+  }
+}

@@ -1,20 +1,20 @@
-<section
+<section role="region" data-aos="fade-up"
   id="cardGridWrap"
-  class="max-w-7xl mx-auto py-20 px-6"
+  class="max-w-7xl mx-auto py-20 px-6 space-y-4"
   role="region"
   aria-labelledby="cardGridHeading"
   data-aos="fade-up"
 >
   <h2
     id="cardGridHeading"
-    class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange"
+    class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange space-y-4"
   >
     🧠 Featured Vulnerability Reports
   </h2>
 
   <div
     id="cardGrid"
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 space-y-4"
     role="list"
   ></div>
 </section>
@@ -24,7 +24,7 @@ const CARDS = (window.ALL_REPORTS || []).slice(0, 100);
 const grid = document.getElementById("cardGrid");
 
 if (!CARDS.length) {
-  grid.innerHTML = `<p class="text-center text-orange-300 col-span-full font-mono text-sm">
+  grid.innerHTML = `<p class="text-center text-orange-300 col-span-full font-mono text-sm space-y-4">
     ⚠️ No vulnerability reports found.
   </p>`;
 }
@@ -43,13 +43,13 @@ CARDS.forEach((r, i) => {
   el.setAttribute("data-aos-delay", `${i * 100}`);
 
   const tagHTML = r.tags.slice(0, 3).map(tag =>
-    `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full bg-orangeLuxe/10 text-orangeLuxe-light font-mono">
+    `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full bg-orangeLuxe/10 text-orangeLuxe-light font-mono space-y-4">
       #${tag}
     </span>`
   ).join("");
 
   const extraTag = r.tags.length > 3
-    ? `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full border border-orangeLuxe/30 text-orangeLuxe-light/60 font-mono">
+    ? `<span class="inline-block text-[10px] px-2 py-0.5 rounded-full border border-orangeLuxe/30 text-orangeLuxe-light/60 font-mono space-y-4">
         +${r.tags.length - 3}
       </span>`
     : "";
@@ -57,33 +57,33 @@ CARDS.forEach((r, i) => {
   const date = new Date(r.date).toLocaleDateString();
 
   el.innerHTML = `
-    <figure class="relative h-44 w-full overflow-hidden">
+    <figure class="relative h-44 w-full overflow-hidden space-y-4">
       <img
         src="https://cdn.example.com/thumbnails/${r.slug}.jpg"
         alt="Screenshot of ${r.title}"
         loading="lazy"
         decoding="async"
         onerror="this.src='/static/img/fallback.jpg'; this.alt='Report image unavailable';"
-        class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+        class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105 space-y-4"
       />
-      <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-4 text-sm text-white font-mono line-clamp-4">
+      <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-4 text-sm text-white font-mono line-clamp-4 space-y-4">
         ${r.summary || "No summary available."}
       </div>
     </figure>
 
-    <div class="p-6 space-y-3">
-      <h3 class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition">
+    <div class="p-6 space-y-3 space-y-4">
+      <h3 class="text-xl font-semibold mb-2" class="text-lg font-semibold text-orangeLuxe-light group-hover:text-orangeLuxe transition space-y-4">
         ${r.title}
       </h3>
 
-      <p class="text-xs text-orangeLuxe-light/60 font-mono">
+      <p class="text-xs text-orangeLuxe-light/60 font-mono space-y-4">
         ${date} • ${r.reportType}
       </p>
 
-      <div class="flex flex-wrap gap-1.5">${tagHTML}${extraTag}</div>
+      <div class="flex flex-wrap gap-1.5 space-y-4">${tagHTML}${extraTag}</div>
 
       <span
-        class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)}"
+        class="inline-block mt-2 text-[11px] px-2 py-0.5 rounded-full font-mono border border-orangeLuxe/30 ${cvssColor(r.cvss)} space-y-4"
         aria-label="CVSS score ${r.cvss}"
       >
         CVSS ${typeof r.cvss === "number" ? r.cvss.toFixed(1) : "N/A"}
