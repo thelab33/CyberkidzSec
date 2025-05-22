@@ -76,7 +76,7 @@ function initScrollHeader() {
 function initAudioFX() {
   const audio = {
     click: new Audio('/static/sfx/keyboard-clack.mp3'),
-    unlock: new Audio('/static/sfx/vhs-unlock.mp3'),
+    unlock: new Audio('/static/static/sfx/vhs-unlock.mp3'),
     swoosh: new Audio('/static/sfx/swoosh.mp3'),
     breach: new Audio('/static/sfx/breach.mp3')
   };

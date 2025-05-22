@@ -1,59 +1,119 @@
-<!-- tags_section.html -->
-<section role="region" data-aos="fade-up" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up" data-testid="tags_section space-y-4" >
-  <h2 class="text-2xl font-bold mb-4" class= space-y-4"text-3xl sm:text-4xl font-extrabold text-center mb-8
-             bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+<section
+  id="tagsSection"
+  role="region"
+  aria-labelledby="tagsHeading"
+  class="my-24 px-4 sm:px-6 lg:px-8 space-y-10"
+  data-aos="fade-up"
+  data-testid="tags_section"
+>
+  <h2
+    id="tagsHeading"
+    class="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent"
+  >
     🏷️ Browse by Tag
   </h2>
 
-  <!-- Tag Rail -->
-  <div id="tagRail" class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory space-y-4"></div>
+  <!-- 🌐 Tag Rail -->
+  <div
+    id="tagRail"
+    class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory"
+    role="tablist"
+    aria-label="Tag Filters"
+  ></div>
 
-  <!-- Results Grid -->
-  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up" space-y-4"></div>
+  <!-- 📚 Filtered Reports Grid -->
+  <div
+    id="tagGrid"
+    class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    role="region"
+    aria-live="polite"
+  ></div>
 </section>
 
 <script>
 const REPORTS = window.ALL_REPORTS || [];
-
-const TAGS = Array.from(new Set(REPORTS.flatMap(r => r.tags))).sort();
+const TAGS = [...new Set(REPORTS.flatMap(r => r.tags))].sort();
 let activeTag = null;
 
 const rail = document.getElementById("tagRail");
 const grid = document.getElementById("tagGrid");
 
-/* Fade rail edges */
+// 🌫️ Fade edges on the rail
 ["left", "right"].forEach(side => {
-  const div = document.createElement("div");
-  div.className = `pointer-events-none absolute inset-y-0 ${side}-0 w-6 bg-gradient-to-${side === "left" ? "r" : "l"} from-cyberNight to-transparent`;
-  rail.appendChild(div);
+  const edge = document.createElement("div");
+  edge.className = `pointer-events-none absolute inset-y-0 ${side}-0 w-6 z-10 bg-gradient-to-${side === "left" ? "r" : "l"} from-cyberNight to-transparent`;
+  rail.appendChild(edge);
 });
 
-/* Render the Rail */
+// 🔖 Tag Button Generator
+function makeTag(name, active, onClick) {
+  const btn = document.createElement("button");
+  btn.textContent = `#${name}`;
+  btn.className = `
+    font-mono text-xs px-3 py-1 rounded-full border
+    ${active ? "bg-orangeLuxe text-black border-orangeLuxe" : "text-orangeLuxe border-orangeLuxe/30 hover:bg-orangeLuxe/10"}
+    transition whitespace-nowrap snap-center focus:outline-none focus:ring-2 focus:ring-orangeLuxe
+  `;
+  btn.setAttribute("role", "tab");
+  btn.setAttribute("aria-pressed", active.toString());
+  btn.onclick = onClick;
+  return btn;
+}
+
+// 🛤️ Draw Tag Rail
 function drawRail() {
-  rail.querySelectorAll("[role=button]").forEach(n => n.remove());
-  rail.prepend(makeTag("All", activeTag === null, () => { activeTag = null; render(); }));
-  TAGS.forEach(t => {
-    const tag = makeTag(t, activeTag === t, () => { activeTag = t; render(); });
-    tag.setAttribute("data-tag", t);
-    rail.appendChild(tag);
+  rail.querySelectorAll("[role=tab]").forEach(btn => btn.remove());
+
+  // "All" button
+  rail.prepend(makeTag("All", activeTag === null, () => {
+    activeTag = null;
+    render();
+  }));
+
+  // Dynamic tags
+  TAGS.forEach(tag => {
+    const tagBtn = makeTag(tag, activeTag === tag, () => {
+      activeTag = tag;
+      render();
+    });
+    tagBtn.setAttribute("data-tag", tag);
+    rail.appendChild(tagBtn);
   });
 }
 
-/* Render the Tag Grid */
+// 🧠 Render Report Cards by Tag
 function render() {
   drawRail();
   grid.innerHTML = "";
-  const list = activeTag ? REPORTS.filter(r => r.tags.includes(activeTag)) : REPORTS;
-  list.forEach((r, i) => {
-    const el = document.createElement("article");
-    el.className = "p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNightGlow via-cyberNight to-zinc-900/80 shadow-lg";
-    el.setAttribute("data-aos", "fade-up");
-    el.setAttribute("data-aos-delay", (i * 100).toString());
-    el.innerHTML = `
-      <h3 class="text-xl font-semibold mb-2" class="font-bold text-orangeLuxe-light space-y-4">${r.title}</h3>
-      <p class="mt-1 text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">${r.summary || "No summary. space-y-4"}</p>`;
-    grid.appendChild(el);
+
+  const filtered = activeTag
+    ? REPORTS.filter(r => r.tags.includes(activeTag))
+    : REPORTS;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<p class="text-orange-300 font-mono text-sm text-center col-span-full">⚠️ No reports for this tag.</p>`;
+    return;
+  }
+
+  filtered.forEach((report, i) => {
+    const card = document.createElement("article");
+    card.className = `
+      p-5 rounded-xl bg-gradient-to-br from-cyberNightGlow via-cyberNight to-zinc-900/80
+      border border-orangeLuxe/25 shadow-lg transition-transform hover:scale-[1.01] focus-within:ring-2 focus:ring-orangeLuxe
+    `;
+    card.setAttribute("data-aos", "fade-up");
+    card.setAttribute("data-aos-delay", (i * 100).toString());
+
+    card.innerHTML = `
+      <h3 class="text-lg font-bold text-orangeLuxe-light mb-2">${report.title}</h3>
+      <p class="text-xs font-mono text-orangeLuxe-light/70 line-clamp-3">
+        ${report.summary || "No summary available."}
+      </p>
+    `;
+    grid.appendChild(card);
   });
+
+  // Scroll selected tab into view
   if (activeTag) {
     const el = rail.querySelector(`[data-tag="${activeTag}"]`);
     el?.scrollIntoView({ inline: "center", behavior: "smooth" });

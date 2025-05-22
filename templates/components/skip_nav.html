@@ -15,13 +15,13 @@
   </div>
 
   <!-- 🧭 Skip Links -->
-  <div class="flex gap-6 space-y-4">
+  <div class="flex gap-6">
     <a href="#main"
-       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1 space-y-4">
+       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Main
     </a>
     <a href="#footer"
-       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1 space-y-4">
+       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Footer
     </a>
   </div>
@@ -29,12 +29,12 @@
   <!-- ❌ Close Button -->
   <button id="skipBarClose"
           aria-label="Close Skip Navigation"
-          class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black space-y-4">
+          class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black">
     ✖️
   </button>
 
   <!-- 🎉 Confetti Canvas -->
-  <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none space-y-4"></canvas>
+  <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none"></canvas>
 </div>
 
 <!-- 🎨 Styles -->
@@ -60,11 +60,14 @@
     40%, 80% { transform: translateX(4px); }
   }
 
-  canvas#confettiCanvas { z-index: 9997; pointer-events: none; }
+  canvas#confettiCanvas {
+    z-index: 9997;
+    pointer-events: none;
+  }
 </style>
 
 <!-- 🧠 Logic -->
-<script>
+<script type="module">
 (() => {
   const skipBar = document.getElementById("skipBar");
   const warpText = document.getElementById("warpText");
@@ -75,25 +78,26 @@
   function showSkipBar() {
     skipBar.classList.remove("-translate-y-40", "pointer-events-none");
     skipBar.classList.add("translate-y-0");
+
     warpText.classList.remove("opacity-0", "scale-90", "-translate-y-1/2");
     warpText.classList.add("opacity-100", "scale-100", "translate-y-0");
 
-    // play warp sound
+    // 🔊 Warp sound effect
     new Audio('/static/audio/warp-sound.mp3').play().catch(() => {});
 
-    // confetti (uses ConfettiGenerator or fallback to canvas-confetti)
+    // 🎉 Confetti effect
     if (window.ConfettiGenerator) {
       confetti = new ConfettiGenerator({ target: confettiCanvas, max: 80 });
       confetti.render();
     }
 
-    // hide glitch title after 1.5s
+    // 🧠 Hide glitch title after 1.5s
     setTimeout(() => {
       warpText.classList.add("opacity-0", "scale-90", "-translate-y-1/2");
       warpText.classList.remove("opacity-100", "scale-100", "translate-y-0");
     }, 1500);
 
-    // auto focus first skip link
+    // 🔗 Auto-focus first link
     setTimeout(() => document.querySelector("#skipBar a")?.focus(), 400);
   }
 
@@ -103,7 +107,7 @@
     if (confetti?.clear) confetti.clear();
   }
 
-  // keyboard triggers
+  // 🎛️ Keyboard Triggers
   window.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "ArrowUp") {
       e.preventDefault();
@@ -112,8 +116,8 @@
     if (e.key === "Escape") hideSkipBar();
   });
 
-  // close button
-  closeBtn.addEventListener("click", hideSkipBar);
+  // ❌ Close
+  closeBtn?.addEventListener("click", hideSkipBar);
 })();
 </script>
 

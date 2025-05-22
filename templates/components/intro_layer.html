@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {% if cta.type == 'button' %}
         <button id="{{ cta.id }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</button>
         {% else %}
-        <a href="{{ cta.href }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</a>
+        <a href="#" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</a>
         {% endif %}
       {% endfor %}
     </div>
@@ -340,3 +340,4 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 
+<script>document.addEventListener("DOMContentLoaded",function(){const t=["Zero‑Day Archive Updating","CYBERKIDZSEC VAULT","Ghosted but not gone.","AI Copilot Online — Stay Ghosted."],e=document.getElementById("heroTyper");let n=0,o=0;function r(){e&&(o<=t[n].length?(e.textContent=t[n].slice(0,o++),setTimeout(r,60+60*Math.random())):setTimeout(()=>{o=0,n=(n+1)%t.length,r()},1600))}r();});</script>

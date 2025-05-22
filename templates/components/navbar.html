@@ -21,7 +21,7 @@
       ] %}
       {% for label, href in nav_items %}
         <a
-          href="{{ href }}"
+          href="#"
           class="relative group transition-colors text-orange-300 hover:text-orangeLuxe space-y-4"
           aria-current="{{ 'page' if request.path == href else '' }}"
         >
@@ -48,7 +48,7 @@
   >
     {% for label, href in nav_items %}
       <a
-        href="{{ href }}"
+        href="#"
         class="block py-2 border-b border-orangeLuxe/20 hover:text-orangeLuxe transition space-y-4"
       >
         {{ label }}

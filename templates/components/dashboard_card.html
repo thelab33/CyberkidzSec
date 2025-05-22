@@ -1,1 +1,47 @@
-<div class="dashboard-card-placeholder">[🚧 Dashboard Card Placeholder]</div>
+<!-- 🧠 Enhanced Dashboard Card Placeholder -->
+<div
+  class="dashboard-card-placeholder flex flex-col items-center justify-center border-2 border-dashed border-orangeLuxe/40 bg-cyberNightGlow text-orangeLuxe-light text-xs font-mono px-6 py-8 rounded-xl text-center animate-pulse hover:border-orangeLuxe hover:shadow-[0_0_10px_rgba(255,165,0,0.6)] focus:outline-none focus:ring-2 focus:ring-orangeLuxe focus:ring-offset-2 space-y-3 transition-all duration-300"
+  role="status"
+  aria-label="Dashboard Card Coming Soon"
+  tabindex="0"
+>
+  <div class="flex items-center space-x-2">
+    <svg
+      class="w-6 h-6 animate-spin-slow text-orangeLuxe"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      >
+      <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
+      <path d="M4 12a8 8 0 018-8" stroke-linecap="round" />
+    </svg>
+    <h2 class="text-lg sm:text-2xl font-extrabold tracking-wide text-orangeLuxe">
+      🚧 Coming Soon
+    </h2>
+  </div>
+  <p class="max-w-xs opacity-70 leading-relaxed">
+    This dashboard feature is under construction. Stay tuned for updates!
+  </p>
+  <button
+    type="button"
+    class="mt-2 px-4 py-1 rounded-md border border-orangeLuxe text-orangeLuxe hover:bg-orangeLuxe hover:text-black transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orangeLuxe focus:ring-offset-1"
+    aria-label="Notify me when dashboard feature is ready"
+    onclick="alert('Thanks for your interest! We will notify you soon.')"
+  >
+    Notify Me
+  </button>
+</div>
+
+<style>
+  /* Slow spin animation for the icon */
+  @keyframes spin-slow {
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
+  }
+  .animate-spin-slow {
+    animation: spin-slow 5s linear infinite;
+  }
+</style>
+

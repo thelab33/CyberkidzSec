@@ -1,1 +1,33 @@
-{}
+{
+  "name": "CYBERKIDZSEC Vault",
+  "short_name": "Vault",
+  "description": "Ghosted but not gone. Bug bounty, vulnerability reports, analytics and more — even offline.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10101a",
+  "theme_color": "#0f172a",
+  "scope": "/",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/static/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/static/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/static/favicon-16.png", "sizes": "16x16", "type": "image/png" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ghost Mode",
+      "short_name": "Ghost",
+      "description": "Enter Ghost Mode instantly.",
+      "url": "/#ghost",
+      "icons": [{ "src": "/static/favicon-32.png", "sizes": "32x32", "type": "image/png" }]
+    },
+    {
+      "name": "Hack the Vault",
+      "short_name": "Playground",
+      "description": "Launch the Hacker Playground.",
+      "url": "/#playground",
+      "icons": [{ "src": "/static/favicon-32.png", "sizes": "32x32", "type": "image/png" }]
+    }
+  ]
+}

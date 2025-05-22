@@ -1,19 +1,22 @@
 <aside id="sideFilter"
        role="region"
        aria-labelledby="tagFilter-label"
-       class="mt-12 bg-cyberNightGlow p-5 rounded-2xl shadow-inner space-y-4 space-y-4"
+       class="mt-12 bg-cyberNightGlow p-5 rounded-2xl shadow-inner space-y-4"
        data-aos="fade-up">
-  <h2 class="text-2xl font-bold mb-4" id="tagFilter-label" class="sr-only space-y-4">Filter by tag</h2>
-  <label for="tagSearch" class="sr-only space-y-4">Search tags</label>
+
+  <h2 id="tagFilter-label" class="sr-only">Filter by tag</h2>
+
+  <label for="tagSearch" class="sr-only">Search tags</label>
   <input type="search"
          id="tagSearch"
-         placeholder="Search tags…"
-         class="w-full px-4 py-2 rounded-md bg-zinc-800 text-orangeLuxe-light text-sm placeholder-orangeLuxe-light/50 focus:ring-2 focus:ring-orangeLuxe space-y-4"
-         aria-label="Search tags">
+         placeholder="Search tags..."
+         class="w-full px-4 py-2 rounded-md bg-zinc-800 text-orangeLuxe-light text-sm placeholder-orangeLuxe-light/50 focus:ring-2 focus:ring-orangeLuxe"
+         aria-label="Search tags" />
+
   <div id="tagList"
        role="list"
-       class="max-h-64 overflow-y-auto space-y-2 pr-1 mt-2 space-y-4">
-    {# Buttons injected by JS #}
+       class="max-h-64 overflow-y-auto space-y-2 pr-1 mt-2">
+    <!-- JS-injected tag buttons go here -->
   </div>
 </aside>
 

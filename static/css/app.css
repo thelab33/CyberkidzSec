@@ -249,3 +249,13 @@
 @import url("missing_ids.css");
 @import url("missing_ids.css");
 @import url("FILENAME.css");
+.btn:hover { filter: brightness(1.14) drop-shadow(0 2px 14px #ffb30099); transform: translateY(-2px) scale(1.04); transition: all 0.23s cubic-bezier(.41,1.5,.46,.95); }
+@media (prefers-reduced-motion: reduce) {.btn:hover {transition: none;transform:none;filter:none;}}
+#siteHeader.scrolled {box-shadow:0 2px 24px #0fc3;padding-top:4px;padding-bottom:4px;transition:all .22s cubic-bezier(.5,1.8,.5,.95);}
+:focus-visible {outline:2.5px dashed #0fc !important; outline-offset:2px !important;box-shadow:0 0 0 4px #0fc6;}
+#skip-nav:focus {animation: pulseFocus 1.2s cubic-bezier(.4,1.5,.5,1) infinite alternate;}
+@keyframes pulseFocus {0%{box-shadow:0 0 0 4px #0fc6;}100%{box-shadow:0 0 12px 8px #0fc2;}}
+.fade-in {opacity:0;transform:translateY(16px);transition:opacity .9s cubic-bezier(.33,1,.68,1),transform .8s cubic-bezier(.34,1.56,.64,1);}
+.fade-in.visible {opacity:1;transform:translateY(0);}
+.micro-card{background:#181825;border:1.5px solid #0fc6;padding:18px 20px;border-radius:16px;box-shadow:0 2px 20px #0fc2;transition:box-shadow .22s;}
+.micro-card:hover{box-shadow:0 4px 30px #34d39933,0 1.5px 16px #0fc9;}

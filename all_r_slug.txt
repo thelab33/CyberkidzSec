@@ -1,0 +1,11 @@
+templates/components/related_reports.html:30:          <a href="/reports/{{ r.slug }}" data-aos="fade-up" data-aos-delay="${i * 150}"
+templates/components/combined-vault-components.html:170:    a.href=`/reports/{{ r.slug }}`;
+templates/components/combined-vault-components.html:572:    div.onclick=()=>location.href=`/reports/{{ r.slug }}`;
+templates/components/combined-vault-components.html:721:            <a href="/reports/{{ r.slug }}"
+templates/components/combined-vault-components.html:922:  el.href  = `/reports/{{ r.slug }}`;
+templates/components/combined-vault-components.html:930:      <img src="https://cdn.example.com/thumbnails/{{ r.slug }}.jpg" alt=""
+templates/components/combined-vault-components.html:1113:    <a href="/reports/{{ r.slug }}" class="group block rounded-2xl focus:ring-2 focus:ring-orangeLuxe space-y-4">
+templates/components/combined-vault-components.html:1119:          <img src="https://source.unsplash.com/512x300?cybersecurity,{{ r.slug }}" alt="${r.title}"
+templates/components/combined-vault-components.html:1364:    <a href="/reports/{{ r.slug }}"
+templates/components/combined-vault-components.html:1373:            src="https://source.unsplash.com/512x300?cybersecurity,{{ r.slug }}"
+templates/components/command_palette.html:121:    div.onclick = () => location.href = `/reports/{{ r.slug }}`;

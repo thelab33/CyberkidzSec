@@ -51,7 +51,7 @@
     <nav class="flex flex-col gap-2 text-orange-300 space-y-4">
       {% set nav = [("Home","/"),("About","/about"),("Reports","/reports"),("Playground","/playground"),("Analytics","/charts")] %}
       {% for label, href in nav %}
-        <a href="{{ href }}" class="w-max hover:text-orangeLuxe transition space-y-4">{{ label }}</a>
+        <a href="#" class="w-max hover:text-orangeLuxe transition space-y-4">{{ label }}</a>
       {% endfor %}
     </nav>
 
@@ -115,12 +115,11 @@ fetch("/api/cve").then(r => r.json()).then(list => {
 </script>
 
 <!-- templates/playground.html -->
-{% extends "base.html" %}
 
 {% block title %}Playground · CyberKidzSec{% endblock %}
 
 {% block content %}
-<section role="region" data-aos="fade-up" class="ckz-hero" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" class="ckz-hero" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
   <div class="max-w-3xl mx-auto flex flex-col items-center justify-center gap-6 text-center space-y-4">
 
     <h1 class="ckz-hero-title space-y-4">
@@ -693,7 +692,7 @@ document.addEventListener("input",e=>{
 </script>
 
 <!-- related_reports.html -->
-<section role="region" data-aos="fade-up" id="relatedWrap" class="my-16" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up"></section data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" id="relatedWrap" class="my-16" data-aos="fade-up"" data-aos="fade-up"></section data-testid="combined-vault-components space-y-4" >
 
 <script>
 /* expects window.ALL_REPORTS (array) & window.CURRENT_REPORT (slug) injected server-side */
@@ -769,7 +768,7 @@ document.querySelectorAll(".skeleton").forEach(box=>{
 </script>
 
 <!-- tags_section.html -->
-<section role="region" data-aos="fade-up" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
   <h2 class="text-2xl font-bold mb-4" class= space-y-4"text-3xl sm:text-4xl font-extrabold text-center mb-8
              bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
     🏷️ Browse by Tag
@@ -903,7 +902,7 @@ render();
 </div>
 
 <!-- report_card_grid.html -->
-<section role="region" data-aos="fade-up" class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
   <h2 class="text-2xl font-bold mb-4" class="text-center text-3xl sm:text-4xl font-black mb-12 tracking-tight gradient-text-orange space-y-4">
     🧠 Featured Vulnerability Reports
   </h2>
@@ -988,7 +987,7 @@ function cvssColor(v){
   </div>
 </div>
 
-<section role="region" data-aos="fade-up" id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
   {% set banners = [
     ('images/og/main_vault_banner.png', "Main Vault Banner"),
     ('images/og/hacker_underground_banner.png', "Hacker Underground Banner"),
@@ -1032,7 +1031,7 @@ window.emptyState = {
 };
 </script>
 
-<section role="region" data-aos="fade-up" id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
 
   <!-- Ambient FX -->
   <div class="absolute inset-0 pointer-events-none space-y-4">
@@ -1202,7 +1201,7 @@ draw(TAGS_ALL);
   </div>
 </template>
 
-<audio id="vaultSfx" src="/sfx/vhs-glitch.mp3" preload="auto"></audio>
+<audio id="vaultSfx" src="/static/sfx/vhs-glitch.mp3" preload="auto"></audio>
 
 <style>
 @keyframes pulse-glow { 0%,100%{opacity:.05} 50%{opacity:.15} }
@@ -1791,7 +1790,7 @@ function announce(msg) {
 </script>
 
 <!-- report_charts_grid.html -->
-<section role="region" data-aos="fade-up" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+<section role="region" data-aos="fade-up" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
 
   <!-- Bar card -->
   <article class="chart-card border-orangeLuxe" data-aos="fade-up" space-y-4">

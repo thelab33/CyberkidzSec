@@ -1,37 +1,42 @@
-<section role="region" data-aos="fade-up" id="bug-tales"
-         class="prose mx-auto my-12 p-6 rounded-xl border border-orangeLuxe/30 bg-gradient-to-br from-zinc-900 via-cyberNight-glow to-black
-                shadow-[0_0_20px_rgba(249,115,22,0.15)] text-orangeLuxe-light font-mono"
-         role="region" aria-labelledby="bt-heading">
-  <!-- 🧠 Heading -->
-  <h2 class="text-2xl font-bold mb-4" id="bt-heading" class="text-3xl font-extrabold tracking-tight flex items-center gap-2 mb-4 space-y-4">
-    🎙️ Bug Tales: <span class="text-orange-400 space-y-4">Zero-Day Chronicles</span>
+<section id="bug-tales"
+         role="region"
+         aria-labelledby="bt-heading"
+         class="prose mx-auto my-12 p-6 rounded-xl border border-orangeLuxe/30
+                bg-gradient-to-br from-zinc-900 via-cyberNight-glow to-black
+                shadow-[0_0_20px_rgba(249,115,22,0.15)] text-orangeLuxe-light font-mono">
+
+  <!-- Heading -->
+  <h2 id="bt-heading" class="text-3xl font-extrabold tracking-tight flex items-center gap-2 mb-6">
+    🎙️ Bug Tales:
+    <span class="text-orange-400">Zero-Day Chronicles</span>
   </h2>
-  <p class="text-sm text-orangeLuxe-light/80 mb-6 max-w-prose space-y-4">
+
+  <p class="text-sm text-orangeLuxe-light/80 mb-8 max-w-prose italic">
     Sit back and listen as ghost-mode operatives recall their most haunting vulnerability finds.
   </p>
 
-  <!-- 🌌 Audio Visualizer Canvas -->
-  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden space-y-4"></canvas>
+  <!-- Audio Visualizer Canvas -->
+  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden mb-6"></canvas>
 
-  <!-- 🔉 Hidden Ambient Audio -->
+  <!-- Audio Player (hidden) -->
   <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
-    <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg">
+    <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg" />
   </audio>
 
-  <!-- 🎛 Controls -->
-  <div class="flex flex-wrap items-center gap-4 mt-6 space-y-4">
+  <!-- Controls -->
+  <div class="flex flex-wrap items-center gap-4">
     <button id="bt-play"
-            class="btn btn--solid bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-5 py-2 rounded shadow transition space-y-4"
+            class="btn btn--solid bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-5 py-2 rounded shadow transition"
             aria-label="Play Bug Tale">
       ▶️ Play Story
     </button>
     <button id="bt-stop"
-            class="btn btn--outline bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2 rounded shadow transition space-y-4"
+            class="btn btn--outline bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2 rounded shadow transition"
             disabled
             aria-label="Stop Bug Tale">
       ⏹️ Stop
     </button>
-    <div class="ml-auto text-xs italic text-orangeLuxe-light/60 hidden sm:block space-y-4">
+    <div class="ml-auto text-xs italic text-orangeLuxe-light/60 hidden sm:block">
       🔁 Looping ambient keyboard audio
     </div>
   </div>
@@ -89,7 +94,7 @@
     playBtn.disabled = false;
     stopBtn.disabled = true;
     if (animationId) cancelAnimationFrame(animationId);
-    canvas?.classList.add("hidden");
+    canvas.classList.add("hidden");
   });
 
   // Auto-restore from localStorage if user left playback on

@@ -3,9 +3,7 @@
       class="scroll-smooth motion-safe:scroll-auto bg-cyberNight text-zinc-100 antialiased flex flex-col min-h-screen"
       data-theme="dark">
 <head>
-  {# ────────────────────────────────
-     🪪 Meta / SEO / Icons / Fonts
-  ──────────────────────────────── #}
+  {# ────── 🪪 Meta / SEO / Icons / Fonts ────── #}
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
@@ -21,12 +19,10 @@
 
   {# Fonts - preconnect and load Inter fast #}
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" as="style" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&amp;display=swap" as="style" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&amp;display=swap" rel="stylesheet" />
 
-  {# ────────────────────────────────
-     🧬 Core & Section Styles (modular)
-  ──────────────────────────────── #}
+  {# ────── 🧬 Core & Section Styles (modular) ────── #}
   {% set styles = [
     'css/app.min.css',
     'css/ghost-mode.css',
@@ -62,15 +58,17 @@
   </script>
 </head>
 <body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe" data-page="vault">
-
-  {# ────────────────
-     ⌨️ Skip Navigation (a11y)
-  ──────────────── #}
+  {# ⌨️ Skip Navigation (a11y) #}
   {% include "components/skip_nav.html" %}
 
-  {# ────────────────
-     🎉 Page Fade Overlay (progressive)
-  ──────────────── #}
+  {# 🚀 A2HS Banner (Custom Install Prompt) #}
+  <div id="a2hs-banner" style="display:none; position:fixed; bottom:2.5rem; left:0; right:0; z-index:9999; background:#101010e6; color:#fff; padding:1rem; text-align:center; box-shadow:0 2px 24px #000a; border-radius: 1rem 1rem 0 0; font-family: Inter, sans-serif;">
+    <span style="font-size:1.05em;">🚀 Install <strong>CYBERKIDZSEC Vault</strong> for offline & lightning-fast access!</span>
+    <button id="a2hs-btn" style="margin-left:1rem; padding:0.5rem 1.4rem; background:linear-gradient(90deg,#f59e42,#fffbe5); color:#222; border:none; border-radius:6px; font-weight:600; box-shadow:0 2px 8px #f59e4280; cursor:pointer; transition:.18s;">Add to Home Screen</button>
+    <button id="a2hs-dismiss" style="margin-left:0.75rem; background:none; color:#fff; border:none; font-size:1.2em; cursor:pointer;">✖</button>
+  </div>
+
+  {# 🎉 Page Fade Overlay (progressive) #}
   <div id="page-fade-overlay" class="fixed inset-0 pointer-events-none z-50 bg-black opacity-0 transition-opacity duration-500"></div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -81,54 +79,38 @@
     });
   </script>
 
-  {# ────────────────
-     🚀 Main Content Layout
-  ──────────────── #}
+  {# 🚀 Main Content Layout #}
   <main id="main" class="flex-1" role="main" tabindex="-1">
     {% block content %}
-      {# 1. HERO SECTION #}
       {% include "components/intro_layer.html" %}
-      {# 2. STATUS BANNER #}
       <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
         <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse select-none">
           🛰️ Zero-Day Archive Updating · Stay Ghosted.
         </div>
       </section>
-      {# 3. BUG TALES #}
       {% include "components/bug_tales.html" %}
-      {# 4. VAULT OVERVIEW / ABOUT / XP / BANNERS #}
       {% include "components/vault_overview_section.html" %}
-      {# 5. FEED / REPORTS / FILTERS #}
       {% include "components/vault_feed.html" %}
-      {# 6. PLAYGROUND & HUD #}
       {% include "components/hacker_playground_section.html" %}
-      {# 7. UTILITIES & POPUPS #}
       {% include "components/utility_modals.html" %}
-      {# 8. HIDDEN EXTRAS #}
       {% include "components/hidden_extras.html" %}
     {% endblock %}
   </main>
 
-  {# ────────────────
-     🧭 Footer & Out-of-flow Utilities
-  ──────────────── #}
+  {# 🧭 Footer & Out-of-flow Utilities #}
   {% include "components/footer.html" %}
   {% include "components/back_to_top.html" %}
   {% block breadcrumbs %}{% endblock %}
 
-  {# ────────────────
-     🎛️ HUD, Modals & Command Palette
-  ──────────────── #}
+  {# 🎛️ HUD, Modals & Command Palette #}
   {% include "components/vault_popup.html" %}
   {% include "components/vault_copilot.html" %}
   {% include "components/section_skeleton.html" %}
   {% include "components/quick_view_modal.html" %}
   {% include "components/hud_toolbar.html" %}
   {% include "components/command_palette.html" %}
-
-  {# ────────────────
-     ⚙️ JS: App, Vendor, Section Scripts
-  ──────────────── #}
+  
+  {# ⚙️ JS: App, Vendor, Section Scripts #}
   {% set scripts = [
     'js/app.min.js',
     'js/ghost-mode.js',
@@ -140,6 +122,28 @@
   {% endfor %}
   <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script>
+    // A2HS logic (custom PWA install banner)
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('a2hs-banner').style.display = 'block';
+    });
+    document.getElementById('a2hs-btn')?.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') showToast("App added to your home screen!", "success");
+        else showToast("Add to Home Screen cancelled.", "info");
+        document.getElementById('a2hs-banner').style.display = 'none';
+        deferredPrompt = null;
+      }
+    });
+    document.getElementById('a2hs-dismiss')?.addEventListener('click', () => {
+      document.getElementById('a2hs-banner').style.display = 'none';
+    });
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // AOS animation setup
@@ -200,16 +204,40 @@
     <script defer data-domain="cyberkidzsec.com" src="https://plausible.io/js/script.js"></script>
   {% endif %}
   <script>
-  // Always scroll to top on page reload or navigation, even after browser "remembers" scroll!
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 10); // 10ms ensures after layout
-  });
-</script>
+    // Always scroll to top on page reload or navigation, even after browser "remembers" scroll!
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, 10); // 10ms ensures after layout
+    });
+  </script>
+  {% include "components/ai_chat_widget.html" %}
+  {% include "components/starfield_canvas.html" %}
+  {% include "components/footer_extras.html" %}
 
 </body>
 </html>
 
+<div id="pwa-hud" style="display:none; position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000; background:#0f172a; color:#f8fafc; padding:.8em 1.5em; border-radius:12px; font-size:.95em; box-shadow:0 2px 18px #0009; font-family:monospace;"><span id="hud-online"></span></div>
+<script src="{{ url_for('static', filename='js/pwa_hud.js') }}"></script>
+<script src="{{ url_for('static', filename='js/confetti.js') }}"></script>
+<script>window.confettiSuccess=()=>{if(window.confetti)window.confetti({spread:70,particleCount:100,origin:{y:0.7}});}</script>
+<div id="hud-status-toast" style="display:none;position:fixed;top:1.5em;right:2em;z-index:9000;background:#1a1b2a;color:#0fc;padding:.7em 1.5em;border-radius:12px;font-family:monospace;box-shadow:0 2px 16px #0fc2;"></div><script>function setHudStatus(msg,c){const e=document.getElementById("hud-status-toast");e.textContent=msg;e.style.display="block";e.style.borderColor=c||"#0fc";setTimeout(()=>{e.style.display="none"},4000);}</script>
+<script>document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".fade-in").forEach(e=>setTimeout(()=>e.classList.add("visible"),230));});</script>
+<canvas id="bg-starfield" style="position:fixed;z-index:-1;top:0;left:0;width:100vw;height:100vh;pointer-events:none;"></canvas><script src="{{ url_for('static', filename='js/webgl-starfield.js') }}"></script><script>if(window.initStarfieldCoreCore){window.initStarfieldCoreCore("bg-starfield");}</script>
+<script>
+document.getElementById("aiCopilotBtn").onclick=()=>showToast("AI Copilot is coming soon!","success");
+</script>
+
+<script>
+window.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    const inp = document.getElementById("autoSearch");
+    inp.classList.toggle("hidden");
+    inp.focus();
+  }
+});
+</script>

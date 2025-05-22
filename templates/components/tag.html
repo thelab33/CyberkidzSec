@@ -1,31 +1,117 @@
-<span class="tagCmp" role="button" tabindex="0 space-y-4"></span>
+<!-- templates/components/tag_component.html -->
+<section id="tagsSection"
+         role="region"
+         aria-labelledby="tagsHeading"
+         class="my-24 px-6"
+         data-aos="fade-up"
+         data-testid="tags_section">
+  <h2 id="tagsHeading"
+      class="text-3xl sm:text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-orangeLuxe via-pink-400 to-fuchsia-500 bg-clip-text text-transparent">
+    🏷️ Browse by Tag
+  </h2>
+
+  <!-- Tag Buttons Rail -->
+  <div id="tagRail"
+       class="relative flex gap-2 overflow-x-auto pb-3 no-scrollbar snap-x snap-mandatory">
+    <!-- Fades -->
+    <div class="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-cyberNight to-transparent"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-cyberNight to-transparent"></div>
+  </div>
+
+  <!-- Filtered Grid Results -->
+  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list"></div>
+</section>
 
 <style>
 .tagCmp {
   @apply inline-block px-3 py-1 text-[11px] font-bold font-mono uppercase rounded-full border
-         cursor-pointer select-none transition-all duration-300 ease-in-out hover:scale-105;
+         cursor-pointer select-none transition-all duration-300 ease-in-out hover:scale-105
+         focus:outline-none focus:ring-2 focus:ring-orangeLuxe;
 }
+
 .tagCmp[data-active="false"] {
   @apply border-orangeLuxe/30 text-orangeLuxe-light/80 bg-orangeLuxe/10 hover:bg-orangeLuxe/20;
 }
+
 .tagCmp[data-active="true"] {
   @apply border-orangeLuxe bg-orangeLuxe text-black shadow-[0_0_8px_#f97316] animate-pulse;
 }
 </style>
 
-<script>
-function makeTag(label, active = false, onClick = null) {
-  const span = document.createElement("span");
-  span.className = "tagCmp";
-  span.textContent = "#" + label;
-  span.dataset.active = active;
-  span.setAttribute("role", "button");
-  span.setAttribute("tabindex", "0");
+<script type="module">
+  const REPORTS = window.ALL_REPORTS || [];
+  const TAGS = Array.from(new Set(REPORTS.flatMap(r => r.tags))).sort();
 
-  span.onclick = () => onClick?.(label);
-  span.onkeydown = e => { if (e.key === "Enter") span.click(); };
+  let activeTag = null;
+  const rail = document.getElementById("tagRail");
+  const grid = document.getElementById("tagGrid");
 
-  return span;
-}
+  function makeTag(label, active = false, onClick = null) {
+    const span = document.createElement("span");
+    span.className = "tagCmp";
+    span.textContent = "#" + label;
+    span.dataset.active = active;
+    span.setAttribute("role", "button");
+    span.setAttribute("tabindex", "0");
+    span.setAttribute("aria-pressed", active.toString());
+
+    span.onclick = () => onClick?.(label);
+    span.onkeydown = e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        span.click();
+      }
+    };
+
+    return span;
+  }
+
+  function drawRail() {
+    rail.querySelectorAll(".tagCmp").forEach(n => n.remove());
+    rail.prepend(makeTag("All", activeTag === null, () => { activeTag = null; render(); }));
+    TAGS.forEach(tag => {
+      const el = makeTag(tag, tag === activeTag, () => {
+        activeTag = tag;
+        render();
+      });
+      el.setAttribute("data-tag", tag);
+      rail.appendChild(el);
+    });
+  }
+
+  function render() {
+    drawRail();
+    grid.innerHTML = "";
+
+    const results = activeTag ? REPORTS.filter(r => r.tags.includes(activeTag)) : REPORTS;
+    if (!results.length) {
+      grid.innerHTML = `<p class="col-span-full text-center text-orange-300 font-mono text-sm">⚠️ No reports found.</p>`;
+      return;
+    }
+
+    results.forEach((r, i) => {
+      const el = document.createElement("article");
+      el.className = "p-4 rounded-xl border border-orangeLuxe/25 bg-gradient-to-br from-cyberNightGlow via-cyberNight to-zinc-900/80 shadow-lg space-y-2";
+      el.setAttribute("data-aos", "fade-up");
+      el.setAttribute("data-aos-delay", (i * 100).toString());
+
+      el.innerHTML = `
+        <h3 class="text-lg font-semibold text-orangeLuxe-light">${r.title}</h3>
+        <p class="text-xs font-mono text-orangeLuxe-light/70">${r.summary || "No summary available."}</p>
+        <div class="flex flex-wrap gap-1 text-xs font-mono">
+          ${r.tags.map(tag => `<span class="tagCmp" data-active="false">#${tag}</span>`).join("")}
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+
+    // Auto scroll active tag into view
+    if (activeTag) {
+      const el = rail.querySelector(`[data-tag="${activeTag}"]`);
+      el?.scrollIntoView({ inline: "center", behavior: "smooth" });
+    }
+  }
+
+  render();
 </script>
 

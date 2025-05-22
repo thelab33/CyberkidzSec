@@ -1,0 +1,81 @@
+{# components/footer_extras.html — Modularized footer scripts and styles #}
+
+<!-- 🌌 Animated Aurora & Noise Layers (moved from footer) -->
+<style>
+  .ghost-breach-warning {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(255, 71, 71, 0.08);
+    color: #f87171;
+    font-weight: bold;
+    font-family: var(--font-mono, monospace);
+    margin-top: 2rem;
+    border: 1px solid #f87171;
+    border-radius: 0.75rem;
+    animation: pulse 2s infinite;
+  }
+  @keyframes toastFade {
+    0% { opacity: 0; transform: translateY(10px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #10b981;
+    color: white;
+    font-family: monospace;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(16,185,129,0.5);
+    animation: toastFade 4s ease-in-out forwards;
+    z-index: 9999;
+  }
+</style>
+
+<!-- PWA HUD, AI Copilot, Search Input -->
+<script src="{{ url_for('static', filename='js/webgl-starfield.js') }}"></script>
+<script>if(window.initStarfieldCoreCore){window.initStarfieldCoreCore('bg-starfield');}</script>
+<div id="pwa-hud"></div>
+<script src="{{ url_for('static', filename='js/pwa_hud.js') }}"></script>
+<button id="aiCopilotBtn">💬 Chat with Copilot</button>
+<script>document.getElementById('aiCopilotBtn').onclick = ()=> showToast('AI Copilot is coming soon!', 'success');</script>
+
+<input id="autoSearch" type="text" placeholder="🔍 Search the Vault..." onkeyup="if(event.key==='Enter'){window.location.href='/search?q='+encodeURIComponent(this.value);}">
+<script>
+  window.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      const inp = document.getElementById('autoSearch');
+      inp.classList.toggle('hidden'); inp.focus();
+    }
+  });
+</script>
+
+<!-- Vault Stability & CVE Logic -->
+<script type="module">
+import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+(() => {
+  const vaultXP = parseInt('{{ vault_xp_percentage }}') || 0;
+  // Animate XP bar moved to component
+  // CVE counter
+  const cveCounter = document.getElementById('cveCounter');
+  if (cveCounter) fetch('https://cve.circl.lu/api/last')
+    .then(r => r.json()).then(data => cveCounter.textContent = Array.isArray(data) ? data.length.toLocaleString() : '--')
+    .catch(() => cveCounter.textContent = '⚠️');
+  
+  // Confetti on newsletter form submission
+  const form = document.querySelector('form[action*="buttondown.email"]');
+  if (form) form.addEventListener('submit', () => {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = '📬 Subscribed! GhostMail en route.';
+    document.body.appendChild(toast);
+    confetti({ particleCount: 70, spread: 90, origin: { y: 0.6 } });
+  });
+})();
+</script>
+

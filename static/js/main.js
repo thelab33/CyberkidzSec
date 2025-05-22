@@ -80,7 +80,7 @@ function initScrollHeader() {
 function initAudioFX() {
   const audio = {
     click: new Audio('/static/sfx/keyboard-clack.mp3'),
-    unlock: new Audio('/static/sfx/vhs-unlock.mp3'),
+    unlock: new Audio('/static/static/sfx/vhs-unlock.mp3'),
     swoosh: new Audio('/static/sfx/swoosh.mp3'),
     breach: new Audio('/static/sfx/breach.mp3'),
   };
@@ -260,6 +260,59 @@ function initStarfield(canvasId) {
   };
 }
 
+// 10. Filters + Sort + Persistence + AI Hook
+function initFilters() {
+  const tags = ["XSS", "Injection", "Misconfig", "Race Condition", "Other"];
+  const tagFilters = document.getElementById("tagFilters");
+  const sortSelect = document.getElementById("sortSelect");
+
+  // Restore state
+  const savedTag = localStorage.getItem("activeTag");
+  const savedSort = localStorage.getItem("sortOrder");
+
+  // Tag Buttons
+  tags.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.textContent = `#${tag}`;
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", "false");
+    btn.className = "px-3 py-1 rounded-md border border-orangeLuxe text-orangeLuxe hover:bg-orangeLuxe hover:text-black text-xs transition";
+    if (savedTag === tag) btn.classList.add("bg-orangeLuxe", "text-black");
+
+    btn.addEventListener("click", () => {
+      tagFilters.querySelectorAll("button").forEach(b => b.setAttribute("aria-checked", "false"));
+      btn.setAttribute("aria-checked", "true");
+
+      localStorage.setItem("activeTag", tag);
+      document.querySelectorAll(".report-card").forEach(card => {
+        const match = card.dataset.tags?.toLowerCase().includes(tag.toLowerCase());
+        card.style.display = match ? "" : "none";
+      });
+
+      window.forgeToast(`🔍 Filtered by #${tag}`, "info");
+      // Hook: AI Summarizer Ready
+      console.log(`[🧠 GPT] Filtered by tag: ${tag}`);
+    });
+
+    tagFilters.appendChild(btn);
+  });
+
+  // Sort Select
+  if (sortSelect && savedSort) sortSelect.value = savedSort;
+  sortSelect?.addEventListener("change", () => {
+    const val = sortSelect.value;
+    localStorage.setItem("sortOrder", val);
+    // TODO: Custom sort logic can be plugged here
+    window.forgeToast(`🧮 Sorted: ${val}`, "info");
+    console.log(`[📊 SORT] Active sort: ${val}`);
+  });
+}
+// Hook this inside tag click logic
+const summaryBox = document.getElementById("aiSummaryBox");
+if (summaryBox) {
+  summaryBox.textContent = `🧠 GPT summary: Here’s what we know about #${tag}…`; // Replace with actual AI call
+}
+initFilters();
 // 🧠 Starfield Boot (on page load)
 document.addEventListener('DOMContentLoaded', () => {
   initStarfield('heroStarfield');

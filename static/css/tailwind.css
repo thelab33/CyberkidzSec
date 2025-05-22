@@ -1,30 +1,65 @@
 /* ──────────────────────────────────────────────
    ⚙️ CYBERKIDZSEC STARFORGE CSS — FORGEMASTER+
 ──────────────────────────────────────────────── */
-
-/* Tailwind Layers */
+/* ───────── Tailwind Core Directives ───────── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Modular Imports */
-@import url("cyber-enhancements.css");
-@import url("ghost-boot.css");
-@import url("ghost-mode.css");
-@import url("back_to_top.css");
-@import url("bug_tales.css");
+/* ───────── Core Styles & Tokens ───────── */
+@import "utilities/variables.css";
+@import "cyber-enhancements.css";
 
-/* Core Layout */
-@import url("sections/header.css");
-@import url("sections/hero.css");
-@import url("sections/footer.css");
-@import url("sections/skip_nav.css");
-@import url("sections/console.css");
+/* ───────── Components ───────── */
+@import "components/button.css";
+@import "components/card_lift.css";
+@import "components/command_palette.css";
+@import "components/header.css";
+@import "components/hero.css";
+@import "components/hud_status.css";
+@import "components/intro-layer.css";
+@import "components/terminal_scan.css";
+@import "components/theme_switch.css";
+@import "components/toast.css";
+@import "components/vault_banners.css";
+@import "components/vault_overlay.css";
+@import "components/xp_bar.css";
 
-/* Animations & Effects */
-@import url("animations.css");
-@import url("components/hud-status.css");
-@import url("sections/report-grid.css");
+/* ───────── Sections ───────── */
+@import "sections/breadcrumbs.css";
+@import "sections/empty_state.css";
+@import "sections/featured_reports.css";
+@import "sections/filter_bar.css";
+@import "sections/hacker_playground.css";
+@import "sections/header.css";
+@import "sections/hero.css";
+@import "sections/index_enhancements.css";
+@import "sections/pagination.css";
+@import "sections/related_reports.css";
+@import "sections/report_charts_grid.css";
+@import "sections/report_grid.css";
+@import "sections/sidebar_cta.css";
+@import "sections/sidebar_filters.css";
+@import "sections/skip_nav.css";
+@import "sections/sticky_header.css";
+@import "sections/tags_section.css";
+@import "sections/vault_banners.css";
+@import "sections/vault_overview.css";
+
+/* ───────── Utilities & Effects ───────── */
+@import "utilities/animations.css";
+@import "utilities/glitch.css";
+
+/* ───────── Optional Modes & Layouts ───────── */
+@import "ghost-mode.css";
+@import "ghost-boot.css";
+
+/* ───────── Layouts & Overrides ───────── */
+@import "layouts/layout.css"; /* If you have layout helpers */
+@import "quick_patches.css";
+
+/* ───────── Themes (if any) ───────── */
+@import "themes/dark.css"; /* example, replace with your theme files */
 
 /* ──────────────────────────────
    🎨 Base Variables & Dark Mode

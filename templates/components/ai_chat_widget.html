@@ -1,0 +1,93 @@
+<!-- AI Chat Widget — CYBERKIDZSEC Forgemaster Tier -->
+<style>
+#aiChatBtn {
+  position: fixed; bottom: 32px; right: 32px; z-index: 9999;
+  background: linear-gradient(90deg, #0fc, #f97316); color: #222; font-size: 2rem;
+  border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 18px #0fc7, 0 0 0 4px #f9731633; transition: box-shadow .2s;
+}
+#aiChatBtn:hover { box-shadow: 0 4px 32px #f97316cc, 0 0 0 6px #0fc8; }
+#aiChatWidget {
+  position: fixed; bottom: 100px; right: 32px; z-index: 9999; width: 370px; max-width: 96vw;
+  background: #181A26F5; border-radius: 1.25rem; box-shadow: 0 2px 32px #0fc9;
+  display: none; flex-direction: column; overflow: hidden; border: 2px solid #0fc7;
+}
+#aiChatHeader { background: #232742; color: #0fc; font-weight: bold; padding: 0.7em 1.2em; }
+#aiChatClose { float: right; color: #f97316; font-size: 1.3em; cursor: pointer; }
+#aiChatLog { flex: 1; padding: 1em; overflow-y: auto; max-height: 270px; font-size: 1em; font-family: monospace; }
+#aiChatInputArea { border-top: 1px solid #0fc7; display: flex; }
+#aiChatInput {
+  flex: 1; border: none; background: #10121d; color: #fff; padding: 0.6em 1em;
+  font-size: 1em; font-family: inherit; border-radius: 0 0 0 1em; outline: none;
+}
+#aiChatSend { background: #0fc; color: #181A26; border: none; font-weight: bold;
+  padding: 0 1.2em; border-radius: 0 0 1em 0; cursor: pointer; transition: background .1s;
+}
+#aiChatSend:hover { background: #f97316; color: #222; }
+.ai-msg-user   { text-align: right; color: #0fc; margin-bottom: 2px; }
+.ai-msg-assist { text-align: left;  color: #fbbf24; margin-bottom: 8px; }
+.ai-msg-stream { color: #b3ffec; }
+</style>
+
+<button id="aiChatBtn" title="AI Chat (Ctrl+J)">💬</button>
+<div id="aiChatWidget" aria-modal="true" role="dialog">
+  <div id="aiChatHeader">
+    Vault Copilot
+    <span id="aiChatClose" title="Close">&times;</span>
+  </div>
+  <div id="aiChatLog" aria-live="polite"></div>
+  <form id="aiChatInputArea" autocomplete="off">
+    <input id="aiChatInput" type="text" autocomplete="off" placeholder="Ask anything about hacking, bugs, or security…">
+    <button type="submit" id="aiChatSend">➤</button>
+  </form>
+</div>
+
+<script>
+(function() {
+  const widget = document.getElementById('aiChatWidget');
+  const btn = document.getElementById('aiChatBtn');
+  const close = document.getElementById('aiChatClose');
+  const log = document.getElementById('aiChatLog');
+  const form = document.getElementById('aiChatInputArea');
+  const input = document.getElementById('aiChatInput');
+  let messages = [{role:"system",content:"You are CYBERKIDZSEC Vault Copilot, an elite AI bug bounty and cybersecurity assistant."}];
+  function appendMsg(role, txt, stream) {
+    let el = document.createElement("div");
+    el.className = "ai-msg-" + (role === "user" ? "user" : "assist") + (stream ? " ai-msg-stream" : "");
+    el.textContent = txt;
+    log.appendChild(el); log.scrollTop = log.scrollHeight;
+  }
+  function toggleChat(show) { widget.style.display = show ? "flex" : "none"; if(show) setTimeout(()=>input.focus(),120);}
+  btn.onclick = () => toggleChat(true);
+  close.onclick = () => toggleChat(false);
+  window.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') { toggleChat(widget.style.display!=="flex"); }
+    if (e.key === "Escape" && widget.style.display === "flex") toggleChat(false);
+  });
+  form.onsubmit = async e => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if(!q) return;
+    appendMsg("user", q);
+    input.value = ""; appendMsg("assist", "▍", true);
+    log.scrollTop = log.scrollHeight;
+    messages.push({role:"user",content:q});
+    let msgIdx = log.children.length-1, buf = "";
+    const resp = await fetch("/api/ai-chat", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({messages, model:"gpt-4o"})
+    });
+    if (!resp.body) { log.children[msgIdx].textContent = "⚠️ Error: No response"; return; }
+    const reader = resp.body.getReader();
+    let done, value;
+    while (!(done = (await reader.read()).done)) {
+      value = new TextDecoder().decode(value = value || value);
+      buf += value; log.children[msgIdx].textContent = buf + "▍";
+    }
+    log.children[msgIdx].textContent = buf.trim();
+    messages.push({role:"assistant",content:buf.trim()});
+  };
+})();
+</script>
+

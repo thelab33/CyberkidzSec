@@ -77,3 +77,14 @@ function makeTiltCard(report, tagLimit = 4) {
 })();
 </script>
 
+<button class="btn btn--solid btn-sm mt-2" onclick="summarizeReport(this)">🧠 Summarize</button>
+<script>
+async function summarizeReport(btn) {
+  btn.textContent = "Summarizing…";
+  const text = btn.closest(".report-card").innerText;
+  const resp = await fetch("/api/gpt_summarize", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text})});
+  const data = await resp.json();
+  showToast(data.summary || "No summary found.","success");
+  btn.textContent = "🧠 Summarize";
+}
+</script>

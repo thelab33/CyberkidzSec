@@ -4,7 +4,7 @@
 {% set key_stats_headers = ['Category', 'Count'] %}
 {% set key_stats_rows = [['XSS', 12], ['Injection', 15], ['Misconfig', 8]] %}
 
-<section id="vault-overview" role="region" aria-labelledby="overviewTitle"
+<section data-insight="pending" id="vault-overview" role="region" aria-labelledby="overviewTitle"
          class="section-container my-24 space-y-20"
          data-aos="fade-up">
 
@@ -66,7 +66,7 @@
          aria-live="polite" aria-busy="{{ 'false' if posts else 'true' }}">
       {% if posts %}
         {% for post in posts %}
-          <article class="card hover-lift animate-fade-in group transition-all"
+          <article class="aos-init aos-animate "card hover-lift animate-fade-in group transition-all"
                    data-aos="zoom-in"
                    data-aos-delay="{{ loop.index0 * 100 }}"
                    aria-labelledby="post-{{ loop.index0 }}-title">
@@ -81,6 +81,7 @@
               <p class="text-sm text-orangeLuxe-light/70 font-mono line-clamp-3 flex-grow">
                 {{ post.excerpt }}
               </p>
+              <button class="btn btn--ghost text-xs font-mono text-emeraldLuxe/80 hover:text-orangeLuxe" onclick="showToast(u0022🧠 GPT summary coming soon!u0022)">🧠 Quick Summary</button>
               <a href="{{ url_for('blog_detail', slug=post.slug) }}"
                  class="mt-auto btn btn--outline w-max">
                 Read More →
@@ -127,7 +128,7 @@
       </div>
     </div>
     <div data-aos="fade-up" data-aos-delay="600">
-      <h2 class="text-2xl font-bold mb-4">Key Stats</h2>
+      <h2 class="tracking-wide animate-pulse-glow text-orangeLuxe-light text-2xl font-bold mb-4">Key Stats</h2>
       {{ macros.data_table(key_stats_headers, key_stats_rows, caption="Summary of vulnerabilities reported to various platforms") }}
     </div>
   </section>

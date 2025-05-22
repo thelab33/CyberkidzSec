@@ -1,0 +1,25 @@
+<div id="a2hs-banner" style="display:none; position:fixed; bottom:32px; left:0; right:0; z-index:9999; background:#1c1c28; color:#fff; padding:1rem; text-align:center; box-shadow:0 2px 16px #000a;">
+  <span>🚀 Install CYBERKIDZSEC Vault for offline & fast access!</span>
+  <button id="a2hs-btn" style="margin-left:1rem; padding:0.5rem 1.2rem; background:#f59e42; color:#222; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Add to Home Screen</button>
+  <button id="a2hs-dismiss" style="margin-left:0.75rem; background:none; color:#fff; border:none; font-size:1.2em; cursor:pointer;">✖</button>
+</div>
+<script>
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('a2hs-banner');
+  if (banner) banner.style.display = 'block';
+});
+document.getElementById('a2hs-btn')?.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    document.getElementById('a2hs-banner').style.display = 'none';
+    deferredPrompt = null;
+  }
+});
+document.getElementById('a2hs-dismiss')?.addEventListener('click', () => {
+  document.getElementById('a2hs-banner').style.display = 'none';
+});
+</script>
