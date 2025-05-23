@@ -1,3 +1,7 @@
+/* File: static/css/components/vault_overlay.css - Description here */
+
+/* File: ./static/css/components/vault_overlay.css - Description here */
+
 /* ==========================================
    Vault Static Overlay ✨
    (Enhances .vhsMask when popup opens)
@@ -34,7 +38,7 @@
 }
 
 /* TV Static Animation */
-@keyframes staticNoise {
+@keyframes static-noise {
   0% {
     transform: translate(0, 0) scale(1);
   }

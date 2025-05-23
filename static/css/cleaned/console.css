@@ -1,0 +1,96 @@
+/* File: static/css/console.css - Description here */
+
+/* File: ./static/css/console.css - Description here */
+
+/* static/css/console.css */
+
+/* ─── Vault Loader Overlay ─── */
+#vault-loader {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 95%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#vault-loader p {
+  color: var(--color-orange-luxe);
+  font-size: 1.25rem;
+  animation: pulseWarp 1.5s ease-in-out infinite;
+}
+
+#vault-loader span {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--color-emerald-ghost);
+}
+
+#loaderClose {
+  margin-top: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--color-zinc-400);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#loaderClose:hover {
+  color: var(--color-zinc-100);
+}
+
+/* ─── Connection Status Badge ─── */
+
+/* ─── Terminal-Scan Interface ─── */
+
+/* ─── HUD Status Panel ─── */
+#hud-status {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgb(15 17 26 / 90%);
+  color: var(--color-zinc-200);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 60%);
+  font-family: monospace;
+  z-index: 9000;
+}
+
+/* ─── Keyframes ─── */
+@keyframes pulse-warp {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05) translateX(2px);
+    opacity: 0.8;
+  }
+}
+
+#vault-loader.hidden {
+  display: none !important; /* Force override if needed */
+}
+
+#loaderClose:active {
+  transform: scale(0.9);
+  transition: transform 0.15s ease-in-out;
+}
+
+#vault-loader {
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+#vault-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}

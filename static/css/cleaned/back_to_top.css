@@ -1,0 +1,16 @@
+/* File: static/css/back_to_top.css - Description here */
+
+/* File: ./static/css/back_to_top.css - Description here */
+
+/* static/css/back_to_top.css */
+
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
