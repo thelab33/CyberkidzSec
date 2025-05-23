@@ -1,3 +1,7 @@
+/* File: static/css/ghost-mode.css - Description here */
+
+/* File: ./static/css/ghost-mode.css - Description here */
+
 /* ───────────────────────────────────────────────────────────────
    👻 Hacker Vault Skin: Ghost Mode — STARFORGE Edition
 ────────────────────────────────────────────────────────────────── */
@@ -76,7 +80,7 @@ body[data-ghost-mode="true"] {
 }
 
 /* ✨ Ghost Blinker + Scanlines Animations */
-@keyframes blinkGhost {
+@keyframes blink-ghost {
   0%,
   100% {
     opacity: 1;
@@ -87,7 +91,7 @@ body[data-ghost-mode="true"] {
   }
 }
 
-@keyframes scanlinesGhost {
+@keyframes scanlines-ghost {
   0% {
     background-position: 0 0;
   }

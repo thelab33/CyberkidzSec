@@ -1,14 +1,22 @@
 {
   "extends": [
     "stylelint-config-standard",
+    "stylelint-config-css-modules",
     "stylelint-config-tailwindcss"
   ],
   "rules": {
-    "selector-id-pattern": null,
-    "at-rule-no-unknown": [true, {
-      "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "layer", "screen"]
-    }],
-    "at-rule-no-deprecated": null
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen", "layer", "content"]
+      }
+    ],
+    "selector-class-pattern": "^[a-zA-Z0-9_:\\/\\[\\]\\-]+$",
+    "selector-id-pattern": "^[a-zA-Z0-9_\\-]+$",
+    "keyframes-name-pattern": "^[a-z0-9\\-]+$",
+    "no-duplicate-selectors": true,
+    "block-no-empty": true,
+    "declaration-block-no-duplicate-properties": true
   }
 }
 

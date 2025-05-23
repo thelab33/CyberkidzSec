@@ -1,6 +1,6 @@
-<section role="region" data-aos="fade-up" id="relatedWrap" class="my-20" data-aos="fade-up" data-aos="fade-up"></section data-testid="related_reports space-y-4" >
+<section role="region" data-aos="fade-up" id="relatedWrap" class="my-20" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up"></section data-testid="related_reports space-y-4"  data-aos="fade-up">
 
-<script>
+<script defer>
 const ALL = window.ALL_REPORTS || [];
 const CURRENT = ALL.find(r => r.slug === window.CURRENT_REPORT);
 
@@ -21,7 +21,7 @@ const results = CURRENT ? getRelated(CURRENT) : [];
 const wrap = document.getElementById("relatedWrap");
 
 wrap.innerHTML = `
-  <h2 class="text-2xl font-bold mb-4" class="text-3xl font-bold mb-6 tracking-tight text-orangeLuxe-light space-y-4">🔗 Related Reports</h2>
+  <h2 class="text-2xl font-bold mb-4" class="text-3xl font-bold mb-4 tracking-tight text-orangeLuxe-light space-y-4">🔗 Related Reports</h2>
   ${
     results.length === 0
     ? `<p class="text-sm text-orangeLuxe-light/70 space-y-4">No related reports found… yet 👀</p>`

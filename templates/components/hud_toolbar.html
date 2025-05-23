@@ -44,7 +44,7 @@
     </p>
 
     <!-- 🛰️ Circular Scroll Tracker -->
-    <div class="relative mx-auto w-20 h-20 mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="Scroll Progress space-y-4">
+    <div class="relative mx-auto w-20 h-20 mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="Scroll Progress space-y-4">
       <svg class="w-full h-full" viewBox="0 0 36 36 space-y-4">
         <path class="text-zinc-700" d= space-y-4"M18 2.0845
               a 15.9155 15.9155 0 0 1 0 31.831
@@ -83,7 +83,7 @@
 }
 </style>
 
-<script>
+<script defer>
 (() => {
   const toolbar = document.getElementById("hudToolbar");
   const toggleBtn = document.getElementById("hudToggle");
@@ -148,7 +148,7 @@
 })();
 </script>
 
-<script>
+<script defer>
 (() => {
   const arc = document.getElementById("hudScrollArc");
   const pct = document.getElementById("hudScrollPercent")?.firstChild;

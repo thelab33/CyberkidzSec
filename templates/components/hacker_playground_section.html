@@ -1,6 +1,6 @@
-{% block title %}Playground · CyberKidzSec Vault{% endblock %}
+{% block meta_desc %}Playground · CyberKidzSec Vault{% endblock meta_desc %}
 
-{% block content %}
+{% block page_content %}
 <section role="region" data-aos="fade-up" id="playgroundSection"
          class="ckz-hero min-h-screen flex flex-col justify-center items-center text-center gap-8 px-6"
          aria-label="Hacker Playground">
@@ -26,13 +26,13 @@
   </div>
 
   <!-- 🛰️ Return Button -->
-  <a href="/" class="btn btn--secondary mt-10">
+  <a href="/" class="btn btn--secondary mt-4">
     🛰️ Return to Base
   </a>
 
 </section>
 
-<script>
+<script defer>
   (() => {
     const output = document.getElementById("terminalOutput");
     const input = document.getElementById("terminalInput");
@@ -75,5 +75,5 @@
     window.addEventListener("load", () => input.focus());
   })();
 </script>
-{% endblock %}
+{% endblock page_content %}
 

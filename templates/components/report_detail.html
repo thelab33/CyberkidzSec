@@ -1,47 +1,45 @@
+{% extends "base.html" %}
+{% import "components/reports.html" as rpt %}
 
-{% block title %}{{ report.title }} · CYBERKIDZSEC{% endblock %}
+{% block meta_desc %}{{ report.title }} · CYBERKIDZSEC{% endblock meta_desc %}
 
-{% block breadcrumbs %}
+{% block extra_breadcrumbs %}
   {% include "components/breadcrumbs.html" %}
-  <script>
+  <script defer>
     renderBreadcrumbs([
       { label: "Home", href: "/" },
       { label: "Reports", href: "/reports" },
       { label: {{ report.title|tojson }} }
     ]);
   </script>
-{% endblock %}
+{% endblock extra_breadcrumbs %}
 
-{% block content %}
-<article class="prose dark:prose-invert max-w-4xl mx-auto py-10 px-6 space-y-8" data-aos="fade-up space-y-4">
+{% block page_content %}
+<article class="prose dark:prose-invert max-w-4xl mx-auto py-10 px-6" data-aos="fade-up">
+  <h1 class="text-4xl font-extrabold">{{ report.title }}</h1>
 
-  <h1 class="text-4xl font-extrabold space-y-4">{{ report.title }}</h1>
-
-  <div class="flex flex-wrap gap-4 text-sm text-orangeLuxe-light/70 font-mono uppercase tracking-wide space-y-4">
+  <div class="flex flex-wrap gap-4 text-sm text-orangeLuxe-light/70 uppercase font-mono my-4">
     <time datetime="{{ report.date }}">{{ report.date|datetimeformat }}</time>
     <span>{{ report.type }}</span>
     <span>CVSS {{ report.cvss }}</span>
   </div>
 
-  <div class="flex flex-wrap gap-2 my-4 space-y-4">
+  <div class="flex flex-wrap gap-2 mb-4">
     {% for t in report.tags %}
-      <a href="{{ url_for('views.reports_list') }}?tag={{ t }}"
-         class="badge hover:bg-orangeLuxe transition space-y-4">{{ t }}</a>
+      <a href="{{ url_for('reports_list') }}?tag={{ t }}" class="badge">#{{ t }}</a>
     {% endfor %}
   </div>
 
   {{ body_html|safe }}
 
-  <!-- 🔬 Enhanced Report Chart -->
-  <section role="region" data-aos="fade-up" aria-labelledby="chart-section" class="mt-12" data-aos="fade-up" data-testid="report_detail space-y-4" >
-    <h2 class="text-2xl font-bold mb-4" id="chart-section" class="text-2xl font-semibold mb-4 space-y-4">Severity Breakdown</h2>
-    {% include "components/report_chart.html" %}
+  <section data-aos="fade-up" class="mt-4" data-aos="fade-up" data-aos="fade-up">
+    <h2 class="text-2xl font-bold mb-4">Severity Breakdown</h2>
+    {{ rpt.report_charts(detail_cvss_yearly, detail_monthly, detail_severity) }}
   </section>
-
 </article>
-{% endblock %}
+{% endblock page_content %}
 
-{% block scripts_extra %}
-  <script src="{{ url_for('static', filename='js/report-detail.js') }}" defer></script>
-{% endblock %}
+{% block page_scripts %}
+  <script defer src="{{ url_for('static','js/report-detail.js') }}" defer></script>
+{% endblock page_scripts %}
 

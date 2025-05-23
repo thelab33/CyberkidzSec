@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block content %}
-  <section class="container mx-auto py-12" data-aos="fade-up"">
-    <h1 class="text-4xl font-extrabold mb-6">{{ title }}</h1>
+{% block page_content %}
+  <section class="container mx-auto py-12" data-aos="fade-up"" data-aos="fade-up" data-aos="fade-up">
+    <h1 class="text-4xl font-extrabold mb-4">{{ title }}</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up"">
       {% for report in featured_reports %}
@@ -13,5 +13,5 @@
       {% endfor %}
     </div>
   </section>
-{% endblock %}
+{% endblock page_content %}
 

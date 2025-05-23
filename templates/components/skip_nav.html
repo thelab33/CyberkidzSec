@@ -4,24 +4,22 @@
             bg-gradient-to-r from-green-400 via-cyan-400 to-green-400
             p-3 text-black font-mono text-sm uppercase tracking-wider shadow-xl
             transform -translate-y-40 transition-transform duration-500 ease-out pointer-events-none"
-     role="navigation" aria-label="Skip Navigation Bar">
+     role="navigation" aria-label="Skip to main content and footer">
 
   <!-- 🌌 Warp Mode Title -->
   <div id="warpText"
        class="absolute top-0 inset-x-0 text-center text-green-400 font-black tracking-widest
               text-lg mix-blend-difference opacity-0 scale-90 -translate-y-1/2
-              transition-all duration-500 ease-in-out glitch-flicker shake-on-show">
+              transition-all duration-500 ease-in-out glitch-flicker">
     WARP MODE ENGAGED
   </div>
 
   <!-- 🧭 Skip Links -->
-  <div class="flex gap-6">
-    <a href="#main"
-       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
+  <div class="flex gap-6 z-10">
+    <a href="#main" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Main
     </a>
-    <a href="#footer"
-       class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
+    <a href="#footer" class="hover:underline focus-visible:ring-2 focus-visible:ring-black rounded px-2 py-1">
       Skip to Footer
     </a>
   </div>
@@ -29,22 +27,18 @@
   <!-- ❌ Close Button -->
   <button id="skipBarClose"
           aria-label="Close Skip Navigation"
-          class="rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black">
+          class="z-10 rounded-full bg-black text-green-400 hover:bg-green-400 hover:text-black transition p-2 focus-visible:ring-2 focus-visible:ring-black">
     ✖️
   </button>
 
   <!-- 🎉 Confetti Canvas -->
-  <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none"></canvas>
+  <canvas id="confettiCanvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
 </div>
 
 <!-- 🎨 Styles -->
 <style>
   .glitch-flicker {
     animation: cyberpunkFlicker 2.5s infinite alternate;
-  }
-
-  .shake-on-show {
-    animation: shake 0.6s ease-in-out;
   }
 
   @keyframes cyberpunkFlicker {
@@ -54,14 +48,8 @@
     75% { opacity: 0.9; text-shadow: 0 0 3px white; }
   }
 
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-4px); }
-    40%, 80% { transform: translateX(4px); }
-  }
-
   canvas#confettiCanvas {
-    z-index: 9997;
+    z-index: 0;
     pointer-events: none;
   }
 </style>
@@ -82,22 +70,20 @@
     warpText.classList.remove("opacity-0", "scale-90", "-translate-y-1/2");
     warpText.classList.add("opacity-100", "scale-100", "translate-y-0");
 
-    // 🔊 Warp sound effect
-    new Audio('/static/audio/warp-sound.mp3').play().catch(() => {});
+    try {
+      new Audio('/static/audio/warp-sound.mp3').play();
+    } catch {}
 
-    // 🎉 Confetti effect
-    if (window.ConfettiGenerator) {
+    if (window.ConfettiGenerator && confettiCanvas) {
       confetti = new ConfettiGenerator({ target: confettiCanvas, max: 80 });
       confetti.render();
     }
 
-    // 🧠 Hide glitch title after 1.5s
     setTimeout(() => {
       warpText.classList.add("opacity-0", "scale-90", "-translate-y-1/2");
       warpText.classList.remove("opacity-100", "scale-100", "translate-y-0");
     }, 1500);
 
-    // 🔗 Auto-focus first link
     setTimeout(() => document.querySelector("#skipBar a")?.focus(), 400);
   }
 
@@ -116,7 +102,6 @@
     if (e.key === "Escape") hideSkipBar();
   });
 
-  // ❌ Close
   closeBtn?.addEventListener("click", hideSkipBar);
 })();
 </script>

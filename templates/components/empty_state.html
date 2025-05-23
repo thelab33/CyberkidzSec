@@ -1,28 +1,26 @@
-<!-- templates/components/empty_state.html -->
+{# templates/components/empty_state.html – Forgemaster Empty State #}
 <div
   id="emptyWrap"
-  class="hidden flex-col items-center justify-center py-24 px-4 text-center space-y-4
+  class="hidden flex flex-col items-center justify-center py-24 px-4 text-center space-y-4
          text-orangeLuxe-light animate-fade-in"
   role="status"
   aria-live="polite"
 >
-  <!-- Emoji Spinner -->
+  <!-- 🙀 Emoji Spinner -->
   <div
-    class="text-6xl opacity-50 animate-spin-slow motion-reduce:animate-none space-y-4"
+    class="text-6xl opacity-50 animate-spin-slow motion-reduce:animate-none"
     aria-hidden="true"
-  >
-    🙀
-  </div>
+  >🙀</div>
 
-  <!-- Message -->
+  <!-- 📣 Message -->
   <p
     id="emptyMsg"
-    class="text-base sm:text-lg font-mono max-w-xl mx-auto text-orangeLuxe-light/80 space-y-4"
+    class="text-base sm:text-lg font-mono max-w-xl mx-auto text-orangeLuxe-light/80"
   >
     Nothing to see here — try adjusting your filters.
   </p>
 
-  <!-- Reset Button (optional) -->
+  <!-- 🔄 Reset Button (optional) -->
   <button
     id="resetBtn"
     class="hidden px-5 py-2 rounded-full text-sm font-semibold
@@ -32,4 +30,32 @@
     Reset Filters
   </button>
 </div>
+
+<script defer>
+  // Example JS to show/hide and wire up the reset button
+  // Usage: call showEmptyState({ message, onReset })
+  window.showEmptyState = ({ message = '', onReset } = {}) => {
+    const wrap = document.getElementById('emptyWrap');
+    const msg  = document.getElementById('emptyMsg');
+    const btn  = document.getElementById('resetBtn');
+
+    if (message) msg.textContent = message;
+    if (typeof onReset === 'function') {
+      btn.classList.remove('hidden');
+      btn.onclick = () => {
+        wrap.classList.add('hidden');
+        onReset();
+      };
+    } else {
+      btn.classList.add('hidden');
+    }
+
+    wrap.classList.remove('hidden');
+  };
+
+  // And to hide:
+  window.hideEmptyState = () => {
+    document.getElementById('emptyWrap').classList.add('hidden');
+  };
+</script>
 

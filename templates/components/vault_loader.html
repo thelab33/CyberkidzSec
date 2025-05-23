@@ -1,0 +1,106 @@
+<!-- 🚀 Forgemaster Loader -->
+<div id="vault-loader"
+     class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-black via-zinc-900 to-zinc-950 backdrop-blur-md transition-opacity duration-700 opacity-100"
+     role="status" aria-label="Vault loading screen" aria-live="assertive">
+  <div class="text-center space-y-6 max-w-md">
+    <p id="vaultStatus" class="text-xl sm:text-2xl font-mono text-orange-400 animate-pulse flex flex-col sm:flex-row items-center justify-center gap-2">
+      <span class="typewriter"></span>
+      <span class="tracking-widest hidden sm:inline">WARP MODE ENGAGED</span>
+    </p>
+    <div id="vaultStatusEvents" class="my-2 min-h-[1.5em]"></div>
+    <div class="loader-dots flex gap-2 justify-center">
+      <span class="dot bg-orange-400"></span>
+      <span class="dot bg-yellow-400"></span>
+      <span class="dot bg-emerald-400"></span>
+    </div>
+    <button id="loaderClose"
+            class="mt-4 text-xl text-orange-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded transition shadow"
+            aria-label="Close warp loader">
+      ✖️ Close Loader
+    </button>
+    <button id="toggleAmbience" class="block mx-auto mt-3 text-xs font-mono bg-zinc-800/80 px-3 py-1 rounded hover:bg-orange-500 focus:ring-2 focus:ring-orange-500 transition">
+      🔊 Ambience
+    </button>
+    <audio id="vault-ambience" src="{{ url_for('static', filename='audio/vault-ambience.mp3') }}" loop preload="auto"></audio>
+  </div>
+</div>
+
+<style>
+  .loader-dots .dot {
+    width: 14px; height: 14px;
+    border-radius: 9999px;
+    animation: bounce 0.9s infinite ease-in-out;
+    box-shadow: 0 0 12px 2px #f59e42a0;
+  }
+  .loader-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+  .loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(-9px); opacity: 1; }
+  }
+  .typewriter::after { content: "|"; animation: blink 1.2s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("vault-loader");
+  const closeBtn = document.getElementById("loaderClose");
+  const typer = loader.querySelector(".typewriter");
+  const steps = [
+    "Initializing Warp Systems...",
+    "Decrypting Vault OS Kernel...",
+    "Bootstrapping Memory Nodes...",
+    "Finalizing Operative Overlay...",
+    "Vault Access Granted"
+  ];
+  const vaultEvents = [
+    "👻 Ghost signatures detected.",
+    "🛡️ Integrity beacon stabilized.",
+    "🌐 Tunnel handshake verified.",
+    "💡 AI agent connected.",
+    "🔑 Secure enclave unlocked.",
+    "🛰️ Network fallback online."
+  ];
+  const statusBox = document.getElementById("vaultStatusEvents");
+  if (sessionStorage.getItem("warpLoaded")) {
+    loader.remove();
+  } else {
+    sessionStorage.setItem("warpLoaded", "true");
+    let i = 0;
+    function typeLine() {
+      if (i >= steps.length) {
+        setTimeout(closeLoader, 800);
+        return;
+      }
+      typer.textContent = steps[i++];
+      setTimeout(typeLine, 1450);
+    }
+    typeLine();
+    (function nextVaultEvent() {
+      if (!statusBox) return;
+      const event = vaultEvents[Math.floor(Math.random() * vaultEvents.length)];
+      statusBox.innerHTML = `<span class="text-xs text-emerald-400 animate-pulse-glow">${event}</span>`;
+      setTimeout(nextVaultEvent, 1000 + Math.random() * 600);
+    })();
+    const ambience = document.getElementById("vault-ambience");
+    document.getElementById("toggleAmbience").onclick = function() {
+      if (ambience.paused) {
+        ambience.play();
+        this.textContent = "🔇 Ambience";
+        navigator.vibrate?.([80,40,80]);
+      } else {
+        ambience.pause();
+        this.textContent = "🔊 Ambience";
+      }
+    };
+    function closeLoader() {
+      loader.classList.add("opacity-0");
+      setTimeout(() => loader.remove(), 700);
+      ambience.pause();
+    }
+    closeBtn.onclick = closeLoader;
+  }
+});
+</script>
+

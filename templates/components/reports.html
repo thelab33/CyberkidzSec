@@ -1,0 +1,119 @@
+{# templates/components/reports.html #}
+
+{%- macro report_card(r, delay=0) -%}
+<article tabindex="0"
+         class="group rounded-2xl overflow-hidden shadow-lg bg-black/80 border border-orangeLuxe/30 p-6 transition hover:shadow-orangeLuxe/70 focus-visible:ring-2 focus-visible:ring-orangeLuxe"
+         data-aos="fade-up"
+         data-aos-delay="{{ delay }}">
+  <figure class="relative h-44 w-full overflow-hidden mb-4">
+    <img src="{{ r.thumb_url or '/static/img/fallback.jpg' }}"
+         alt="Screenshot of {{ r.title }}"
+         loading="lazy"
+         class="object-cover w-full h-full transition-transform group-hover:scale-105" />
+  </figure>
+  <h3 class="text-xl font-semibold text-orangeLuxe mb-2">{{ r.title }}</h3>
+  <p class="text-sm text-orangeLuxe-light/70 mb-4 line-clamp-3">
+    {{ r.summary or "No summary available." }}
+  </p>
+  <div class="flex justify-between items-center text-[11px] font-mono">
+    <span class="px-2 py-0.5 rounded-full border {{ cvss_color(r.cvss) }}">
+      CVSS {{ r.cvss is number and r.cvss|round(1) or 'N/A' }}
+    </span>
+    <time datetime="{{ r.date }}">{{ r.date|datetimeformat }}</time>
+  </div>
+  <a href="{{ url_for('report_detail', slug=r.slug) }}"
+     class="mt-4 inline-block text-sm font-mono underline text-orange-400 hover:text-orange-300">
+    Read Full Report →
+  </a>
+</article>
+{%- endmacro -%}
+
+
+{%- macro report_card_grid(reports) -%}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  {% if reports %}
+    {% for r in reports %}
+      {{ report_card(r, loop.index0 * 100) }}
+    {% endfor %}
+  {% else %}
+    <p class="col-span-full text-center text-orange-400 font-mono italic">
+      ⚠️ No reports found.
+    </p>
+  {% endif %}
+</div>
+{%- endmacro -%}
+
+
+{%- macro report_charts(yearly, monthly, severity) -%}
+<section role="region" aria-label="Report Charts" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto my-28 px-6" data-aos="fade-up" data-aos="fade-up">
+  <!-- Bar / Line toggle -->
+  <article data-aos="fade-right">
+    <header class="flex items-center justify-between mb-4">
+      <h3 id="barTitle" class="text-xl font-semibold">CVSS Avg per Year</h3>
+      <select id="barView" class="bg-zinc-800 text-sm px-3 py-1 rounded border border-orangeLuxe">
+        <option value="yearly">Yearly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </header>
+    <canvas id="barCanvas" height="300"></canvas>
+  </article>
+
+  <!-- Radar -->
+  <article data-aos="fade-left">
+    <header class="text-center mb-4">
+      <h3 class="text-xl font-semibold">Severity Distribution</h3>
+    </header>
+    <canvas id="radarCanvas" height="300"></canvas>
+  </article>
+
+  <script type="module">
+    import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+    const barCtx = document.getElementById('barCanvas'),
+          radarCtx = document.getElementById('radarCanvas'),
+          sel      = document.getElementById('barView'),
+          titleEl  = document.getElementById('barTitle');
+
+    let barChart, radarChart;
+    const buildBar = view => {
+      const data = view==='yearly' ? {{ yearly|tojson }} : {{ monthly|tojson }};
+      const labels = data.map(d=>view==='yearly'?d.year:d.month);
+      const key    = view==='yearly'?'cvss':'count';
+      titleEl.textContent = view==='yearly'? 'CVSS Avg per Year':'Reports per Month';
+
+      barChart?.destroy();
+      barChart = new Chart(barCtx, {
+        type: 'bar',
+        data:{labels, datasets:[{data:data.map(d=>d[key]), backgroundColor:'#f97316', borderRadius:6}]},
+        options:{plugins:{legend:{display:false}},
+                 scales:{x:{ticks:{color:'#f8fafc', font:{family:'monospace'}},grid:{color:'#333'}},
+                         y:{ticks:{color:'#f8fafc', font:{family:'monospace'}},grid:{color:'#333'}}}}
+      });
+    };
+
+    const buildRadar = () => {
+      const data = {{ severity|tojson }};
+      radarChart = new Chart(radarCtx, {
+        type:'radar',
+        data:{labels:data.map(d=>d.severity),datasets:[{data:data.map(d=>d.count),backgroundColor:'rgba(236,72,153,0.5)',borderColor:'#ec4899'}]},
+        options:{plugins:{legend:{display:false}},
+                 scales:{r:{angleLines:{color:'#444'},grid:{color:'#444'},
+                           pointLabels:{color:'#f8fafc',font:{family:'monospace',size:12}},
+                           ticks:{color:'#f8fafc'}}}}
+      });
+    };
+
+    sel.onchange = () => buildBar(sel.value);
+    buildBar('yearly');
+    buildRadar();
+  </script>
+{%- endmacro -%}
+
+
+{# helper for cvss badge color #}
+{% macro cvss_color(v) -%}
+  {{ 'text-red-400'     if v>=9 else
+     'text-orange-400'  if v>=7 else
+     'text-yellow-400'  if v>=4 else
+     'text-emerald-400' }}
+{%- endmacro -%}
+

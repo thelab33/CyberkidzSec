@@ -1,3 +1,7 @@
+/* File: static/css/ghost-boot.css - Description here */
+
+/* File: ./static/css/ghost-boot.css - Description here */
+
 /* ───────────────────────────────────────────────────────────────
    👻 GHOST BOOTLOADER — CyberKidzSec Entry Sequence (STARFORGE)
 ────────────────────────────────────────────────────────────────── */
@@ -86,7 +90,7 @@
 }
 
 /* ✨ Fade Loader Out */
-@keyframes loaderFadeOut {
+@keyframes loader-fadeout {
   to {
     opacity: 0;
     visibility: hidden;
@@ -106,7 +110,7 @@
 }
 
 /* ░▒▓ Cursor Blinking */
-@keyframes blinkCursor {
+@keyframes blink-cursor {
   50% {
     border-color: transparent;
   }

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}404 Not Found · CYBERKIDZSEC{% endblock %}
+{% block meta_desc %}404 Not Found · CYBERKIDZSEC{% endblock meta_desc %}
 
-{% block content %}
-<section class="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-10 px-6 py-20 animate-fade-in" role="alert" aria-labelledby="errorTitle">
+{% block page_content %}
+<section class="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-10 px-6 py-20 animate-fade-in" role="alert" aria-labelledby="errorTitle" data-aos="fade-up" data-aos="fade-up">
 
   <!-- 💀 ASCII Terminal Error -->
   <pre class="font-mono text-orangeLuxe-light text-sm bg-zinc-900 p-6 rounded-xl shadow-md w-full max-w-2xl overflow-x-auto border border-orangeLuxe/30">
@@ -25,12 +25,12 @@
   </div>
 
   <!-- ⌨️ Suggested Actions -->
-  <div class="flex flex-wrap justify-center gap-4 mt-6" data-aos="fade-up">
+  <div class="flex flex-wrap justify-center gap-4 mt-4" data-aos="fade-up">
     <a href="{{ url_for('views.home') }}" class="btn btn--solid">🏠 Return to Mainframe</a>
     <a href="{{ url_for('views.reports_list') }}" class="btn btn--outline">📚 Browse Reports</a>
     <a href="{{ url_for('playground.index') }}" class="btn btn--secondary">🎮 Hack the Playground</a>
   </div>
 
 </section>
-{% endblock %}
+{% endblock page_content %}
 

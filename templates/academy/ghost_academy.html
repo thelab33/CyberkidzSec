@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Ghost Academy · CyberKidzSec Vault{% endblock %}
+{% block meta_desc %}Ghost Academy · CyberKidzSec Vault{% endblock meta_desc %}
 
-{% block content %}
-<section class="section-container py-20 max-w-4xl mx-auto text-center space-y-12" data-aos="fade-up">
+{% block page_content %}
+<section class="section-container py-20 max-w-4xl mx-auto text-center space-y-12" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up">
 
   <!-- 🎓 Academy Header -->
   <header>
@@ -35,13 +35,13 @@
   </nav>
 
   <!-- 🧬 Progress Feedback -->
-  <p id="xpFeedback" class="mt-6 text-sm text-orange-400 font-mono" aria-live="polite"></p>
+  <p id="xpFeedback" class="mt-4 text-sm text-orange-400 font-mono" aria-live="polite"></p>
 
 </section>
-{% endblock %}
+{% endblock page_content %}
 
-{% block scripts_extra %}
-<script>
+{% block page_scripts %}
+<script defer>
 (() => {
   const buttons = document.querySelectorAll('#academyMissions button');
   const feedback = document.getElementById('xpFeedback');
@@ -57,5 +57,5 @@
   });
 })();
 </script>
-{% endblock %}
+{% endblock page_scripts %}
 

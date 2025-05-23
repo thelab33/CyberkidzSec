@@ -1,38 +1,38 @@
-<!-- 🔄 section_skeleton.html — Forgemaster Skeleton Loader -->
-<div class="skeleton" data-lines="4" aria-busy="true" role="status" aria-label="Loading section... space-y-4"></div>
+{# templates/components/section_skeleton.html – Forgemaster Skeleton Loader #}
+<div class="skeleton" data-lines="4" aria-busy="true" role="status" aria-label="Loading section…"></div>
 
 <style>
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.skeleton {
-  display: grid;
-  gap: 0.75rem;
-  padding: 2.5rem 0;
-  opacity: 0.9;
-}
-.skeleton[data-lines]::before {
-  content: attr(data-lines) " lines loading...";
-  font-size: 0;
-}
-.skeleton > *, .skeleton::before {
-  height: 1rem;
-  border-radius: 0.25rem;
-  background: linear-gradient(90deg, #27272a 0%, #3f3f46 50%, #27272a 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-}
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    display: grid;
+    gap: 0.75rem;
+    padding: 2.5rem 0;
+    opacity: 0.9;
+  }
+  .skeleton[data-lines]::before {
+    content: attr(data-lines) " lines loading…";
+    font-size: 0; /* hide text but keep semantics */
+  }
+  .skeleton > *, .skeleton::before {
+    height: 1rem;
+    border-radius: 0.25rem;
+    background: linear-gradient(90deg, #27272a 0%, #3f3f46 50%, #27272a 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
 </style>
 
-<script>
-document.querySelectorAll(".skeleton").forEach(skel => {
-  const count = parseInt(skel.dataset.lines || 3);
-  while (skel.children.length < count) {
-    const bar = document.createElement("div");
-    bar.setAttribute("aria-hidden", "true");
-    skel.appendChild(bar);
-  }
-});
+<script defer>
+  document.querySelectorAll(".skeleton").forEach(skel => {
+    const count = parseInt(skel.dataset.lines || 3, 10);
+    while (skel.children.length < count) {
+      const bar = document.createElement("div");
+      bar.setAttribute("aria-hidden", "true");
+      skel.appendChild(bar);
+    }
+  });
 </script>
 

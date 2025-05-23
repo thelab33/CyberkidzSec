@@ -1,5 +1,5 @@
 <footer id="footer"
-        class="relative mt-32 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-black to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden"
+        class="relative mt-4 border-t border-orangeLuxe/25 bg-gradient-to-b from-zinc-900 via-black to-black px-6 py-20 text-sm font-mono text-orange-200 overflow-hidden"
         data-vault-stability="{{ vault_xp_percentage }}">
 
   <!-- 🌌 Animated Aurora Ribbon -->
@@ -23,7 +23,7 @@
     <nav class="flex flex-col gap-2 text-orange-300">
       {% set nav = [("Home","/"),("About","/about"),("Reports","/reports"),("Playground","/playground"),("Analytics","/charts")] %}
       {% for label, href in nav %}
-        <a href="#" class="hover:text-orangeLuxe hover:underline transition">{{ label }}</a>
+        <a href="{{ href }}" class="hover:text-orangeLuxe hover:underline transition">{{ label }}</a>
       {% endfor %}
     </nav>
 
@@ -58,14 +58,14 @@
 
   <!-- 🚨 Ghost Breach Alert -->
   <div id="ghostBreachWarning"
-       class="ghost-breach-warning hidden animate-pulse mt-6 px-4 py-2 border border-red-400 text-red-400 rounded-lg text-center text-sm font-bold font-mono"
+       class="ghost-breach-warning hidden animate-pulse mt-4 px-4 py-2 border border-red-400 text-red-400 rounded-lg text-center text-sm font-bold font-mono"
        role="alert"
        aria-live="assertive">
     ⚠️ VAULT BREACH DETECTED
   </div>
 
   <!-- 🧠 Vault Stability Bar -->
-  <div class="relative mt-10 max-w-6xl mx-auto">
+  <div class="relative mt-4 max-w-6xl mx-auto">
     <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
       <div class="h-full transition-all duration-1000 ease-in-out"
            style="width: {{ vault_xp_percentage }}%; background: linear-gradient(to right, #f59e0b, #facc15, #34d399);">

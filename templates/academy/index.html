@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Ghost Academy · CyberKidzSec Vault{% endblock %}
+{% block meta_desc %}Ghost Academy · CyberKidzSec Vault{% endblock meta_desc %}
 
-{% block content %}
-<section class='max-w-4xl mx-auto py-16 px-6 text-center'>
-  <h1 class='text-5xl font-extrabold mb-6 text-orangeLuxe-light'>🎓 Ghost Academy</h1>
-  <p class='mb-8 text-orange-300'>Sharpen your hacking skills. Earn XP. Become a legend.</p>
+{% block page_content %}
+<section class='max-w-4xl mx-auto py-16 px-6 text-center' data-aos="fade-up" data-aos="fade-up">
+  <h1 class='text-5xl font-extrabold mb-4 text-orangeLuxe-light'>🎓 Ghost Academy</h1>
+  <p class='mb-4 text-orange-300'>Sharpen your hacking skills. Earn XP. Become a legend.</p>
 
   <div class='space-y-6'>
     <a href='#' class='btn-primary block'>Complete the XSS Basics Mission (+10 XP)</a>
@@ -12,4 +12,4 @@
     <a href='#' class='btn-primary block'>Submit a Knowledge Post (+50 XP)</a>
   </div>
 </section>
-{% endblock %}
+{% endblock page_content %}

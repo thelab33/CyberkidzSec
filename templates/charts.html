@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Report Analytics · CYBERKIDZSEC{% endblock %}
+{% block meta_desc %}Report Analytics · CYBERKIDZSEC{% endblock meta_desc %}
 
-{% block content %}
+{% block page_content %}
 <main class="max-w-6xl mx-auto px-6 py-16 space-y-12 animate-fade-in">
-  <h1 class="text-3xl font-extrabold tracking-tight mb-8">📊 Report Analytics</h1>
+  <h1 class="text-3xl font-extrabold tracking-tight mb-4">📊 Report Analytics</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
@@ -41,9 +41,9 @@
 
   </div>
 </main>
-{% endblock %}
+{% endblock page_content %}
 
-{% block scripts_extra %}
+{% block page_scripts %}
 <script type="module">
   import { Chart } from 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
 
@@ -152,5 +152,5 @@
     });
   });
 </script>
-{% endblock %}
+{% endblock page_scripts %}
 

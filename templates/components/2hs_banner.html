@@ -1,0 +1,55 @@
+{# templates/components/a2hs_banner.html #}
+
+<!-- Add to Home Screen Banner -->
+<div id="a2hsBanner"
+     class="fixed bottom-0 inset-x-0 bg-zinc-800 text-orange-200 p-4 flex items-center justify-between shadow-lg transform translate-y-full transition-transform duration-300"
+     role="dialog" aria-live="polite" aria-label="Install App">
+  <div class="flex items-center gap-3">
+    <i class="fas fa-download text-xl"></i>
+    <div>
+      <p class="font-bold">Add CYBERKIDZSEC Vault to your Home Screen</p>
+      <p class="text-sm">Get faster access and offline support.</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button id="a2hsInstallBtn"
+            class="px-4 py-2 bg-orangeLuxe text-black rounded-lg font-semibold hover:bg-orangeLuxe-dark focus:outline-none focus:ring-2 focus:ring-orangeLuxe"
+            aria-label="Install App">
+      Install
+    </button>
+    <button id="a2hsCloseBtn" class="text-orangeLuxe-light hover:text-orangeLuxe focus:outline-none" aria-label="Dismiss">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+<script defer>
+// PWA Installation Banner Logic
+let deferredPrompt;
+const banner = document.getElementById('a2hsBanner');
+const installBtn = document.getElementById('a2hsInstallBtn');
+const closeBtn = document.getElementById('a2hsCloseBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.classList.remove('translate-y-full');
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  banner.classList.add('translate-y-full');
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+
+closeBtn.addEventListener('click', () => {
+  banner.classList.add('translate-y-full');
+});
+
+window.addEventListener('appinstalled', () => {
+  banner.remove();
+});
+</script>
+

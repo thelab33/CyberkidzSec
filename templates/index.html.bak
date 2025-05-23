@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block meta_desc %}Home · CYBERKIDZSEC Vault{% endblock meta_desc %}
+{% block page_title %}Home · CYBERKIDZSEC Vault{% endblock page_title %}
+
+{% block extra_head %}
+  <meta property="og:title" content="CYBERKIDZSEC Vault" />
+  <meta property="og:description" content="Elite Ghost-Mode Bug Bounty Hub." />
+  <meta property="og:image" content="{{ url_for('static', filename='images/og/main_vault_banner.png') }}" />
+{% endblock extra_head %}
+
+{% block page_content %}
+  {# Loader, Hero, Branding #}
+  {% include "components/vault_loader.html" %}
+  {% include "components/hero.html" %}
+  {% include "components/status_strip.html" %}
+  {% include "components/a2hs_banner.html" %}
+  {% include "components/filter_controls.html" %}
+  <section class="container mx-auto space-y-16" data-aos="fade-up">
+    {% include "components/bug_tales.html" %}
+    {% include "components/blog_section.html" %}
+    {% include "components/vault_overview_section.html" %}
+    {% include "components/report_card_grid.html" %}
+    {% include "components/report_charts_grid.html" %}
+    {% include "components/playground_hero.html" %}
+    {% include "components/playground_ctas.html" %}
+  </section>
+  {% include "components/empty_state.html" %}
+  {% include "components/section_skeleton.html" %}
+{% endblock page_content %}
+
+{% block page_scripts %}
+  <script>
+    // Example: trigger confetti on hero section load
+    document.addEventListener('DOMContentLoaded', function() {
+      const hero = document.getElementById('hero');
+      if (hero) {
+        hero.addEventListener('mouseenter', () => {
+          if (window.confettiSuccess) window.confettiSuccess();
+        }, { once: true });
+      }
+    });
+  </script>
+{% endblock page_scripts %}
+

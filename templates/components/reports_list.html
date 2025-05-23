@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import "components/reports.html" as rpt %}
+
+{% block meta_desc %}Vulnerability Reports · CYBERKIDZSEC{% endblock meta_desc %}
+
+{% block page_content %}
+  {{ rpt.report_charts(yearly_cvss, monthly_trends, severity_data) }}
+
+  <section class="section-container my-24" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up">
+    <h2 class="text-3xl font-extrabold text-center text-orangeLuxe mb-4">
+      🧠 Featured Vulnerability Reports
+    </h2>
+    {{ rpt.report_card_grid(featured_reports) }}
+  </section>
+{% endblock page_content %}
+

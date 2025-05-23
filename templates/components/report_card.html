@@ -1,4 +1,4 @@
-<script>
+<script defer>
 function makeTiltCard(report, tagLimit = 4) {
   const li = document.createElement("li");
   li.setAttribute("data-aos", "fade-up");
@@ -78,7 +78,7 @@ function makeTiltCard(report, tagLimit = 4) {
 </script>
 
 <button class="btn btn--solid btn-sm mt-2" onclick="summarizeReport(this)">🧠 Summarize</button>
-<script>
+<script defer>
 async function summarizeReport(btn) {
   btn.textContent = "Summarizing…";
   const text = btn.closest(".report-card").innerText;

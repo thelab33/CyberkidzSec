@@ -24,13 +24,13 @@
   <!-- 📚 Filtered Reports Grid -->
   <div
     id="tagGrid"
-    class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
     role="region"
     aria-live="polite"
   ></div>
 </section>
 
-<script>
+<script defer>
 const REPORTS = window.ALL_REPORTS || [];
 const TAGS = [...new Set(REPORTS.flatMap(r => r.tags))].sort();
 let activeTag = null;

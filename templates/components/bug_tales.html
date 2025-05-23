@@ -1,3 +1,5 @@
+{# templates/components/bug_tales.html #}
+
 <section id="bug-tales"
          role="region"
          aria-labelledby="bt-heading"
@@ -6,17 +8,17 @@
                 shadow-[0_0_20px_rgba(249,115,22,0.15)] text-orangeLuxe-light font-mono">
 
   <!-- Heading -->
-  <h2 id="bt-heading" class="text-3xl font-extrabold tracking-tight flex items-center gap-2 mb-6">
+  <h2 id="bt-heading" class="text-3xl font-extrabold tracking-tight flex items-center gap-2 mb-4">
     🎙️ Bug Tales:
     <span class="text-orange-400">Zero-Day Chronicles</span>
   </h2>
 
-  <p class="text-sm text-orangeLuxe-light/80 mb-8 max-w-prose italic">
+  <p class="text-sm text-orangeLuxe-light/80 mb-4 max-w-prose italic">
     Sit back and listen as ghost-mode operatives recall their most haunting vulnerability finds.
   </p>
 
   <!-- Audio Visualizer Canvas -->
-  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden mb-6"></canvas>
+  <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden mb-4"></canvas>
 
   <!-- Audio Player (hidden) -->
   <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
@@ -42,7 +44,7 @@
   </div>
 </section>
 
-<script>
+<script defer>
 (() => {
   const playBtn = document.getElementById("bt-play");
   const stopBtn = document.getElementById("bt-stop");
@@ -66,7 +68,7 @@
     function draw() {
       animationId = requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
-      ctx.fillStyle = "#000000";
+      ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       const barWidth = (canvas.width / bufferLength) * 2.5;
       let x = 0;
@@ -97,12 +99,10 @@
     canvas.classList.add("hidden");
   });
 
-  // Auto-restore from localStorage if user left playback on
   if (localStorage.getItem("bugTaleAutoPlay") === "true") {
     audio.play().catch(() => null);
   }
 
-  // Save state
   audio.addEventListener("play", () => localStorage.setItem("bugTaleAutoPlay", "true"));
   audio.addEventListener("pause", () => localStorage.setItem("bugTaleAutoPlay", "false"));
 })();

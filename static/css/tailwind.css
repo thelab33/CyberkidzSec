@@ -1,16 +1,21 @@
-/* ──────────────────────────────────────────────
+/* ==========================================================================
    ⚙️ CYBERKIDZSEC STARFORGE CSS — FORGEMASTER+
-──────────────────────────────────────────────── */
-/* ───────── Tailwind Core Directives ───────── */
+   Tailwind + Custom Imports (atomic, modular, cyber-edged, a11y-tuned)
+   --------------------------------------------------------------------------
+   This is the core CSS entrypoint for all vault, HUD, and overlay styling.
+   Edit: ./static/css/tailwind.css
+   ========================================================================== */
+
+/* === TAILWIND CORE DIRECTIVES === */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ───────── Core Styles & Tokens ───────── */
-@import "utilities/variables.css";
-@import "cyber-enhancements.css";
+/* === CORE TOKENS & CYBER ENHANCEMENTS === */
+@import "utilities/variables.css";     /* CSS custom properties (colors, spacings, etc) */
+@import "cyber-enhancements.css";      /* Glow, shadows, custom focus, special fx */
 
-/* ───────── Components ───────── */
+/* === UI COMPONENTS (Atomic/Modular) === */
 @import "components/button.css";
 @import "components/card_lift.css";
 @import "components/command_palette.css";
@@ -25,13 +30,13 @@
 @import "components/vault_overlay.css";
 @import "components/xp_bar.css";
 
-/* ───────── Sections ───────── */
+/* === PAGE SECTIONS === */
 @import "sections/breadcrumbs.css";
 @import "sections/empty_state.css";
 @import "sections/featured_reports.css";
 @import "sections/filter_bar.css";
 @import "sections/hacker_playground.css";
-@import "sections/header.css";
+@import "sections/header.css";           /* Header layout (section context) */
 @import "sections/hero.css";
 @import "sections/index_enhancements.css";
 @import "sections/pagination.css";
@@ -46,26 +51,28 @@
 @import "sections/vault_banners.css";
 @import "sections/vault_overview.css";
 
-/* ───────── Utilities & Effects ───────── */
-@import "utilities/animations.css";
-@import "utilities/glitch.css";
+/* === UTILITIES & FX === */
+@import "utilities/animations.css";   /* Animation helpers (fade, bounce, etc) */
+@import "utilities/glitch.css";       /* Glitch/CRT/scanline fx */
 
-/* ───────── Optional Modes & Layouts ───────── */
-@import "ghost-mode.css";
-@import "ghost-boot.css";
+/* === GHOST MODES & LEGACY === */
+@import "ghost-mode.css";             /* Ghost-mode overlays, easter eggs */
+@import "ghost-boot.css";             /* Boot splash fx */
 
-/* ───────── Layouts & Overrides ───────── */
-@import "layouts/layout.css"; /* If you have layout helpers */
-@import "quick_patches.css";
+/* === LAYOUTS & PATCHES === */
+@import "layouts/layout.css";         /* Page-wide grid/layout tweaks */
+@import "quick_patches.css";          /* Quick bugfixes/temporary overrides */
 
-/* ───────── Themes (if any) ───────── */
-@import "themes/dark.css"; /* example, replace with your theme files */
+/* === THEMES (Replace/add as needed) === */
+@import "themes/dark.css";            /* Example theme file: dark mode */
+/* @import "themes/light.css";        // Enable for light themes */
 
 /* ──────────────────────────────
    🎨 Base Variables & Dark Mode
 ──────────────────────────────── */
 @layer base {
   :root {
+    /* ---- Brand & FX Tokens ---- */
     --warp-overlay-opacity: 0.88;
     --warp-overlay-scale: 1.07;
     --warp-overlay-color: rgb(20 20 35 / 50%);
@@ -95,8 +102,6 @@
    🧱 Components & Sections Layer
 ───────────────────────────────── */
 @layer components {
-
-  /* General Section Styling */
   section {
     background: var(--lux-bg);
     border-radius: 1.5rem;
@@ -105,20 +110,19 @@
     border: var(--section-border);
     padding: 2.5rem 1.25rem;
   }
-
-  /* Header/Sticky */
-  header.sticky, #siteHeader {
+  header.sticky,
+  #siteHeader {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(16, 16, 22, 0.94);
+    background: rgb(16 16 22 / 94%);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 16px 0 #1e293b44;
     border-bottom: 1.5px solid rgb(251 191 36 / 7%);
-    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    transition:
+      background var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
-
-  /* Hero Section */
   #hero {
     margin-top: 1.25rem;
     min-height: 420px;
@@ -139,14 +143,12 @@
     pointer-events: none;
     filter: blur(0.8px) brightness(1.1);
   }
-  #hero .relative {
-    z-index: 1;
-  }
+  #hero .relative { z-index: 1; }
   #hero h1 {
     font-size: 2.75rem;
     font-weight: 900;
     background: linear-gradient(90deg, var(--orange) 30%, #fffbe9 100%);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 2px 20px #ff7f0040;
     margin-bottom: 0.25em;
@@ -156,20 +158,16 @@
     gap: 1.25rem;
     justify-content: center;
     margin-top: 1.5rem;
-    font-family: 'Fira Mono', monospace;
+    font-family: "Fira Mono", monospace;
   }
-
-  /* Status Bar */
   #vault-status {
     margin-top: -0.75rem;
-    background: rgba(24, 24, 32, 0.96);
+    background: rgb(24 24 32 / 96%);
     border-radius: 0 0 1.5rem 1.5rem;
     border-bottom: 2px solid var(--orange);
     box-shadow: 0 2px 12px 0 #fb923c18;
     font-weight: bold;
   }
-
-  /* Bug Tales Section */
   #bug-tales {
     background: linear-gradient(120deg, #14181f 80%, #22202c 100%);
     border-left: 4px solid var(--orange);
@@ -179,19 +177,17 @@
     margin-bottom: 2.25rem;
     font-style: italic;
   }
-
-  /* Feed/Analytics */
-  #vault-feed, .vault-feed {
-    background: rgba(25, 25, 32, 0.97);
+  #vault-feed,
+  .vault-feed {
+    background: rgb(25 25 32 / 97%);
     border-radius: 1rem;
     box-shadow: 0 0 20px #fb923c08;
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     border: var(--section-border);
   }
-
-  /* Playground/HUD */
-  #hacker-playground, .hacker-playground-section {
+  #hacker-playground,
+  .hacker-playground-section {
     background: linear-gradient(110deg, #16182a 60%, #23232a 100%);
     border-radius: 1rem;
     box-shadow: 0 0 40px 0 #0fc2cc22;
@@ -200,22 +196,17 @@
     margin-bottom: 2rem;
     position: relative;
   }
-
-  /* Utilities & Modals */
-  .utility-modal, .vault-utility {
-    background: rgba(20, 20, 30, 0.97);
+  .utility-modal,
+  .vault-utility {
+    background: rgb(20 20 30 / 97%);
     border: 1.5px solid #22d3ee40;
     box-shadow: 0 0 18px 0 #0fc2cc44;
     border-radius: 1rem;
     padding: 1.5rem 1rem;
   }
-
-  /* One skip nav at very top only */
   .skip-nav {
     position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    top: 0; left: 0; z-index: 1000;
     background: #16181f;
     color: #fbbf77;
     font-size: 1rem;
@@ -231,57 +222,32 @@
    🎞️ FX & Animation Layer
 ───────────────────────────────── */
 @layer utilities {
-  @keyframes warpBlur {
-    0%, 100% {
-      transform: scale(1) translate(0);
-      opacity: var(--warp-overlay-opacity);
-    }
-    50% {
-      transform: scale(1.1) translate(-10px, -10px);
-      opacity: calc(var(--warp-overlay-opacity) + 0.1);
-    }
+  @keyframes warp-blur {
+    0%, 100% { transform: scale(1) translate(0); opacity: var(--warp-overlay-opacity);}
+    50% { transform: scale(1.1) translate(-10px, -10px); opacity: calc(var(--warp-overlay-opacity) + 0.1);}
   }
-
-  @keyframes gradientBorder {
-    0% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
-    50% { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899); }
-    100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee); }
+  @keyframes gradient-border {
+    0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee);}
+    50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899);}
+    100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee);}
   }
-
-  @keyframes warpStabilize {
-    0% {
-      opacity: 0;
-      transform: scale(1.05) skewY(1deg);
-      filter: brightness(0.7) blur(2px);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(0.98) skewY(-1deg);
-      filter: brightness(1.2) blur(0);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) skewY(0);
-      filter: brightness(1) blur(0);
-    }
+  @keyframes warp-stabilize {
+    0%   { opacity: 0;   transform: scale(1.05) skewY(1deg);   filter: brightness(0.7) blur(2px);}
+    50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg);  filter: brightness(1.2) blur(0);}
+    100% { opacity: 1;   transform: scale(1) skewY(0);         filter: brightness(1) blur(0);}
   }
-
-  @keyframes floatSpark {
-    0% { transform: translateY(0) scale(1); opacity: 0.9; }
-    50% { transform: translateY(-10px) scale(1.3); opacity: 0.5; }
-    100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
+  @keyframes float-spark {
+    0%   { transform: translateY(0) scale(1);   opacity: 0.9;}
+    50%  { transform: translateY(-10px) scale(1.3); opacity: 0.5;}
+    100% { transform: translateY(-20px) scale(0.8); opacity: 0;}
   }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes spin {
+    to { transform: rotate(360deg);}
+  }
 }
 
-/* ─── Parallax Orbit FX ───────────────────────── */
-#heroParallax {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  will-change: transform;
-}
+/* Parallax Orbit FX */
+#heroParallax { position: absolute; inset: 0; z-index: 10; will-change: transform; }
 #heroParallax .orbit {
   position: absolute;
   border: 1px dashed rgb(255 255 255 / 8%);
@@ -290,9 +256,8 @@
   pointer-events: none;
 }
 #heroParallax .orbit.small { width: 40%; height: 40%; top: 30%; left: 30%; animation-duration: 60s; }
-#heroParallax .orbit.med { width: 70%; height: 70%; top: 15%; left: 15%; animation-duration: 90s; }
+#heroParallax .orbit.med   { width: 70%; height: 70%; top: 15%; left: 15%; animation-duration: 90s; }
 #heroParallax .orbit.large { width: 100%; height: 100%; top: 0; left: 0; animation-duration: 120s; }
-
 
 /* ──────────────────────────────
    ⭐️ 5 Bonus Features!
@@ -304,7 +269,7 @@
   font-weight: 800;
   position: relative;
   background: linear-gradient(90deg, #f97316 40%, #fbbf24 60%, #fff0 100%);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .section-headline::after {
@@ -313,28 +278,32 @@
   right: -2.2rem;
   top: 0.1em;
   font-size: 1.2em;
-  animation: floatSpark 2s infinite linear;
+  animation: float-spark 2s infinite linear;
 }
 
 /* 2. Interactive Card Hover for Reports */
-.report-card, .vault-feed .card {
-  transition: box-shadow 0.22s cubic-bezier(.24,.8,.42,1), transform 0.18s;
+.report-card,
+.vault-feed .card {
+  transition:
+    box-shadow 0.22s cubic-bezier(0.24, 0.8, 0.42, 1),
+    transform 0.18s;
   border-radius: 1.15rem;
   background: #23242e;
   box-shadow: 0 4px 22px 0 #0fc2cc12;
 }
-.report-card:hover, .vault-feed .card:hover {
+.report-card:hover,
+.vault-feed .card:hover {
   transform: translateY(-4px) scale(1.03);
   box-shadow: 0 10px 30px 0 #f9731626;
 }
 
 /* 3. Pulse Effect for Live Status */
 #vault-status .pulse {
-  animation: pulseStatus 1.2s infinite alternate cubic-bezier(.4,.1,.2,1.1);
+  animation: pulse-status 1.2s infinite alternate cubic-bezier(0.4, 0.1, 0.2, 1.1);
 }
-@keyframes pulseStatus {
+@keyframes pulse-status {
   from { opacity: 1; }
-  to { opacity: 0.62; }
+  to   { opacity: 0.62; }
 }
 
 /* 4. Confetti Burst (on success actions) */
@@ -342,13 +311,14 @@
   pointer-events: none;
   position: fixed;
   z-index: 9999;
-  left: 0; top: 0; width: 100vw; height: 100vh;
-  animation: confettiDrop 1.9s cubic-bezier(.36,1.4,.47,.97) forwards;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  animation: confetti-drop 1.9s cubic-bezier(0.36, 1.4, 0.47, 0.97) forwards;
 }
-@keyframes confettiDrop {
-  0% { opacity: 1; transform: translateY(-50px) scale(1.2); }
-  70% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(100vh) scale(0.85); }
+@keyframes confetti-drop {
+  0%   { opacity: 1; transform: translateY(-50px) scale(1.2);}
+  70%  { opacity: 1;}
+  100% { opacity: 0; transform: translateY(100vh) scale(0.85);}
 }
 
 /* 5. Glowing Focus Ring for Accessibility */
@@ -358,5 +328,4 @@
   box-shadow: 0 0 0 4px #fbbf7733;
   transition: outline-color 0.15s;
 }
-
 

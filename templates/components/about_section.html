@@ -1,33 +1,32 @@
-{# templates/components/about_section.html #}
-<section role="region" data-aos="fade-up" class="section-container py-20 space-y-12 animate-fade-in" data-aos="fade-up" data-aos="fade-up" data-testid="about_section space-y-4" >
-  <header class="text-center space-y-4 space-y-4">
-    <h1 class="hero-title space-y-4">About CyberKidzSec</h1>
-    <p class="text-lg text-orangeLuxe-light/80 max-w-2xl mx-auto space-y-4">
+<!-- 👤 About Section -->
+<section id="about-section"
+         class="section-container py-20 space-y-12 animate-fade-in"
+         data-aos="fade-up">
+  <header class="text-center space-y-4">
+    <h1 class="hero-title">About CyberKidzSec</h1>
+    <p class="text-lg text-orangeLuxe-light/80 max-w-2xl mx-auto">
       A guardian’s vault of exploits, reflections, and technical storytelling.
     </p>
   </header>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center space-y-4">
-    <figure class="w-full flex justify-center" data-aos="zoom-in" data-aos-delay="200 space-y-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <figure class="w-full flex justify-center" data-aos="zoom-in" data-aos-delay="200">
       <img src="{{ url_for('static', filename='images/avatars/operative.jpg') }}"
            alt="Operative at keyboard"
-           class="rounded-2xl shadow-lg w-80 object-cover space-y-4" />
-      <figcaption class="sr-only space-y-4">Operative at work</figcaption>
+           class="rounded-2xl shadow-lg w-80 object-cover" />
+      <figcaption class="sr-only">Operative at work</figcaption>
     </figure>
-
-    <div class="prose dark:prose-invert space-y-6" data-aos="fade-left" data-aos-delay="400 space-y-4">
+    <div class="prose dark:prose-invert space-y-6" data-aos="fade-left" data-aos-delay="400">
       <p>I’m a bug bounty hunter, Certified Network Engineer, and currently interning as a Vulnerability Management analyst at GuidePoint Security.</p>
       <p>This portfolio showcases my security research — with raw reports, reflections, and redacted HackerOne data.</p>
-      <a href="{{ url_for('bug_vault.index') }}" class="btn btn--primary hover-lift space-y-4">🛰️ Explore the Vault</a>
+      <a href="{{ url_for('bug_vault.index') }}" class="btn btn--primary hover-lift">🛰️ Explore the Vault</a>
     </div>
   </div>
-
   <div data-aos="fade-up" data-aos-delay="600">
-    <h2 class="text-2xl font-bold mb-4" class="text-3xl font-bold mb-4 space-y-4">Key Stats</h2>
+    <h2 class="tracking-wide animate-pulse-glow text-orangeLuxe-light text-2xl font-bold mb-4">Key Stats</h2>
     {% import "macros.html" as macros %}
-    {% set headers = ['Category', 'Count'] %}
-    {% set rows = [['XSS', 12], ['Injection', 15], ['Misconfig', 8]] %}
-    {{ macros.data_table(headers, rows, caption="Summary of vulnerabilities reported to various platforms") }}
+    {% set key_stats_headers = ['Category', 'Count'] %}
+    {% set key_stats_rows = [['XSS', 12], ['Injection', 15], ['Misconfig', 8]] %}
+    {{ macros.data_table(key_stats_headers, key_stats_rows, caption="Summary of vulnerabilities reported to various platforms") }}
   </div>
 </section>
 

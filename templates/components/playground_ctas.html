@@ -1,0 +1,45 @@
+{# Primary action CTAs for Playground #}
+<section role="region" data-aos="fade-up" aria-label="Primary actions"
+         class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4"
+>
+  {% set ctas = [
+    {
+      id:        "academy",
+      emoji:     "🎓",
+      title:     "Join Ghost Academy",
+      desc:      "Sharpen your skills. Earn XP. Become a legend.",
+      href:      url_for('academy.academy_home'),
+      label:     "Enter Academy",
+      btn_shadow:"group-hover:shadow-glow-orange focus:ring-orangeLuxe"
+    },
+    {
+      id:        "dashboard",
+      emoji:     "🛰️",
+      title:     "View Operative Stats",
+      desc:      "Track your vault journey + XP history.",
+      href:      url_for('dashboard.dashboard_home'),
+      label:     "Launch Dashboard",
+      btn_shadow:"group-hover:shadow-hud-panel focus:ring-emeraldLuxe"
+    }
+  ] %}
+  {% for cta in ctas %}
+    <article role="region"
+             aria-labelledby="{{ cta.id }}-title"
+             class="cta-card group p-6 bg-cyberNight rounded-2xl border border-orangeLuxe/30 shadow-md transition-all hover:shadow-orangeLuxe/20 focus-within:ring-2"
+    >
+      <h2 id="{{ cta.id }}-title"
+          class="text-2xl font-bold text-orange-300 mb-2 tracking-wide">
+        {{ cta.emoji }} {{ cta.title }}
+      </h2>
+      <p class="text-xs text-orangeLuxe-light/70 mb-4">{{ cta.desc }}</p>
+      <a href="{{ cta.href }}"
+         aria-labelledby="{{ cta.id }}-title"
+         class="w-full inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded border border-orangeLuxe text-orangeLuxe
+                hover:bg-orangeLuxe hover:text-black transition-all {{ cta.btn_shadow }}"
+      >
+        {{ cta.label }}
+      </a>
+    </article>
+  {% endfor %}
+</section>
+

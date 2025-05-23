@@ -1,3 +1,42 @@
-<!-- starfield_canvas.html -->
-<canvas id="heroStarfield" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+{# templates/components/starfield_canvas.html #}
+<canvas id="heroStarfield"
+        class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+<script defer>
+(() => {
+  const canvas = document.getElementById('heroStarfield');
+  const ctx    = canvas.getContext('2d');
+  let w, h, stars;
+
+  const init = () => {
+    w = canvas.width  = canvas.clientWidth;
+    h = canvas.height = canvas.clientHeight;
+    stars = Array.from({length:200}, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      size: Math.random() * 1.2,
+      speed: 0.1 + Math.random() * 0.5
+    }));
+  };
+
+  const resizeHandler = () => init();
+  window.addEventListener('resize', resizeHandler);
+
+  const updateAndDraw = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (let s of stars) {
+      s.y -= s.speed;
+      if (s.y < 0) {
+        s.y = h;
+        s.x = Math.random() * w;
+      }
+      ctx.fillStyle = 'white';
+      ctx.fillRect(s.x, s.y, s.size, s.size);
+    }
+    requestAnimationFrame(updateAndDraw);
+  };
+
+  init();
+  updateAndDraw();
+})();
+</script>
 

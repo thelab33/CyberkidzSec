@@ -1,3 +1,7 @@
+/* File: static/css/console.css - Description here */
+
+/* File: ./static/css/console.css - Description here */
+
 /* static/css/console.css */
 
 /* ─── Vault Loader Overlay ─── */
@@ -112,7 +116,7 @@
 }
 
 /* ─── Keyframes ─── */
-@keyframes pulseWarp {
+@keyframes pulse-warp {
   0%,
   100% {
     transform: scale(1);

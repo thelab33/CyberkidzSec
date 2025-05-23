@@ -1,4 +1,4 @@
-<!-- 🌐 CyberKidzSec Scroll Progress Indicator -->
+{# templates/components/scroll_progress.html – CyberKidzSec Scroll Progress Indicator #}
 <div id="scrollProgress"
      role="presentation"
      aria-hidden="true"
@@ -15,18 +15,17 @@
   }
 </style>
 
-<script>
+<script defer>
 (() => {
   const bar = document.getElementById("scrollProgress");
-
-  /** 📉 Smooth scroll tracking */
   let ticking = false;
-  const update = () => {
+
+  function update() {
     const max = document.body.scrollHeight - window.innerHeight;
-    const percent = (window.scrollY / max) || 0;
-    bar.style.transform = `scaleX(${percent.toFixed(4)})`;
+    const pct = max > 0 ? window.scrollY / max : 0;
+    bar.style.transform = `scaleX(${pct.toFixed(4)})`;
     ticking = false;
-  };
+  }
 
   window.addEventListener("scroll", () => {
     if (!ticking) {
@@ -35,8 +34,8 @@
     }
   });
 
-  /** 🧪 Initial render animation (fade-in + grow) */
   window.addEventListener("load", () => {
+    // Fade-in + initial grow
     bar.style.transition = "transform 0.5s ease-out";
     setTimeout(() => {
       update();

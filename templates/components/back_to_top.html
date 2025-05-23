@@ -1,4 +1,4 @@
-<!-- ✅ Back to Top Button (Forgemaster Tier) -->
+{# templates/components/back_to_top.html — Forgemaster Back to Top Button #}
 <button
   id="backToTopBtn"
   aria-label="Back to top"
@@ -6,19 +6,19 @@
          shadow-[0_0_20px_rgba(249,115,22,0.5)] opacity-0 translate-y-6
          transition-all duration-300 pointer-events-none hover:scale-110 hover:shadow-[0_0_35px_rgba(249,115,22,0.6)]"
 >
-  <i class="fas fa-rocket animate-bounce-slow space-y-4"></i>
+  <i class="fas fa-rocket animate-bounce-slow"></i>
 </button>
 
-<!-- 🌟 Smooth Scroll & Visibility Logic -->
-<script>
+<script defer>
 (() => {
   const btn = document.getElementById("backToTopBtn");
 
   /** Show/hide on scroll */
   function toggleBtn() {
-    btn.classList.toggle("opacity-0", window.scrollY < 400);
-    btn.classList.toggle("translate-y-6", window.scrollY < 400);
-    btn.classList.toggle("pointer-events-none", window.scrollY < 400);
+    const hidden = window.scrollY < 400;
+    btn.classList.toggle("opacity-0", hidden);
+    btn.classList.toggle("translate-y-6", hidden);
+    btn.classList.toggle("pointer-events-none", hidden);
   }
   toggleBtn();
   window.addEventListener("scroll", toggleBtn);
@@ -30,7 +30,6 @@
 })();
 </script>
 
-<!-- 🌟 Custom Bounce Animation -->
 <style>
 @keyframes bounce-slow {
   0%, 100% { transform: translateY(0); }

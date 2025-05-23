@@ -1,0 +1,15 @@
+templates/components/combined-vault-components.html:{% include "components/filter_bar.html" %}
+templates/components/combined-vault-components.html:{% include "components/sidebar_filters.html" %}
+templates/components/utility_modals.html:  {% include "components/quick_view_modal.html" %}
+templates/components/utility_modals.html:  {% include "components/vault_popup.html" %}
+templates/components/utility_modals.html:  {% include "components/vault_copilot.html" %}
+templates/components/utility_modals.html:  {% include "components/section_skeleton.html" %}
+templates/components/utility_modals.html:  {% include "components/command_palette.html" %}
+templates/components/utility_modals.html:  {% include "components/back_to_top.html" %}
+templates/components/utility_modals.html:  {% include "components/sticky_header.html" %}
+templates/components/utility_modals.html:  {% include "components/skip_nav.html" %}
+templates/components/utility_modals.html:  {% include "components/navbar.html" %}
+templates/components/report_detail.html:  {% include "components/breadcrumbs.html" %}
+templates/components/report_detail.html:    {% include "components/report_chart.html" %}
+templates/components/hidden_extras.html:  {% include "components/tag.html" %}
+templates/components/hidden_extras.html:  {% include "components/combined-vault-components.html" %}

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Reports · CYBERKIDZSEC{% endblock %}
+{% block meta_desc %}Reports · CYBERKIDZSEC{% endblock meta_desc %}
 
-{% block content %}
-<section class="max-w-7xl mx-auto px-6 py-16 space-y-12" data-aos="fade-up">
+{% block page_content %}
+<section class="max-w-7xl mx-auto px-6 py-16 space-y-12" data-aos="fade-up" data-aos="fade-up" data-aos="fade-up">
 
   <!-- 🔍 Filter Bar + Sidebar -->
   {% include "components/filter_bar.html" %}
@@ -29,13 +29,13 @@
   <!-- 🔢 Pagination -->
   {% include "components/pagination.html" %}
 </section>
-{% endblock %}
+{% endblock page_content %}
 
-{% block scripts_extra %}
-  <script src="{{ url_for('static', filename='js/infinite-scroll.js') }}" defer></script>
+{% block page_scripts %}
+  <script defer src="{{ url_for('static', filename='js/infinite-scroll.js') }}" defer></script>
   <script type="module">
     // 🚀 Hydrate client-side reporting JS
     window.PAGE_REPORTS = {{ reports | tojson | safe }};
   </script>
-{% endblock %}
+{% endblock page_scripts %}
 

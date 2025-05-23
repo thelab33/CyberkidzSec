@@ -1,0 +1,772 @@
+=== Python Environment ===
+Python 3.13.3
+Package                   Version
+------------------------- -----------
+alembic                   1.16.0
+annotated-types           0.7.0
+anyio                     4.9.0
+asgiref                   3.8.1
+asttokens                 3.0.0
+attrs                     25.3.0
+black                     25.1.0
+blinker                   1.9.0
+build                     1.2.2.post1
+cachelib                  0.13.0
+certifi                   2025.1.31
+cffi                      1.17.1
+cfgv                      3.4.0
+charset-normalizer        3.4.1
+click                     8.2.1
+coverage                  7.8.0
+cryptography              44.0.2
+decorator                 5.2.1
+distlib                   0.3.9
+distro                    1.9.0
+dj-database-url           2.3.0
+Django                    5.2
+django-environ            0.12.0
+django-extensions         3.2.3
+django-heroku             0.3.1
+django-sslserver          0.22
+djangorestframework       3.16.0
+docopt                    0.6.2
+drf-spectacular           0.28.0
+EditorConfig              0.17.0
+executing                 2.2.0
+fastapi                   0.115.12
+feedparser                6.0.11
+filelock                  3.18.0
+Flask                     3.1.0
+Flask-Caching             2.3.1
+Flask-Migrate             4.1.0
+Flask-SQLAlchemy          3.1.1
+gpt-cli                   1.0.11
+greenlet                  3.2.1
+gunicorn                  22.0.0
+h11                       0.16.0
+httpcore                  1.0.9
+httpx                     0.28.1
+identify                  2.6.10
+idna                      3.10
+inflection                0.5.1
+iniconfig                 2.1.0
+ipython                   9.1.0
+ipython_pygments_lexers   1.1.1
+itsdangerous              2.2.0
+jedi                      0.19.2
+Jinja2                    3.1.6
+jiter                     0.10.0
+jsbeautifier              1.15.4
+jsonschema                4.23.0
+jsonschema-specifications 2024.10.1
+Mako                      1.3.10
+Markdown                  3.6
+markdown-it-py            3.0.0
+MarkupSafe                3.0.2
+matplotlib-inline         0.1.7
+mdurl                     0.1.2
+mypy_extensions           1.1.0
+nodeenv                   1.9.1
+openai                    1.76.0
+packaging                 25.0
+parso                     0.8.4
+pathspec                  0.12.1
+pexpect                   4.9.0
+pip                       25.1.1
+pip-tools                 7.4.1
+pipreqs                   0.4.13
+platformdirs              4.3.8
+playwright                1.51.0
+pluggy                    1.6.0
+pre_commit                4.2.0
+prisma                    0.15.0
+prompt_toolkit            3.0.51
+psycopg2                  2.9.10
+psycopg2-binary           2.9.10
+ptyprocess                0.7.0
+pure_eval                 0.2.3
+pycparser                 2.22
+pydantic                  2.11.3
+pydantic_core             2.33.1
+pyee                      12.1.1
+Pygments                  2.19.1
+pyOpenSSL                 25.0.0
+pyproject_hooks           1.2.0
+pytest                    7.4.4
+pytest-base-url           2.1.0
+pytest-cov                5.0.0
+pytest-django             4.8.0
+pytest-playwright         0.4.2
+python-dotenv             1.1.0
+python-slugify            8.0.4
+PyYAML                    6.0.2
+referencing               0.36.2
+requests                  2.32.3
+rich                      14.0.0
+rpds-py                   0.24.0
+ruff                      0.11.7
+sentry-sdk                2.25.1
+setuptools                79.0.1
+sgmllib3k                 1.0.0
+six                       1.17.0
+sniffio                   1.3.1
+SQLAlchemy                2.0.41
+sqlparse                  0.5.3
+stack-data                0.6.3
+starlette                 0.46.1
+text-unidecode            1.3
+tld                       0.13
+tomlkit                   0.13.2
+tqdm                      4.67.1
+traitlets                 5.14.3
+typing_extensions         4.13.2
+typing-inspection         0.4.0
+uritemplate               4.1.1
+urllib3                   2.3.0
+uvicorn                   0.34.0
+virtualenv                20.30.0
+wcwidth                   0.2.13
+Werkzeug                  3.1.3
+wheel                     0.45.1
+whitenoise                6.9.0
+yarg                      0.1.10
+=== Flask Routes & Blueprints ===
+src/views.py:@views.route("/")
+src/blueprints/copilot/routes.py:@copilot.route("/api/copilot/query", methods=["POST"])
+src/blueprints/views.py:@views.route("/")
+src/blueprints/views.py:@views.route("/about")
+src/blueprints/views.py:@views.route("/reports")
+src/blueprints/views.py:@views.route("/playground")
+src/blueprints/views.py:@views.route("/reports/<slug>")
+src/blueprints/views.py:@views.route("/charts")
+src/blueprints/threat_labs/routes.py:# src/blueprints/threat_labs/routes.py
+src/blueprints/threat_labs/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/vuln_scanner/routes.py:# src/blueprints/vuln_scanner/routes.py
+src/blueprints/vuln_scanner/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/playground/route.py:# src/blueprints/playground/routes.py
+src/blueprints/playground/route.py:@playground.route("/")
+src/blueprints/playground/routes.py:# src/blueprints/playground/routes.py
+src/blueprints/playground/routes.py:@playground.route("/")
+src/blueprints/api_playground/routes.py:# src/blueprints/api_playground/routes.py
+src/blueprints/api_playground/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/api.py:@api.route("/cve")
+src/blueprints/api.py:@api.route("/reports")
+src/blueprints/api.py:@api.route("/log", methods=["POST"])
+src/blueprints/vault_dashboard/routes.py:# src/blueprints/vault_dashboard/routes.py
+src/blueprints/vault_dashboard/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/dashboard/routes.py:@dashboard.route('/')
+src/blueprints/smart_contract_playground/routes.py:# src/blueprints/smart_contract_playground/routes.py
+src/blueprints/smart_contract_playground/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/status/routes.py:@status.route("/ws/status")
+src/blueprints/academy/route.py:# src/blueprints/academy/routes.py
+src/blueprints/academy/route.py:@academy.route("/")
+src/blueprints/academy/routes.py:@academy.route("/")
+src/blueprints/pentest_playground/routes.py:# src/blueprints/pentest_playground/routes.py
+src/blueprints/pentest_playground/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/bug_vault/routes.py:# src/blueprints/bug_vault/routes.py
+src/blueprints/bug_vault/routes.py:@bp.route("/", methods=["GET"])
+src/blueprints/ai_assistant/routes.py:# src/blueprints/ai_assistant/routes.py
+src/blueprints/ai_assistant/routes.py:@bp.route("/", methods=["GET"])
+src/api.py:# Example route: latest CVEs (or your radar blips later)
+src/api.py:@api.route("/ping")
+src/app.py:from src.blueprints.views import views
+src/app.py:from src.blueprints.api import api
+src/app.py:from src.blueprints.academy.routes import academy
+src/app.py:from src.blueprints.dashboard.routes import dashboard
+src/app.py:from src.blueprints.playground.routes import playground
+src/app.py:from src.blueprints.bug_vault.routes import bp as bug_vault_bp
+src/app.py:from src.blueprints.threat_labs.routes import bp as threat_labs_bp
+src/app.py:from src.blueprints.vault_dashboard.routes import bp as vault_dashboard_bp
+src/app.py:from src.blueprints.pentest_playground.routes import bp as pentest_playground_bp
+src/app.py:from src.blueprints.vuln_scanner.routes import bp as vuln_scanner_bp
+src/app.py:from src.blueprints.api_playground.routes import bp as api_playground_bp
+src/app.py:from src.blueprints.smart_contract_playground.routes import bp as sc_playground_bp
+src/app.py:from src.blueprints.ai_assistant.routes import bp as ai_assistant_bp
+src/app.py:from src.blueprints.status.routes import status  #  Healthcheck/Status Route
+src/app.py:from src.blueprints.copilot import copilot
+src/app.py:    # Register blueprints and error pages
+src/app.py:    register_blueprints(app)
+src/app.py:def register_blueprints(app):
+src/app.py:    """Attach blueprints to the app."""
+src/app.py:    # Core routes
+src/app.py:    app.register_blueprint(views)
+src/app.py:    app.register_blueprint(api)
+src/app.py:    app.register_blueprint(academy)
+src/app.py:    app.register_blueprint(dashboard)
+src/app.py:    app.register_blueprint(playground)
+src/app.py:    app.register_blueprint(bug_vault_bp,          url_prefix='/vault')
+src/app.py:    app.register_blueprint(threat_labs_bp,        url_prefix='/labs')
+src/app.py:    app.register_blueprint(vault_dashboard_bp,    url_prefix='/dashboard')
+src/app.py:    app.register_blueprint(pentest_playground_bp, url_prefix='/playground')
+src/app.py:    app.register_blueprint(vuln_scanner_bp,       url_prefix='/scanner')
+src/app.py:    app.register_blueprint(api_playground_bp,     url_prefix='/api')
+src/app.py:    app.register_blueprint(sc_playground_bp,      url_prefix='/contracts')
+src/app.py:    app.register_blueprint(ai_assistant_bp,       url_prefix='/assistant')
+src/app.py:    app.register_blueprint(status)  #  /ws/status route
+src/app.py:    app.register_blueprint(copilot)
+=== Templates Blocks/Includes ===
+templates/charts.html:{% extends "base.html" %}
+templates/charts.html:{% block title %}Report Analytics · CYBERKIDZSEC{% endblock %}
+templates/charts.html:{% block content %}
+templates/charts.html:{% block scripts_extra %}
+templates/threat_labs/index.html:{% extends "base.html" %}
+templates/threat_labs/index.html:{% block content %}
+templates/404.html:{% extends "base.html" %}
+templates/404.html:{% block title %}404 Not Found · CYBERKIDZSEC{% endblock %}
+templates/404.html:{% block content %}
+templates/vuln_scanner/index.html:{% extends "base.html" %}
+templates/vuln_scanner/index.html:{% block content %}
+templates/base.html:  <meta name="description" content="{% block meta_desc %}CYBERKIDZSEC — Zero-Day Vault.{% endblock %}" />
+templates/base.html:  <title>{% block title %}CYBERKIDZSEC Vault{% endblock %}</title>
+templates/base.html:  {% block head_extra %}{% endblock %}
+templates/base.html:  {% block style_includes %}{% endblock %}
+templates/base.html:  {% include "components/skip_nav.html" %}
+templates/base.html:    {% block content %}
+templates/base.html:      {% include "components/intro_layer.html" %}
+templates/base.html:      {% include "components/bug_tales.html" %}
+templates/base.html:      {% include "components/vault_overview_section.html" %}
+templates/base.html:      {% include "components/vault_feed.html" %}
+templates/base.html:      {% include "components/hacker_playground_section.html" %}
+templates/base.html:      {% include "components/utility_modals.html" %}
+templates/base.html:      {% include "components/hidden_extras.html" %}
+templates/base.html:  {% include "components/footer.html" %}
+templates/base.html:  {% include "components/back_to_top.html" %}
+templates/base.html:  {% block breadcrumbs %}{% endblock %}
+templates/base.html:  {% include "components/vault_popup.html" %}
+templates/base.html:  {% include "components/vault_copilot.html" %}
+templates/base.html:  {% include "components/section_skeleton.html" %}
+templates/base.html:  {% include "components/quick_view_modal.html" %}
+templates/base.html:  {% include "components/hud_toolbar.html" %}
+templates/base.html:  {% include "components/command_palette.html" %}
+templates/base.html:  {% block script_includes %}{% endblock %}
+templates/base.html:  {% block scripts_extra %}{% endblock %}
+templates/base.html:  {% include "components/ai_chat_widget.html" %}
+templates/base.html:  {% include "components/starfield_canvas.html" %}
+templates/base.html:  {% include "components/footer_extras.html" %}
+templates/pages/home/utilities.html:  {% include "components/quick_view_modal.html" %}
+templates/pages/home/utilities.html:  {% include "components/vault_popup.html" %}
+templates/pages/home/utilities.html:  {% include "components/vault_copilot.html" %}
+templates/pages/home/utilities.html:  {% include "components/section_skeleton.html" %}
+templates/pages/home/utilities.html:  {% include "components/command_palette.html" %}
+templates/pages/home/utilities.html:  {% include "components/back_to_top.html" %}
+templates/pages/home/utilities.html:  {% include "components/sticky_header.html" %}
+templates/pages/home/utilities.html:  {% include "components/skip_nav.html" %}
+templates/pages/home/utilities.html:  {% include "components/navbar.html" %}
+templates/pages/home/overview.html:  {% include "components/vault_overview.html" %}
+templates/pages/home/overview.html:  {% include "components/vault_banners.html" %}
+templates/pages/home/overview.html:  {% include "components/vault_xp_bar.html" %}
+templates/pages/home/overview.html:  {% include "components/blog_section.html" %}
+templates/pages/home/overview.html:  {% include "components/about_section.html" %}
+templates/pages/home/catch_all.html:  {% include "components/tag.html" %}
+templates/pages/home/catch_all.html:  {% include "components/combined-vault-components.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/filter_bar.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/sidebar_filters.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/sidebar_cta.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/sidebar.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/report_charts_grid.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/report_chart.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/report_card_grid.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/report_grid.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/related_reports.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/tag_section.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/tags_section.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/empty_state.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/breadcrumbs.html" %}
+templates/pages/home/reports_feed.html:    {% include "components/pagination.html" %}
+templates/pages/home/playground.html:  {% include "components/hacker_playground.html" %}
+templates/pages/home/playground.html:  {% include "components/cta_cards.html" %}
+templates/pages/home/playground.html:  {% include "components/playground.html" %}
+templates/pages/home/playground.html:  {% include "components/dashboard_card.html" %}
+templates/pages/home/playground.html:  {% include "components/hud_toolbar.html" %}
+templates/pages/home/playground.html:  {% include "components/hud_status.html" %}
+templates/pages/home/playground.html:  {% include "components/terminal_scan.html" %}
+templates/pages/home/playground.html:  {% include "components/scroll_progress.html" %}
+templates/pages/home/intro.html:  {% include "components/console.html" %}
+templates/pages/home/intro.html:  {% include "components/hero.html" %}
+templates/pages/home/intro.html:  {% include "components/bug_tales.html" %}
+templates/components/hacker_playground_section.html:{% block title %}Playground · CyberKidzSec Vault{% endblock %}
+templates/components/hacker_playground_section.html:{% block content %}
+templates/components/combined-vault-components.html:{% block title %}Playground · CyberKidzSec{% endblock %}
+templates/components/combined-vault-components.html:{% block content %}
+templates/components/combined-vault-components.html:{% include "components/filter_bar.html" %}
+templates/components/combined-vault-components.html:{% include "components/sidebar_filters.html" %}
+templates/components/utility_modals.html:  {% include "components/quick_view_modal.html" %}
+templates/components/utility_modals.html:  {% include "components/vault_popup.html" %}
+templates/components/utility_modals.html:  {% include "components/vault_copilot.html" %}
+templates/components/utility_modals.html:  {% include "components/section_skeleton.html" %}
+templates/components/utility_modals.html:  {% include "components/command_palette.html" %}
+templates/components/utility_modals.html:  {% include "components/back_to_top.html" %}
+templates/components/utility_modals.html:  {% include "components/sticky_header.html" %}
+templates/components/utility_modals.html:  {% include "components/skip_nav.html" %}
+templates/components/utility_modals.html:  {% include "components/navbar.html" %}
+templates/components/report_detail.html:{% block title %}{{ report.title }} · CYBERKIDZSEC{% endblock %}
+templates/components/report_detail.html:{% block breadcrumbs %}
+templates/components/report_detail.html:  {% include "components/breadcrumbs.html" %}
+templates/components/report_detail.html:{% block content %}
+templates/components/report_detail.html:    {% include "components/report_chart.html" %}
+templates/components/report_detail.html:{% block scripts_extra %}
+templates/components/blog_section.html:{% block title %}Blog · CYBERKIDZSEC{% endblock %}
+templates/components/blog_section.html:{% block content %}
+templates/components/playground.html:{% block title %}Playground · CyberKidzSec{% endblock %}
+templates/components/playground.html:{% block content %}
+templates/components/hidden_extras.html:  {% include "components/tag.html" %}
+templates/components/hidden_extras.html:  {% include "components/combined-vault-components.html" %}
+templates/playground/index.html:{% extends "base.html" %}
+templates/playground/index.html:{% block title %}🎮 Hacker Playground · CyberKidzSec Vault{% endblock %}
+templates/playground/index.html:{% block content %}
+templates/api_playground/index.html:{% extends "base.html" %}
+templates/api_playground/index.html:{% block content %}
+templates/reports_list.html:{% extends "base.html" %}
+templates/reports_list.html:{% block title %}Reports · CYBERKIDZSEC{% endblock %}
+templates/reports_list.html:{% block content %}
+templates/reports_list.html:  {% include "components/filter_bar.html" %}
+templates/reports_list.html:  {% include "components/sidebar_filters.html" %}
+templates/reports_list.html:        {% include "components/report_card.html" %}
+templates/reports_list.html:  {% include "components/pagination.html" %}
+templates/reports_list.html:{% block scripts_extra %}
+templates/vault_dashboard/index.html:{% extends "base.html" %}
+templates/vault_dashboard/index.html:{% block content %}
+templates/dashboard/index.html:{% extends 'base.html' %}
+templates/dashboard/index.html:{% block title %}Operative Dashboard · CyberKidzSec Vault{% endblock %}
+templates/dashboard/index.html:{% block content %}
+templates/smart_contract_playground/index.html:{% extends "base.html" %}
+templates/smart_contract_playground/index.html:{% block content %}
+templates/academy/ghost_academy.html:{% extends 'base.html' %}
+templates/academy/ghost_academy.html:{% block title %}Ghost Academy · CyberKidzSec Vault{% endblock %}
+templates/academy/ghost_academy.html:{% block content %}
+templates/academy/ghost_academy.html:{% block scripts_extra %}
+templates/academy/index.html:{% extends 'base.html' %}
+templates/academy/index.html:{% block title %}Ghost Academy · CyberKidzSec Vault{% endblock %}
+templates/academy/index.html:{% block content %}
+templates/index.html:{% extends "base.html" %}
+templates/index.html:{% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
+templates/index.html:{% block content %}
+templates/index.html:{% include "components/console.html" %}
+templates/index.html:    {% include "components/header.html" %}
+templates/index.html:  {% include "components/hero.html" %}
+templates/index.html:  {% include "components/bug_tales.html" %}
+templates/index.html:  {% include "components/vault_overview_section.html" %}
+templates/index.html:  {% include "components/vault_feed.html" %}
+templates/index.html:  {% include "components/hacker_playground_section.html" %}
+templates/index.html:  {% include "components/utility_modals.html" %}
+templates/index.html:  {% include "components/hidden_extras.html" %}
+templates/pentest_playground/index.html:{% extends "base.html" %}
+templates/pentest_playground/index.html:{% block content %}
+templates/report_analytics.html:{% extends "base.html" %}
+templates/report_analytics.html:{% block title %}Report Analytics · CYBERKIDZSEC{% endblock %}
+templates/report_analytics.html:{% block content %}
+templates/report_analytics.html:{% block scripts_extra %}
+templates/bug_vault/index.html:{% extends "base.html" %}
+templates/bug_vault/index.html:{% block content %}
+templates/ai_assistant/index.html:{% extends "base.html" %}
+templates/ai_assistant/index.html:{% block content %}
+=== Duplicate Templates (by content) ===
+3be7b8b182ccd96e48989b4e57311193  templates/components/sidebar_cta.html
+3be7b8b182ccd96e48989b4e57311193  templates/components/sidebar.html
+
+d0aebc77aef12e3e20e983d1af89b151  templates/charts.html
+d0aebc77aef12e3e20e983d1af89b151  templates/report_analytics.html
+
+e71c0e65a4101532b22b196593c43ae1  templates/ai_assistant/index.html
+e71c0e65a4101532b22b196593c43ae1  templates/api_playground/index.html
+e71c0e65a4101532b22b196593c43ae1  templates/pentest_playground/index.html
+e71c0e65a4101532b22b196593c43ae1  templates/smart_contract_playground/index.html
+e71c0e65a4101532b22b196593c43ae1  templates/vault_dashboard/index.html
+e71c0e65a4101532b22b196593c43ae1  templates/vuln_scanner/index.html
+=== Static Assets Overview ===
+static/css/console.css: Unicode text, UTF-8 text
+static/css/missing_ids.css: empty
+static/css/scrollbars.css: empty
+static/css/starforge-enhancements.css: empty
+static/css/sections/header.css: Unicode text, UTF-8 text
+static/css/sections/pagination.css: Unicode text, UTF-8 text
+static/css/sections/sidebar_cta.css: Unicode text, UTF-8 text
+static/css/sections/skip_nav.css: ASCII text
+static/css/sections/hero.css: Unicode text, UTF-8 text
+static/css/sections/related_reports.css: Unicode text, UTF-8 text
+static/css/sections/sticky_header.css: ASCII text
+static/css/sections/vault_overview.css: ASCII text
+static/css/sections/index_enhancements.css: empty
+static/css/sections/report_grid.css: Unicode text, UTF-8 text
+static/css/sections/vault_banners.css: ASCII text
+static/css/sections/sidebar_filters.css: Unicode text, UTF-8 text
+static/css/sections/featured_reports.css: Unicode text, UTF-8 text
+static/css/sections/breadcrumbs.css: ASCII text
+static/css/sections/filter_bar.css: Unicode text, UTF-8 text
+static/css/sections/tags_section.css: Unicode text, UTF-8 text
+static/css/sections/report_charts_grid.css: Unicode text, UTF-8 text
+static/css/sections/hacker_playground.css: Unicode text, UTF-8 text
+static/css/sections/empty_state.css: Unicode text, UTF-8 text
+static/css/command_palette.css: ASCII text
+static/css/tailwind.css: Unicode text, UTF-8 text
+static/css/ghost-boot.css: Unicode text, UTF-8 text
+static/css/ghost-mode.css: Unicode text, UTF-8 text
+static/css/components/xp_bar.css: Unicode text, UTF-8 text
+static/css/components/button.css: ASCII text
+static/css/components/header.css: empty
+static/css/components/toast.css: Unicode text, UTF-8 text
+static/css/components/command_palette.css: Unicode text, UTF-8 text
+static/css/components/vault_overlay.css: Unicode text, UTF-8 text
+static/css/components/hero.css: Unicode text, UTF-8 text
+static/css/components/intro-layer.css: empty
+static/css/components/card_lift.css: Unicode text, UTF-8 text
+static/css/components/hud_status.css: Unicode text, UTF-8 text
+static/css/components/theme_switch.css: Unicode text, UTF-8 text
+static/css/components/vault_banners.css: ASCII text
+static/css/components/terminal_scan.css: Unicode text, UTF-8 text
+static/css/app.min.css: ASCII text, with very long lines (63307)
+static/css/quick_patches.css: empty
+static/css/back_to_top.css: ASCII text
+static/css/cyber-enhancements.css: assembler source, Unicode text, UTF-8 text
+static/css/app.css: assembler source, Unicode text, UTF-8 text
+static/css/utilities/variables.css: empty
+static/css/utilities/animations.css: empty
+static/css/utilities/glitch.css: Unicode text, UTF-8 text
+static/css/bug_tales.css: ASCII text
+static/css/cyber-enhancements.css.bak: assembler source, Unicode text, UTF-8 text
+static/js/app.min.js: Unicode text, UTF-8 text
+static/js/spotlight-search.js: Unicode text, UTF-8 text
+static/js/ghost-boot.js: Unicode text, UTF-8 text
+static/js/hero.js: Unicode text, UTF-8 text, with very long lines (770)
+static/js/search.js: JavaScript source, Unicode text, UTF-8 text
+static/js/pwa_hud.js: Unicode text, UTF-8 text
+static/js/vault_overview.js: ASCII text
+static/js/back_to_top.js: JavaScript source, ASCII text
+static/js/elite/dashboard_chart.js: ASCII text
+static/js/elite/severity_glow.js: empty
+static/js/elite/hall_of_fame.js: empty
+static/js/elite/terminal-theme.js: empty
+static/js/elite/terminal_clicks.js: empty
+static/js/elite/konami-payload.js: empty
+static/js/elite/bug_xp_bar.js: empty
+static/js/elite/binary_drip.js: empty
+static/js/init.js: Unicode text, UTF-8 text
+static/js/bug_tales.js: Unicode text, UTF-8 text
+static/js/hero.js.bak: Unicode text, UTF-8 text
+static/js/glitchify.js: JavaScript source, ASCII text
+static/js/console.js: Unicode text, UTF-8 text
+static/js/main.js: Unicode text, UTF-8 text, with very long lines (2101)
+static/js/header.js: Unicode text, UTF-8 text
+static/js/hero_starfield_debug.js: ASCII text
+static/js/search.worker.js: Java source, Unicode text, UTF-8 text
+static/js/ghost-mode.js: Unicode text, UTF-8 text
+static/js/confetti.js: JavaScript source, Unicode text, UTF-8 text, with very long lines (7542)
+static/js/ghost-boot-anim.js: Unicode text, UTF-8 text
+static/js/vault-utils.js: Unicode text, UTF-8 text
+static/js/webgl-starfield.js: ASCII text, with no line terminators
+static/js/cyber-enhancements.js: Unicode text, UTF-8 text
+static/images/star-fallback.jpg: empty
+static/images/avatars/operative.jpg: empty
+static/images/grid.svg: SVG Scalable Vector Graphics image, ASCII text
+static/images/scanlines.svg: empty
+static/images/og/main_vault_banner.png: empty
+static/images/og/hacker_underground_banner.png: empty
+static/images/og/zero_day_archive_banner.png: empty
+static/images/og/demo-1.png: empty
+static/images/og/demo-2.png: empty
+static/images/og/demo-3.png: empty
+=== Tailwind CSS Files ===
+-rw-r--r-- 1 elgato elgato 90K May 22 02:30 static/css/app.min.css
+-rw-r--r-- 1 elgato elgato 11K May 22 02:05 static/css/tailwind.css
+=== Accessibility Audit ===
+templates/home.html:  aria-live="polite"
+templates/charts.html:        <canvas id="cvssChart" class="w-full h-72" role="img" aria-label="Bar chart showing CVSS score distribution"></canvas>
+templates/charts.html:        <canvas id="typeChart" class="w-full h-72" role="img" aria-label="Pie chart showing vulnerability type breakdown"></canvas>
+templates/404.html:<section class="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-10 px-6 py-20 animate-fade-in" role="alert" aria-labelledby="errorTitle">
+templates/base.html:  <main id="main" class="flex-1" role="main" tabindex="-1">
+templates/base.html:      <section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
+templates/pages/home/utilities.html:<section id="utility-modals" data-section="modals" aria-hidden="true" data-test="section-modals">
+templates/pages/home/catch_all.html:<section id="catch-all-extras" class="hidden" aria-hidden="true">
+templates/pages/home/status_strip.html:<section id="vault-status" role="status" class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md" data-aos="fade" data-test="section-status">
+templates/pages/home/reports_feed.html:  <aside class="space-y-10 lg:sticky lg:top-24 self-start" role="complementary" aria-label="Report filters and controls">
+templates/pages/home/reports_feed.html:  <div class="lg:col-span-3 space-y-16" role="region" aria-labelledby="reports-heading">
+templates/pages/home/intro.html:  <div id="featuredSkeleton" class="skeleton" data-lines="8" aria-hidden="true"></div>
+templates/components/related_reports.html:<section role="region" data-aos="fade-up" id="relatedWrap" class="my-20" data-aos="fade-up" data-aos="fade-up"></section data-testid="related_reports space-y-4" >
+templates/components/breadcrumbs.html:  aria-label="Breadcrumb"
+templates/components/breadcrumbs.html:      if (last) content.setAttribute("aria-current", "page");
+templates/components/empty_state.html:  role="status"
+templates/components/empty_state.html:  aria-live="polite"
+templates/components/empty_state.html:    aria-hidden="true"
+templates/components/vault_overview.html:<section role="region" data-aos="fade-up"
+templates/components/vault_overview.html:  <div aria-label="Vault XP Status" class="mx-auto max-w-2xl text-center space-y-4 space-y-4">
+templates/components/vault_overview.html:        aria-describedby="vaultXpText"
+templates/components/vault_overview.html:      role="status"
+templates/components/hacker_playground_section.html:<section role="region" data-aos="fade-up" id="playgroundSection"
+templates/components/hacker_playground_section.html:         aria-label="Hacker Playground">
+templates/components/vault_banners.html:<section role="region" data-aos="fade-up"
+templates/components/tags_section.html:  role="region"
+templates/components/tags_section.html:  aria-labelledby="tagsHeading"
+templates/components/tags_section.html:    role="tablist"
+templates/components/tags_section.html:    aria-label="Tag Filters"
+templates/components/tags_section.html:    role="region"
+templates/components/tags_section.html:    aria-live="polite"
+templates/components/tags_section.html:  btn.setAttribute("aria-pressed", active.toString());
+templates/components/tags_section.html:  rail.querySelectorAll("[role=tab]").forEach(btn => btn.remove());
+templates/components/vault_popup.html:       role="dialog" aria-modal="true">
+templates/components/vault_popup.html:    <span tabindex="0"></span>
+templates/components/vault_popup.html:    <span tabindex="0"></span>
+templates/components/about_section.html:<section role="region" data-aos="fade-up" class="section-container py-20 space-y-12 animate-fade-in" data-aos="fade-up" data-aos="fade-up" data-testid="about_section space-y-4" >
+templates/components/vault_xp_bar.html:<section role="region" data-aos="fade-up" aria-label="Vault XP Status"
+templates/components/vault_xp_bar.html:              aria-describedby="vaultXpText">
+templates/components/vault_xp_bar.html:     role="status" aria-live="polite">
+templates/components/hero.html.bak:  role="banner"
+templates/components/hero.html.bak:  aria-labelledby="hero-heading hero-subheading"
+templates/components/hero.html.bak:  <picture class="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+templates/components/hero.html.bak:  <div aria-hidden="true" class="absolute inset-0 pointer-events-none z-10">
+templates/components/hero.html.bak:        aria-live="polite"
+templates/components/hero.html.bak:        role="progressbar"
+templates/components/hero.html.bak:        aria-valuenow="{{ vault_xp_percentage }}"
+templates/components/hero.html.bak:        aria-valuemin="0"
+templates/components/hero.html.bak:        aria-valuemax="100"
+templates/components/hero.html.bak:        aria-label="Vault Stability"
+templates/components/hero.html.bak:        aria-label="Open global search (Cmd + K)"
+templates/components/hero.html.bak:        aria-label="Jump to Hacker Playground"
+templates/components/footer.html:  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite]"></div>
+templates/components/footer.html:  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay"></div>
+templates/components/footer.html:        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orange-500" aria-label="Subscribe">Join</button>
+templates/components/footer.html:        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github"></i></a>
+templates/components/footer.html:        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin"></i></a>
+templates/components/footer.html:        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug"></i></a>
+templates/components/footer.html:       role="alert"
+templates/components/footer.html:       aria-live="assertive">
+templates/components/filter_bar.html:     role="toolbar"
+templates/components/filter_bar.html:     aria-label="Filter and sort vulnerability reports"
+templates/components/filter_bar.html:  <div id="tagFilters" role="radiogroup" aria-label="Tag Filters"
+templates/components/filter_bar.html:            aria-label="Toggle light/dark theme">
+templates/components/tag.html:         role="region"
+templates/components/tag.html:         aria-labelledby="tagsHeading"
+templates/components/tag.html:  <div id="tagGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list"></div>
+templates/components/tag.html:    span.setAttribute("aria-pressed", active.toString());
+templates/components/navbar.html:  role="navigation"
+templates/components/navbar.html:  aria-label="Main site navigation"
+templates/components/navbar.html:          aria-current="{{ 'page' if request.path == href else '' }}"
+templates/components/navbar.html:      aria-label="Open mobile menu"
+templates/components/navbar.html:    toggle.setAttribute("aria-expanded", menu.classList.contains("hidden") ? "false" : "true");
+templates/components/scroll_progress.html:     role="presentation"
+templates/components/scroll_progress.html:     aria-hidden="true"
+templates/components/skip_nav.js:     role="navigation"
+templates/components/skip_nav.js:     aria-label="Skip links (Press ⌘↑)">
+templates/components/skip_nav.js:       aria-hidden="true">
+templates/components/skip_nav.js:          aria-label="Close skip navigation">
+templates/components/status_strip.html:         role="status"
+templates/components/status_strip.html:         aria-live="polite"
+templates/components/back_to_top.html:  aria-label="Back to top"
+templates/components/vault_overview_section.html:<section data-insight="pending" id="vault-overview" role="region" aria-labelledby="overviewTitle"
+templates/components/vault_overview_section.html:  <div aria-label="Vault XP Status" class="mx-auto max-w-xl text-center space-y-4">
+templates/components/vault_overview_section.html:                aria-describedby="vaultXpText"></progress>
+templates/components/vault_overview_section.html:       role="status">
+templates/components/vault_overview_section.html:  <section role="region" aria-labelledby="blogTitle"
+templates/components/vault_overview_section.html:         aria-live="polite" aria-busy="{{ 'false' if posts else 'true' }}">
+templates/components/vault_overview_section.html:                   aria-labelledby="post-{{ loop.index0 }}-title">
+templates/components/vault_overview_section.html:          <div class="rounded-lg bg-zinc-800 animate-pulse h-64 shadow-md" aria-hidden="true"></div>
+templates/components/combined-vault-components.html:  aria-label="Back to top"
+templates/components/combined-vault-components.html:  <div aria-hidden class="pointer-events-none absolute -top-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orangeLuxe to-transparent animate-[pulse-glow_4s_infinite] space-y-4"></div>
+templates/components/combined-vault-components.html:  <div aria-hidden class="absolute inset-0 bg-[url('/static/img/noise.png')] opacity-5 mix-blend-overlay space-y-4"></div>
+templates/components/combined-vault-components.html:        <button class="rounded-md bg-orangeLuxe px-4 py-2 text-xs font-bold text-black hover:bg-orangeLuxe-dark" aria-label="Subscribe to newsletter space-y-4">Join</button>
+templates/components/combined-vault-components.html:        <a href="https://github.com/thelab33/cyberkidzsec-vault" target="_blank" rel="noopener" aria-label="GitHub repository" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-github space-y-4"></i></a>
+templates/components/combined-vault-components.html:        <a href="https://linkedin.com/in/cyberkidzsec" target="_blank" rel="noopener" aria-label="LinkedIn profile" class="hover:text-orangeLuxe transition"><i class="fa-brands fa-linkedin space-y-4"></i></a>
+templates/components/combined-vault-components.html:        <a href="/submit" aria-label="Submit vulnerability" class="hover:text-orangeLuxe transition"><i class="fa-solid fa-bug space-y-4"></i></a>
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" class="ckz-hero" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:  aria-label="Breadcrumb"
+templates/components/combined-vault-components.html:      span.setAttribute("aria-current", "page");
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up"
+templates/components/combined-vault-components.html:  <div class="fixed inset-0 z-[9999] overflow-y-auto" role="dialog" aria-modal="true space-y-4">
+templates/components/combined-vault-components.html:      <span class="inline-block h-screen align-middle" aria-hidden="true space-y-4"></span>
+templates/components/combined-vault-components.html:            <button id="qvPrev" class="navBtn hidden" aria-label="Previous report space-y-4">← Prev</button>
+templates/components/combined-vault-components.html:            <button id="qvNext" class="navBtn hidden" aria-label="Next report space-y-4">Next →</button>
+templates/components/combined-vault-components.html:  span.dataset.active=active; span.role="button"; span.tabIndex=0;
+templates/components/combined-vault-components.html:    div.className="cmdRow"; div.dataset.active="false"; div.tabIndex=-1;
+templates/components/combined-vault-components.html:        role="banner"
+templates/components/combined-vault-components.html:        aria-label="Main Site Header">
+templates/components/combined-vault-components.html:       aria-label="CYBERKIDZSEC Vault Home">
+templates/components/combined-vault-components.html:      <svg class="h-8 w-8 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true space-y-4">
+templates/components/combined-vault-components.html:              aria-label="Toggle dark mode"
+templates/components/combined-vault-components.html:            aria-controls="mobileNav"
+templates/components/combined-vault-components.html:            aria-expanded="false"
+templates/components/combined-vault-components.html:            aria-label="Open mobile navigation">
+templates/components/combined-vault-components.html:         role="status"
+templates/components/combined-vault-components.html:         aria-live="polite">
+templates/components/combined-vault-components.html:        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true space-y-4">
+templates/components/combined-vault-components.html:       role="navigation"
+templates/components/combined-vault-components.html:       aria-label="Mobile Navigation">
+templates/components/combined-vault-components.html:       aria-hidden="true">
+templates/components/combined-vault-components.html:    menuToggle.setAttribute('aria-expanded', isOpen.toString());
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" id="relatedWrap" class="my-16" data-aos="fade-up"" data-aos="fade-up"></section data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up"" id="tagsSection" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:  rail.querySelectorAll("[role=button]").forEach(n=>n.remove());
+templates/components/combined-vault-components.html:            aria-label="Toggle theme">
+templates/components/combined-vault-components.html:          aria-label="Toggle navigation"
+templates/components/combined-vault-components.html:          aria-expanded="false">
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" class="max-w-6xl mx-auto py-20 px-6" data-aos="fade-up"" id="cardGridWrap" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:    role="region" aria-labelledby="academy-title"
+templates/components/combined-vault-components.html:    role="region" aria-labelledby="dashboard-title"
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" id="vault-banners" class="my-16 grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" id="hero" class="relative text-center py-24 px-6 sm:px-8 lg:px-12 rounded-2xl border border-orangeLuxe/40 shadow-[0_10px_50px_rgba(255,115,0,0.1)] bg-gradient-to-br from-cyberNight via-cyberNight to-cyberNight text-orangeLuxe-light overflow-hidden opacity-0 animate-fade-in" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 backdrop-blur p-4" role="dialog" aria-modal="true space-y-4">
+templates/components/combined-vault-components.html:    <span tabindex="0"></span>
+templates/components/combined-vault-components.html:    <span tabindex="0"></span>
+templates/components/combined-vault-components.html:    document.querySelectorAll("[role=dialog]").forEach(el => el.remove());
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up"
+templates/components/combined-vault-components.html:  aria-labelledby="featured-heading"
+templates/components/combined-vault-components.html:    aria-hidden
+templates/components/combined-vault-components.html:    role="list"
+templates/components/combined-vault-components.html:  <button id="hudToggle" class="flex w-full items-center justify-between px-4 py-2 text-xs font-mono text-orangeLuxe-light hover:bg-orangeLuxe/10 rounded-t-2xl" aria-expanded="true space-y-4">
+templates/components/combined-vault-components.html:    toggleBtn.setAttribute("aria-expanded", !body.classList.contains("hidden"));
+templates/components/combined-vault-components.html:      <div class="flex flex-nowrap gap-2" role="radiogroup" aria-label="Filter Reports space-y-4">
+templates/components/combined-vault-components.html:                    role="radio" aria-checked="${f === filter}" title="Filter by ${f}">
+templates/components/combined-vault-components.html:          aria-label="Toggle dark/light">
+templates/components/combined-vault-components.html:live.setAttribute("aria-live", "polite");
+templates/components/combined-vault-components.html:  aria-label="Pagination"
+templates/components/combined-vault-components.html:    if (active) btn.setAttribute("aria-current", "page");
+templates/components/combined-vault-components.html:<section role="region" data-aos="fade-up" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto mt-24 px-6" data-aos="fade-up"" data-aos="fade-up" data-testid="combined-vault-components space-y-4" >
+templates/components/combined-vault-components.html:   aria-label="Skip to main content">
+templates/components/header.html:  {'id':'liveStatus','label':'Online','html':'<span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" role="status" aria-label="Online"></span>'},
+templates/components/header.html:  {'id':'notifToggle','label':'Notifications','html':'<i class="fas fa-bell" aria-hidden="true"></i><span class="sr-only">Notifications</span><span class="notif-count">3</span>'},
+templates/components/header.html:  {'id':'cmdPalette','label':'Command Palette','html':'<i class="fas fa-terminal" aria-hidden="true"></i><span class="sr-only">Command Palette</span>'},
+templates/components/header.html:  {'id':'themeToggle','label':'Toggle Theme','html':'<i class="fas fa-moon" aria-hidden="true"></i><span class="sr-only">Toggle Theme</span>'},
+templates/components/header.html:        role="banner">
+templates/components/header.html:       aria-label="Go to Home">
+templates/components/header.html:      <svg class="h-8 w-8 animate-spin-slow text-orangeLuxe" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+templates/components/header.html:               aria-label="Search the Vault"
+templates/components/header.html:          <i class="fas fa-search" aria-hidden="true"></i>
+templates/components/header.html:      <nav class="hidden lg:flex space-x-6" aria-label="Primary Navigation">
+templates/components/header.html:             aria-current="{{ 'page' if active else '' }}">
+templates/components/header.html:              aria-controls="mobileNav"
+templates/components/header.html:              aria-expanded="false"
+templates/components/header.html:              aria-label="Toggle mobile menu">
+templates/components/header.html:       aria-label="Mobile Navigation">
+templates/components/header.html:    const expanded = btn.getAttribute('aria-expanded') === 'true';
+templates/components/header.html:    btn.setAttribute('aria-expanded', !expanded);
+templates/components/quick_view_modal.html:  <div class="fixed inset-0 z-[9999] flex items-center justify-center p-8 bg-black/70 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="qvTitle space-y-4">
+templates/components/quick_view_modal.html:        <button data-close aria-label="Close modal" class="text-2xl text-orange-300 hover:text-orangeLuxe transition space-y-4">✖</button>
+templates/components/quick_view_modal.html:          <button id="qvPrev" class="navBtn hidden" aria-label="Previous report space-y-4">← Prev</button>
+templates/components/quick_view_modal.html:          <button id="qvNext" class="navBtn hidden" aria-label="Next report space-y-4">Next →</button>
+templates/components/report_charts_grid.html:<section role="region" data-aos="fade-up"
+templates/components/vault_copilot.html:<div id="copilot" class="fixed bottom-6 right-6 z-50 bg-zinc-900/90 backdrop-blur-lg border border-orangeLuxe px-4 py-4 rounded-2xl shadow-2xl w-80 hidden" role="dialog" aria-modal="true space-y-4">
+templates/components/vault_copilot.html:            aria-label="Copilot prompt input"></textarea>
+templates/components/vault_copilot.html:  <pre id="copilotResponse" class="mt-3 text-xs text-emeraldLuxe font-mono whitespace-pre-wrap max-h-48 overflow-y-auto custom-scrollbar" aria-live="polite space-y-4"></pre>
+templates/components/vault_copilot.html:        aria-label="Toggle Vault Copilot">
+templates/components/hud_status.html:     role="status" aria-live="polite" aria-label="HUD System Status">
+templates/components/hud_status.html:     aria-hidden="true">
+templates/components/section_skeleton.html:<div class="skeleton" data-lines="4" aria-busy="true" role="status" aria-label="Loading section... space-y-4"></div>
+templates/components/section_skeleton.html:    bar.setAttribute("aria-hidden", "true");
+templates/components/ai_chat_widget.html:<div id="aiChatWidget" aria-modal="true" role="dialog">
+templates/components/ai_chat_widget.html:  <div id="aiChatLog" aria-live="polite"></div>
+templates/components/report_card.html:    <a href="/reports/${report.slug}" role="link" aria-label="View ${report.title}" class="group block rounded-2xl focus-visible:ring-2 focus-visible:ring-orangeLuxe transition-transform duration-300 space-y-4">
+templates/components/utility_modals.html:         aria-hidden="true"
+templates/components/cta_cards.html:<section role="region" data-aos="fade-up" aria-label="Primary actions"
+templates/components/cta_cards.html:    <article role="region"
+templates/components/cta_cards.html:             aria-labelledby="{{ cta.id }}-title"
+templates/components/cta_cards.html:         aria-labelledby="{{ cta.id }}-title"
+templates/components/intro_layer.html:     role="status" aria-label="Vault loading screen" aria-live="assertive">
+templates/components/intro_layer.html:            aria-label="Close warp loader">
+templates/components/intro_layer.html:<nav id="skipNav" tabindex="0"
+templates/components/intro_layer.html:<section role="region" data-aos="fade-up"
+templates/components/intro_layer.html:  aria-labelledby="hero-heading hero-subheading"
+templates/components/intro_layer.html:  <div aria-hidden="true" class="absolute inset-0 z-20 pointer-events-none">
+templates/components/intro_layer.html:    <p id="heroTyper" class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe" aria-live="polite"></p>
+templates/components/intro_layer.html:<section role="region" data-aos="fade-up" id="bug-tales"
+templates/components/intro_layer.html:         aria-labelledby="bt-heading">
+templates/components/intro_layer.html:  <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
+templates/components/intro_layer.html:            aria-label="Play Bug Tale">
+templates/components/intro_layer.html:            aria-label="Stop Bug Tale">
+templates/components/dashboard_card.html:  role="status"
+templates/components/dashboard_card.html:  aria-label="Dashboard Card Coming Soon"
+templates/components/dashboard_card.html:  tabindex="0"
+templates/components/dashboard_card.html:      aria-hidden="true"
+templates/components/dashboard_card.html:    aria-label="Notify me when dashboard feature is ready"
+templates/components/console.html:     role="status" aria-label="Vault loading screen" aria-live="assertive">
+templates/components/console.html:            aria-label="Close warp loader">
+templates/components/featured_reports.html:<section role="region" data-aos="fade-up"
+templates/components/featured_reports.html:  aria-labelledby="featured-heading"
+templates/components/featured_reports.html:    aria-hidden="true"
+templates/components/featured_reports.html:    role="list"
+templates/components/command_palette.html:     role="dialog" aria-modal="true" aria-label="Command Palette"></div>
+templates/components/command_palette.html:       role="search">
+templates/components/command_palette.html:           focus:outline-none focus:ring-2 focus:ring-emerald-400" aria-label="Search the Vault" />
+templates/components/command_palette.html:    <div id="cmdResults" class="max-h-80 overflow-y-auto custom-scrollbar" role="listbox space-y-4"></div>
+templates/components/pagination.html:  aria-label="Pagination"
+templates/components/pagination.html:    if (active) btn.setAttribute("aria-current", "page");
+templates/components/sidebar_filters.html:       role="region"
+templates/components/sidebar_filters.html:       aria-labelledby="tagFilter-label"
+templates/components/sidebar_filters.html:         aria-label="Search tags" />
+templates/components/sidebar_filters.html:       role="list"
+templates/components/vault_feed.html:<section id="vault-feed" class="max-w-7xl mx-auto py-16 px-6" aria-label="Vulnerability Reports Feed">
+templates/components/vault_feed.html:      <article tabindex="0" class="group rounded-2xl border border-orangeLuxe/30 bg-black/80 p-6 shadow-lg transition hover:shadow-orangeLuxe/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeLuxe">
+templates/components/report_detail.html:  <section role="region" data-aos="fade-up" aria-labelledby="chart-section" class="mt-12" data-aos="fade-up" data-testid="report_detail space-y-4" >
+templates/components/blog_section.html:<section role="region" data-aos="fade-up" class="section-container py-20 space-y-16" aria-labelledby="blogTitle" data-aos="fade-up" data-testid="blog_section space-y-4" >
+templates/components/blog_section.html:       aria-live="polite" aria-busy="{{ 'false' if posts else 'true' }}">
+templates/components/blog_section.html:                 role="article" aria-labelledby="post-{{ loop.index0 }}-title">
+templates/components/blog_section.html:             aria-hidden="true"></div>
+templates/components/bug_tales.html:         role="region"
+templates/components/bug_tales.html:         aria-labelledby="bt-heading"
+templates/components/bug_tales.html:  <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
+templates/components/bug_tales.html:            aria-label="Play Bug Tale">
+templates/components/bug_tales.html:            aria-label="Stop Bug Tale">
+templates/components/hud_toolbar.html:     role="region" aria-label="HUD Dashboard" tabindex="0">
+templates/components/hud_toolbar.html:          aria-expanded="true">
+templates/components/hud_toolbar.html:    <div class="relative mx-auto w-20 h-20 mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="Scroll Progress space-y-4">
+templates/components/hud_toolbar.html:#hudToolbar [role="progressbar"] {
+templates/components/hud_toolbar.html:  #hudToolbar [role="progressbar"] {
+templates/components/hud_toolbar.html:    toggleBtn.setAttribute("aria-expanded", (!collapsed).toString());
+templates/components/hud_toolbar.html:    arc.setAttribute("aria-valuenow", percent);
+templates/components/playground.html:<section role="region" data-aos="fade-up" id="playgroundSection" class="ckz-hero min-h-screen flex flex-col justify-center items-center text-center gap-8 px-6" data-aos="fade-up"" data-aos="fade-up" data-testid="playground space-y-4" >
+templates/components/hacker_playground.html:<section role="region" data-aos="fade-up"
+templates/components/hero.html:         role="banner"
+templates/components/hero.html:         aria-labelledby="hero-heading hero-subheading"
+templates/components/hero.html:  <div aria-hidden="true" class="absolute inset-0 z-20 pointer-events-none">
+templates/components/hero.html:    <p id="heroTyper" class="text-sm sm:text-base font-mono uppercase tracking-widest text-emeraldLuxe" aria-live="polite"></p>
+templates/components/hidden_extras.html:         aria-hidden="true"
+templates/components/hidden_extras.html:         tabindex="-1"
+templates/components/terminal_scan.html:<section role="region" data-aos="fade-up"
+templates/components/terminal_scan.html:         aria-label="Hacker terminal output"
+templates/components/skip_nav.html:     role="navigation" aria-label="Skip Navigation Bar">
+templates/components/skip_nav.html:          aria-label="Close Skip Navigation"
+templates/components/report_card_grid.html:<section role="region" data-aos="fade-up"
+templates/components/report_card_grid.html:  role="region"
+templates/components/report_card_grid.html:  aria-labelledby="cardGridHeading"
+templates/components/report_card_grid.html:    role="list"
+templates/components/report_card_grid.html:        aria-label="CVSS score ${r.cvss}"
+templates/components/tag_section.html:<section role="region" data-aos="fade-up" id="tagsSection" class="my-24 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos="fade-up" data-testid="tag_section space-y-4" >
+templates/components/tag_section.html:           aria-label="Search tags" />
+templates/components/tag_section.html:  rail.querySelectorAll("[role=button]").forEach(n => n.remove());
+templates/components/report_chart.html:<section role="region" data-aos="fade-up" id="chartContainer" class="w-full max-w-md mx-auto mt-12" role="region" aria-labelledby="chartTitle" data-aos="zoom-in" data-aos-delay="150" data-aos="fade-up" data-testid="report_chart space-y-4" >
+templates/components/report_chart.html:  <ul id="chartStats" class="text-sm font-mono text-orangeLuxe-light/80 space-y-1 text-center mb-4" aria-live="polite space-y-4"></ul>
+templates/components/report_chart.html:    <canvas id="reportChart" height="280" aria-label="Report Type Chart" role="img"></canvas>
+templates/macros.html:<article class="card flex flex-col h-full overflow-hidden rounded-2xl border border-orangeLuxe/20 shadow hover:shadow-orangeLuxe/40 transition-all group" role="article" tabindex="0">
+templates/reports_list.html:      role="list"
+templates/reports_list.html:      aria-label="Vulnerability Reports"
+templates/reports_list.html:      aria-live="polite"
+templates/reports_list.html:      <li role="listitem" class="animate-fade-in hover-lift">
+templates/academy/ghost_academy.html:  <nav role="navigation" aria-label="Academy Missions" class="space-y-6" id="academyMissions">
+templates/academy/ghost_academy.html:  <p id="xpFeedback" class="mt-6 text-sm text-orange-400 font-mono" aria-live="polite"></p>
+templates/index.html:           role="status"
+templates/report_analytics.html:        <canvas id="cvssChart" class="w-full h-72" role="img" aria-label="Bar chart showing CVSS score distribution"></canvas>
+templates/report_analytics.html:        <canvas id="typeChart" class="w-full h-72" role="img" aria-label="Pie chart showing vulnerability type breakdown"></canvas>
+=== WebSocket usage ===
+static/js/app.min.js:// 6. WebSocket Vault Feed
+static/js/app.min.js:    const ws = new WebSocket(`${proto}://${location.host}/ws/status`);
+static/js/hero.js:    const ws=new WebSocket(`${proto}://${location.host}/ws/status`);
+static/js/main.js:// 6. WebSocket Vault Feed
+static/js/main.js:    const ws = new WebSocket(`${proto}://${location.host}/ws/status`);
+static/js/cyber-enhancements.js:  // ─── 6️⃣ WebSocket Vault Feed ───
+static/js/cyber-enhancements.js:      ws = new WebSocket(`${proto}://${location.host}/ws/status`);
+=== Git Status ===
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   static/css/cyber-enhancements.css
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	audit_report.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+8b5df87 chore: full project update — fixed missing routes, polished UI, added AI chat API endpoint, fixed static assets
+ee8f8ee Fix: Complete Jinja2 blocks and polish Hacker Playground section
+d5c41c4 🔧 Fix: Auto-scroll
+b81e9ea 🔧 Fix: Add missing SFX, placeholder sw.js, minor polish
+3eed8d9 ✨ CLOSER

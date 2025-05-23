@@ -1,25 +1,87 @@
-<section role="region" data-aos="fade-up"
+<section
   id="vault-banners"
-  class="section-container my-24 space-y-4"
+  role="region"
+  aria-label="Vault Banners"
+  class="section-container my-24 space-y-10"
   data-aos="fade-up"
 >
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 space-y-4">
+  <header class="text-center mb-4">
+    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-orangeLuxe-light mb-2">
+      🏴 Vault Banners
+    </h2>
+    <p class="text-orange-200 font-mono text-sm sm:text-base max-w-xl mx-auto">
+      Official banners from the CyberKidzSec Vault—hover for details or tap to preview!
+    </p>
+  </header>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     {% set banners = [
       ('images/og/main_vault_banner.png', "Main Vault Banner"),
       ('images/og/hacker_underground_banner.png', "Hacker Underground Banner"),
       ('images/og/zero_day_archive_banner.png', "Zero-Day Archive Banner")
     ] %}
     {% for src, alt in banners %}
-      <figure class="overflow-hidden rounded-2xl shadow-md group hover:shadow-orange-500/30 transition-all duration-300 space-y-4">
+      <figure
+        tabindex="0"
+        class="overflow-hidden rounded-2xl shadow-md group relative bg-zinc-950 hover:shadow-orange-500/40 focus-within:shadow-orange-400/50 transition-all duration-300"
+        aria-label="{{ alt }}"
+        data-aos="zoom-in"
+        data-aos-delay="{{ loop.index0 * 120 }}"
+      >
         <img
           src="{{ url_for('static', filename=src) }}"
           alt="{{ alt }}"
           loading="lazy"
-          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out space-y-4"
+          class="w-full h-48 object-cover rounded-xl group-hover:scale-105 group-focus:scale-105 transition-transform duration-700 ease-out"
         />
-        <figcaption class="sr-only space-y-4">{{ alt }}</figcaption>
+        <!-- Banner Overlay on Hover/Focus -->
+        <figcaption class="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-400 text-orange-300 text-lg font-mono font-semibold tracking-widest cursor-pointer">
+          {{ alt }}
+        </figcaption>
+        <!-- Optional: Magnify Icon for Preview -->
+        <button
+          type="button"
+          aria-label="Preview {{ alt }}"
+          class="absolute top-2 right-2 p-2 bg-zinc-900/70 rounded-full shadow-md hover:bg-orange-500/80 focus:outline-none focus:ring-2 focus:ring-orange-400 transition z-10"
+          onclick="showBannerPreview('{{ url_for('static', filename=src) }}', '{{ alt }}')"
+        >
+          <i class="fas fa-magnifying-glass-plus"></i>
+        </button>
       </figure>
     {% endfor %}
   </div>
 </section>
+
+<!-- Banner Preview Modal (hidden by default) -->
+<div id="bannerPreviewModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] hidden">
+  <div class="bg-zinc-900 rounded-xl shadow-2xl p-8 max-w-lg w-full flex flex-col items-center relative">
+    <button
+      class="absolute top-3 right-3 text-orange-300 text-xl bg-transparent hover:text-orange-400 focus:outline-none"
+      onclick="closeBannerPreview()"
+      aria-label="Close preview"
+    >✖️</button>
+    <img id="bannerPreviewImg" src="" alt="" class="w-full rounded-lg mb-4 shadow-lg" />
+    <div id="bannerPreviewCaption" class="text-orange-200 font-mono text-lg text-center"></div>
+  </div>
+</div>
+
+<script defer>
+function showBannerPreview(src, alt) {
+  const modal = document.getElementById('bannerPreviewModal');
+  document.getElementById('bannerPreviewImg').src = src;
+  document.getElementById('bannerPreviewImg').alt = alt;
+  document.getElementById('bannerPreviewCaption').textContent = alt;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeBannerPreview() {
+  document.getElementById('bannerPreviewModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+document.getElementById('bannerPreviewModal').addEventListener('click', function(e) {
+  if (e.target === this) closeBannerPreview();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeBannerPreview();
+});
+</script>
 

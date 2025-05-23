@@ -1,0 +1,25 @@
+{# Blog card for use with both live and sample posts #}
+<article class="card hover-lift animate-fade-in group transition-all"
+         data-aos="zoom-in"
+         data-aos-delay="{{ delay|default(0) }}"
+         role="article"
+         aria-labelledby="{{ id }}">
+  <img src="{{ thumb_url }}"
+       alt="Thumbnail for {{ title }}"
+       class="w-full h-40 object-cover rounded-t bg-zinc-900/30"
+       loading="lazy" />
+  <div class="p-4 flex flex-col space-y-3">
+    <h2 id="{{ id }}"
+        class="font-semibold text-lg text-orangeLuxe-light group-hover:text-orangeLuxe transition">
+      {{ title }}
+    </h2>
+    <p class="text-sm text-orangeLuxe-light/70 font-mono line-clamp-3">
+      {{ excerpt }}
+    </p>
+    <a href="{{ url }}"
+       class="mt-auto btn btn--outline w-max focus:ring-2 focus:ring-orangeLuxe/70">
+      Read More →
+    </a>
+  </div>
+</article>
+

@@ -1,0 +1,93 @@
+{% block meta_desc %}Blog · CYBERKIDZSEC{% endblock meta_desc %}
+
+{% block page_content %}
+<section class="section-container py-20 space-y-16" id="blog" role="region" aria-labelledby="blogTitle" data-aos="fade-up" data-testid="blog_section" data-aos="fade-up" data-aos="fade-up">
+
+  <!-- 🧠 Hero Header -->
+  <header class="text-center max-w-4xl mx-auto space-y-4" data-aos="fade-down">
+    <h1 id="blogTitle" class="hero-title text-orangeLuxe-light">CyberKidzSec Blog</h1>
+    <p class="text-lg sm:text-xl text-orangeLuxe-light/80 font-mono">
+      Insights, tools, bounty stories, and hacker reflections — <strong>from the vault.</strong>
+    </p>
+  </header>
+
+  <!-- 🔍 Filter/Search Bar -->
+  <div class="flex justify-center mb-4" data-aos="fade">
+    <input type="search" id="blogSearch" placeholder="Search posts…"
+      class="max-w-xs w-full rounded-md border bg-zinc-900 border-orangeLuxe/40 px-4 py-2 text-orangeLuxe-light focus:ring-2 focus:ring-orangeLuxe outline-none transition placeholder:text-orangeLuxe/50"
+      aria-label="Search blog posts" />
+  </div>
+
+  <!-- Blog Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="blogCards" aria-live="polite" aria-busy="{{ 'false' if posts else 'true' }}">
+    {% if posts %}
+      {% for post in posts %}
+        {% set post_args = {
+          "id": "post-{}".format(loop.index0),
+          "title": post.title,
+          "excerpt": post.excerpt,
+          "thumb_url": post.thumb_url or "/static/img/default-thumb.jpg",
+          "url": url_for('blog_detail', slug=post.slug),
+          "delay": loop.index0 * 100
+        } %}
+        {% include "components/blog_card.html" with context %}
+      {% endfor %}
+    {% else %}
+      {# Sample posts with unique images #}
+      {% set sample_posts = [
+        {'title': 'Ghost Recon: Bounty Tips from the Shadows', 'excerpt': 'Learn how to lurk, pivot, and exfiltrate with style — straight from the CyberKidzSec ghost-mode handbook.', 'slug': 'ghost-recon'},
+        {'title': 'Starforge: Building Your First Recon Toolkit', 'excerpt': 'A hands-on guide to assembling a powerful recon setup using open-source tools and terminal sorcery.', 'slug': 'starforge-recon'},
+        {'title': 'Zero-Day Diaries: The XSS That Refused to Die', 'excerpt': 'Inside the hunt for a persistent XSS that bypassed CSP, WAFs, and even developer denial.', 'slug': 'xss-diaries'},
+        {'title': 'Payload Alchemy: Crafting Better PoCs', 'excerpt': 'Elevate your bug bounty reports with polished, reproducible Proof of Concepts that captivate triagers.', 'slug': 'payload-alchemy'},
+        {'title': 'Dark Mode Accessibility in Hacker UIs', 'excerpt': 'How to make ghost-themed UIs usable for everyone without sacrificing that elite hacker vibe.', 'slug': 'accessible-dark'},
+        {'title': 'From Burp to Report: Automating Your Workflow', 'excerpt': 'Speed up your pentest documentation and reporting with automation strategies for bug bounty pros.', 'slug': 'burp-to-report'}
+      ] %}
+      {% for post in sample_posts %}
+        {% set post_args = {
+          "id": "sample-{}".format(loop.index0),
+          "title": post.title,
+          "excerpt": post.excerpt,
+          "thumb_url": "/static/img/sample-blog-{}.jpg".format(loop.index + 1),
+          "url": "/blog/{}".format(post.slug),
+          "delay": loop.index0 * 100
+        } %}
+        {% include "components/blog_card.html" with context %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- 🚫 Empty-State -->
+  {% if posts is not defined or posts|length == 0 %}
+  <div class="text-center my-16 animate-fade-in" data-aos="fade-up">
+    <p class="text-orangeLuxe-light/80 font-mono text-lg">
+      No blog posts found… yet.<br>
+      <span class="text-orangeLuxe animate-pulse">Stay ghosted, more stories coming soon!</span>
+    </p>
+  </div>
+  {% endif %}
+
+  <!-- 📈 Pagination CTA -->
+  <div class="text-center mt-4" data-aos="fade-up">
+    <a href="{{ url_for('views.reports_list') }}" class="btn btn--secondary hover-lift">
+      📖 View All Posts
+    </a>
+  </div>
+</section>
+
+<script defer>
+  // Simple search filter (client-side for static, extend with JS as needed)
+  document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById('blogSearch');
+    if (!input) return;
+    input.addEventListener('input', function() {
+      const cards = document.querySelectorAll('#blogCards article');
+      const q = this.value.toLowerCase();
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  });
+</script>
+{% endblock page_content %}
+

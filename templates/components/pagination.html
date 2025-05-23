@@ -4,12 +4,12 @@
   data-page="1"       <!-- Current page (set dynamically) -->
   data-total="10"     <!-- Total pages (set dynamically) -->
   aria-label="Pagination"
-  class="mt-14 flex justify-center items-center gap-2 flex-wrap space-y-4"
+  class="mt-4 flex justify-center items-center gap-2 flex-wrap space-y-4"
 >
   <!-- Buttons injected by JS -->
 </nav>
 
-<script>
+<script defer>
 (function () {
   const nav = document.getElementById("pagination");
   let page = +nav.dataset.page || 1;

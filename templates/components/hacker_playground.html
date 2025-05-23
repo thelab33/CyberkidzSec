@@ -41,11 +41,11 @@
         Run Scan 🛰️
       </button>
     </form>
-    <pre id="scanOut" class="hidden mt-5 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light transition-all space-y-4"></pre>
+    <pre id="scanOut" class="hidden mt-4 bg-black/70 border border-orangeLuxe/40 rounded p-4 font-mono text-sm text-orangeLuxe-light transition-all space-y-4"></pre>
   </div>
 
   <!-- 👻 Ghost Easter Egg -->
-  <div id="ghostFlag" class="hidden mt-16 text-center bg-cyberNight.glow/70 rounded-xl p-6
+  <div id="ghostFlag" class="hidden mt-4 text-center bg-cyberNight.glow/70 rounded-xl p-6
         border border-orangeLuxe/40 shadow-lg animate-pulse-glow text-orangeLuxe-light font-mono">
   </div>
 
@@ -55,7 +55,7 @@
   </p>
 </section>
 
-<script>
+<script defer>
 const $ = (q) => document.querySelector(q);
 const makeFlag = (txt) => `FLAG{${btoa(txt)}}`;
 const XP_TOTAL = 5;

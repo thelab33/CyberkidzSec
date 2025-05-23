@@ -14,7 +14,7 @@
       <span class="dot bg-emerald-400"></span>
     </div>
     <button id="loaderClose"
-            class="mt-7 text-xl text-orange-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded transition shadow"
+            class="mt-4 text-xl text-orange-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded transition shadow"
             aria-label="Close warp loader">
       ✖️ Close Loader
     </button>
@@ -54,7 +54,7 @@
 </style>
 
 <!-- ⚡ Forgemaster Loader + Ambience + Parallax Script -->
-<script>
+<script defer>
 document.addEventListener("DOMContentLoaded", () => {
   // --- Loader with Typewriter Steps & Ghost Events ---
   const loader = document.getElementById("vault-loader");
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       {% endfor %}
     </div>
-    <div class="mt-6 flex flex-wrap justify-center gap-6">
+    <div class="mt-4 flex flex-wrap justify-center gap-6">
       {% for cta in hero.ctas %}
         {% if cta.type == 'button' %}
         <button id="{{ cta.id }}" class="btn {{ cta.classes }} px-8 py-3 rounded-lg backdrop-blur-sm transition hover:shadow-lg">{{ cta.label }}</button>
@@ -254,14 +254,14 @@ document.addEventListener("DOMContentLoaded", () => {
   <h2 class="text-2xl font-bold mb-4" id="bt-heading">
     🎙️ Bug Tales: <span class="text-orange-400">Zero-Day Chronicles</span>
   </h2>
-  <p class="text-sm text-orangeLuxe-light/80 mb-6 max-w-prose">
+  <p class="text-sm text-orangeLuxe-light/80 mb-4 max-w-prose">
     Sit back and listen as ghost-mode operatives recall their most haunting vulnerability finds.
   </p>
   <canvas id="bt-visualizer" class="w-full h-16 rounded-md bg-black/60 hidden"></canvas>
   <audio id="bt-sfx" loop preload="auto" aria-hidden="true">
     <source src="{{ url_for('static', filename='audio/keyboard-clack.mp3') }}" type="audio/mpeg">
   </audio>
-  <div class="flex flex-wrap items-center gap-4 mt-6">
+  <div class="flex flex-wrap items-center gap-4 mt-4">
     <button id="bt-play"
             class="btn btn--solid bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-5 py-2 rounded shadow transition"
             aria-label="Play Bug Tale">
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 </section>
-<script>
+<script defer>
 (() => {
   const playBtn = document.getElementById("bt-play");
   const stopBtn = document.getElementById("bt-stop");
@@ -340,4 +340,4 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 
-<script>document.addEventListener("DOMContentLoaded",function(){const t=["Zero‑Day Archive Updating","CYBERKIDZSEC VAULT","Ghosted but not gone.","AI Copilot Online — Stay Ghosted."],e=document.getElementById("heroTyper");let n=0,o=0;function r(){e&&(o<=t[n].length?(e.textContent=t[n].slice(0,o++),setTimeout(r,60+60*Math.random())):setTimeout(()=>{o=0,n=(n+1)%t.length,r()},1600))}r();});</script>
+<script defer>document.addEventListener("DOMContentLoaded",function(){const t=["Zero‑Day Archive Updating","CYBERKIDZSEC VAULT","Ghosted but not gone.","AI Copilot Online — Stay Ghosted."],e=document.getElementById("heroTyper");let n=0,o=0;function r(){e&&(o<=t[n].length?(e.textContent=t[n].slice(0,o++),setTimeout(r,60+60*Math.random())):setTimeout(()=>{o=0,n=(n+1)%t.length,r()},1600))}r();});</script>
