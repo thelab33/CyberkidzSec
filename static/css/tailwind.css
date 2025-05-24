@@ -1,5 +1,6 @@
 /* ==========================================================================
    ⚙️ CYBERKIDZSEC STARFORGE CSS — FORGEMASTER+
+<<<<<<< HEAD
    Tailwind + Custom Imports (atomic, modular, cyber-edged, a11y-tuned)
    --------------------------------------------------------------------------
    This is the core CSS entrypoint for all vault, HUD, and overlay styling.
@@ -7,6 +8,11 @@
    ========================================================================== */
 
 /* === TAILWIND CORE DIRECTIVES === */
+=======
+──────────────────────────────────────────────── */
+
+/* ───────── Tailwind Core Directives ───────── */
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,6 +97,7 @@
     --section-border: 1px solid rgb(253 186 116 / 15%);
     --lux-bg: linear-gradient(135deg, #191923 60%, #1f2937 100%);
   }
+
   html.dark {
     --orange: #ff7f00;
     --orange-luxe-light: #ffc78c;
@@ -102,6 +109,10 @@
    🧱 Components & Sections Layer
 ───────────────────────────────── */
 @layer components {
+<<<<<<< HEAD
+=======
+  /* General Section Styling */
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   section {
     background: var(--lux-bg);
     border-radius: 1.5rem;
@@ -133,6 +144,7 @@
     box-shadow: 0 8px 40px 0 #fb923c12;
     z-index: 10;
   }
+
   #hero canvas {
     position: absolute;
     inset: 0;
@@ -143,7 +155,15 @@
     pointer-events: none;
     filter: blur(0.8px) brightness(1.1);
   }
+<<<<<<< HEAD
   #hero .relative { z-index: 1; }
+=======
+
+  #hero .relative {
+    z-index: 1;
+  }
+
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   #hero h1 {
     font-size: 2.75rem;
     font-weight: 900;
@@ -153,6 +173,7 @@
     text-shadow: 0 2px 20px #ff7f0040;
     margin-bottom: 0.25em;
   }
+
   #hero .stats {
     display: flex;
     gap: 1.25rem;
@@ -177,8 +198,14 @@
     margin-bottom: 2.25rem;
     font-style: italic;
   }
+<<<<<<< HEAD
   #vault-feed,
   .vault-feed {
+=======
+
+  /* Feed/Analytics */
+  #vault-feed, .vault-feed {
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
     background: rgb(25 25 32 / 97%);
     border-radius: 1rem;
     box-shadow: 0 0 20px #fb923c08;
@@ -196,8 +223,14 @@
     margin-bottom: 2rem;
     position: relative;
   }
+<<<<<<< HEAD
   .utility-modal,
   .vault-utility {
+=======
+
+  /* Utilities & Modals */
+  .utility-modal, .vault-utility {
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
     background: rgb(20 20 30 / 97%);
     border: 1.5px solid #22d3ee40;
     box-shadow: 0 0 18px 0 #0fc2cc44;
@@ -222,19 +255,54 @@
    🎞️ FX & Animation Layer
 ───────────────────────────────── */
 @layer utilities {
+<<<<<<< HEAD
   @keyframes warp-blur {
     0%, 100% { transform: scale(1) translate(0); opacity: var(--warp-overlay-opacity);}
     50% { transform: scale(1.1) translate(-10px, -10px); opacity: calc(var(--warp-overlay-opacity) + 0.1);}
+=======
+  @keyframes warpBlur {
+    0%, 100% {
+      transform: scale(1) translate(0);
+      opacity: var(--warp-overlay-opacity);
+    }
+
+    50% {
+      transform: scale(1.1) translate(-10px, -10px);
+      opacity: calc(var(--warp-overlay-opacity) + 0.1);
+    }
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   }
   @keyframes gradient-border {
     0%   { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee);}
     50%  { border-image-source: linear-gradient(135deg, #22d3ee, #ec4899);}
     100% { border-image-source: linear-gradient(45deg, var(--orange), #22d3ee);}
   }
+<<<<<<< HEAD
   @keyframes warp-stabilize {
     0%   { opacity: 0;   transform: scale(1.05) skewY(1deg);   filter: brightness(0.7) blur(2px);}
     50%  { opacity: 0.8; transform: scale(0.98) skewY(-1deg);  filter: brightness(1.2) blur(0);}
     100% { opacity: 1;   transform: scale(1) skewY(0);         filter: brightness(1) blur(0);}
+=======
+
+  @keyframes warpStabilize {
+    0% {
+      opacity: 0;
+      transform: scale(1.05) skewY(1deg);
+      filter: brightness(0.7) blur(2px);
+    }
+
+    50% {
+      opacity: 0.8;
+      transform: scale(0.98) skewY(-1deg);
+      filter: brightness(1.2) blur(0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1) skewY(0);
+      filter: brightness(1) blur(0);
+    }
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   }
   @keyframes float-spark {
     0%   { transform: translateY(0) scale(1);   opacity: 0.9;}
@@ -246,8 +314,19 @@
   }
 }
 
+<<<<<<< HEAD
 /* Parallax Orbit FX */
 #heroParallax { position: absolute; inset: 0; z-index: 10; will-change: transform; }
+=======
+/* ─── Parallax Orbit FX ───────────────────────── */
+#heroParallax {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  will-change: transform;
+}
+
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
 #heroParallax .orbit {
   position: absolute;
   border: 1px dashed rgb(255 255 255 / 8%);
@@ -272,6 +351,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .section-headline::after {
   content: "✨";
   position: absolute;
@@ -291,8 +371,13 @@
   background: #23242e;
   box-shadow: 0 4px 22px 0 #0fc2cc12;
 }
+<<<<<<< HEAD
 .report-card:hover,
 .vault-feed .card:hover {
+=======
+
+.report-card:hover, .vault-feed .card:hover {
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   transform: translateY(-4px) scale(1.03);
   box-shadow: 0 10px 30px 0 #f9731626;
 }
@@ -301,7 +386,12 @@
 #vault-status .pulse {
   animation: pulse-status 1.2s infinite alternate cubic-bezier(0.4, 0.1, 0.2, 1.1);
 }
+<<<<<<< HEAD
 @keyframes pulse-status {
+=======
+
+@keyframes pulseStatus {
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
   from { opacity: 1; }
   to   { opacity: 0.62; }
 }
@@ -315,10 +405,18 @@
   width: 100vw; height: 100vh;
   animation: confetti-drop 1.9s cubic-bezier(0.36, 1.4, 0.47, 0.97) forwards;
 }
+<<<<<<< HEAD
 @keyframes confetti-drop {
   0%   { opacity: 1; transform: translateY(-50px) scale(1.2);}
   70%  { opacity: 1;}
   100% { opacity: 0; transform: translateY(100vh) scale(0.85);}
+=======
+
+@keyframes confettiDrop {
+  0% { opacity: 1; transform: translateY(-50px) scale(1.2); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100vh) scale(0.85); }
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
 }
 
 /* 5. Glowing Focus Ring for Accessibility */

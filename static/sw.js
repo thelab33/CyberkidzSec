@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ────────────────────────────────────────────────────────────────
 //  service-worker.js · Starforge Elite™ Tier
 //  Offline-first PWA cache strategy with critical fallbacks
@@ -84,3 +85,6 @@ self.addEventListener('fetch', event => {
   );
 });
 
+=======
+// Blank SW for PWA compliance
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)

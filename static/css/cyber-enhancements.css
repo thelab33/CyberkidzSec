@@ -317,6 +317,7 @@ body[data-ghost-mode="true"] .hero-skull {
   font-weight: 600;
   transition: all 0.3s ease-in-out;
 }
+<<<<<<< HEAD
 
 .vault-glow[data-glow="true"]::after {
   content: "";
@@ -370,3 +371,11 @@ section,
 header {
   margin-bottom: 3rem;
 }
+=======
+.vault-glow[data-glow="true"]::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle, rgb(255 255 255 / 5%) 0%, transparent 70%); animation: pulse-glow 2s infinite; pointer-events: none; }
+
+ @keyframes pulse-glow { 0%,100% {opacity:.4;} 50% {opacity:.1;} }
+.vault-glow[data-glow="true"]::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgb(255 255 255 / 5%) 0%,transparent 70%);animation:pulse-glow 2s infinite;pointer-events:none;}
+
+@keyframes pulse-glow{0%,100%{opacity:.4;}50%{opacity:.1;}}
+>>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
