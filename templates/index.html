@@ -1,46 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Home · CYBERKIDZSEC Vault{% endblock %}
+{% block meta_desc %}
+Home · CYBERKIDZSEC Vault — Elite Ghost-Mode Bug Bounty Hub.
+{% endblock meta_desc %}
 
-{% block content %}
+{% block page_title %}
+Home · CYBERKIDZSEC Vault
+{% endblock page_title %}
 
-{% include "components/console.html" %}
+{% block extra_head %}
+  <meta property="og:title" content="CYBERKIDZSEC Vault" />
+  <meta property="og:description" content="Elite Ghost-Mode Bug Bounty Hub." />
+  <meta property="og:image" content="{{ url_for('static', filename='images/og/main_vault_banner.png') }}" />
+  <meta property="og:url" content="{{ request.url }}" />
+  <meta name="twitter:title" content="CYBERKIDZSEC Vault" />
+  <meta name="twitter:description" content="Elite Ghost-Mode Bug Bounty Hub." />
+  <meta name="twitter:image" content="{{ url_for('static', filename='images/og/main_vault_banner.png') }}" />
+{% endblock extra_head %}
 
-  {# ───── HERO ───── #}
-  <header id="siteHeader" class="sticky top-0 z-40">
-    {% include "components/header.html" %}
-  </header>
-
+{% block page_content %}
+  {# 🚀 Loader, Hero, Branding Layers #}
+  {% include "components/vault_loader.html" %}
   {% include "components/hero.html" %}
+  {% include "components/status_strip.html" %}
+  {% include "components/a2hs_banner.html" %}
+  {% include "components/filter_controls.html" %}
 
-  {# ───── STATUS STRIP ───── #}
-  <section id="vault-status"
-           role="status"
-           class="w-full bg-zinc-900/60 backdrop-blur py-3 shadow-md"
-           data-aos="fade"
-           data-test="section-status">
-    <div class="max-w-7xl mx-auto text-center text-sm sm:text-base font-mono text-orange-400 uppercase tracking-wider animate-pulse select-none">
-      🛰️ Zero-Day Archive Updating · Stay Ghosted.
-    </div>
+  <section class="container mx-auto space-y-16" data-aos="fade-up">
+    {% include "components/bug_tales.html" %}
+    {% include "components/blog_section.html" %}
+    {% include "components/vault_overview_section.html" %}
+    {% include "components/report_card_grid.html" %}
+    {% include "components/report_charts_grid.html" %}
+    {% include "components/playground_hero.html" %}
+    {% include "components/playground_ctas.html" %}
   </section>
 
-  {# ───── BUG TALES (Audio Narration) ───── #}
-  {% include "components/bug_tales.html" %}
+  {# 🧩 Empty & Loading States #}
+  {% include "components/empty_state.html" %}
+  {% include "components/section_skeleton.html" %}
+{% endblock page_content %}
 
-  {# ───── VAULT OVERVIEW (XP/Stats/Banners) ───── #}
-  {% include "components/vault_overview_section.html" %}
-
-  {# ───── MAIN FEED (Reports/Analytics/Filters) ───── #}
-  {% include "components/vault_feed.html" %}
-
-  {# ───── HACKER PLAYGROUND & HUD ───── #}
-  {% include "components/hacker_playground_section.html" %}
-
-  {# ───── UTILITIES & MODALS ───── #}
-  {% include "components/utility_modals.html" %}
-
-  {# ───── HIDDEN / DEBUG EXTRAS ───── #}
-  {% include "components/hidden_extras.html" %}
-
-{% endblock %}
+{% block page_scripts %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.getElementById('hero');
+      if (hero) {
+        hero.addEventListener('mouseenter', () => {
+          if (window.confettiSuccess) window.confettiSuccess();
+        }, { once: true });
+      }
+    });
+  </script>
+{% endblock page_scripts %}
 

@@ -379,3 +379,13 @@ header {
 
 @keyframes pulse-glow{0%,100%{opacity:.4;}50%{opacity:.1;}}
 >>>>>>> 5f4a19a (WIP: Stage changes before pull/rebase)
+
+/* View‑transition helpers */
+.vt-fade,
+.vt-fade-up { view-transition-name: fade; contain: paint; }
+::view-transition-old(fade),
+::view-transition-new(fade) { animation: fade 400ms ease; }
+@keyframes fade { from { opacity:0; transform:translateY(1rem);} }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*), ::view-transition-new(*) { animation:none!important; }
+}

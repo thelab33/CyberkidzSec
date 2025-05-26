@@ -18,7 +18,7 @@
     <div id="terminalOutput" class="whitespace-pre-wrap space-y-4"></div>
     <div class="flex items-center space-y-4">
       <span class="text-green-400 space-y-4">$</span>
-      <input id="terminalInput" type="text" autocomplete="off"
+      <input id="terminalInput-7" type="text" autocomplete="off"
              class="flex-1 bg-transparent outline-none text-green-400 pl-2 caret-green-400 space-y-4" />
     </div>
   </div>
@@ -80,10 +80,10 @@
 
 <style>
 /* 🧠 Blinking Hacker Cursor */
-#terminalInput::placeholder {
+terminalInput::placeholder {
   color: green;
 }
-#terminalInput {
+terminalInput {
   caret-color: #22c55e;
 }
 </style>

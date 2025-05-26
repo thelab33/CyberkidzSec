@@ -180,7 +180,7 @@
   }
 
   /* Status Bar */
-  #vault-status {
+  .vault-status {
     margin-top: -0.75rem;
     background: rgb(24 24 32 / 96%);
     border-radius: 0 0 1.5rem 1.5rem;
@@ -367,7 +367,7 @@
 }
 
 /* 3. Pulse Effect for Live Status */
-#vault-status .pulse {
+.vault-status .pulse {
   animation: pulseStatus 1.2s infinite alternate
     cubic-bezier(0.4, 0.1, 0.2, 1.1);
 }

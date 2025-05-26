@@ -268,3 +268,12 @@
 .fade-in.visible {opacity:1;transform:translateY(0);}
 .micro-card{background:#181825;border:1.5px solid #0fc6;padding:18px 20px;border-radius:16px;box-shadow:0 2px 20px #0fc2;transition:box-shadow .22s;}
 .micro-card:hover{box-shadow:0 4px 30px #34d39933,0 1.5px 16px #0fc9;}
+
+Object.assign(hero.style, {
+  opacity: 1,
+  visibility: "visible",
+  display: "block",
+  position: "relative",
+  zIndex: 9999
+});
+
