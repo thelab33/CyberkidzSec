@@ -37,6 +37,8 @@
   {% endblock style_includes %}
 
   {% block extra_head %}{% endblock extra_head %}
+<script defer src="https://browser.sentry-cdn.com/7.101.1/bundle.tracing.replay.min.js" integrity="sha384-X" crossorigin="anonymous"></script>
+<script>window.SENTRY_RELEASE=localStorage.getItem("vaultRelease")||"dev";Sentry.init({dsn:"%SENTRY_DSN%",release:window.SENTRY_RELEASE,tracesSampleRate:.4});</script>
 </head>
 <body class="relative selection:bg-orangeLuxe/20 selection:text-orangeLuxe" data-page="{{ data_page|default('vault') }}">
 

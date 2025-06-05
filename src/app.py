@@ -44,8 +44,11 @@ def static_url(filename: str) -> str:
     return url_for("static", filename=filename, v=version)
 
 
+import sentry_sdk
 def create_app() -> Flask:
     """Create and configure the CYBERKIDZSEC Flask application."""
+    # Sentry backend init
+    sentry_sdk.init(dsn=os.getenv('SENTRY_DSN', ''), traces_sample_rate=0.4, release=os.getenv('RELEASE', 'dev'))
     app = Flask(
         __name__,
         template_folder=str(TEMPLATES_DIR),
@@ -129,4 +132,3 @@ def register_error_pages(app: Flask) -> None:
     @app.errorhandler(500)
     def internal_server_error(e):
         return render_template("errors/500.html", title="500 Server Error"), 500
-
